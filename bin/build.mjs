@@ -11,6 +11,8 @@ import glob from "glob-promise"
 import matter from "gray-matter"
 import { exec } from "child-process-promise"
 import footnotes from "remark-footnotes"
+import slugify from "slugify"
+import moment from "moment"
 
 const parser = new ArgumentParser()
 parser.add_argument("input")
@@ -49,14 +51,30 @@ ${lines.slice(splitPoint + 1).join("\n")}`.trim()
   await writeFile(contentPath, templated)
   await mkdirs(path.dirname(dataPath))
   await writeFile(dataPath, JSON.stringify(!isEmpty ? data : {}, null, 2))
-  const pagePath = replaceExt(path.join("pages", path.relative(args.input, source)), ".jsx")
-  const contentImportPath = replaceExt(path.relative(path.dirname(pagePath), contentPath), "")
-  const layoutImportPath = path.relative(
-    path.dirname(pagePath),
-    path.join("layouts", data.layout ?? args.defaultLayout)
-  )
-  const frontmatterImportPath = path.relative(path.dirname(pagePath), dataPath)
-  const pageContent = `
+  let pagePath
+  if (source.startsWith("mdx/essays/")) {
+    if (data.published || process.env.DEVELOPMENT) {
+      pagePath = path.join(
+        "pages/essays",
+        moment(data.published ?? Date.UTC())
+          .utc()
+          .format("YYYY-MM-DD") +
+          "-" +
+          slugify(data.title, { lower: true }) +
+          ".jsx"
+      )
+    }
+  } else {
+    pagePath = replaceExt(path.join("pages", path.relative(args.input, source)), ".jsx")
+  }
+  if (pagePath) {
+    const contentImportPath = replaceExt(path.relative(path.dirname(pagePath), contentPath), "")
+    const layoutImportPath = path.relative(
+      path.dirname(pagePath),
+      path.join("layouts", data.layout ?? args.defaultLayout)
+    )
+    const frontmatterImportPath = path.relative(path.dirname(pagePath), dataPath)
+    const pageContent = `
 import Content from "${contentImportPath}"
 import components from "${layoutImportPath}"
 import frontmatter from "${frontmatterImportPath}"
@@ -65,10 +83,11 @@ export default function Page() {
   return <Content components={components} frontmatter={frontmatter} />
 }
 `.trimStart()
-  await mkdirs(path.dirname(pagePath))
-  await writeFile(pagePath, pageContent)
-  pages[pagePath] = true
-  await writeGitIgnore()
+    await mkdirs(path.dirname(pagePath))
+    await writeFile(pagePath, pageContent)
+    pages[pagePath] = true
+    await writeGitIgnore()
+  }
 }
 
 async function rm(source) {
