@@ -1,0 +1,53 @@
+{
+  "private": true,
+  "name": "geoffreychallen.com",
+  "version": "0.1.0",
+  "scripts": {
+    "prebuild": "node bin/build.mjs mdx output --build --clean",
+    "build": "next build",
+    "lint": "next lint",
+    "ncu": "ncu",
+    "serve": "next start",
+    "start": "run-p start-mdx start-next",
+    "start-mdx": "node bin/build.mjs mdx output --clean",
+    "start-next": "next dev",
+    "prettier": "prettier -w --plugin=prettier-plugin-organize-imports . && prettier-package-json --write"
+  },
+  "dependencies": {
+    "glob": "^7.1.7",
+    "glob-promise": "^4.2.0",
+    "next": "11.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/argparse": "^2.0.8",
+    "@types/child-process-promise": "^2.2.1",
+    "@types/fs-extra": "^9.0.11",
+    "@types/node": "^15.12.4",
+    "@types/react": "17.0.11",
+    "@types/replace-ext": "^2.0.0",
+    "argparse": "^2.0.1",
+    "child-process-promise": "^2.2.1",
+    "chokidar": "^3.5.2",
+    "eslint": "^7.29.0",
+    "eslint-config-next": "^11.0.0",
+    "fs-extra": "^10.0.0",
+    "gray-matter": "^4.0.3",
+    "npm-check-updates": "^11.7.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.3.1",
+    "prettier-package-json": "^2.6.0",
+    "prettier-plugin-organize-imports": "^2.1.0",
+    "remark-footnotes": "^3.0.0",
+    "replace-ext": "^2.0.0",
+    "sass": "^1.35.1",
+    "ts-node": "^10.0.0",
+    "typescript": "4.3.4",
+    "xdm": "^1.11.1"
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 120
+  }
+}

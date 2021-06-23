@@ -1,0 +1,67 @@
+@use "sass:math";
+
+$minFontSize: 16;
+$maxFontSize: 24;
+$minTextWidth: 480;
+$maxTextWidth: math.div($minTextWidth, $minFontSize) * $maxFontSize;
+
+.responsive {
+  font-size: calc(
+    #{$minFontSize}px + (max(min(100vw, #{$maxTextWidth}px), #{$minTextWidth}px) - #{$minTextWidth}px) /
+      (#{$maxTextWidth - $minTextWidth}) * (#{$maxFontSize - $minFontSize})
+  );
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.4em;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0 16px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: "Georgia", serif;
+  color: #555555;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  background-color: #fdfdfd;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Helvetica", "serif";
+  color: #444444;
+}
+p {
+  margin-bottom: 1em;
+  &.lead {
+    font-size: 1.1em;
+  }
+}
+#__next {
+  max-width: #{$maxTextWidth}px;
+  margin-left: auto;
+  margin-right: auto;
+}
+a {
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+  &:visited {
+    color: inherit;
+  }
+  color: #222222;
+}
+hr {
+  display: block;
+  height: 4px;
+  border: 0;
+  border-top: 4px solid #eeeeee;
+}
