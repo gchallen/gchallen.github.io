@@ -12,8 +12,8 @@ const Index: React.FC = () => {
           And I write code that helps them learn.
         </p>
         <p>
-          My goal is to teach as many students as possible. I do this primarily by creating interactive learning
-          environments using code.
+          My goal is to teach as many students as possible. I do this by creating interactive learning
+          environments that scale.
         </p>
         <p>
           I post essays here on teaching, technology, and the overlap between the two. I try to keep my essays on
