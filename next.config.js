@@ -1,3 +1,7 @@
-const withTM = require('next-transpile-modules')(['react-children-utilities'])
+const withTM = require("next-transpile-modules")(["react-children-utilities"])
 
-module.exports = withTM()
+module.exports = withTM({
+  experimental: {
+    scrollRestoration: true,
+  },
+})

@@ -1,8 +1,8 @@
 // organize-imports-ignore
 import type { AppProps } from "next/app"
 import Head from "next/head"
-import "./reset.css"
-import "./global.scss"
+import "../styles/reset.css"
+import "../styles/global.scss"
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (

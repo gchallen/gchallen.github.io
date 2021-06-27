@@ -3,6 +3,7 @@ import Link from "next/link"
 import { onlyText } from "react-children-utilities"
 import Header from "../components/Header"
 
+
 const A: React.FC<{ href: string }> = ({ href, ...props }) => {
   if (href === "-") {
     const text = onlyText(props.children)
@@ -11,20 +12,12 @@ const A: React.FC<{ href: string }> = ({ href, ...props }) => {
 
     return (
       <>
-        <div style={{ float: "left", fontSize: "3em", paddingRight: 16, lineHeight: 1 }}>{text[0]}</div>
+        <span style={{ float: "left", fontSize: "3em", paddingRight: 16, lineHeight: 1 }}>{capital}</span>
         {rest && <span style={{ fontVariant: "small-caps", letterSpacing: "1.5px" }}>{rest}</span>}
       </>
     )
-  } else if (href === "+") {
-    const text = onlyText(props.children)
-    return (
-      <>
-        <div style={{ float: "right", fontSize: "2em", paddingLeft: 16, lineHeight: 1, maxWidth: 400 }}>{text}</div>
-        <span>{text}</span>
-      </>
-    )
   } else {
-    return <Link href={href} {...props} />
+    return <Link href={href}><a {...props} /></Link>
   }
 }
 
@@ -50,5 +43,5 @@ const Wrapper: React.FC<{ frontmatter: { title: string; description: string } }>
     </>
   )
 }
-const components = { wrapper: Wrapper, a: A }
+const components = { wrapper: Wrapper, a: A } // , a: A }
 export default components

@@ -13,6 +13,7 @@ import { exec } from "child-process-promise"
 import footnotes from "remark-footnotes"
 import slugify from "slugify"
 import moment from "moment"
+import { links, headings, pullquotes } from "./plugins.mjs"
 
 const parser = new ArgumentParser()
 parser.add_argument("input")
@@ -34,7 +35,7 @@ async function writeGitIgnore() {
 
 async function update(source) {
   const { content, data, isEmpty } = matter(await readFile(source))
-  const contents = (await compile(content, { remarkPlugins: [[footnotes, { inlineNotes: true }]] })).toString()
+  const contents = (await compile(content, { remarkPlugins: [[footnotes, { inlineNotes: true }], links, headings, pullquotes] })).toString()
   const contentPath = replaceExt(path.resolve(args.output, path.relative(args.input, source)), ".js")
   const dataPath = replaceExt(path.resolve(args.output, path.relative(args.input, source)), ".json")
   const frontmatterString = Object.keys(data)
@@ -49,8 +50,6 @@ ${frontmatterString}
 ${lines.slice(splitPoint + 1).join("\n")}`.trim()
   await mkdirs(path.dirname(contentPath))
   await writeFile(contentPath, templated)
-  await mkdirs(path.dirname(dataPath))
-  await writeFile(dataPath, JSON.stringify(!isEmpty ? data : {}, null, 2))
   let pagePath
   if (source.startsWith("mdx/essays/")) {
     if (data.published || process.env.DEVELOPMENT) {
@@ -68,6 +67,10 @@ ${lines.slice(splitPoint + 1).join("\n")}`.trim()
     pagePath = replaceExt(path.join("pages", path.relative(args.input, source)), ".jsx")
   }
   if (pagePath) {
+    const url = replaceExt(pagePath.replace("pages/", ""), "")
+    await mkdirs(path.dirname(dataPath))
+    await writeFile(dataPath, JSON.stringify(!isEmpty ? { ...data, url } : { url }, null, 2))
+
     const contentImportPath = replaceExt(path.relative(path.dirname(pagePath), contentPath), "")
     const layoutImportPath = path.relative(
       path.dirname(pagePath),
