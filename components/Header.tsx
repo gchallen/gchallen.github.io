@@ -1,54 +1,112 @@
+import { Cross as Hamburger } from "hamburger-react"
 import Link from "next/link"
+import { useState } from "react"
+import Sidebar from "react-sidebar"
 import styles from "./Header.module.scss"
 
-const Header: React.FC = () => {
+const SidebarContent: React.FC = () => {
   return (
-    <div id="header" style={{ fontFamily: "Tahoma, sans-serif" }}>
-      <div className={styles.container}>
-        <div className={styles.box}>
-          <img src="/cartoon-light.png" alt="Geoffrey Challen" width={55} height={63} />
-        </div>
-        <div className={styles.box} style={{ justifyContent: "center", fontSize: "1.1em" }}>
+    <div id="sidebarcontent">
+      <h2>
+        <Link href="/">
+          <a>Home</a>
+        </Link>
+      </h2>
+      <h2>
+        <Link href="/about/">
+          <a>About</a>
+        </Link>
+      </h2>
+      <h2>
+        <Link href="/essays/">
+          <a>Essays</a>
+        </Link>
+      </h2>
+    </div>
+  )
+}
+const Header: React.FC = () => {
+  const [isOpen, setOpen] = useState(false)
+
+  return (
+    <>
+      <Sidebar
+        styles={{
+          root: { position: undefined },
+          content: {
+            position: undefined,
+            top: undefined,
+            left: undefined,
+            right: undefined,
+            bottom: undefined,
+          },
+          sidebar: { position: "fixed" },
+        }}
+        sidebar={<SidebarContent />}
+        open={isOpen}
+        onSetOpen={setOpen}
+      >
+        <div></div>
+      </Sidebar>
+      <header style={{ fontFamily: "Tahoma, sans-serif" }}>
+        <div className={styles.container}>
+          <div className={styles.box}>
+            <Link href="/">
+              <a>
+                <img src="/cartoon-light.png" alt="Geoffrey Challen" width={55} height={63} />
+              </a>
+            </Link>
+          </div>
+          <div className={styles.box} style={{ justifyContent: "center", fontSize: "1.1em" }}>
+            <Link href="/" passHref>
+              <div style={{ display: "flex" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    textAlign: "right",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div style={{ borderRight: "1px solid #bbbbbb", paddingRight: 5 }}>
+                    <div>
+                      <strong>Geoffrey</strong>
+                    </div>
+                    <div>
+                      <strong>Teaching</strong>
+                    </div>
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", paddingLeft: 6, justifyContent: "center" }}>
+                  <div>Challen</div>
+                  <div>Professor</div>
+                </div>
+              </div>
+            </Link>
+          </div>
           <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              textAlign: "right",
-              justifyContent: "center",
-            }}
+            className={styles.hamburger}
+            style={{ justifyContent: "flex-end", alignItems: "center", paddingRight: 8 }}
           >
-            <div style={{ borderRight: "1px solid #bbbbbb", paddingRight: 5 }}>
-              <div>
-                <strong>Geoffrey</strong>
-              </div>
-              <div>
-                <strong>Teaching</strong>
-              </div>
+            <div style={{ zIndex: 1000 }}>
+              <Hamburger toggled={isOpen} toggle={setOpen} label={"Open menu"} />
             </div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", paddingLeft: 5, justifyContent: "center" }}>
-            <div>Challen</div>
-            <div>Professor</div>
+        </div>
+        <div className={styles.links}>
+          <div>
+            <Link href="/essays">
+              <a>Essays</a>
+            </Link>
+          </div>
+          <div>
+            <Link href="/about">
+              <a>About</a>
+            </Link>
           </div>
         </div>
-        <div className={styles.box} />
-      </div>
-      <div
-        style={{
-          marginTop: -10,
-          display: "flex",
-          fontSize: "0.9em",
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
-        }}
-      >
-        <div style={{ marginRight: 10 }}>
-          <Link href="/about">
-            <a>About</a>
-          </Link>
-        </div>
-      </div>
-    </div>
+      </header>
+    </>
   )
 }
 export default Header

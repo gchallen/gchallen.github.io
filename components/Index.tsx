@@ -1,12 +1,6 @@
 import Link from "next/link"
+import { Essay } from "../lib/getEssays"
 import styles from "./Index.module.scss"
-
-type Essay = {
-  title: string
-  description: string
-  publishedAt: string
-  url: string
-}
 
 const Index: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, published }) => {
   return (
@@ -46,7 +40,13 @@ const Index: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publ
             </p>
             {published.slice(0, 5).map(({ title, description, publishedAt, url }, i) => (
               <div key={i}>
-                <h3><Link href={`/${url}`}><a>{publishedAt} : {title}</a></Link></h3>
+                <h3>
+                  <Link href={`/${url}`}>
+                    <a>
+                      {publishedAt} : {title}
+                    </a>
+                  </Link>
+                </h3>
                 <p>{description}</p>
               </div>
             ))}

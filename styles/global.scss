@@ -10,8 +10,10 @@ $maxTextWidth: math.div($minTextWidth, $minFontSize) * $maxFontSize;
     #{$minFontSize}px + (max(min(100vw, #{$maxTextWidth}px), #{$minTextWidth}px) - #{$minTextWidth}px) /
       (#{$maxTextWidth - $minTextWidth}) * (#{$maxFontSize - $minFontSize})
   );
-  h1 {
+  h1,
+  .h1 {
     font-size: 2em;
+    margin-bottom: 0.4em;
   }
   h2 {
     font-size: 1.4em;
@@ -73,10 +75,85 @@ hr {
 }
 div.pullquote {
   float: right;
-  font-size: 1.3em;
+  font-size: 1.2em;
   max-width: 40%;
   line-height: 1.1em;
-  padding-left: 0.2em;
-  padding-bottom: 0.2em;
-  color: #888888;
+  padding-left: 0.5em;
+  border-left: 1px solid #444444;
+  margin-left: 0.5em;
+  margin-bottom: 0.2em;
+  color: #666666;
+}
+span.firstword {
+  float: left;
+  padding-right: 4px;
+  font-size: 3em;
+  line-height: 1;
+  margin-right: 4px;
+}
+span.restword {
+  vertical-align: top;
+  font-variant: small-caps;
+  letter-spacing: 1.5px;
+}
+header {
+  background-color: #fdfdfd;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  z-index: 1000000;
+}
+.paddings {
+  padding-top: calc(68px + 2em);
+}
+sup.footnote {
+  span.inner:hover {
+    text-decoration: underline;
+  }
+}
+.tooltip-container {
+  color: #555555 !important;
+  font-size: 0.8em;
+  max-width: 20em;
+}
+figure {
+  margin-bottom: 1em;
+}
+figcaption {
+  margin-top: 8px;
+  color: #444444;
+  font-size: 0.7em;
+  padding-left: 1em;
+  padding-right: 1em;
+  text-align: center;
+  text-decoration: none;
+}
+a.inverted-link {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+#sidebarcontent {
+  height: 100vh;
+  padding: 24px;
+  padding-top: 96px;
+  background-color: #fdfdfd;
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  h2 {
+    font-weight: 400;
+    font-size: 1.4em;
+  }
 }

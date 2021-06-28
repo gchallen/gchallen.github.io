@@ -1,8 +1,87 @@
+import dynamic from "next/dynamic"
 import Head from "next/head"
 import Link from "next/link"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { onlyText } from "react-children-utilities"
+import { useInView } from "react-hook-inview"
+import { usePopperTooltip } from "react-popper-tooltip"
+import "react-popper-tooltip/dist/styles.css"
 import Header from "../components/Header"
 
+const Ace = dynamic(() => import("react-ace"), { ssr: false })
+
+const Code: React.FC<{ originalCode: string; mode: string; children: string }> = ({ mode, children, ...props }) => {
+  const code = useMemo(() => Buffer.from(props.originalCode, "base64").toString(), [props.originalCode])
+
+  const [height, setHeight] = useState(0)
+  const [state, setState] = useState<"static" | "loading" | "loaded">("static")
+  const ref = useRef<HTMLDivElement>(null)
+
+  const onEnter = useCallback(() => {
+    setState("loading")
+  }, [])
+
+  const [setRef, _] = useInView({
+    threshold: 0,
+    unobserveOnEnter: true,
+    onEnter,
+  })
+
+  useEffect(() => {
+    setRef(ref.current)
+    setHeight(ref.current?.clientHeight ?? 0)
+  }, [])
+
+  const ace = state !== "static" && (
+    <Ace
+      mode={mode}
+      width="100%"
+      height={`${height}px`}
+      fontSize="1rem"
+      showPrintMargin={false}
+      defaultValue={code}
+      onBeforeLoad={(ace) => {
+        ace.config.set("basePath", `https://cdn.jsdelivr.net/npm/ace-builds@${ace.version}/src-min-noconflict`)
+      }}
+      style={{ display: state === "loaded" ? "block" : "none" }}
+      onLoad={() => {
+        setState("loaded")
+      }}
+    />
+  )
+
+  return (
+    <>
+      <div
+        ref={ref}
+        className="ace_editor"
+        dangerouslySetInnerHTML={{ __html: children }}
+        style={{ display: state !== "loaded" ? "block" : "none" }}
+      />
+      {ace && ace}
+    </>
+  )
+}
+
+const Footnote: React.FC<{ counter: string }> = ({ counter, children }) => {
+  const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip({
+    placement: "top",
+  })
+
+  return (
+    <>
+      <sup className="footnote" ref={setTriggerRef}>
+        (<span className="inner">{counter}</span>)
+      </sup>
+      {visible && (
+        <div ref={setTooltipRef} {...getTooltipProps({ className: "tooltip-container responsive" })}>
+          <span>{children}</span>
+          <div {...getArrowProps({ className: "tooltip-arrow" })} />
+        </div>
+      )}
+    </>
+  )
+}
 
 const A: React.FC<{ href: string }> = ({ href, ...props }) => {
   if (href === "-") {
@@ -12,13 +91,35 @@ const A: React.FC<{ href: string }> = ({ href, ...props }) => {
 
     return (
       <>
-        <span style={{ float: "left", fontSize: "3em", paddingRight: 16, lineHeight: 1 }}>{capital}</span>
-        {rest && <span style={{ fontVariant: "small-caps", letterSpacing: "1.5px" }}>{rest}</span>}
+        <span className="firstword">{capital}</span>
+        {rest && <span className="restword">{rest}</span>}
       </>
     )
   } else {
-    return <Link href={href}><a {...props} /></Link>
+    return (
+      <Link href={href}>
+        <a {...props} />
+      </Link>
+    )
   }
+}
+
+const Image: React.FC<{ src: string; alt: string; width: number; height: number; caption?: string }> = ({
+  src,
+  alt,
+  width,
+  height,
+  caption,
+  children,
+}) => {
+  return (
+    <figure>
+      <div style={{ position: "relative", height: 0, paddingTop: `${(height / width) * 100}%` }}>
+        <img src={src} alt={alt} style={{ position: "absolute", top: 0, left: 0, maxWidth: "100%", height: "auto" }} />
+      </div>
+      <figcaption>{children}</figcaption>
+    </figure>
+  )
 }
 
 const Wrapper: React.FC<{ frontmatter: { title: string; description: string } }> = ({ frontmatter, children }) => {
@@ -43,5 +144,5 @@ const Wrapper: React.FC<{ frontmatter: { title: string; description: string } }>
     </>
   )
 }
-const components = { wrapper: Wrapper, a: A } // , a: A }
+const components = { wrapper: Wrapper, a: A, Code, Footnote, Image }
 export default components

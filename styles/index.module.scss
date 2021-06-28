@@ -1,5 +1,5 @@
 .index {
-   h1 {
+  h1 {
     color: #000000;
     margin-bottom: 0.2em;
   }
@@ -16,16 +16,20 @@
   }
 }
 .h2 {
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-family: "Helvetica", sans-serif;
   line-height: 1.2;
   margin-bottom: 0.4em;
 }
 .nav {
   display: flex;
+  flex-direction: column;
+  font-size: 1.2em;
   div {
     display: inline-block;
-    margin-left: 12px;
+    margin-top: 8px;
+    margin-right: 8px;
+    text-align: right;
   }
   a {
     text-decoration: none;

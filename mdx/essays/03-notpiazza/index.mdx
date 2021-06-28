@@ -1,0 +1,185 @@
+---
+title: Why I Don't Use Piazza
+description: >
+  Piazza is not a forum and doesn't effectively build community. If you are using it, please consider stopping. There are much better alternatives.
+published: 2021-06-17
+---
+
+If you’ve attended university in the past decade, you’ve probably used Piazza.
+It’s become ubiquitous, at least at US universities.
+I haven’t used Piazza for my courses for many years.
+If you teach students and want them to learn, I don’t think you should either.
+
+Piazza has a lot of technical problems, which I’ll a bit of fun with in just a few minutes.
+But my biggest problem with it is pedagogical, not technological.^[Although still, for real, it's 2021 and you don't have a decent Markdown editor. Something is wrong...]
+
+Piazza claims to want to help students learn.
+But, on inspection, it’s fairly clear that it’s primary goal is actually to help students extract answers from course staff as efficiently as possible.
+In doing so, it ends up discouraging the dialogue that supports student learning and understanding, and so ends up inhibiting, rather than supporting, student learning.
+
+[I’ve](-) observed that colleagues tend to describe Piazza as their “course forum”.
+The name Piazza itself lends itself to that misunderstanding of Piazza as forum software: An online venue where discussions about course content take place.
+
+![Piazza is not a forum](~/01.png)
+Piazza doesn't claim to be a forum. Which is good. Because it's not.
+
+But on Piazza’s homepage the word _forum_ does not appear.
+It describes itself as a “Q&A platform”.
+And if you read the rest of the description, particularly the focus on saving time and immediate action, the true design goals become more clear.
+
+Piazza isn’t the only tool with similar aims, even if it is dominant in the educational space.
+Sites like Quora, Stackoverflow, Reddit, and others; and software like Discourse; also aim to help create communities centered around problem solving and information sharing.
+And to a great degree what distinguishes these tools from each other are design choices, particularly regarding their user interface.
+So it’s worth examining Piazza’s user interface to get a sense of its true aims.
+
+![Sample Piazza user interface](~/02.png)
+Believe it or not, someone on a Piazza forum I have access to posted a blank question and even some blank discussion recently.
+How convenient!
+
+At the top is a box where students can enter a question.
+That’s pretty standard.
+Once the question is posted, below it there are two additional text boxes: the first for a student answer, which in my experience is usually blank.
+Below it is where the action is: “the instructor’s answer”.^[Piazza sophomorically refuses to capitalize titles properly, probably due to college-age e.e. cummings-esque capitalization preferences. I went through that phase myself. I’m glad it’s over.]
+
+Below the Q&A components is a section for “followup discussions” where you can post “lingering questions and comments”.
+Note that there is no indication that this area is used as part of answering the original question.
+That’s supposed to fit entirely into one of the answer boxes at the top, below the original question.
+Instead, this area is for lingering questions—meaning, if you are a student and you didn’t understand the answer, here is your chance to make that known.
+
+It’s a tell that, by default, any reply attached to the original question in this section is marked as _unresolved_.
+Unresolved questions are highlighted in angry red in the UI, and counted as problems to solve in the instructor overview page.
+
+[With](-) these design choices in mind, [I think it’s best to describe Piazza as an answer extraction system](+).
+Students have questions and want answers.
+Fast!
+They do not want to engage in a discussion about the answer.
+They just want you to put it in the answer box—the one marked for the instructor.
+Right away!
+And if you're not clear enough, they'll let you know via an _unresolved follow-up_.
+
+Piazza’s own promotional materials stress this rapidity as a feature, not a bug. One of the first bits of the Wikipedia page about Piazza notes how quickly student questions are answered. And did I mention that statistics about response time are posted prominently across the UI?
+
+![Piazza instructor statistics view](~/03.png)
+Piazza's metrics focus on rapid replies, not quality conversation.
+
+[But](-) is this focus on response time a good thing? Consider the joke structure that I’ve seen used multiple times by faculty:
+
+* Student: Hey Prof, I have a question!
+* Professor: Great! What would you like to know?
+* Student: Is the answer to Question 8 on the homework A, B, C, or D?
+* Professor: Well, what is the question asking?
+* Student: It says, (insert subject-appropriate question here).
+* Professor: Right. So do you remember our discussion of that topic last week during class?
+* Student: So are you saying the answer is C?
+* Professor: No, not quite. I might suggest that you review Chapter 7 in the textbook which covers this topic in depth.
+* Student: So it’s D then?
+* ...
+
+The reason this joke lands is that it highlights a common source of tension between students and course staff.
+Students want answers.
+Fast!
+Staff want students to learn.
+Frequently that means slowing them down, engaging them in dialogue, and instructing them in how to learn the material, rather than just coughing up an answer.
+The tension isn’t usually quite this stark—that’s what makes the joke funny.
+But it’s ever present.
+
+Finding the right balance here is tricky.
+The extremes are not good.
+A course where students cannot ever get help—or where doing so requires hunting down the professor and sitting through a discursive stem-winder—is not a good course.
+However, a course where helping students means just showing them the answers is also not a good course.
+
+I talk a lot about this with my course staff.
+We run a help site where students can come to get help with their daily programming tasks and our longer multi-week assignments.
+It allows students to display their code to staff and receive verbal assistance.
+
+The UI already does not allow course staff to drive—meaning actually type into the student’s machine—which is itself helpful at limiting their tendencies to want to just take over.
+We've also emphasized this in the past when we worked face-to-face with students.
+Never touch a student's computer!
+But when the line of students waiting gets long, it can be tempting to rush, and just point out what the student is doing wrong rather than guiding them towards identifying the problem themselves.
+
+Even the word _help_ is somewhat problematic.
+We should probably call it the tutoring site, rather than the help site.
+I remind my staff that their ultimate goal is not to help students.
+That we could accomplish by just fixing their problem.
+But this isn’t the Genius Bar.
+Their goal is to _teach_ students.
+That requires a slower pace, a lot more patience, and a completely different interaction pattern.
+
+[This](-) points to another serious problem with Piazza. It’s UI doesn’t support even the limited back-and-forth needed to turn a question into a learning opportunity.
+
+On our forum that back-and-forth frequently goes like this:
+
+* Student: I’m having a problem with my code.
+* Staff: What’s the problem?
+* Student: It’s not working.
+* Staff: In what way is it not working?
+* Student: (Pastes error output.)
+* Staff: Can you explain the error message to me? What’s going wrong?
+* ...
+* Staff: What have you tried so far?
+* ...
+* Staff: What happened when you tried that? Did the same error occur again, or did something else happen?
+* ...
+
+And so on and so on toward an eventual resolution.^[Note that we do at least try and get students a bit farther down the field initially by using topic templates that encourage them to post details about their problem, including relevant output and error messages, so that we can skip over the first few round-trips.]
+This dialog serves several purposes. First, more often than not it’s necessary, since staff actually don’t know what the student’s problem is. Contrary to popular belief, we’re not omniscient.
+
+But more importantly, it demonstrates the thought process that actual programmers go through when solving problems and debugging programs.
+So it teaches students how to think about these problems themselves, rather than just relying on the course staff for answers.
+Sometimes by the time we arrive at a solution, it’s fairly specific to this student’s particular problem, and may not be that useful to others.
+But the problem solving process itself is very general, and so other students who are watching the exchange can and do benefit.
+
+Could you do something like this on Piazza?
+Sure.
+By fighting it’s UI through a bunch of “unresolved followups” running out to the right margin, each by default considered a problem to be solved rather than part of the solution to an actual problem.
+
+And at the end, what do you put in the answer box?
+Here the solution is a process, not an answer—_active learning_, not passive answer extraction.
+I guess you could fill every applicable answer box with a link to common problem-solving and debugging strategies.
+Or links to the course resources that students can use to find the answer themselves.
+I doubt students would appreciate that very much, since it doesn’t help them answer their question.
+Fast!
+
+Honestly, I can’t think of many questions where my primary goal in answering them would be speed.
+I suspect that most of these would fall into the category of things about the course structure or administration that students tend to ask even though they could find it on the syllabus.
+For any question about the course content—design questions, conceptual questions, debugging questions—speed is _not_ the goal or even _a_ goal, and rushing is frequently the enemy of learning. I want to be able to engage in a discussion, not just facilitate answer extraction. I want an actual forum, not Piazza.
+
+[Happily](-) actual forums are not hard to come by.
+I’ve been using [Discourse](https://discourse.org/) for my courses for years.
+It’s forum software that facilitates discussion, learning, and community.
+It’s open-source and extremely simple to self-host on-prem. And it’s great.
+If you want help getting started using it for your course, feel free to get in touch, or ask on [Discourse Meta](https://meta.discourse.org/).
+There’s also a great community behind this tool.
+
+Discourse also addresses many of the technology concerns I have with Piazza.
+To put it bluntly, Piazza is poor technology—which is probably why it’s almost never used outside of academia.
+The UI is ugly and doesn’t update properly.
+It’s mobile solution is a separate app.^[Given that Piazza seems to have only one or two developers, maintaining separate mobile apps does not seem like a good strategy.]
+Deep linking is broken.
+The Markdown editor took forever to arrive and is still worse than most.
+Being free doesn’t mean that your tech stack should stagnate for decades.
+And it’s not even free anymore!
+
+Piazza is also a closed-source product in a position to harvest massive amounts of sensitive student information.
+Although, given the speed at which their development team deploys new features, I guess I’m not terribly worried that they are doing sophisticated evil things with user data.
+
+I teach a course on technology. Even if it did a better job of supporting student learning, I would still be reluctant to require that students use a poorly-designed poorly-aging piece of closed-source web technology. We can do better than Piazza. A lot better.
+
+[I’m](-) also in a position to be able to deploy an alternative. Sadly, this is less common than you might think. Running Discourse requires shell access to a small machine, a publicly-routable IP address, a DNS entry, and email. You wouldn’t think that these would be particularly hard to come by at a modern university.
+
+But even as someone teaching computer science, it turns out that gaining access to the basic computational resources to install a simple web application is quite difficult. Today, campus IT are more likely to “help” you install a real forum by telling you to use Piazza like everyone else—rather than helping you find the resources you need, or better yet installing an alternative and maintaining it.^[I maintain multiple Discourse installations for different courses and purposes. It’s extremely not hard.] These are topics for another time.
+
+So it’s nice to see at least some campus-approved options that don’t require self-hosting start to arrive, like Campuswire.
+I haven’t used Campuswire myself, and will probably continue to use Discourse as its open source and more configurable.
+But Campuswire probably has good odds of being better than Piazza, since it would be hard to be worse.
+Maybe the technology community is finally realizing that there are massive opportunities in just selling halfway-decent educational web technologies to universities.
+You just don’t have to try that hard to compete with what we’re already being told to use.
+But this is yet another topic for another time.
+
+Until better alternatives arrive, my suggestion is to not use Piazza if you can avoid it.
+And if you teach computer science or in a technical discipline, you *can* avoid it.
+No, Piazza is not good enough—I hear that a lot.
+It encourages behaviors that inhibit student learning, and there are better alternatives that don’t.
+Also our students will probably be more excited about building a better future through technology if we stop endorsing such terrible software.
+
+If you can’t avoid it, at least treat Piazza as poorly-design and possibly even adversarial. It’s probably better than having no online forum-like site. But it is not a forum, and it does not create community, or foster the learning that accompanies dialog.
