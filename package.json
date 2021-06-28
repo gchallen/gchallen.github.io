@@ -5,6 +5,7 @@
   "scripts": {
     "prebuild": "node bin/build.mjs mdx output --build --clean",
     "build": "next build",
+    "predeploy": "yarn export",
     "deploy": "gh-pages -t -d dist",
     "preexport": "rimraf dist && yarn build",
     "export": "next export -o dist && touch dist/.nojekyll",
