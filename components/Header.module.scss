@@ -15,14 +15,14 @@
   display: flex;
   div {
     display: none;
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 640px) {
       display: block;
     }
   }
 }
 .links {
   display: flex;
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 640px) {
     display: none;
   }
   margin-top: -2em;
@@ -32,6 +32,6 @@
   align-items: flex-end;
   padding-right: 0.5em;
   div {
-    margin-right: 0.5em;
+    margin-right: 0.7em;
   }
 }

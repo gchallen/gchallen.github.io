@@ -8,21 +8,40 @@ import styles from "./Header.module.scss"
 const SidebarContent: React.FC = () => {
   return (
     <div id="sidebarcontent">
-      <h2>
-        <Link href="/">
-          <a>Home</a>
-        </Link>
-      </h2>
-      <h2>
-        <Link href="/about/">
-          <a>About</a>
-        </Link>
-      </h2>
-      <h2>
-        <Link href="/essays/">
-          <a>Essays</a>
-        </Link>
-      </h2>
+      <div>
+        <h2>
+          <Link href="/">
+            <a>Home</a>
+          </Link>
+        </h2>
+        <h2>
+          <Link href="/about/">
+            <a>About</a>
+          </Link>
+        </h2>
+        <h2>
+          <Link href="/essays/">
+            <a>Essays</a>
+          </Link>
+        </h2>
+      </div>
+      <div>
+        <h2>
+          <Link href="/rss.xml">
+            <a>RSS</a>
+          </Link>
+        </h2>
+        <h2>
+          <Link href="/atom.xml">
+            <a>Atom</a>
+          </Link>
+        </h2>
+        <h2>
+          <Link href="/feed.json">
+            <a>JSON</a>
+          </Link>
+        </h2>
+      </div>
     </div>
   )
 }
@@ -110,6 +129,11 @@ const Header: React.FC = () => {
           <div>
             <Link href="/about">
               <a>About</a>
+            </Link>
+          </div>
+          <div>
+            <Link href="#feeds">
+              <a>Feeds</a>
             </Link>
           </div>
         </div>

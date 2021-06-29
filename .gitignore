@@ -37,3 +37,7 @@ yarn-error.log*
 /output
 /public/mdx
 /dist
+
+/public/atom.xml
+/public/feed.json
+/public/rss.xml

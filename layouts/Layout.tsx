@@ -8,6 +8,7 @@ import { useInView } from "react-hook-inview"
 import { usePopperTooltip } from "react-popper-tooltip"
 import "react-popper-tooltip/dist/styles.css"
 import Header from "../components/Header"
+import Footer from "../components/Footer"
 
 const Ace = dynamic(() => import("react-ace"), { ssr: false })
 
@@ -148,6 +149,7 @@ const Wrapper: React.FC<{ frontmatter: { title: string; description: string } }>
         <h1>{frontmatter.title}</h1>
         {children}
       </main>
+      <Footer />
     </>
   )
 }

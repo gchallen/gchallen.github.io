@@ -3,7 +3,7 @@
   "name": "geoffreychallen.com",
   "version": "0.1.0",
   "scripts": {
-    "prebuild": "node bin/build.mjs mdx output --build --clean",
+    "prebuild": "node bin/build.mjs mdx output --build --clean && node bin/rss.mjs",
     "build": "next build",
     "predeploy": "yarn export",
     "deploy": "gh-pages -t -d dist",
@@ -46,6 +46,7 @@
     "chokidar": "^3.5.2",
     "eslint": "^7.29.0",
     "eslint-config-next": "^11.0.1",
+    "feed": "^4.2.2",
     "fs-extra": "^10.0.0",
     "gh-pages": "^3.2.3",
     "gray-matter": "^4.0.3",
