@@ -7,8 +7,8 @@ import { onlyText } from "react-children-utilities"
 import { useInView } from "react-hook-inview"
 import { usePopperTooltip } from "react-popper-tooltip"
 import "react-popper-tooltip/dist/styles.css"
-import Header from "../components/Header"
 import Footer from "../components/Footer"
+import Header from "../components/Header"
 
 const Ace = dynamic(() => import("react-ace"), { ssr: false })
 
@@ -66,9 +66,21 @@ const Code: React.FC<{ originalCode: string; mode: string; children: string }> =
 }
 
 const Footnote: React.FC<{ counter: string }> = ({ counter, children }) => {
-  const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip({
-    placement: "top",
-  })
+  const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip(
+    {
+      placement: "top",
+    },
+    {
+      modifiers: [
+        {
+          name: "flip",
+          options: {
+            padding: 90,
+          },
+        },
+      ],
+    }
+  )
 
   return (
     <>
@@ -76,10 +88,10 @@ const Footnote: React.FC<{ counter: string }> = ({ counter, children }) => {
         (<span className="inner">{counter}</span>)
       </sup>
       {visible && (
-        <div ref={setTooltipRef} {...getTooltipProps({ className: "tooltip-container responsive" })}>
+        <span ref={setTooltipRef} {...getTooltipProps({ className: "tooltip-container responsive" })}>
           <span>{children}</span>
-          <div {...getArrowProps({ className: "tooltip-arrow" })} />
-        </div>
+          <span {...getArrowProps({ className: "tooltip-arrow" })} />
+        </span>
       )}
     </>
   )

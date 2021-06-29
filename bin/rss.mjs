@@ -31,13 +31,13 @@ Promise.resolve().then(async () => {
     copyright: `All rights reserved ${new Date().getFullYear()}, Geoffrey Challen`,
     feedLinks: {
       json: "https://www.geoffreychallen.com/feed.json",
-      atom: "https://www.geoffreychallen.com/atom.xml"
+      atom: "https://www.geoffreychallen.com/atom.xml",
     },
     author: {
       name: "Geoffrey Challen",
       email: "geoffrey.challen@gmail.com",
-      link: "https://www.geoffreychallen.com"
-    }
+      link: "https://www.geoffreychallen.com",
+    },
   })
   for (const post of published) {
     feed.addItem({
@@ -45,7 +45,7 @@ Promise.resolve().then(async () => {
       id: `https://www.geoffreychallen.com/${post.url}`,
       link: `https://www.geoffreychallen.com/${post.url}`,
       description: post.description,
-      date: new Date(post.publishedAt)
+      date: new Date(post.publishedAt),
     })
   }
   await fs.writeFile("public/rss.xml", feed.rss2())

@@ -116,6 +116,8 @@ header {
   padding-top: calc(68px + 2em);
 }
 sup.footnote {
+  vertical-align: top;
+  font-size: 0.7em;
   span.inner:hover {
     text-decoration: underline;
   }

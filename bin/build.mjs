@@ -11,6 +11,7 @@ import glob from "glob-promise"
 import matter from "gray-matter"
 import { exec } from "child-process-promise"
 import footnotes from "remark-footnotes"
+import smartypants from "@ngsctt/remark-smartypants"
 import slugify from "slugify"
 import moment from "moment"
 import { links, headings, pullquotes, highlighter, fixfootnotes, fiximages } from "./plugins.mjs"
@@ -73,6 +74,7 @@ async function update(source) {
         pullquotes,
         highlighter,
         fixfootnotes,
+        smartypants,
         [fiximages, { url: path.join("mdx", url) }],
       ],
     })

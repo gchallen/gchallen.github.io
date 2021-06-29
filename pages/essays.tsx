@@ -1,9 +1,9 @@
 import { GetStaticProps } from "next"
 import Head from "next/head"
 import Essays from "../components/Essays"
+import Footer from "../components/Footer"
 import Header from "../components/Header"
 import { Essay, getEssays } from "../lib/getEssays"
-import Footer from "../components/Footer"
 
 const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, published }) => {
   const description =
