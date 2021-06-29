@@ -3,6 +3,7 @@ import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
 import Essays from "../components/Essays"
+import Footer from "../components/Footer"
 import { Essay, getEssays } from "../lib/getEssays"
 import styles from "../styles/index.module.scss"
 
@@ -35,6 +36,9 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           <div>
             <Link href="/about">About</Link>
           </div>
+          <div>
+            <Link href="#feeds">Feeds</Link>
+          </div>
         </nav>
       </div>
       <div className="responsive">
@@ -53,6 +57,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
         <hr />
         <Essays published={published} />
       </div>
+      <Footer />
     </div>
   )
 }

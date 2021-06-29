@@ -3,6 +3,7 @@ import Head from "next/head"
 import Essays from "../components/Essays"
 import Header from "../components/Header"
 import { Essay, getEssays } from "../lib/getEssays"
+import Footer from "../components/Footer"
 
 const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, published }) => {
   const description =
@@ -21,6 +22,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
       <div className="responsive paddings">
         <Essays published={published} h1 />
       </div>
+      <Footer />
     </>
   )
 }
