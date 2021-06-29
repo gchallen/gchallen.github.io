@@ -1,0 +1,166 @@
+---
+title: Quantity Over Quality
+description: >
+   Practice makes perfect. Programming is a skill, and if you want CS1 students to get better at it, you need to encourage them to practice. A lot.
+   But also discourage them from focusing too much on quality too early.
+published: 2021-06-24
+---
+
+[One](-) of my favorite stories about teaching goes like this.
+
+A ceramics instructor provided students in their studio class two grading options.
+They could be evaluated based on the single highest _quality_ piece that they produced during the semester.
+Or, they could be evaluated based on the _quantity_ of work that they produced—literally the weight of everything they created, broken shards, failed experiments, all of it.
+
+At the end of the semester the class convened to share their work.
+Unsurprisingly, the students who elected the quantity grading option had produced a lot more pieces.
+But, perhaps surprisingly, they had also produced higher quality work.
+
+[There](-) are two lessons here that I reflect on when designing CS1 and the early computer science curriculum.
+
+Perhaps the more obvious one is that quantity matters.
+Practice makes perfect.
+[Programming is a skill, and if you want students to get better at it, you need to encourage them to practice. A lot.](+)
+
+Starting in Fall 2018 we began requiring students to complete a daily homework problem in CS1.
+We also included several small programming problems on the weekly quizzes given in our computer-based testing facility.
+In Fall 2018 students completed 108 small programming problems in both unproctored and unproctored environments, writing approximately 14,000 non-commenting lines of code per student, or around 133 lines per student per day over a 15-week semester.
+By Spring 2020 that number had risen a bit to around 19,000 lines-per-student.
+
+Students start the semester writing snippets that merely declare and initialize variables, but finish by implementing Quicksort partition and sophisticated recursive algorithms on binary trees.
+Students never lose points for incorrect submissions.
+The focus is always on practice, fixing mistakes, and eventually getting it right.
+
+We’ve also invested significant time and energy into developing new systems for authoring and evaluating small problem submissions.
+More on these soon.
+But I consider creating more opportunities for students to practice to be one of the highest-value activities I engage in when supporting my CS1 course.
+I try to write new problems every day.
+
+A lot of the CS1 courses I see just don’t give students enough opportunities to practice.
+Sometimes when I tell people that we require students do daily work they look at me like I’m crazy.
+This is college!
+But not only does it work, but it’s also extremely well-tolerated.
+By asking students to do a bit each day, we can actually help them accomplish a lot more over the course of the semester than if we used larger less-frequent assignments.
+The psychology behind this approach is worth exploring separately.
+
+[But](-) the second lesson from our story is equally important, if a bit obscured by the primary lesson.
+
+There are at least two ways to interpret the fact that the quantity-focused group produced higher quality work.
+The first is simply that, by creating more pieces, they were more likely to create something decent—the sort-of monkeys typing Shakespeare theory.
+But note that there was no restriction on the amount of work that the quality-focused group could produce.
+Nobody said that they had to produce only one high-quality piece.
+They just weren’t incentivized to produce a large amount of work.
+
+I don’t think that the quantity-focused students produced better work by oversampling their output curve.
+While I also suspect that practicing developed their critical eye at least somewhat, I also don’t think that this was the explanation.
+Presumably all of the students in the ceramics studio were able to distinguish high-quality work, even if they couldn’t reliably produce it.
+
+Instead, I think that, by focusing on quality, the quality-driven group ended up inhibiting their ability to create excellent pieces.
+This isn’t as strange as it might sound.
+There is an entire school of Chinese thought focused on the idea of ["trying without trying"](https://en.wikipedia.org/wiki/Wu_wei).
+It also aligns with [Ira Glass's well-known advice for beginners](https://www.goodreads.com/quotes/309485-nobody-tells-this-to-people-who-are-beginners-i-wish) to try and avoid focusing on quality early until their capabilities begin to catch up with their expectations.
+
+[What](-) lessons does the quality angle of this story have for CS1?
+We _do_ want to teach students to write good code, not just a lot of code.
+What is the right way to do that?
+
+Just like early CS courses frequently don’t do enough quantity, I think that there is a temptation to do too much code quality too early.
+At best, students aren’t ready for it until they have done more work and written more programs.
+At worst, early obsession over code quality produces timid programmers that neither produce high-quality code nor are able to enjoy the process of just building things and getting them to work.
+
+[Before](-) continuing the discussion, we should consider what we mean when we talk about code quality in early CS courses.
+
+A useful way to organize code quality for this discussion is on a spectrum, with things that computers can correct and fix automatically at one end and aspects that only a human can evaluate on the other.
+The reason that this is particularly useful is that aspects on one end of the spectrum can be identified and sometimes even corrected automatically, whereas at the other end of the spectrum we require a fair amount of person-power and, more importantly, human wisdom.
+This impacts teachability.
+
+As an example of one extreme, the Go programming language provides [a formatting tool](https://blog.golang.org/gofmt) that can reformat Go code to match its language style specification.
+Many other linters fall into this category.
+A lot of what we are correcting at this level might be referred to as style, but linters can also be configured to examine things like cyclomatic complexity, method length and return count, and other metrics that at least hint at design.
+
+As an example of the other extreme, imagine the kind of high-level code review that might take place in industry.^[Note that I have never participated in this process first-hand.]
+Conversations with a senior software developer are not going to waste time on brace placement, file layout, swallowed exceptions, or test coverage.
+The code will be assumed to be working, passing all tests, and meeting all internal code quality metrics.
+
+Instead, there will be ongoing discussions of high-level design decisions and tradeoffs.
+What happens if we want to support this other use case later?
+What's the worst-case performance of this code path?
+Is there a way to further generalize a particular problem-solving approach that might currently handle multiple cases using similar but not identical methodologies?
+What are current sources of technical debt and plans to retire them in the future, if needed?
+Note that while these conversations are about the code, they are at such a high level that examining actual lines of code may not even be necessary—assuming that developers with a sufficient understanding of it are involved.
+
+[Courses](-) that aim to teach code quality usually imagine that students will be engaged in this kind of high-level design discussions.
+But this is a fantasy.
+Early in the program, students just aren’t ready for this kind of conversation.
+They can’t write programs large enough to run into these kinds of tradeoffs and considerations.
+Trying to organize code review at this point usually ends up meaning having conversations about things that a linter could pretty easily catch automatically, representing a fairly serious waste of human attention.
+
+Another outcome is that course staff are instructed to push a fixed set of guidelines about intermediate aspects of code quality, like that rulesets you can find in books like _Clean Code_.
+Some of these rules have value, to be sure.
+But they lose a lot of their impact when they are applied too rigidly, or by course staff that haven't really written enough code to understand the reasoning behind them.
+Students don’t learn much from "Because I said so" or "Because Clean Code" said so.
+
+Even later in the program after students have started to write larger programs, I remain highly skeptical that we can really create courses that engage them in high-level design conversations.
+Because the next problem that immediately arises is who do you recruit to play the experienced senior developer?
+Graduate students?
+I’m giggling.
+Faculty?
+Now I’m laughing.
+And recruit undergraduate course staff and now it's the blind leading the blind.
+
+[I](-) do think that we can should do more with the low-end code quality aspects described above, the ones that we can identify automatically.
+When I started teaching CS1 I began requiring running all student code through the [`checkstyle`](https://checkstyle.sourceforge.io/) Java linter.
+Our `checkstyle` configuration is based on the original Sun rules and mainly checks style, enforcing rules related to whitespace, brace placement, indentation, and the like.
+
+We do this for several different reasons.
+First, I think that students should learn to write code using a consistent style.
+There seems to be good reasoning behind the Sun rules in terms of improving readability, so it’s as good a set of rules as any.
+Consistency is the key.
+I usually get a few students that want to argue about brace placement, but they tend to fall in line quickly.
+
+The second more pragmatic reason is that it really helps the course staff
+Reading lots of unfamiliar is hard enough for inexperienced course staff.
+There's no reason to make it harder by letting every student make their own choices about formatting.
+Go really gets this right by having a language standard.
+Java doesn’t, but by using `checkstyle` we make sure that all student code looks as similar as possible.
+Downstream instructors have also thanked me for the same reason, since basic formatting habits learned in Java carry over to similar languages.
+
+We let students get used to `checkstyle` rules for a few weeks and then start running it on all submissions—both to our unproctored homework problems and on proctored quiz questions.
+I remember someone here incredulously asking: "You're going to run a linter during quizzes?"
+Yup.
+Students internalize the rules quickly and this quickly becomes a non-issue.
+It just works.
+
+A lot of the CS1 courses I examine don’t seem to do much with linting.
+I suspect that this is because they are afraid of further frustrating students.
+But I think this is a mistake.
+If we want to improve code quality, let's start with the low-hanging fruit.
+
+We've also experimented with evaluating and incentivizing other aspects of code quality in my class.
+Midway through several past semesters we began reserving a small number of points on each homework for correct code that passed two simple code quality checks.
+First, the submission must not include any [dead code](https://en.wikipedia.org/wiki/Dead_code).
+Second, it should have a [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) within some delta of the reference solution.
+Both of these are quantitative metrics that can be evaluated automatically.
+We’ll probably continue to utilize these kind of hints going forward to help encourage students to not submit overly-complex solutions.
+
+[Past](-) the easy stuff, can we do much more about code quality early? And should we?
+
+I think that the answer to both questions is no.
+Early CS courses should use a properly-configured linter to enforce formatting and other basic code-quality metrics.
+I think it's worth experimenting with other metrics that are both quantitative and where there is a clear right and wrong.
+Dead code is bad, as is overly-complex code.
+Neither requires a human in the evaluation loop.
+
+Past that point, I'm skeptical that we can actually do useful code review at scale.
+Even once students are ready for it, staffing these courses with enough qualified guides is difficult to impossible.
+
+But this also doesn’t really matter that much, because I don't think that an early focus on quality is healthy anyway.
+Just focus on quantity, and let students enjoy the journey, make their mistakes, and become better programmers.
+
+The danger here is that we create beginning programmers who can write clean code but can’t actually build anything or solve real problems—like writers that can craft a perfect sentence but can’t tell a story.
+In the process, we risk losing students who signed up to change the world, not to endlessly refactor code that doesn’t even do anything particularly exciting to conform to guideline they don’t understand.
+Students need to start and keep building real things to retain their motivation, even if what they create is a bit ugly.
+
+And the uncomfortable truth is that sloppy, messy, ugly, and slow code has, does, and will change the world.
+Focus on quantity, and quality will come.
+But please at least run a linter.

@@ -38,7 +38,7 @@ h4,
 h5,
 h6 {
   font-family: "Helvetica", "serif";
-  color: #444444;
+  color: #555555;
 }
 div.lead {
   p {
@@ -68,6 +68,12 @@ a {
       text-decoration: underline;
     }
   }
+}
+h2 a {
+  color: inherit;
+}
+h3 a {
+  color: inherit;
 }
 hr {
   display: block;
