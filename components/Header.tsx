@@ -1,4 +1,5 @@
 import { Cross as Hamburger } from "hamburger-react"
+import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import Sidebar from "react-sidebar"
@@ -53,7 +54,14 @@ const Header: React.FC = () => {
           <div className={styles.box}>
             <Link href="/">
               <a>
-                <img src="/cartoon-light.png" alt="Geoffrey Challen" width={55} height={63} />
+                <Image
+                  priority
+                  src="/cartoon-light.png"
+                  alt="Geoffrey Challen"
+                  width={46}
+                  height={63}
+                  unoptimized={process.env.NODE_ENV === "development"}
+                />
               </a>
             </Link>
           </div>

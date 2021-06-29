@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic"
 import Head from "next/head"
+import NextImage from "next/image"
 import Link from "next/link"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { onlyText } from "react-children-utilities"
@@ -109,14 +110,20 @@ const Image: React.FC<{ src: string; alt: string; width: number; height: number;
   alt,
   width,
   height,
-  caption,
   children,
+  ...props
 }) => {
   return (
     <figure>
-      <div style={{ position: "relative", height: 0, paddingTop: `${(height / width) * 100}%` }}>
-        <img src={src} alt={alt} style={{ position: "absolute", top: 0, left: 0, maxWidth: "100%", height: "auto" }} />
-      </div>
+      <NextImage
+        src={src}
+        alt={alt}
+        layout="responsive"
+        width={width}
+        height={height}
+        unoptimized={process.env.NODE_ENV === "development"}
+        {...props}
+      />
       <figcaption>{children}</figcaption>
     </figure>
   )

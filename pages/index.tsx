@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next"
 import Head from "next/head"
+import Image from "next/image"
 import Link from "next/link"
 import Essays from "../components/Essays"
 import { Essay, getEssays } from "../lib/getEssays"
@@ -18,7 +19,15 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
         <meta property="og:description" content={description.trim()} key="ogdesc" />
       </Head>
       <div className={styles.container}>
-        <img src="/cartoon-light.png" alt="Geoffrey Challen" width={88} height={102} />
+        <Image
+          src="/cartoon-light.png"
+          alt="Geoffrey Challen"
+          width={75}
+          height={102}
+          priority
+          layout="fixed"
+          unoptimized={process.env.NODE_ENV === "development"}
+        />
         <nav className={`${styles.nav} responsive`}>
           <div>
             <Link href="/essays">Essays</Link>

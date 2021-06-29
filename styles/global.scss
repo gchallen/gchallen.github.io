@@ -40,11 +40,13 @@ h6 {
   font-family: "Helvetica", "serif";
   color: #444444;
 }
-p {
-  margin-bottom: 1em;
-  &.lead {
+div.lead {
+  p {
     font-size: 1.1em;
   }
+}
+p {
+  margin-bottom: 1em;
 }
 #__next {
   max-width: #{$maxTextWidth}px;
@@ -155,5 +157,10 @@ a.inverted-link {
   h2 {
     font-weight: 400;
     font-size: 1.4em;
+  }
+}
+div.rounded-img {
+  img:first-of-type {
+    border-radius: 10%;
   }
 }
