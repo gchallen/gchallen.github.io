@@ -1,50 +1,61 @@
+import { useWindowHeight } from "@react-hook/window-size"
 import { Cross as Hamburger } from "hamburger-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Sidebar from "react-sidebar"
 import styles from "./Header.module.scss"
 
 const SidebarContent: React.FC = () => {
+  const [rendered, setRendered] = useState(false)
+  useEffect(() => {
+    setRendered(true)
+  }, [])
+  const height = useWindowHeight()
   return (
-    <div id="sidebarcontent">
-      <div>
-        <h2>
-          <Link href="/">
-            <a>Home</a>
-          </Link>
-        </h2>
-        <h2>
-          <Link href="/about/">
-            <a>About</a>
-          </Link>
-        </h2>
-        <h2>
-          <Link href="/essays/">
-            <a>Essays</a>
-          </Link>
-        </h2>
-      </div>
-      <div>
-        <h2>
-          <Link href="/rss.xml">
-            <a>RSS</a>
-          </Link>
-        </h2>
-        <h2>
-          <Link href="/atom.xml">
-            <a>Atom</a>
-          </Link>
-        </h2>
-        <h2>
-          <Link href="/feed.json">
-            <a>JSON</a>
-          </Link>
-        </h2>
-      </div>
-    </div>
+    <>
+      {rendered && (
+        <div id="sidebarcontent" style={{ height }}>
+          <div>
+            <h2>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+            </h2>
+            <h2>
+              <Link href="/about/">
+                <a>About</a>
+              </Link>
+            </h2>
+            <h2>
+              <Link href="/essays/">
+                <a>Essays</a>
+              </Link>
+            </h2>
+          </div>
+          <div>
+            <h2>
+              <Link href="/rss.xml">
+                <a>RSS</a>
+              </Link>
+            </h2>
+            <h2>
+              <Link href="/atom.xml">
+                <a>Atom</a>
+              </Link>
+            </h2>
+            <h2>
+              <Link href="/feed.json">
+                <a>JSON</a>
+              </Link>
+            </h2>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
+
 const Header: React.FC = () => {
   const [isOpen, setOpen] = useState(false)
 
