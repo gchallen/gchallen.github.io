@@ -69,6 +69,8 @@ const Footnote: React.FC<{ counter: string }> = ({ counter, children }) => {
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip(
     {
       placement: "top",
+      delayHide: 100,
+      interactive: true
     },
     {
       modifiers: [
