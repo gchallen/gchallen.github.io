@@ -13,7 +13,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
   return (
     <>
       <Head>
-        <title>Essays</title>
+        <title>Geoffrey Challen : Essays</title>
         <meta property="og:title" content="Essays" key="ogtitle" />
         <meta name="description" content={description} />
         <meta property="og:description" content={description} key="ogdesc" />

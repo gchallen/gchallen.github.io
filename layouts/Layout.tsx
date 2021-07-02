@@ -70,7 +70,7 @@ const Footnote: React.FC<{ counter: string }> = ({ counter, children }) => {
     {
       placement: "top",
       delayHide: 100,
-      interactive: true
+      interactive: true,
     },
     {
       modifiers: [
@@ -144,12 +144,14 @@ const Image: React.FC<{ src: string; alt: string; width: number; height: number;
   )
 }
 
-const Wrapper: React.FC<{ frontmatter: { title: string; description: string } }> = ({ frontmatter, children }) => {
+const Wrapper: React.FC<{
+  frontmatter: { title: string; description: string; publishedAt: string; reading: { text: string }; noDate?: boolean }
+}> = ({ frontmatter, children }) => {
   const { title, description } = frontmatter
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>Geoffrey Challen : {title}</title>
         <meta property="og:title" content={title} key="ogtitle" />
         {description && (
           <>
@@ -160,6 +162,13 @@ const Wrapper: React.FC<{ frontmatter: { title: string; description: string } }>
       </Head>
       <Header />
       <main className="responsive paddings">
+        {!frontmatter.noDate && (
+          <div className="publishedAt">
+            <strong>{frontmatter.publishedAt}</strong>
+            <br />
+            <em>{frontmatter.reading.text}</em>
+          </div>
+        )}
         <h1>{frontmatter.title}</h1>
         {children}
       </main>

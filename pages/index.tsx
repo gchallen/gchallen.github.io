@@ -14,7 +14,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
   return (
     <div className={styles.index}>
       <Head>
-        <title>Geoffrey Challen, Teaching Faculty</title>
+        <title>Geoffrey Challen : Teaching Faculty</title>
         <meta property="og:title" content="Geoffrey Challen, Teaching Faculty" key="ogtitle" />
         <meta name="description" content={description.trim()} />
         <meta property="og:description" content={description.trim()} key="ogdesc" />

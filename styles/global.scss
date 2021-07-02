@@ -13,7 +13,8 @@ $maxTextWidth: math.div($minTextWidth, $minFontSize) * $maxFontSize;
   h1,
   .h1 {
     font-size: 2em;
-    margin-bottom: 0.4em;
+    margin-bottom: 0.5em;
+    line-height: 1.1em;
   }
   h2 {
     font-size: 1.4em;
@@ -26,10 +27,15 @@ body {
   box-sizing: border-box;
   font-size: 16px;
   font-family: "Georgia", serif;
-  color: #555555;
+
   line-height: 1.5;
   text-rendering: optimizeLegibility;
+  color: #555555;
   background-color: #fdfdfd;
+  &.dark-mode {
+    background-color: #333333;
+    color: #cccccc;
+  }
 }
 h1,
 h2,
@@ -39,6 +45,9 @@ h5,
 h6 {
   font-family: "Helvetica", "serif";
   color: #555555;
+  .dark-mode & {
+    color: #dddddd;
+  }
 }
 div.lead {
   p {
@@ -62,6 +71,9 @@ a {
     color: inherit;
   }
   color: #444444;
+  .dark-mode & {
+    color: #dddddd;
+  }
   &.anchor {
     text-decoration: none;
     &:hover {
@@ -80,6 +92,9 @@ hr {
   height: 4px;
   border: 0;
   border-top: 4px solid #eeeeee;
+  .dark-mode & {
+    border-top: 4px solid #888888;
+  }
 }
 div.pullquote {
   float: right;
@@ -87,10 +102,14 @@ div.pullquote {
   max-width: 40%;
   line-height: 1.1em;
   padding-left: 0.5em;
-  border-left: 1px solid #444444;
   margin-left: 0.5em;
   margin-bottom: 0.2em;
   color: #666666;
+  border-left: 1px solid #444444;
+  .dark-mode & {
+    color: #cccccc;
+    border-left: 1px solid #444444;
+  }
 }
 span.firstword {
   float: left;
@@ -130,6 +149,11 @@ sup.footnote {
 }
 .tooltip-container {
   color: #555555 !important;
+  background-color: #fefefe !important;
+  .dark-mode & {
+    background-color: #333333 !important;
+    color: #cccccc !important;
+  }
   font-size: 0.8em;
   max-width: 20em;
 }
@@ -158,6 +182,9 @@ a.inverted-link {
   padding: 24px;
   padding-top: 96px;
   background-color: #fdfdfd;
+  .dark-mode & {
+    background-color: #333333;
+  }
   a {
     text-decoration: none;
     &:hover {
@@ -192,6 +219,56 @@ footer {
       &:hover {
         text-decoration: underline;
       }
+    }
+  }
+}
+div.publishedAt {
+  float: right;
+  line-height: 1.1em;
+  font-size: 0.8em;
+  text-align: right;
+}
+header {
+  font-family: "Tahoma, sans-serif";
+  .container {
+    display: flex;
+    font-family: "Tahoma", sans-serif;
+    padding: 10px;
+    padding-bottom: 10px;
+    background-color: #fdfdfd;
+    box-shadow: 0px 3px 8px #dddddd;
+    .dark-mode & {
+      background-color: #333333;
+      box-shadow: 0px 3px 8px #222222;
+    }
+  }
+  .box {
+    flex: 1;
+    display: flex;
+  }
+  .hamburger {
+    flex: 1;
+    display: flex;
+    div {
+      display: none;
+      @media screen and (max-width: 640px) {
+        display: block;
+      }
+    }
+  }
+  .links {
+    display: flex;
+    @media screen and (max-width: 640px) {
+      display: none;
+    }
+    margin-top: -2em;
+    font-size: 1.1em;
+    font-family: "Georgia", serif;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-right: 0.5em;
+    div {
+      margin-right: 0.7em;
     }
   }
 }

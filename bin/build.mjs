@@ -15,6 +15,7 @@ import smartypants from "@ngsctt/remark-smartypants"
 import slugify from "slugify"
 import moment from "moment"
 import { links, headings, pullquotes, highlighter, fixfootnotes, fiximages } from "./plugins.mjs"
+import readingTime from "reading-time"
 
 const parser = new ArgumentParser()
 parser.add_argument("input")
@@ -65,6 +66,7 @@ async function update(source) {
       await copy(otherFile, path.join(publicDir, path.basename(otherFile)))
     }
   }
+  const reading = readingTime(content)
   const contents = (
     await compile(content, {
       remarkPlugins: [
@@ -96,7 +98,11 @@ ${lines.slice(splitPoint + 1).join("\n")}`.trim()
   await writeFile(contentPath, templated)
 
   await mkdirs(path.dirname(dataPath))
-  await writeFile(dataPath, JSON.stringify(!isEmpty ? { ...data, url } : { url }, null, 2))
+  const publishedAt = data.published ? moment(data.published).utc().format("YYYY-MM-DD") : undefined
+  await writeFile(
+    dataPath,
+    JSON.stringify(!isEmpty ? { ...data, url, reading, publishedAt } : { url, reading, publishedAt }, null, 2)
+  )
 
   const contentImportPath = replaceExt(path.relative(path.dirname(pagePath), contentPath), "")
   const layoutImportPath = path.relative(

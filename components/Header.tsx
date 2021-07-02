@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import Sidebar from "react-sidebar"
-import styles from "./Header.module.scss"
+import ChooseDarkMode from "../components/ChooseDarkMode"
 
 const SidebarContent: React.FC = () => {
   const [rendered, setRendered] = useState(false)
@@ -34,6 +34,10 @@ const SidebarContent: React.FC = () => {
             </h2>
           </div>
           <div>
+            <h2>
+              <ChooseDarkMode text />
+            </h2>
+            <hr />
             <h2>
               <Link href="/rss.xml">
                 <a>RSS</a>
@@ -79,9 +83,9 @@ const Header: React.FC = () => {
       >
         <div></div>
       </Sidebar>
-      <header style={{ fontFamily: "Tahoma, sans-serif" }}>
-        <div className={styles.container}>
-          <div className={styles.box}>
+      <header>
+        <div className="container">
+          <div className="box">
             <Link href="/">
               <a>
                 <Image
@@ -95,7 +99,7 @@ const Header: React.FC = () => {
               </a>
             </Link>
           </div>
-          <div className={styles.box} style={{ justifyContent: "center", fontSize: "1.1em" }}>
+          <div className="box" style={{ justifyContent: "center", fontSize: "1.1em" }}>
             <Link href="/" passHref>
               <div style={{ display: "flex" }}>
                 <div
@@ -122,16 +126,13 @@ const Header: React.FC = () => {
               </div>
             </Link>
           </div>
-          <div
-            className={styles.hamburger}
-            style={{ justifyContent: "flex-end", alignItems: "center", paddingRight: 8 }}
-          >
+          <div className="hamburger" style={{ justifyContent: "flex-end", alignItems: "center", paddingRight: 8 }}>
             <div style={{ zIndex: 1000 }}>
               <Hamburger toggled={isOpen} toggle={setOpen} label={"Open menu"} />
             </div>
           </div>
         </div>
-        <div className={styles.links}>
+        <div className="links">
           <div>
             <Link href="/essays">
               <a>Essays</a>
@@ -146,6 +147,9 @@ const Header: React.FC = () => {
             <Link href="#feeds">
               <a>Feeds</a>
             </Link>
+          </div>
+          <div>
+            <ChooseDarkMode />
           </div>
         </div>
       </header>
