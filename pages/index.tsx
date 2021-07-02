@@ -2,6 +2,7 @@ import { GetStaticProps } from "next"
 import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
+import ChooseDarkMode from "../components/ChooseDarkMode"
 import Essays from "../components/Essays"
 import Footer from "../components/Footer"
 import { Essay, getEssays } from "../lib/getEssays"
@@ -38,6 +39,9 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           </div>
           <div>
             <Link href="#feeds">Feeds</Link>
+          </div>
+          <div>
+            <ChooseDarkMode />
           </div>
         </nav>
       </div>

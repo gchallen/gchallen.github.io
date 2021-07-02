@@ -14,9 +14,9 @@ const ChooseDarkMode: React.FC<{ text?: boolean }> = ({ text }) => {
   }
   if (!text) {
     if (darkMode.value) {
-      return <FaMoon onClick={darkMode.disable} style={{ verticalAlign: "middle" }} />
+      return <FaSun onClick={darkMode.disable} style={{ verticalAlign: "middle" }} />
     } else {
-      return <FaSun onClick={darkMode.enable} style={{ verticalAlign: "middle" }} />
+      return <FaMoon onClick={darkMode.enable} style={{ verticalAlign: "middle" }} />
     }
   } else {
     if (darkMode.value) {
