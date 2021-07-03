@@ -101,15 +101,23 @@ div.pullquote {
   float: right;
   font-size: 1.2em;
   max-width: 40%;
-  line-height: 1.1em;
+  @media screen and (max-width: 640px) {
+    max-width: 60%;
+    font-size: 1.1em;
+    font-weight: bold;
+    line-height: 1.2em;
+    margin-left: 0.5em;
+    padding-left: 0.5em;
+    margin-bottom: 0;
+  }
+  line-height: 1.2em;
   padding-left: 0.5em;
   margin-left: 0.5em;
-  margin-bottom: 0.2em;
   color: #666666;
   border-left: 1px solid #444444;
   .dark-mode & {
     color: #cccccc;
-    border-left: 1px solid #444444;
+    border-left: 1px solid #cccccc;
   }
 }
 span.firstword {
@@ -123,22 +131,6 @@ span.restword {
   vertical-align: top;
   font-variant: small-caps;
   letter-spacing: 1.5px;
-}
-header {
-  background-color: #fdfdfd;
-  position: fixed;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  top: 0;
-  left: 0;
-  right: 0;
-  a {
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  z-index: 1000000;
 }
 .paddings {
   padding-top: calc(68px + 2em);
@@ -250,6 +242,20 @@ div#publishedAt {
 }
 header {
   font-family: "Tahoma, sans-serif";
+  background-color: #fdfdfd;
+  position: fixed;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  z-index: 1000000;
   .container {
     display: flex;
     font-family: "Tahoma", sans-serif;
