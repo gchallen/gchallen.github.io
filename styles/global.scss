@@ -127,6 +127,8 @@ span.restword {
 header {
   background-color: #fdfdfd;
   position: fixed;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   top: 0;
   left: 0;
   right: 0;
@@ -175,6 +177,11 @@ a.inverted-link {
   &:hover {
     text-decoration: underline;
   }
+}
+.sidebarroot {
+  position: fixed !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 #sidebarcontent {
   display: flex;

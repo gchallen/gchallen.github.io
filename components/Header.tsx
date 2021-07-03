@@ -56,6 +56,8 @@ const Header: React.FC = () => {
   return (
     <>
       <Sidebar
+        rootClassName="sidebarroot"
+      /*
         styles={{
           root: { position: undefined },
           content: {
@@ -67,6 +69,7 @@ const Header: React.FC = () => {
           },
           sidebar: { position: "fixed", top: "0", left: "0", bottom: "0" },
         }}
+        */
         sidebar={<SidebarContent />}
         open={isOpen}
         onSetOpen={setOpen}
