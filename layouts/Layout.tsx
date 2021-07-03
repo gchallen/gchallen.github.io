@@ -162,14 +162,18 @@ const Wrapper: React.FC<{
       </Head>
       <Header />
       <main className="responsive paddings">
-        {!frontmatter.noDate && (
-          <div className="publishedAt">
-            <strong>{frontmatter.publishedAt}</strong>
-            <br />
-            <em>{frontmatter.reading.text}</em>
+        <div id="titleContainer">
+          <div style={{ flex: 1 }}>
+            <h1>{frontmatter.title}</h1>
           </div>
-        )}
-        <h1>{frontmatter.title}</h1>
+          {!frontmatter.noDate && (
+            <div id="publishedAt">
+              <strong>{frontmatter.publishedAt}</strong>
+              <br />
+              <em>{frontmatter.reading.text}</em>
+            </div>
+          )}
+        </div>
         {children}
       </main>
       <Footer />

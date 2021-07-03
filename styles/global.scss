@@ -13,8 +13,9 @@ $maxTextWidth: math.div($minTextWidth, $minFontSize) * $maxFontSize;
   h1,
   .h1 {
     font-size: 2em;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.8em;
     line-height: 1.1em;
+    margin-top: 0.5em;
   }
   h2 {
     font-size: 1.4em;
@@ -222,8 +223,17 @@ footer {
     }
   }
 }
-div.publishedAt {
-  float: right;
+div#titleContainer {
+  display: flex;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  align-items: flex-end;
+  h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+div#publishedAt {
   line-height: 1.1em;
   font-size: 0.8em;
   text-align: right;
