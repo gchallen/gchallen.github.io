@@ -1,62 +1,52 @@
-import { useWindowHeight } from "@react-hook/window-size"
 import { Cross as Hamburger } from "hamburger-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Sidebar from "react-sidebar"
 import ChooseDarkMode from "../components/ChooseDarkMode"
 
 const SidebarContent: React.FC = () => {
-  const [rendered, setRendered] = useState(false)
-  useEffect(() => {
-    setRendered(true)
-  }, [])
-  const height = useWindowHeight()
   return (
-    <>
-      {rendered && (
-        <div id="sidebarcontent" style={{ height }}>
-          <div>
-            <h2>
-              <Link href="/">
-                <a>Home</a>
-              </Link>
-            </h2>
-            <h2>
-              <Link href="/about/">
-                <a>About</a>
-              </Link>
-            </h2>
-            <h2>
-              <Link href="/essays/">
-                <a>Essays</a>
-              </Link>
-            </h2>
-          </div>
-          <div>
-            <h2>
-              <ChooseDarkMode text />
-            </h2>
-            <hr />
-            <h2>
-              <Link href="/rss.xml">
-                <a>RSS</a>
-              </Link>
-            </h2>
-            <h2>
-              <Link href="/atom.xml">
-                <a>Atom</a>
-              </Link>
-            </h2>
-            <h2>
-              <Link href="/feed.json">
-                <a>JSON</a>
-              </Link>
-            </h2>
-          </div>
-        </div>
-      )}
-    </>
+    <div id="sidebarcontent" style={{ height: "100%" }}>
+      <div>
+        <h2>
+          <Link href="/">
+            <a>Home</a>
+          </Link>
+        </h2>
+        <h2>
+          <Link href="/about/">
+            <a>About</a>
+          </Link>
+        </h2>
+        <h2>
+          <Link href="/essays/">
+            <a>Essays</a>
+          </Link>
+        </h2>
+      </div>
+      <div>
+        <h2>
+          <ChooseDarkMode text />
+        </h2>
+        <hr />
+        <h2>
+          <Link href="/rss.xml">
+            <a>RSS</a>
+          </Link>
+        </h2>
+        <h2>
+          <Link href="/atom.xml">
+            <a>Atom</a>
+          </Link>
+        </h2>
+        <h2>
+          <Link href="/feed.json">
+            <a>JSON</a>
+          </Link>
+        </h2>
+      </div>
+    </div>
   )
 }
 
@@ -75,7 +65,7 @@ const Header: React.FC = () => {
             right: undefined,
             bottom: undefined,
           },
-          sidebar: { position: "fixed" },
+          sidebar: { position: "fixed", top: "0", left: "0", bottom: "0" },
         }}
         sidebar={<SidebarContent />}
         open={isOpen}
