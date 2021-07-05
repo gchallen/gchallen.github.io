@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import "../styles/reset.css"
 import "../styles/global.scss"
 import "../styles/ace.scss"
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -22,7 +23,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [router.events])
   return (
-    <>
+    <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charSet="utf-8" />
@@ -35,6 +36,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#ffffff" />
       </Head>
       <Component {...pageProps} />
-    </>
+    </GoogleReCaptchaProvider>
   )
 }

@@ -19,6 +19,7 @@ $maxTextWidth: math.div($minTextWidth, $minFontSize) * $maxFontSize;
   }
   h2 {
     font-size: 1.4em;
+    margin-bottom: 0.5em;
   }
 }
 
@@ -211,7 +212,7 @@ footer {
   margin-left: 6em;
   margin-right: 6em;
   font-size: 1em;
-  div {
+  & > div {
     display: flex;
     justify-content: center;
     margin-top: 0.5em;
@@ -296,5 +297,49 @@ header {
     div {
       margin-right: 0.7em;
     }
+  }
+}
+.technical {
+  font-size: 0.8em;
+  color: #888888;
+}
+.grecaptcha-badge {
+  visibility: hidden;
+}
+.subscribe {
+  justify-content: center;
+  align-items: center;
+  & > div {
+    display: flex;
+    align-items: center;
+  }
+  .email {
+    flex: 1;
+    font-family: "Monaco", monospace;
+  }
+  .submit {
+    display: block;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    font-size: 1.2em;
+    line-height: 1.4em;
+    color: #555555;
+    background-color: #fdfdfd;
+    border: 1px solid #555555;
+    &:disabled {
+      border: 1px solid #aaaaaa;
+    }
+    .dark-mode & {
+      background-color: #333333;
+      color: #cccccc;
+      border: 1px solid #cccccc;
+      &:disabled {
+        border: 1px solid #555555;
+      }
+    }
+  }
+  svg.success {
+    color: green;
+    transition: opacity 0.5s;
   }
 }

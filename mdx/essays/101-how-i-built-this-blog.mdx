@@ -1,0 +1,120 @@
+---
+title: How I Built This Site
+description: >
+   Every website needs a good origin story.
+   This is mine.
+technical: true
+---
+
+[I've](-) been meaning to set up a personal website for a while—probably for over a year before I got around to it.
+
+Why did it take so long?
+I'm quite familiar with website design and actively maintain multiple sites, including several that are substantially more complex than this one.
+I also have felt for a while that I had a fair amount I wanted to say about topics both educational and technical.
+And yet, it still took a while for this site to come to fruition.
+
+[On](-) one level you can argue that it's because I made some of the classic _I want a personal website_ mistakes.
+Particularly ones made by people who love to program.
+There's a temptation for us to approach a personal website as an opportunity to write _code_, rather than write and share _text_.
+
+For some reason, personal websites also feel like the ideal time to try out a new language or framework.
+I had built a few other websites using [Gatsby](https://www.gatsbyjs.com/).
+I'm happy with those sites—at least, for now.
+And I did start a previous version of this site using Gatsby.
+But I think that the process of starting a new project using a familiar framework can remind you of all the things that you dislike it, things that you've happily forgotten about and are able to ignore on sites that are working and in maintenance mode.
+In contrast, unfamiliar frameworks are still shiny and new, since you haven't had a chance to figure out everything that's wrong with them yet.
+
+## Design Requirements
+
+[But](-) let's take a step back and discuss design requirements.
+Here were mine for this site, in no particular order.
+
+First, I wanted my own personal website.
+Yes, I could have set up something on a site like Medium or Substack.
+But I'm a coder and at least a part-time web developer.
+I figured that I could put up something myself that I'd be happier with, and that would also allow me to showcase some of my educational web development projects in ways that third-party sites would not.
+More on that later.
+
+Second, I wanted something that looked good.
+I am not a web designer—or at least not a very good or sophisticated one.
+But I also know that I react negatively to ugly, slow, or difficult to read sites.
+Personally I'm probably overreactive to typography and good text layout, sometimes at the expense of content and clarity.
+I wasted a lot of time eliminating widows and orphans when writing academic papers—time that would have been better spent sharpening my arguments.
+I'm working on that, but I'm not fully recovered yet.
+Since this is my site, it gets to reflect at least a few of my neuroses.
+
+Having full control over the text layout and being able to implement and design things like dropped capitals, pull quotes, and footnotes, is another reason that led me away from third-party options.
+Overall I think that Medium looks alright, although it's pages are clearly really heavy and bloated.
+Honestly, the Substack blogs I've read look pretty awful to me.
+Maybe I just don't like their default font.
+Obviously if you want full control over stuff like this, rolling your own site is the way to go.
+
+[Third](-), I wanted something that would allow me to use [React](https://reactjs.org/).
+OK... I can already hear you groaining.
+"Dude, just throw some HTML and CSS files in a directory and be _done_!"
+Even some of the documentation for the tech stack that I ended up using essentially says the same thing.
+[But my personal website is also a project portfolio](+), and a lot of the educational tools that I build have frontends implemented as React components.
+Yes, I'm aware that you can integrate React into any site.
+But to save time I frequently don't bundle my work for direct use in the browser, and instead simply export components in a way that still requires downstream transpilation and webpacking.
+
+Finally, I wanted something that would allow me to easily achieve reasonable performance.
+Overall I think that the tech community is far too focused on performance at the expense of pretty much any other objective, which seems particularly silly after several decades of riding an exponentially-increasing hardware performance curve.
+But that's no excuse for the poor loading times of a lot of websites.
+I wanted to avoid obsessing over performance.
+But, at the same time, I also wanted a framework that did a decent job on performance out of the box so I couldn't get myself in too much trouble.
+
+## Start With Content
+
+[But](-) I knew all of these requirements a long time ago, and it still took a long time to get started.
+In the end, what helped me was a simple and obvious trick: **Start with content.**
+
+I can't take credit for this.
+I'm pretty sure that the direct inspiration was in a comment on a [Hacker News](https://news.ycombinator.com/) thread that I read.
+Someone commented that, after being burned in the past, now when someone approaches them about setting up a personal blog or website, they require that they first produce five posts or articles that they want to publish.
+Usually they never hear from them again.
+
+In my case both the writer and the web developer share the same headspace.^[I have a pretty sizeable noggin, so there's plenty of room...]
+Geoff the web developer was cracking his knuckles and saying, "Yes! Let's write some code!"
+But at this point he looks over his shoulder at Geoff the writer and first asks: "But what was it that you wanted to say, anyway?"
+
+[At](-) this juncture it was helpful that Coder Geoff ended up taking a vacation.
+I spent a week at the beginning of June during which I promised myself that I would not write _any_ code.
+That left Writer Geoff with a lot of time to get to work—and access to the computer, which Coder Geoff tends to hog when he's around.
+
+Every morning for nine straight days I woke up and wrote, not stopping until I had finished one complete essay.
+Usually that required all of the hours until lunchtime, and sometimes a portion of the afternoon.
+Some of the essays were short, others sprawled.
+To avoid any web development temptations, I wrote them all in Google Docs, which also provided access to spelling and grammar checks.
+That also helped me focus on non-technical more education-focused topics that didn't require code snippets or other components that aren't well-supported by Docs.
+
+Now I had content.
+I also knew that the voice inside my head also sounded pretty reasonable on the page.
+So now it was time for Coder Geoff to get to work bringing the content produced by Writer Geoff to the web in a way that they would both be proud of.
+And it was very helpful that Writer Geoff was eager to see their work published, which helped Coder Geoff stop procrastinating over the technical details and make some forward progress.
+
+## Technical Details: NextJS and MDX
+
+[This](-) site is a [Next.js](https://nextjs.org/) app.^[Quoting [Josh Comeau](https://www.joshwcomeau.com/blog/how-i-built-my-blog/)].
+Essays and most other site content are authored in [MDX](https://mdxjs.com/), but with developer hot reloading implemented using a custom build script.
+
+### Next.js
+
+Why Next.js?
+Because I was tired of Gatsby, and Next.js seemed like the _next_ thing to try.
+At this point I'm impressed with Next.js.
+Coming from Gatsby, Next.js is definitely simpler and feels more "low-level", assuming you can ever say that about a JavaScript static site framework.
+For example, the code that gathers a list of essays does so by trawling through the filesystem, something you would never do in Gatsby outside of a plugin.
+
+The funny thing is that I was actually turned off by this aspect of Next.js when I had investigated it previously.
+At some point the Next.js homepage had some statement akin to "It's just like PHP! Just throw some files in a directory and off you go."
+I stopped reading right there.
+I should have given Next.js a harder look at the time, but anything that claimed that a comparison with PHP could ever be positive seemed not worth further consideration.
+I moved on to Gatsby and spent a fair amount of time with it, using it to build several websites including my [current course website](https://cs125.cs.illinois.edu/).
+
+But aspects of Gatsby were starting to grate.
+Requiring that everything be squeezed into GraphQL seems like it might be a decent choice for sites with complex content sources and for larger teams with separation between content generation and frontend.
+But I felt like I was getting little to nothing out of this requirement.
+It didn't always feel like an impediment, given the great plugin ecosystem.
+[But when I found myself `base64`-encoding a piece of data so that I could get Gastby to load it during build time, I decided to explore other options](+) again.
+
+It also helped that right around the time that I was getting restarted on site development, Gatsby v3 [broke hot-reload support for MDX](https://github.com/gatsbyjs/gatsby/issues/30062), my content authoring format of choice.

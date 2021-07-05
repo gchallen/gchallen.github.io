@@ -145,9 +145,16 @@ const Image: React.FC<{ src: string; alt: string; width: number; height: number;
 }
 
 const Wrapper: React.FC<{
-  frontmatter: { title: string; description: string; publishedAt: string; reading: { text: string }; noDate?: boolean }
+  frontmatter: {
+    title: string
+    description: string
+    publishedAt: string
+    reading: { text: string }
+    noDate?: boolean
+    technical?: boolean
+  }
 }> = ({ frontmatter, children }) => {
-  const { title, description } = frontmatter
+  const { title, description, technical, publishedAt, reading } = frontmatter
   return (
     <>
       <Head>
@@ -164,13 +171,14 @@ const Wrapper: React.FC<{
       <main className="responsive paddings">
         <div id="titleContainer">
           <div style={{ flex: 1 }}>
-            <h1>{frontmatter.title}</h1>
+            <h1>{title}</h1>
+            {technical && <span className="technical">(Technical)</span>}
           </div>
           {!frontmatter.noDate && (
             <div id="publishedAt">
-              <strong>{frontmatter.publishedAt}</strong>
+              <strong>{publishedAt || "Draft"}</strong>
               <br />
-              <em>{frontmatter.reading.text}</em>
+              <em>{reading.text}</em>
             </div>
           )}
         </div>

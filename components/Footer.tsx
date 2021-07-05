@@ -1,8 +1,10 @@
 import Link from "next/link"
+import SubscribeButton from "./SubscribeButton"
 
 const Footer: React.FC = () => {
   return (
     <footer>
+      <SubscribeButton />
       <div>
         <Link href="/">
           <a>Home</a>

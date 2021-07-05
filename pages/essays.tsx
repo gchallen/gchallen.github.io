@@ -20,7 +20,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
       </Head>
       <Header />
       <div className="responsive paddings">
-        <Essays published={published} h1 />
+        <Essays published={published} drafts={drafts} h1 />
       </div>
       <Footer />
     </>
@@ -29,7 +29,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { published, drafts } = await getEssays()
-  return { props: { published } }
+  return { props: { published, drafts: process.env.NODE_ENV === "development" ? drafts : [] } }
 }
 
 export default Page

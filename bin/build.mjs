@@ -43,7 +43,7 @@ async function update(source) {
     if (data.published || process.env.DEVELOPMENT) {
       pagePath = path.join(
         "pages/essays",
-        moment(data.published ?? Date.UTC())
+        moment(data.published || new Date())
           .utc()
           .format("YYYY-MM-DD") +
           "-" +
