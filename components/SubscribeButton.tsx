@@ -14,7 +14,6 @@ const SubscribeButton = () => {
     fetch("https://lists.geoffreychallen.com/publisher/")
       .then((res) => res.json())
       .then(({ count }) => {
-        console.log(count)
         setSubscriberCount(count)
       })
   }, [])
@@ -31,7 +30,6 @@ const SubscribeButton = () => {
         return
       }
       const token = await executeRecaptcha("subscribe")
-      console.log(token)
       setShowSuccess(true)
     },
     [executeRecaptcha]
@@ -40,7 +38,14 @@ const SubscribeButton = () => {
   return (
     <form className="subscribe" onSubmit={onSubmit}>
       <div>
-        <input className="email" type="text" value={email} onChange={onChange} name="email" placeholder="your@email.com" />
+        <input
+          className="email"
+          type="text"
+          value={email}
+          onChange={onChange}
+          name="email"
+          placeholder="your@email.com"
+        />
         <input className="submit" type="submit" value="Subscribe" disabled={!enabled} />
         <FaCheckCircle className="success" size={"1.4em"} style={{ display: "block", opacity: showSuccess ? 1 : 0 }} />
       </div>
