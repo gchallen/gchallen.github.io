@@ -13,7 +13,10 @@ const SubscribeButton = () => {
   useEffect(() => {
     fetch("https://lists.geoffreychallen.com/publisher/")
       .then((res) => res.json())
-      .then(({ count }) => setSubscriberCount(count))
+      .then(({ count }) => {
+        console.log(count)
+        setSubscriberCount(count)
+      })
   }, [])
 
   const onChange = useCallback((event) => {
@@ -28,6 +31,7 @@ const SubscribeButton = () => {
         return
       }
       const token = await executeRecaptcha("subscribe")
+      console.log(token)
       setShowSuccess(true)
     },
     [executeRecaptcha]
