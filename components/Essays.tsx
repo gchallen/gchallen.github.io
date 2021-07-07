@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Essay } from "../lib/getEssays"
+import SubscribeButton from "./SubscribeButton"
 
 const Summary: React.FC<{ essay: Essay }> = ({ essay }) => {
   const { title, description, publishedAt, url } = essay
@@ -17,10 +18,11 @@ const Summary: React.FC<{ essay: Essay }> = ({ essay }) => {
     </div>
   )
 }
-const Essays: React.FC<{ published: Essay[]; drafts?: Essay[]; h1?: boolean }> = ({
+const Essays: React.FC<{ published: Essay[]; drafts?: Essay[]; h1?: boolean; showSubscribe?: boolean }> = ({
   published,
   drafts,
   h1 = false,
+  showSubscribe = false,
 }) => {
   return (
     <>
@@ -40,6 +42,11 @@ const Essays: React.FC<{ published: Essay[]; drafts?: Essay[]; h1?: boolean }> =
             teaching accessible to teachers who don&apos;t program, and my essays on technology interesting to
             programmers who don&apos;t teach.
           </p>
+          {showSubscribe && (
+            <SubscribeButton hideAfterSubscribe>
+              <p>Want to know when I post new essays? Subscribe here.</p>
+            </SubscribeButton>
+          )}
           {drafts && drafts.length > 0 && (
             <>
               {h1 ? <h2>Drafts</h2> : <h3>Drafts</h3>}

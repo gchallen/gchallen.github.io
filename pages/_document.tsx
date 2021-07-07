@@ -54,7 +54,13 @@ if (localStorageExists) {
   // source of truth from document.body
   var isDarkMode = document.body.classList.contains(classNameDark);
   localStorage.setItem(storageKey, JSON.stringify(isDarkMode));
-}`.trim(),
+}
+try {
+  if (localStorage.getItem("subscribed") !== null) {
+    document.body.classList.add("subscribed");
+  }
+} catch (err) {}
+`.trim(),
             }}
           />
           <Main />

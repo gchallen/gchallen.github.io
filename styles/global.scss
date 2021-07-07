@@ -343,3 +343,9 @@ header {
     transition: opacity 0.5s;
   }
 }
+div.subscribe {
+  margin-bottom: 1em;
+  body.subscribed &.hideAfterSubscribe {
+    display: none;
+  }
+}

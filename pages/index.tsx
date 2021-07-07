@@ -5,6 +5,7 @@ import Link from "next/link"
 import ChooseDarkMode from "../components/ChooseDarkMode"
 import Essays from "../components/Essays"
 import Footer from "../components/Footer"
+import SubscribeButton from "../components/SubscribeButton"
 import { Essay, getEssays } from "../lib/getEssays"
 import styles from "../styles/index.module.scss"
 
@@ -53,11 +54,11 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
         </p>
         <p>
           My goal is to teach as many students as possible. I do this by creating interactive learning environments that
-          scale.
+          scale. <Link href="/about">More about me...</Link>
         </p>
-        <p>
-          <Link href="/about">More about me...</Link>
-        </p>
+        <SubscribeButton hideAfterSubscribe>
+          <p>Want to be notified when I post new content? Subscribe here.</p>
+        </SubscribeButton>
         <hr />
         <Essays published={published} />
       </div>

@@ -20,7 +20,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
       </Head>
       <Header />
       <div className="responsive paddings">
-        <Essays published={published} drafts={drafts} h1 />
+        <Essays published={published} drafts={drafts} h1 showSubscribe />
       </div>
       <Footer />
     </>

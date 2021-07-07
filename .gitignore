@@ -41,3 +41,4 @@ yarn-error.log*
 /public/atom.xml
 /public/feed.json
 /public/rss.xml
+/aws
