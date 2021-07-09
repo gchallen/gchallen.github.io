@@ -56,7 +56,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           And I write code that helps them learn.
         </p>
         <p>
-          My goal is to teach as many students as possible. I do this by creating interactive learning environments that
+          My goal is to teach computer science to as many students as possible. I do this by creating interactive learning environments that
           scale. <Link href="/about">More about me...</Link>
         </p>
         <SubscribeButton hideAfterSubscribe>
