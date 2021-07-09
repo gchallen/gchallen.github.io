@@ -63,7 +63,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           <p>Want to be notified when I post new content? Subscribe here.</p>
         </SubscribeButton>
         <hr />
-        <Essays published={published} />
+        <Essays published={published} limit />
       </div>
       <Footer />
     </div>

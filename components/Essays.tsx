@@ -18,12 +18,13 @@ const Summary: React.FC<{ essay: Essay }> = ({ essay }) => {
     </div>
   )
 }
-const Essays: React.FC<{ published: Essay[]; drafts?: Essay[]; h1?: boolean; showSubscribe?: boolean }> = ({
-  published,
-  drafts,
-  h1 = false,
-  showSubscribe = false,
-}) => {
+const Essays: React.FC<{
+  published: Essay[]
+  drafts?: Essay[]
+  h1?: boolean
+  showSubscribe?: boolean
+  limit?: boolean
+}> = ({ published, drafts, h1 = false, showSubscribe = false, limit = false }) => {
   return (
     <>
       {published.length > 0 && (
@@ -40,8 +41,13 @@ const Essays: React.FC<{ published: Essay[]; drafts?: Essay[]; h1?: boolean; sho
           <p>
             I post essays here on teaching, technology, and the overlap between the two. I try to keep my essays on
             teaching accessible to teachers who don&apos;t program, and my essays on technology interesting to
-            programmers who don&apos;t teach.
+            programmers who don&apos;t teach.{" "}
           </p>
+          {limit && (
+            <p>
+              Here are my latest four essays. For the complete set, click <Link href="/essays/">here</Link>.
+            </p>
+          )}
           {showSubscribe && (
             <SubscribeButton hideAfterSubscribe>
               <p>Want to know when I post new essays? Subscribe here.</p>
@@ -55,9 +61,14 @@ const Essays: React.FC<{ published: Essay[]; drafts?: Essay[]; h1?: boolean; sho
               ))}
             </>
           )}
-          {published.slice(0, 5).map((essay, i) => (
+          {published.slice(0, limit ? 4 : Infinity).map((essay, i) => (
             <Summary key={i} essay={essay} />
           ))}
+          {limit && (
+            <p>
+              For more essays, click <Link href="/essays/">here</Link>.
+            </p>
+          )}
         </>
       )}
     </>
