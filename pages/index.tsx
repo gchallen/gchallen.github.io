@@ -23,10 +23,10 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
       </Head>
       <div className={styles.container}>
         <Image
-          src="/cartoon-light.png"
+          src="/cartoon-130x176.png"
           alt="Geoffrey Challen"
-          width={75}
-          height={102}
+          width={130}
+          height={176}
           priority
           layout="fixed"
           unoptimized={process.env.NODE_ENV === "development"}
@@ -39,7 +39,10 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
             <Link href="/about">About</Link>
           </div>
           <div>
-            <Link href="#feeds">Feeds</Link>
+            <Link href="/CV">CV</Link>
+          </div>
+          <div>
+            <Link href="#feeds">Subscribe</Link>
           </div>
           <div>
             <ChooseDarkMode />

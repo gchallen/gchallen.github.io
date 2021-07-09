@@ -278,14 +278,14 @@ header {
     display: flex;
     div {
       display: none;
-      @media screen and (max-width: 640px) {
+      @media screen and (max-width: 720px) {
         display: block;
       }
     }
   }
   .links {
     display: flex;
-    @media screen and (max-width: 640px) {
+    @media screen and (max-width: 720px) {
       display: none;
     }
     margin-top: -2em;
@@ -312,6 +312,9 @@ header {
   & > div {
     display: flex;
     align-items: center;
+  }
+  form {
+    width: 100%;
   }
   .email {
     flex: 1;

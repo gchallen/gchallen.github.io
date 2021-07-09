@@ -1,28 +1,43 @@
 import { Cross as Hamburger } from "hamburger-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useRouter } from "next/router"
+import React, { useState } from "react"
 import Sidebar from "react-sidebar"
 import ChooseDarkMode from "../components/ChooseDarkMode"
 
-const SidebarContent: React.FC = () => {
+const SidebarLink: React.FC<{ href: string; setOpen: (open: boolean) => void }> = ({ href, setOpen, children }) => {
+  const { pathname } = useRouter()
+  if (href === pathname || href === `${pathname}/`) {
+    return <div onClick={() => setOpen(false)}>{children}</div>
+  } else {
+    return <Link href={href}>{children}</Link>
+  }
+}
+
+const SidebarContent: React.FC<{ setOpen: (open: boolean) => void }> = ({ setOpen }) => {
   return (
     <div id="sidebarcontent" style={{ height: "100%" }}>
       <div>
         <h2>
-          <Link href="/">
+          <SidebarLink href="/" setOpen={setOpen}>
             <a>Home</a>
-          </Link>
+          </SidebarLink>
         </h2>
         <h2>
-          <Link href="/about/">
+          <SidebarLink href="/about/" setOpen={setOpen}>
             <a>About</a>
-          </Link>
+          </SidebarLink>
         </h2>
         <h2>
-          <Link href="/essays/">
+          <SidebarLink href="/essays/" setOpen={setOpen}>
             <a>Essays</a>
-          </Link>
+          </SidebarLink>
+        </h2>
+        <h2>
+          <SidebarLink href="/CV/" setOpen={setOpen}>
+            <a>Curriculum Vitæ</a>
+          </SidebarLink>
         </h2>
       </div>
       <div>
@@ -67,7 +82,7 @@ const Header: React.FC = () => {
             bottom: undefined,
           },
         }}
-        sidebar={<SidebarContent />}
+        sidebar={<SidebarContent setOpen={setOpen} />}
         open={isOpen}
         onSetOpen={setOpen}
       >
@@ -80,7 +95,7 @@ const Header: React.FC = () => {
               <a>
                 <Image
                   priority
-                  src="/cartoon-light.png"
+                  src="/cartoon-75x102.png"
                   alt="Geoffrey Challen"
                   width={46}
                   height={63}
@@ -131,6 +146,11 @@ const Header: React.FC = () => {
           <div>
             <Link href="/about">
               <a>About</a>
+            </Link>
+          </div>
+          <div>
+            <Link href="/CV">
+              <a>CV</a>
             </Link>
           </div>
           <div>
