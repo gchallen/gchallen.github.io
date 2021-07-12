@@ -1,11 +1,14 @@
 import validator from "email-validator"
+import { useSession } from "next-auth/client"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import { FaCheckCircle } from "react-icons/fa"
+import LoginButton from "./LoginButton"
 
 const SubscribeButton: React.FC<{ hideAfterSubscribe?: boolean }> = ({ children, hideAfterSubscribe = false }) => {
   const { executeRecaptcha } = useGoogleReCaptcha()
   const [, setSubscriberCount] = useState<number | undefined>()
+  const [session] = useSession()
   const [email, setEmail] = useState<string>("")
   const submitEmail = useRef<string>("")
   const [enabled, setEnabled] = useState(false)
@@ -25,11 +28,24 @@ const SubscribeButton: React.FC<{ hideAfterSubscribe?: boolean }> = ({ children,
     }
   }, [])
 
-  const onChange = useCallback((event) => {
-    setEmail(event.target.value)
-    setEnabled(validator.validate(event.target.value))
-    submitEmail.current = event.target.value
+  const updateEmail = useCallback((newEmail: string) => {
+    setEmail(newEmail)
+    setEnabled(validator.validate(newEmail))
+    submitEmail.current = newEmail
   }, [])
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      updateEmail(session.user.email)
+    } else {
+      setShowSuccess(false)
+      updateEmail("")
+    }
+  }, [session, updateEmail])
+
+  const onChange = useCallback((event) => {
+    updateEmail(event.target.value)
+  }, [updateEmail])
 
   const onSubmit = useCallback(
     async (event) => {
@@ -64,6 +80,7 @@ const SubscribeButton: React.FC<{ hideAfterSubscribe?: boolean }> = ({ children,
       {children}
       <form className="subscribe" onSubmit={onSubmit}>
         <div>
+          <LoginButton icon />
           <input
             className="email"
             type="text"
@@ -71,7 +88,7 @@ const SubscribeButton: React.FC<{ hideAfterSubscribe?: boolean }> = ({ children,
             onChange={onChange}
             name="email"
             placeholder="your@email.com"
-            disabled={showSuccess}
+            disabled={session?.user?.email ? true : showSuccess}
           />
           <input className="submit" type="submit" value="Subscribe" disabled={!enabled} />
           <FaCheckCircle

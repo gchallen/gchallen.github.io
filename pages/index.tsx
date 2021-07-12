@@ -8,6 +8,7 @@ import Footer from "../components/Footer"
 import SubscribeButton from "../components/SubscribeButton"
 import { Essay, getEssays } from "../lib/getEssays"
 import styles from "../styles/index.module.scss"
+import LoginButton from "../components/LoginButton"
 
 const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, published }) => {
   const description =
