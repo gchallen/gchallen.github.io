@@ -60,7 +60,8 @@ export default NextAuth({
     jwt: true,
   },
   jwt: {
-    secret: "Z4AkQbg8WgJrorNAp7BiJlKT9R5jtPIF",
+    signingKey: process.env.JWT_SIGNING_KEY,
+    secret: process.env.SECRET,
   },
   callbacks: {
     async jwt(token, user, account) {

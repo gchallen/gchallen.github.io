@@ -1,4 +1,5 @@
 import Link from "next/link"
+import LoginButton from "./LoginButton"
 import SubscribeButton from "./SubscribeButton"
 
 const Footer: React.FC = () => {
@@ -18,6 +19,7 @@ const Footer: React.FC = () => {
         <Link href="/essays/">
           <a>Essays</a>
         </Link>
+        <LoginButton text />
       </div>
       <div id="feeds">
         <Link href="/rss.xml">

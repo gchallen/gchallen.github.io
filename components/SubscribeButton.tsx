@@ -3,7 +3,6 @@ import { useSession } from "next-auth/client"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import { FaCheckCircle } from "react-icons/fa"
-import LoginButton from "./LoginButton"
 
 const SubscribeButton: React.FC<{ hideAfterSubscribe?: boolean }> = ({ children, hideAfterSubscribe = false }) => {
   const { executeRecaptcha } = useGoogleReCaptcha()
@@ -43,9 +42,12 @@ const SubscribeButton: React.FC<{ hideAfterSubscribe?: boolean }> = ({ children,
     }
   }, [session, updateEmail])
 
-  const onChange = useCallback((event) => {
-    updateEmail(event.target.value)
-  }, [updateEmail])
+  const onChange = useCallback(
+    (event) => {
+      updateEmail(event.target.value)
+    },
+    [updateEmail]
+  )
 
   const onSubmit = useCallback(
     async (event) => {
@@ -80,7 +82,6 @@ const SubscribeButton: React.FC<{ hideAfterSubscribe?: boolean }> = ({ children,
       {children}
       <form className="subscribe" onSubmit={onSubmit}>
         <div>
-          <LoginButton icon />
           <input
             className="email"
             type="text"

@@ -73,23 +73,30 @@ export const NewWindowLoginProvider: React.FC = ({ children }) => {
 }
 export const useNewWindowLogin = () => useContext(NewWindowLoginContext)
 
-const LoginButton: React.FC<{ icon?: boolean }> = ({ icon = false }) => {
+const LoginButton: React.FC<{ icon?: boolean; text?: boolean }> = ({ icon = false, text = false }) => {
   const { session, login, logout, busy } = useNewWindowLogin()
-  console.log(session)
   return (
     <>
       {!session && (
         <>
-          <button disabled={busy} onClick={login}>
-            {icon ? <FaSignInAlt /> : <span>Login</span>}
-          </button>
+          {text ? (
+            <a onClick={login}>Login</a>
+          ) : (
+            <button disabled={busy} onClick={login}>
+              {icon ? <FaSignInAlt /> : <span>Login</span>}
+            </button>
+          )}
         </>
       )}
       {session && (
         <>
-          <button disabled={busy} onClick={logout}>
-            {icon ? <FaSignOutAlt /> : <span>Logout</span>}
-          </button>
+          {text ? (
+            <a onClick={logout}>Logout</a>
+          ) : (
+            <button disabled={busy} onClick={logout}>
+              {icon ? <FaSignOutAlt /> : <span>Logout</span>}
+            </button>
+          )}
         </>
       )}
     </>
