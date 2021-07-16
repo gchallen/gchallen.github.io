@@ -1,0 +1,284 @@
+---
+title: Quantifying CS1
+description: >
+  Finding ways to measure success or failure is important when teaching any course, but particularly when teaching CS1.
+  I outline five metrics that I use to evaluate CS1, describe how and why to collect them, and present results from my own course.
+published: 2021-07-16
+---
+
+[Recently](-) [Mark Guzdial published a piece describing how he evaluates teaching portfolios](https://cacm.acm.org/magazines/2021/5/252164-teaching-other-teachers-how-to-teach-cs-better/fulltext).
+It's a good article, and you should certainly read it.
+I found myself nodding along with the following points:
+
+* He doesn't think much of student evaluations of teaching
+* He points out that overreliance on assistance from the instructor or course staff can indicate problems with the course design and materials
+* He looks for evidence of instructors creating a positive and inclusive climate
+* He supports building and evaluating new pedagogical tools
+
+But by the end I was struck less by what was included in his criteria than by what was excluded: Any consideration of actual results and data.
+While his post does focus on process and best practices, merely mimicking things that might have been shown to work elsewhere without validating them in your own environment dangerously skirts the definition of [cargo cult science](https://en.wikipedia.org/wiki/Cargo_cult_science).
+
+So in this essay I'm going to list some of what I consider important _quantitative_ measures for evaluating CS1 instruction.
+Some of these are specific to CS1, others are more general.
+These are all ways that I would want my own course to be evaluated.
+Uncoincidentally, they are all metrics I've used to assess my own attempts to improve my class.
+I'll share some of those results as we go.
+
+[To](-) start, let me send off a few common objections to quantifying CS1 and data-driven analysis.
+
+**First, none of these measures should be taken out of context.**
+A common response by people who aren't collecting data seems to be a fear that, if the data existed, other people wouldn’t understand it.
+Well, to start, until the data exists, nobody can understand it, or act on it.
+And second, usually it's the instructor that is going to collect, interpret, and present it—allowing them to place it in proper context. 
+I would certainly expect this to be true on a promotion portfolio.
+Overall if you are really sure that any attempts at data analysis will be used against you in bad faith, you probably have other problems to focus on—like finding a new job.
+
+**Second, any data collection required to answer these questions should be expected of instructors.**
+[Too often I hear that we can't expect already busy teachers to collect or process even the data required to explore some of these questions.](+)
+But tracking these metrics is far more important than many of the other things that they are doing.
+Without data you are flying blind, and incapable of making the larger structural changes required to achieve a truly successful course.
+Lacking representative data can also make instructors oversensitive to outliers—particularly to complaints from struggling students or flattery from successful ones.
+You need to know where the mass of the distribution is, not just sample the louder ends.
+
+Most of the metrics I list below can and should be based on data collected and analyzed by individual instructors.
+A few do require some level of departmental or multi-instructor coordination.
+But lacking those shouldn't prevent us from analyzing the data we do have.
+This also has the effect of putting the instructor in the driver's seat, which is likely to make them more comfortable and help assure that the data is not taken out of context, as it might be if analyzed by a third party.
+
+[Without](-) further ado, what measurements should we use to quantify CS1? Here are my suggestions:
+
+* **What and who is the course trying to teach?** This is not always quantifiable, but is measurable and comparable to a degree, and important to put other numbers in context.
+* **How many students are meeting the learning goals?**
+* **What performance gaps exist between cohorts?**
+* **Do students succeed in downstream courses?**
+* **How much programming practice are students receiving?**
+
+Let's go through each in turn.
+
+## What and who is the course trying to teach?
+
+Of the metrics I've listed, this is the one that is the hardest to quantify.
+However, it's also probably one of the most important, and should be considered before examining other data points.
+
+Why?
+[Because the umbrella term CS1 hides massive differences between CS1 courses across different institutions](+), which range in pace from brutally fast to stultifyingly slow, even after you control for differences in the incoming student population.
+In my CS1 course we do loops and selection structures in the first few weeks.
+I've seen other courses that don’t cover these language features until almost the end of the semester.
+
+To be fair, there _is_ a range of potential speeds at which CS1 can be taught, even if some seem clearly too fast or too slow.
+Choosing the right one requires considering a lot of different factors, including the strength of the student population and expectations of downstream courses.
+It also frequently requires making tradeoffs between multiple objectives.
+For example, for courses that teach both CS majors and non-majors, the majors may be able to move much faster at the risk of increasing frustration among non-majors.
+And the course may need to prepare majors for later coursework, unlike non-majors who may not usually proceed past CS1.
+
+Simply making CS1 easier and easier seems too often to be the approach to these tradeoffs.
+But it's not a solution.
+It simply shifts the problem downstream, as continuing students arrive unprepared to succeed in later courses.
+
+CS1 courses that are too easy also seem likely to exacerbate feelings of not belonging from students who start with little to no experience with CS.
+Before they take a single course, they shouldn't expect to know any computer science!
+But after they take a CS course, if they still don't know much due to a course that was not rigorous enough, it makes it easier for them to conclude—incorrectly—that they just aren't cut out for the field.
+[We do need to get students moving in CS1.
+Simply patting them on the head and sending them onward is not a solution.](+)
+
+These tensions and the decision-making surrounding them deserve separate treatment,
+and I'll return to this topic.
+But for now, consider an understanding of both the audience and ambitiousness of CS1 to be critical for contextualizing the metrics that follow.
+
+[For](-) my own CS1 course, this calibration has been one of the bigger challenges.
+The problem here is exacerbated by Illinois’ _selectivity gap_—a wide difference in admissions rates between our CS majors and the rest of the university population.
+Illinois admits 62% of its applicants.
+But Computer Science at Illinois admits only 15%!^[And I think our latest round of admissions pushed this below 10%.]
+This 47% selectivity gap is more than twice that of other elite CS programs: including CMU (17%), Berkeley (8.5%), University of Washington (18%), and the University of Texas (21%).
+
+My course serves both as the first course for majors and potential minors and as a service course for non-majors with a strong interest in the material.
+The tension is palpable.
+The vast majority of my students—over 80% each year—are non-majors.
+But the course is taught in computer science and has a responsibility to prepare students for the rest of our program.
+The drop rate among majors is near zero, whereas among non-majors it's non-zero.
+I suspect I could cover much more without affecting the majors.
+But at the price of increasing the non-major drop rate further.
+
+To make matters worse, until recently my CS1 course was followed by a second programming course before data structures—**but only for majors**!
+And yet, a lot of the non-majors, including students trying to transfer into the major, did proceed to our data structures course without that extra semester of programming practice.
+[So my job was to prepare the less-prepared students for a challenging data structures course without the extra practice that the already more-prepared students received.](+)
+If that sounds insane to you, trust your instincts.
+
+[I've](-) done my best to find a pace for my course that balances these competing objectives.
+I've also worked outside my course to improve the early curriculum for non-majors—specifically by opening the follow-on programming course to all students, not just majors.
+But this is a tough challenge and an optimization problem that I'm not convinced has a stable solution.
+
+It’s also important to note that we do offer many other slower-paced CS1-like options, including one in Python, one designed specifically for engineers, another that focuses on data science—and all those just in computer science.
+And a bunch of other ones that seem to crop up across the university like weeds.
+Still, my course is the elephant in the room, with the highest profile and largest enrollments—over 1200 for Fall 2020 and over 1400 for Fall 2021.
+
+## How many students succeed?
+
+[I](-) define a course _success rate_ as the number of students who are earning a satisfactory grade in the class.
+Note that this does _not_ mean the number who are passing, since usually a department does not consider a D to be a suitable grade in CS1.
+Sure, you can move on, and nobody can stop you.
+Ds get degrees!
+But most advisers look for a stronger signal early that a student is prepared to succeed.
+C's and D’s in CS1 are very likely to turn into F’s in CS2 and later courses, putting a student’s academic progression at risk.
+Better to hold them back early than let them fail later.
+
+My understanding is that my departmental advisers will contact any student who receives lower than an A- in my CS1 course.
+Not all of them will retake the class.
+But a B grade or lower is seen as an early sign of trouble and a reason to check in.
+What happens next depends on a student's circumstances, but it's not uncommon for these students to retake early courses to make sure that they have a solid foundation before continuing with the program.
+
+As a result, I define the success rate for my course as the percentage of students who receive an A- or above, with the denominator the number of students in the course two weeks into the semester.
+But that definition may vary depending on your program's expectations.
+
+[It's](-) fairly obvious how to interpret success rates.
+However, this is one of the measures I've included that is more openly subject to instructor manipulation, since they are assigning grades.
+It's worth keeping that in mind. The success rate should also be considered in the context of what the course is trying to accomplish. 
+Courses that introduce more material may end up having lower success rate than a course that doesn't end up covering that much or effectively prepare students for success in later coursework.
+
+Note that success rates are _not_ the same as 1 - DFW, where DFW is the drop-fail-withdraw rate.
+While students that earn a C in my course have passed, I don’t consider them to have succeeded.
+On some level, for many students a C or even a B can be more damaging than a drop, since it ends up on their transcript and affects their GPA, which we're now apparently requiring students to maintain at incredibly inflated levels.
+So it seems strange to consider a C a better outcome than a drop when students themselves don't share that assessment.
+
+And, as it turns out, it's also possible for the success rate to increase even as the DFW rate goes up.
+But that’s a story for later.
+
+[For](-) my CS1 course our Fall 2020 success rate was 69% and in Spring 2021 it was 63%, both during a year when the course was offered entirely asynchronously online.
+Success rates for CS majors are much higher: over 95 percent in most semesters.
+
+I think that these numbers are decent, given the objectives that the course is charged with accomplishing; the variation in the student population; and that my students can walk linked lists, recurse over binary trees, implement Quicksort partition, and definitely finish off FizzBuzz.
+They've also done some simple Android development.
+But I'll admit that I don’t have a lot of comparison points here.
+If you have numbers you'd like to share, please [get in touch](mailto:geoffrey.challen@gmail.com).
+
+[It's](-) also worth considering the rate at which your course produces bad outcomes: specifically low grades and failures.
+Again, I don't necessarily consider drops to be a bad outcome, although they do get more costly as the semester progresses.
+Most of the students who leave my class drop, which is in large part due to our transparent and incremental grading policies.
+Only 7% in Fall 2020 and 13% in Spring 2021 earned a C grade or below.
+
+Finally, given that these data were collected during the COVID year, it's important to consider the potential impact of university grading policies.
+In both semesters of the 2020–2021 academic year the University of Illinois provided students with a P/F option.
+However, this option was provided _after_ the drop deadline in Fall 2020 but _before_ the Spring 2021 semester began. 
+I suspect that this may have had a role in reducing our success rate in Spring 2021, with more students willing to take the pass and not do all of the work required to get an A.
+At the same time, pretty much all of our overselected majors take my course in the fall, and numbers from that semester always look a bit better due to their influence.
+
+As a side note, I would love to permanently offer my course with either a pass-fail option or entirely pass-fail.
+But the people in charge tell me that I can't.
+
+## What performance gaps exist between different cohorts?
+
+While grades are inherently subjective, looking at the performance of different cohorts within the same course can be extremely illuminating.
+Because while faculty can and do inflate (and deflate) student grades, manipulating the performance of different cohorts requires adjustments that I'm pretty sure would be flagged as capricious grading pretty much anywhere.
+
+Inter-cohort performance can quantify several aspects of effectiveness for CS1, depending on the cohorts that are compared.
+[Gender gaps may indicate that a course is not doing a good job of creating a welcoming atmosphere](+), or is—hopefully unintentionally—reinforcing cultural stereotypes about who is good at computer science.
+Courses with persistent gender gaps may also have assessment structures that are unintentionally favoring male or female students.
+Gaps between different racial or ethnic groups may hint at similar problems.
+This is one quantitative aspect of course performance that we should always be measuring and paying attention to, each and every semester.
+
+Gaps between students with more and less prior experience are harder to interpret.
+If a CS1 course welcomes students with no prior experience, they need to be able to succeed. 
+However, it’s also unrealistic to expect students with prior experience to have to work as hard as complete beginners.
+I took advanced beginning French in college.
+There were people in that class who _clearly_ came in already speaking some French.
+They did better than I did!^[I was also a bad student, and was particularly bad at this particular course, which met at an ungodly early hour, particularly for a college-age computer scientist.]
+
+So small experience gaps are probably acceptable.
+Larger ones start to create questions about whether the course is really calibrated properly for its student population, or perhaps not teaching the material well enough to support students without prior experience.
+
+[One](-) of the things that I'm the most proud of with my CS1 course is how we've closed our gender gap over the past few years.
+A median final grade gap that was 8 percent in Fall 2018 dropped to zero by Fall 2019 and has been at most a point over the past few semesters.
+Drop rates are also equivalent across genders, so this isn't something that we're achieving through attrition.
+
+I'll write more at some point about how we accomplished this—or at least, what I think has helped.
+Because it's possible that it's all due to better admissions!
+But one strategy that I have found helpful is to assume that any gender gaps that arise indicate a problem with that assessment that needs to be fixed.
+[I fundamentally don't believe that we should observe gender performance differences in CS1.](+)
+So when we do, we assume it's a problem with the course, and work to correct it.
+
+Our experience gap is also quite small: only 1% between students that self-identified as 1 (no prior experience) versus 2–5 (some to a lot of prior experience) during Spring 2021.
+I think that this has a lot to do with the fact that we've created excellent materials, and don't create unnecessary competition between students for grades.
+
+## Do students succeed downstream?
+
+This might be the hardest for a single instructor to measure.
+It also introduces a bunch of different potential confounders.
+But it's probably one of the more valuable metrics to keep an eye on.
+
+Unfortunately gaining access to this data requires some help—either from a downstream instructor, or from your department.
+My colleagues are always quite willing to share their data with me, and I've engaged in a few useful collaborations surrounding cross-course design based on this information.
+And it can be helpful to work with raw grading data, rather than with the letter grades themselves, where a lot of precision has been lost.
+But it's also great if someone in your department has this data or is paying attention to these kinds of cross-cutting metrics.
+If you work in a department like this, please [get in touch](mailto:geoffrey.challen@gmail.com)!
+I'd love to know more.
+
+If you can do this, it also helps to have a sentinel course.
+For CS1 this is frequently the downstream data structures and algorithms class, which in many departments represents the end of the early programming sequence and a gateway into the rest of the program.
+
+[In](-) my case I’ll admit that I was not tracking this measure, despite excellent relationships with the faculty teaching the downstream data structures course. I need to do better here.
+
+I did finally get to see some of this data when we assembled some numbers for a site visit to support a grant application.
+My heart was racing as I process the raw data.
+But it turned out that I was happy with what I discovered.
+Since I took CS1, the DFW rate for CS majors in our data structures course dropped from 12% to 6%.
+
+However, recall that our CS students do take a second-semester programming course before proceeding to data structures.
+And that course itself had gone through some substantial changes.
+So I was further gratified to see that the DFW rate for non-majors had also fallen by from 19% to 13%.
+
+[Clearly](-) there is a lot of additional context you have to bring to these analyses, some of which is missing here.
+For example, an excellent CS1 course may inspire less-prepared students to continue their studies in CS, and they may end up struggling in later courses.
+This is particularly true if there is a big difference in experience or general academic preparation between CS majors and non-majors, which is true here and I'm sure also at least some other universities.
+It can also take a while to observe changes in downstream courses and complete this feedback loop.
+During that time a bunch of other things may have changed, making it hard to pinpoint what caused things to improve or regress.
+
+All that said: [We really need to be doing more of this kind of longitudinal data analysis](+). At best it can produce some very useful insights. And at worst it brings the right group of people together and can start some very useful discussions and collaborations.
+
+## How much programming are students doing?
+
+The numbers above measure student success or failure.
+But it’s equally important to measure _effort_.
+So we’ll close with something near and dear to my heart—the amount of programming that students are actually doing in CS1.
+
+This is particularly important for introductory computer science, which is one of a small set of college classes that teaches a skill.^[Most of the others are also CS courses or courses that teach a human language.]
+When learning to program, [practice makes perfect](/essays/2021-06-24-quantity-over-quality).
+
+Now, obviously there are limits to which you can increase the amount of programming students are doing. At some point the course starts being far too difficult, and students get discouraged.
+
+But I think that many CS1 courses are not even close to that point of diminishing returns.
+My experience has been that students are highly-motivated to learn computer science and programming, and relish opportunities to improve.
+We've put a lot of effort recently into both building and using new systems allowing us to rapidly author new programming problems for them to solve, to keep up with their desire for more practice.
+
+How the course is structured can also makes a huge difference here.
+[A larger number of smaller programming tasks is more effective at encouraging practice and learning than a small number of larger assignments.](+)
+Students tend to procrastinate, and so many will try and finish off the entire weekly assignment in one sitting—usually right before the deadline.
+Not only does this create frustration, but it also means that, rather than five or more practice sessions in a week that they might receive through daily assignments, they're only getting one.
+There’s a limit to how much you can learn in one sitting, and for beginners that limit can be fairly small.
+Spreading the work out increases learning, reduces student frustration, and allows you to assign even more practice and help students learn even more.
+
+[A](-) straightforward way to quantify this is to just count the number of lines of code that students write each semester.
+It can also make sense to break that down further by the environment or task that they are working on: unproctored versus proctored, small programming tasks versus larger projects.
+
+I’ve written previously about [quantity versus quality in CS1 and the early programming curriculum](/essays/2021-06-24-quantity-over-quality). But as a recap:
+
+> Starting in Fall 2018 we began requiring students to complete a daily homework problem in CS1. We also included several small programming problems on the weekly quizzes given in our computer-based testing facility. In Fall 2018 students completed 108 small programming problems in both unproctored and unproctored environments, writing approximately 14,000 non-commenting lines of code per student, or around 133 lines per student per day over a 15-week semester. By Spring 2020 that number had risen a bit to around 19,000 lines-per-student.
+
+We collected slightly-different numbers for Spring 2021, but they tell the same story: Our CS1 students are getting a _lot_ of practice. 
+And note that, through effective course design, we've been able to achieve this without spiking the drop rate or causing student perceptions of the course to plummet.
+[Your CS1 students may be willing to do a lot more work than you think!](+)
+But why would that surprise us?
+Programming is the most powerful and high-impact creative skill that you can learn.
+
+---
+
+[In](-) summary—I guess I've written another long bullet-point-delimited essay.
+I promise that the next thing I post will be in story form, rather than list form.
+
+Overall, even four years later I continue to find trying to teach CS1 effectively an enormous and fulfilling challenge.
+The design space is huge and was expanded further by the pandemic.
+There are all kinds of tradeoffs to make and, due to autograding, CS1 courses can explore various types of course assessment design that simply aren't available to other courses: For example, assigning over 75 daily homework problems without placing any burden on human graders.
+There’s also huge technology gaps and opportunities in this space to create better and more engaging content and materials.
+
+Making good choices here inevitably involves experimentation that should be guided by data.
+[So I hope that people evaluating courses start to ask for quantitative evidence that they are succeeding.](+)
+Even just gathering the data to be able to start answering these questions has a tendency to guide you in the right direction.

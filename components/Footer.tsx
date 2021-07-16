@@ -20,6 +20,9 @@ const Footer: React.FC = () => {
           <a>Essays</a>
         </Link>
         <LoginButton text />
+        <Link href="mailto:geoffrey.challen@gmail.com">
+          <a>Contact</a>
+        </Link>
       </div>
       <div id="feeds">
         <Link href="/rss.xml">

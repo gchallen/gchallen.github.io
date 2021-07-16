@@ -184,6 +184,7 @@ const Wrapper: React.FC<{
         </div>
         {children}
       </main>
+      {!frontmatter.noDate && <div className="thanks">Thanks for reading!<br/>I&apos;d love to know what you think.<br/>Feel free to <a href="mailto:geoffrey.challen@gmail.com">get in touch.</a></div>}
       <Footer />
     </>
   )
