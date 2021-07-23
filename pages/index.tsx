@@ -8,7 +8,6 @@ import Footer from "../components/Footer"
 import SubscribeButton from "../components/SubscribeButton"
 import { Essay, getEssays } from "../lib/getEssays"
 import styles from "../styles/index.module.scss"
-import LoginButton from "../components/LoginButton"
 
 const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, published }) => {
   const description =
@@ -57,8 +56,8 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           And I write code that helps them learn.
         </p>
         <p>
-          My goal is to teach computer science to as many students as possible. I do this by creating interactive learning environments that
-          scale. <Link href="/about">More about me...</Link>
+          My goal is to teach computer science to as many students as possible. I do this by creating interactive
+          learning environments that scale. <Link href="/about">More about me...</Link>
         </p>
         <SubscribeButton hideAfterSubscribe>
           <p>Want to be notified when I post new content? Subscribe here.</p>
