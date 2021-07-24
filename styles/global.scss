@@ -369,3 +369,15 @@ div.thanks {
   font-size: 0.9em;
   text-align: right;
 }
+div.note {
+  background-color: #eeeeee;
+  .dark-mode & {
+    background-color: #444444;
+  }
+  padding-top: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+  p:last-of-type {
+    padding-bottom: 16px;
+  }
+}

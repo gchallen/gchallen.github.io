@@ -1,0 +1,265 @@
+---
+title: Computerized Testing for CS1
+description: >
+  Nothing has been more transformative for my CS1 course than frequent computerized assessments.
+  Including programming questions on weekly proctored quizzes keeps students on track while also helping support many other unproctored assessments.
+  Initially facilitated by an on-campus testing center, we've now successfully transitioned that component of the course online.
+  I'll talk about how and why to use computerized assessments in CS1.
+published: 2021-07-23
+---
+
+<div className="note">
+
+I authored the initial version of this essay after the COVID year.
+But it still definitely represents pre-pandemic thinking about the importance of physical space.
+I've decided to publish it largely unaltered, mainly because I still think that physical testing centers are an incredibly useful innovation to support education, and I wanted to show appreciation for all of the hard work that went in to establishing ours here at Illinois.
+
+But our experiences during the pandemic have led me to question the need for physical space for giving regular proctored exams.
+So I've added a postscript discussing what I've learned during the pandemic on this topic, and what our plans are moving forward.
+
+</div>
+
+[In](-) the basement of the Grainger Engineering library at the University of Illinois is an inconspicuous room labeled the [Computer-Based Testing Facility](https://cbtf.engr.illinois.edu/).
+It would be easy to mistake it for a computer lab.
+In some ways, it kind of _is_ a computer lab.
+But it's also what enabled the most important transformation in teaching CS1 that I have participated in: The usage of regular computerized assessments to establish programming proficiency.
+If you teach CS1, you should consider this approach as well.
+
+![The Illinois CBTF.](~/01.jpeg)
+The Illinois Computer-Based Testing Facility. A bunch of computers in a room. Thrilling!
+
+[The](-) Computer-Based Testing Facility—CBTF for short—is pretty much what it's name implies: a facility that supports computer-based testing.
+Its rows upon rows of identical computer workstations resemble a garden-variety computer lab, similar to those that are still squatting in the basements of many campus buildings, increasingly-empty now as students arrive with laptops more powerful than the lab machines.
+But if you look closely there are signs of its intended purpose: prominent numbering identifying each workstation, monitor screens, cameras discreetly placed on the ceiling, a check-in desk near the entrance.
+
+At Illinois, courses that want to give computerized exams sign up to use the CBTF before the semester starts.
+The testing center supports multiple computerized testing platforms, including both home-grown LMS systems and more widely-used options. Course staff are responsible for authoring assessments and configuring them properly so that they are available in the testing center.
+
+I don't have precise numbers about how many courses are using the CBTF, but this is a popular testing option for engineering courses here.
+Many of our introductory computer science courses give computerized exams using the CBTF, with varying frequency.
+The testing center is popular enough that capacity has become an issue.
+
+Students enrolled in courses that use the CBTF sign up to take each exam using an online scheduling system.
+The testing center has limited capacity, meaning that exams for large courses must be spread out over multiple days.
+This causes some challenges with exam security, but also ends up providing students with more flexibility in exam scheduling, allowing them to find a time that does not conflict with their other classes or activities.
+The center is open 7 days a week and for long hours each day: 9AM to 9PM typically during the week.
+At their appointed time students check in at the testing center, and are led by a CBTF proctor to a computer where they complete their exam.
+Exams are usually one hour in length, although they can be longer.
+
+Exam security is established in several ways.
+Human proctors and cameras monitor students as they complete their exams to ensure that they are not accessing forbidden materials or devices, or attempting to view the work of nearby students.
+Because the CBTF is used by many courses, it is likely that students seated nearby will be working on exams for different courses anyway.
+
+Access to the internet by CBTF workstations is restricted to only allow connections to machines required to complete assessments.
+Students cannot perform general internet searches, access materials on course websites, or communicate with people outside the CBTF using email, chat, or other methods.
+In addition, CBTF workstations use a published range of internet protocol (IP) addresses, allowing requests originating from inside the CBTF to be identified.
+This allows exam servers to provide students with access to exams only when they are in the CBTF, and not before or afterward.
+Software on the CBTF workstations themselves is limited to only programs that are requested for use by courses that give exams in the testing center—typically tools like calculators.
+
+[It should be mentioned that this entire facility represents a significant investment by the Grainger College of Engineering](+) in terms of space, staffing, and software.
+But it pays off in a huge way, particularly for CS1.
+Nothing has transformed how I teach more than being able to give students regular computerized assessments.
+
+[Let](-) me briefly describe how we use computerized assessments in my CS1 course.
+
+My students take 15 one-hour weekly proctored assessments worth 30%^[40% starting in Fall 2021] of their final grade.
+In the past, 12 of them have been quizzes largely focused on the prior week’s material, and 3 have been more cumulative midterms.
+Students were allowed to drop several low quiz scores, but no midterm grades.
+But in terms of format they are pretty much indistinguishable from each other, and we're planning to drop the label midterm going forward.
+We've found that calling something a midterm seems to stress students out unnecessarily, even when it’s worth a very small percentage of their grade.
+
+Each assessment comprises a mixture of multiple-choice and programming questions.
+A representative quiz might have 15 multiple-choice questions on concepts and terminology together worth 60 points and 3 programming questions together worth 40 points.
+Students have a limited number of attempts on the multiple-choice questions, but unlimited penalty-free attempts on the programming problems.
+Everything—including programming tasks—is done in the browser, in an environment that students are familiar with from unproctored daily homework problems.
+We used to use a home-grown LMS system, but recently moved to [our own bespoke quiz system](https://cs125.cs.illinois.edu/best/#quiz-system).
+Both multiple-choice and programming questions are graded within seconds.
+On programming questions students receive detailed feedback about what went wrong on failed attempts, including information from the linter, compiler, or testing and analysis harness needed to correct and resubmit their answer.
+
+But the technical details of our quiz system are really somewhat irrelevant.
+The point is that, each week, students must solve small programming problems using a computer in a controlled environment.
+That's where the magic happens.
+
+[Why](-) is this such a transformative tool for teaching computer science? 
+
+First and foremost, regular assessments encourage students to practice.
+Students in my CS1 course also complete a daily homework problem in an unproctored environment.
+But when teaching CS1, these problems are typically fairly trivial: For example, write a method that sums all of the elements in an array.
+This is code that is easy to find solutions for online.
+
+Without a weekly assessment in a controlled environment, our daily homework would have much less pedagogical value.
+Students would be less likely to take them seriously, and more likely to just look up answers online or copy off a friend.
+These problems are also usually too small to effectively check for plagiarism.
+
+[So the primary value of being able to give programming problems in a proctored environment is to support learning in _unproctored_ environments.](+)
+Students that want to do well on the quizzes are more likely to take the daily homework seriously, and return to those questions for practice before each quiz.
+All of this practice helps them internalize the concepts and patterns needed to become a better programmer and improve their computational thinking.
+I frequently tell students: if I could get you to practice this much without giving quizzes, I would.
+But I haven’t come up with anything else that works this well.
+
+[The](-) success of this approach is also due to assessment frequency.
+Testing students every week means that each assessment is lower-stakes, reducing the incentives to cram-and-forget.
+Multiple lower-stakes assessments also allow us to implement generous drop policies, further reducing student exam anxiety and allowing us to filter out the effect of bad luck or bad days.
+Frequent assessment also allows us to more quickly identify students who are struggling, and for students themselves to more quickly identify material that they have not completely understood, making it less likely that they get too far behind to catch up.
+
+There are several aspects of a computerized testing center that may help support frequent assessment.
+Quizzes are taken outside of class time, eliminating the competition between content and assessment for limited classroom hours.
+The CBTF also allows instructors to offload a lot of the logistics associated with exams: including scheduling and rescheduling, identity verification, implementing exam-related policies, and accommodating students with testing accommodations.
+To some degree, frequent assessment in large courses can be onerous just due to some of these headaches.
+Outsourcing them to a dedicated center is really helpful.
+
+[So](-) far the benefits I've outlined are just as applicable to non-CS as to CS courses.
+But the biggest benefit of computerized testing for CS1 is that computers are much, much, much better at grading code than humans.
+
+When comparing computers to human graders, there are a few dimensions of goodness that we should consider.
+For answers that computers can evaluate, they are obviously going to win hands-down in terms of speed and precision.
+Nobody would argue that there is any benefit to human-grading a SCANTRON exam.
+
+Whether a computer is also better at evaluating whether an answer is correct depends a lot on the question we're asking.
+In some cases, the answer is that humans are better, and sometimes so much so that using computers is inappropriate—for example, to grade essays or other complex written responses.
+Hopefully someday we'll develop AI solutions for these problems, but early results indicate that we aren't there yet.
+In other cases the result is roughly a draw.
+If the questions ask for the numeric result of a mathematical calculation, computers and humans perform equally well at gauging correctness—at least assuming the computer isn’t expecting insane numbers of significant figures, for example.
+
+[But for evaluating the correctness of code, computers are simply much better graders than humans.](+)
+This is at least partly because humans are so bad at it.
+My course staff spend a lot of time debugging code with our students, a related task that even others with a lot more experience perform poorly at.
+I've been doing it for a long time, and I'd like to think that I’m decent at it.
+But I’m also not available to grade 3,000 submissions to small programming problems each week, nor would this be the best or even a good way for me to support students in my course.
+Plus, before I’m even done reading the first line, the computer has run thousands of test cases and found a failing input.
+
+[However](-), there’s a small catch.
+Computers are great at determining whether code is correct.
+However, they are terrible at determining whether code is _almost_ correct.
+Miss a semicolon?
+Wrong.
+Swap the capitalization of one character in the name of your method?
+Wrong.
+Fat-finger a variable name?
+Wrong!
+These are errors that a human might not even notice and could easily ignore.
+Computers cannot.
+
+But this limitation is easily outweighed by the fact that computerized testing allows the computer to be in the loop, providing feedback as students complete the problem.
+The compiler will catch the missing semicolon and misnamed variable and provide a line number, and our testing tool will inform you that your method doesn't match the name or signature we’re expecting.
+This is also why I consider it to be crucial to allow students unlimited penalty-free attempts when completing problems in CS1—under any conditions.^[This also requires good test suites. If they can be easily memoized, you have other problems.]
+
+Note also that the programming errors that students experience on computerized assessments are identical to those that they encounter during normal programming practice.
+[Everyone makes silly mistakes, even really experienced programmers.
+What you get better at is fixing them, quickly.](+)
+Our computerized quizzes give students that practice, and help train them to become much better at understanding and fixing their mistakes once they start working on larger programming projects.
+
+I will admit that the amount of student complaining regarding not getting partial credit for "tiny" errors has never fully dropped to zero.
+However, even a single character error _isn't_ actually tiny if you can't correct it given useful output and unlimited attempts.
+
+There’s also a degree of surreality regarding having humans grade computer code.
+The code has to be able to be run by a computer!
+Having humans grade computer code is expensive, error-prone, and doesn't facilitate students learning how to actually program a real computer—the exact skill that we're trying to teach in CS1.
+It's time to relegate this approach to the dustbin of history.
+
+I can hear what you're thinking.
+Isn't this already what's being done in most CS1 courses?
+Are people really still giving programming problems on paper exams?
+Sadly, the answer is yes.
+I'm not going to out anyone publicly, but you don't need to look at too many other CS1 courses to find ones that are still have students complete high-stakes assessments that include writing code on paper.
+In 2021.
+
+![A paper computer science exam.](~/02.png)
+An example of how programming is evaluated at another "top-tier" university.
+
+[Despite](-) the transformative effect of our testing center, it's been tough to get anyone to pay much attention.
+It's starting to catch on in a few places, but very slowly.
+I'm definitely not holding my breath about reading about this in the Times.
+
+I think there are a couple of reasons for this.
+First, we at Illinois aren't really that good at advertising.
+Our messaging has a tendency to get muddled and miss the main point.
+We pivot too quickly to discussing the exam software tools that have been developed here that are used in the CBTF.
+Those tools are themselves somewhat interesting, but not as transformative as just the testing center itself, or just giving frequent computerized exams, or even just giving frequent exams, and how the testing center supports these practices.
+Or we overemphasize the fact that the testing center gives students flexibility about when they take their exams.
+Again, not really the point.
+Frequency matters.
+On a computer matters.
+Flexibility is at best a workaround for limited capacity, and at worst creates problems since information about the exam tends to filter out and provide an advantage to unscrupulous students.
+
+Perhaps the testing center itself is also so simple and obvious that it seems like it can't represent true innovation.
+It’s just a room with some computers in it!
+Yes.
+And it will completely transform how you teach computer science.
+You should try it.
+
+[And](-) you can.
+In fact, I bet you have a perfect space on campus for your computerized testing center right now.
+It's already packed with computers.
+It's woefully underutilized.
+It's your campus computer lab!
+A relic of a time gone by when most students _didn't_ arrive on campus with a laptop that can run circles around your lab workstations.
+Even if you think you still need some computer labs^[You don't.], your campus probably has a lot more than it needs.
+Grab one and get started.
+
+Even without a dedicated space, there are other ways to support computerized testing in CS1.
+My course is actually going to have to figure this out, since we’ve outgrown our campus testing center—at least for now.
+With our enrollment well over a thousand they didn't want to continue to allow us to run weekly assessments.
+Hopefully campus will commit more resources to our testing center and we'll be back.
+But for now we need to make other arrangements.
+I'll discuss what we did during the pandemic, and how it informs our thinking going forward, in the postscript below.
+
+Whatever we do, continuing to be able to perform regular computerized assessments is absolutely critical.
+It really has become a cornerstone supporting student learning in my course.
+
+## Postscript: After the Pandemic
+
+[As](-) noted above, this is an essay that I had wanted to share for some time.
+But it's largely based on my experiences prior to the COVID-19 pandemic that altered the 2020–2021 academic year.
+
+[One of things that I learned from the pandemic is both the importance and the irrelevance of physical space.](+)
+There are aspects of [course community](/essays/2021-07-09-creating-course-community) that have been difficult or impossible to preserve without students on campus.
+But, at the same time, there are a lot of aspects of my course that we were able to transition [very successfully online](/essays/2021-07-16-quantifying-cs1).
+Proctored assessments were one of them.
+
+Without access to our on-campus testing center, we began giving our weekly proctored quizzes over Zoom, with groups of students proctored by course staff.
+Luckily, while the rest of the course ran asynchronously online, students had still scheduled a single hour for a weekly lab.
+We used this as quiz time, since it was the only time each week that we had reserved on student schedules.
+
+Overall this worked out well.
+We were able to continue to give the regular assessments that are so critical to my course, but without needing the on-campus space that we had utilized previously.
+
+Some things about the online setting were actually more convenient.
+For example, we were able to each quiz entirely on one day, rather that spread out over multiple.
+This both made it easier to secure the quiz contents, while also allowing us to start quiz review a lot earlier than we had in the past, which I think increased the pedagogical value of the quizzes even further.
+
+Supporting this approach did require building some new tools, including our own [new quiz authoring tool](https://cs125.cs.illinois.edu/best/#quiz-system) and proctoring integration.
+At the time that the pandemic started, the homegrown LMS that we had been using previously for homework and quizzes had no way to allow proctors to control assessment access during the quiz—meaning that a student could take it at their assigned time regardless of whether they joined the proctoring call.
+Clearly this was not acceptable.^[They may have fixed this since, but I haven't checked.]
+
+Another tool that was critical to the success of online quizzes was [a new framework we've created for rapidly authoring new programming questions](https://cs125.cs.illinois.edu/best/#homework).
+I was able to use that in Spring 2021 to write new questions for each quiz, usually only one or two days before.
+A fresh set of questions makes it harder for students to gain an advantage by figuring out what's on the exam beforehand.
+
+But what about cheating?
+Obviously it's a concern with online assessments.
+And overall it's hard to determine how much is happening.
+However, I will note that the score distributions for our online assessments were quite similar to what we had observed previously when using our highly-secure on-campus testing center.
+Were some students cheating in ways that they couldn't before?
+Probably.
+Was it endemic?
+I don't think so.
+
+[Moving](-) forward we're presented with an interesting tradeoff.
+At least for Fall 2021 we'll be continuing to run all exams online.
+As described above, our on-campus testing center wasn't able to support us at full capacity.
+Plus, we're still anticipating needing to support remote students, and it seems unfair to give the exams differently to on-campus and remote students.
+
+But assuming we can get back into our testing center at some point, we have two options with different tradeoffs.
+Our testing center is more secure and relieves us of some of the overhead of testing arrangements, but it requires scheduling the exam over multiple days which causes scheduling problems and requires all students to be on campus.
+In contrast, online proctored exams require more work on our part and are less secure, but can be run on our own schedule, scale more easily, and allow us to support students regardless of location.
+
+To me there's not a clear winner here—at least not yet.
+We'll use the next few semesters to do a few things.
+First, try and further improve the security of our own online quiz system.
+Second, try and collect behavioral evidence of cheating or at least suspicious behavior during quizzes.
+Even if this isn't something that we can use to charge students with academic integrity violations, it should still help us estimate how much cheating is actually taking place.
+
+And, on a more exciting note, we're also working on new types of questions that will work better in _both_ environments—specifically ones where we can easily create lots of variants so that no two students ever see the same version.
+This has been tough to do in the past for CS1 courses, but we have a very exciting new approach that we're working on.
+More on that—and everything else—soon.
