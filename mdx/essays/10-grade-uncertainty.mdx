@@ -1,0 +1,310 @@
+---
+title: Grade Uncertainty
+description: >
+  Grade uncertainty represents the amount of uncertainty students have about how
+  they are doing in a course. Reducing grade uncertainty has proven positive in
+  my courses, even if it has had some interesting side effects.
+published: 2021-08-13
+---
+
+[I](-) define _grade uncertainty_ to refer to the degree to which a student can accurately predict, at a given point in time, their final grade in the course.
+I consider grade uncertainty to be negative and have taken steps in my CS1 course to reduce it.
+The results have been both positive but also surprising.
+
+[While](-) thinking this all over I realized that I actually had been exposed to the idea of grade uncertainty a long time ago.
+By [Robert Pirsig](https://en.wikipedia.org/wiki/Robert_M._Pirsig), in [_Zen and Art of Motorcycle Maintenance_](https://en.wikipedia.org/wiki/Zen_and_the_Art_of_Motorcycle_Maintenance).
+
+In the book Pirsig describes a writing class he taught where students received qualitative feedback on their essays, but no grades were given until the end of the semester.
+He reports that this improved the classroom atmosphere.
+Students who were only motivated by their grade tended to drift off without the reinforcement of a continuous stream of marks. 
+Students who were genuinely engaged with the material but who might have been lulled into complacency by their own success stayed engaged.
+He considered this experiment a success, essentially arguing that _increasing_ student grade uncertainty was a good thing.
+
+I'm arguing the opposite.
+Pirsig is definitely a better storyteller.
+I'll let you decide who to believe.
+
+[When](-) you ask a student what grade they are going to make^[My former Ph.D. adviser Matt Welsh introduced me to the formulation of _making_—rather than _earning_—a grade. I've always liked it and found it more accurate.] in a course and they answer "I don’t know", that's grade uncertainty.
+When you ask a failing student what grade they are going to make and they answer “probably an A”, that's grade uncertainty.
+When you ask a student who legitimately is doing well at that point what they are going to make, and they answer "probably a A-", and then end up with a C—that's also grade uncertainty.
+So grade uncertainty encompasses both the ability to make a prediction, and the accuracy of the prediction itself.
+
+Clearly grade uncertainty decreases over the course of the semester, even if the starting point may differ between students.
+Someone with prior experience may have less grade uncertainty at the outset than a beginner.
+But, inevitably, at the end of the semester, final grades are released and grade uncertainty collapses to zero.
+
+Given the temporal progression of grade uncertainty, choosing a consistent measurement point when comparing courses or course structures is important.
+And, as a practical matter, grade uncertainty also matters more at certain times.
+For example, there is usually a deadline for students to drop a course without receiving a mark on their transcript, or to avoid paying full tuition.
+High grade uncertainty around this point can lead to poor decisions—either students who are doing well choosing to drop and lose their investments of time and treasure, or students who are not doing well continuing and ending up with a grade they are unhappy with.
+Given the importance of this decision, I usually consider grade uncertainty at the drop deadline, although it’s progression over the course of the semester is also worth examining.
+
+Grade uncertainty is also reduced when students know their current grade in the course with reasonable accuracy. Providing this information—including performing the calculations required to convert scores on individual assessments to a total score—is straightforward, and supported by all learning management systems.
+If you're not providing this information to students already, you probably don't care much about reducing grade uncertainty^[If you do, this is an obvious first step. Come back when you're done.].
+So let's assume students can check their current grade and that it is accurate.
+
+[What](-) aspects of course design increase or reduce grade uncertainty?
+Let's consider some examples.
+
+A dominant factor is grading structure.
+A small number of higher-stakes exams increases grading uncertainty.
+A larger number of lower-stakes exams reduces it.
+
+Consider a course with a single assessment worth 100% of the student’s grade.
+Of course this assessment will be comprehensive and located at the end of the semester.
+As a result, students will spend the entire semester not really knowing how they are actually doing, until all grading uncertainty is collapsed in one fell swoop.
+
+It's hard to design a course with more grade uncertainty.
+There are also many other reasons why such a grading structure is
+unhealthy—most obviously that it encourages cram-and-forget to the greatest
+possible degree.
+And yet, there are educational systems that still deliver courses using this model.
+The mind reels.
+
+Frequently one of the causes of grade uncertainty is the burden of grading itself.
+I have met few instructors or course staff that enjoy grading^[The ones that really do, you worry about a bit...].
+One 100% exam allows an instructor to produce a grade while performing as little grading as possible.
+
+[Now](-) consider a _small_ modification where we split the single exam into two smaller exams: one given at mid-semester and a second at the end.
+The relative point totals aren't always balanced but also aren't particularly important, so let's optimistically say that they are both worth 50%.
+This is actually a fairly common grading model for many university courses in the states, even if the first midterm exam is usually weighted less heavily that the final.
+
+At this point a student knows 50% of their grade at midterm.
+And we only have two exams to grade rather than one, which is not _too_ much additional grading.
+Great!
+So we're done, right?
+
+Not so fast.
+In fact, this example points to several other aspects of grade uncertainty that we need to consider.
+
+Assessment is a sampling process.
+[A student's performance on a single exam is inevitably the result of many factors beyond their knowledge of the
+subject matter](+).
+The exam may focus on material that the student did not focus on during their preparation.
+They may struggle with the exam format or with time management.
+The exam may take place during a particularly busy or stressful week, impacting their ability to prepare.
+
+Or the student may not have prepared well for the exam.
+While we expect students to study, there is a tendency by instructors to discount this aspect of student performance.
+So it is certainly possible that a student may feel well-prepared for an exam and that they will do well.
+Their understanding of the material may in fact be significant.
+But if they are not prepared for the exam format, environment, or the way in which it tests their understanding, they may end up doing poorly.
+Or they just had a bad day.
+All to say that exams are an imperfect way of measuring student understanding.
+
+Now consider the student after completing the first 50% exam.
+It is true that they have more information at mid-semester than the student in a course with a single summary assessment.
+So this is a bit better.
+But their grade on the midterm may not be a good predictor of their grade on the final.
+Students that overperform their actual level of knowledge may acquire a false sense of confidence, while those that underperform may acquire a false sense of despair.
+Some poorly-performing students may choose to drop, falsely validating the predictive power of the exam.
+
+Of course, with only two assessments, it's also possible that a poor showing on one _can_ harm a student's final grade beyond repair.
+Which is yet another great reason not to employ this structure.
+
+[At](-) the end of the day, two assessments is too few to both establish how much a student actually knows and provide them with certainty about how things will turn out in the end.
+But perhaps, if two is better than one, more is better than two?
+
+Yes!
+[More assessments are better!](+)
+There are a variety of reasons for this, many if not all of which intersect with reducing grade uncertainty.
+
+Obviously more assessments mean more data points.
+Given the sampling error inherent in each assessment, we can reduce our overall error in measuring student knowledge by collecting more samples, and even further by rejecting outliers, which we can't do until we have enough data points.
+
+However, it should also be obvious that what we are trying to measure is not a constant.
+We are teaching students and they are learning, meaning that what we expect them to know is changing day to day and week to week.
+
+More importantly, assessments are _not_ just for the purposes of evaluation.
+They are equally if not more important as part of the feedback loop that students use to gauge how well they are learning the material.
+Each one provides them an opportunity to reevaluate their study strategies.
+If you didn't do as well as you wanted, consider how you prepared and try something different next time.
+
+[More](-) assessments also usually means that each is lower stakes.
+High-stakes assessments increase grade uncertainty.
+A student may not be sure how they will do on the single assessment worth 50% of their grade.
+But if each assessment only contributes 10% or less, students can survive a few bad days without ruining their overall score.
+Lower-stakes assessments also have the benefit of reducing incentives to cram-and-forget.
+
+Student familiarity with how to prepare and take exams itself also helps reduce grade uncertainty.
+If a student knows what they need to do to improve their current grade, they are more likely to be able to make a confident prediction about how things will end up.
+
+10 evenly-spaced 10% assessments is already much better than two high-stakes tests.
+20 would be even better.
+Is there a limit?
+In terms of reducing grade uncertainty, I don't think so.
+But of course, in practice we hit other limits fairly quickly—such as the amount of assessments that our staff
+can grade or the amount of proctoring that we can provide.
+[But if you want to reduce grade uncertainty, adding more assessments is the best way to start.](+)
+
+[So](-) far we've identified assessment frequency as the primary contributor to grade uncertainty.
+The timing of assessments is also important, particularly when considered alongside important deadlines for grade-related decisions like dropping a course.
+
+As a simple example, a course that gave 10 10% exams all during the last week of class has not really reduced grade uncertainty.
+Maybe this is a bit better than one 100% exam, although packing them together doesn’t allow students to make adjustments to ensure that they are learning throughout the semester.
+
+Many low-stakes assessments also don’t help with grade uncertainty if they don't amount to much of the total grade.
+Consider a course with a 40% midterm, 50% final, and 10 evenly-spaced quizzes worth 1% each.
+Students may glean some benefit from the quizzes in terms of adjusting and improving their learning and study strategies.
+But they are still aware that their grade is largely based on undersampling via a small number of high-stakes exams. 
+Increasing the number of low-stakes assessments doesn't help much as long as grades are dominated by a small number of high-stakes assessments.
+
+[Other](-) factors also influence grade uncertainty.
+But rather than continuing this somewhat wonky exposition, let's examine a case study that will identify a few more salient points.
+
+When I took over my CS1 course in Fall 2017, the course grading structure looked like this:
+
+* 45% 15 weekly quizzes
+* 25% comprehensive final exam
+* 15% 5 large programming assignments
+* 10% participation
+* 5% ~50 smaller programming homework problems
+
+This is not a particularly unusual grading structure for a CS1 course.
+If anything, it already incorporates more low-stakes assessment than many similar courses, given the 15 weekly quizzes that replaced a high-stakes midterm.
+
+Continuing to estimate grade uncertainty by considering the amount of a student's grade they would have earned by mid-semester, which is also the drop deadline at Illinois, we can perform the following calculation for the 2017 edition of my course:
+
+* 21% on the quizzes +
+* 6% on the programming assignments +
+* 5% participation +
+* 2.5% on the smaller programming problems
+* = **34.5%** earned by midterm.
+
+Not bad for a course with a 25% final exam!
+
+However, the truth was a bit grimmer, due to some policy choices that also need to be considered when evaluating grade uncertainty.
+There were no deadlines on the small homework problems.
+Students can and did complete all of them at the very end of the semester.
+In addition, the penalty for late submissions on the larger programming assignments was 1% off per week.
+Given that the first larger programming assignment was not released until 10 weeks before the end of the semester, the maximum penalty on any programming assignment was 10%, a small amount that did not necessarily represent a strong incentive to start the work on time.
+
+Instructors are all familiar with student tendencies to procrastinate and engage in magical thinking about how much they’ll get done in the waning weeks of the semester.
+So it's fair to say that _at best_ students in this course would have earned 34.5% of their grade by the mid-semester drop deadline.
+But at worst they would have earned **only 26%**, if we remove the assessments that students had no real incentive to complete as scheduled.
+
+Now let's consider the information available to a student at mid-semester.
+At best they would have taken a few quizzes, completed the first few programming assignments, and kept up with the homework.
+That would give them a sense of how well they performed on those course components, and how well they would do in the ones remaining in the second half of the semester.
+
+But what about that 25% final exam lurking at the end?
+Here we identify another critical component of grade uncertainty, particularly when
+high-stakes assessments are used.
+The final exam was the _only_ assessment in the entire semester where students had to write  code on their own in a controlled environment.
+None of the quizzes contained programming questions, and other programming assignments were not done in controlled environments.
+
+When low- and high-stakes assessments are used together, it is important for reducing grade uncertainty that the low-stakes assessments help students predict how they will do on the higher-stakes assessments.
+If they do not, the high-stakes assessment can introduce as much grade uncertainty as if the low-stakes assessments
+were not present.
+So even though the Fall 2017 version of the course included low-stakes assessments (good), a combination of overly-lenient course deadline policies (in this context, bad) and a comprehensive exam that was not similar to other
+assessments (bad) left the course with what I consider to be a moderate level of grade uncertainty.
+There was room to improve.
+
+[I](-) modified the grading structure as follows.
+The percentages have changed slightly over the preceding years, but don't stray too far from the following:
+
+* 40% 12 weekly one-hour quizzes and 3 one-hour midterms
+* 30% 75+ daily homework problems
+* 30% larger multi-part programming assignment
+
+Deadlines for quizzes and homework are strictly enforced.
+But students are provided with a generous number of drops allowing them to skip a few homework or alleviate the effect of a few poor quiz scores—one of the nice features of using many smaller assessments.
+
+Reducing grade uncertainty was an explicit goal of this grading approach.
+So, unsurprisingly, students have earned almost exactly 50% of their grade at midterm.
+In addition, the progression from 0% on Day 0 to 100% at the end of the semester is as smooth as possible.
+There are some bumps for each weekly quiz and near deadlines for the multi-part programming assignment—I’m not naive enough to expect students to start these when they are released.
+But the goal is for students to both learn a bit every day and earn a bit of their grade every day.
+
+Compared with the previous approach, we’ve taken the following steps to reduce grade uncertainty.
+First, we dropped the summary final exam, replacing it assessments that support continuous practice and learning.
+Second, we've removed policies that allowed students to defer work until the end of the semester.
+These are bad choices for grade uncertainty, student mental health, and for a bunch of other reasons.
+
+Third, we've established a consistent weekly schedule and format that ensures students understand our assessment formats and how to prepare.
+Every quiz and midterm has the same format, combining multiple-choice questions and programming problems done in a proctored environment.
+Every week has the same format, with a sequence of lessons and homework problems culminating in a quiz.
+Quiz programming problems are highly-related to programming problems that students have done as homework.
+[We try to make it as obvious as possible how to succeed in the course.](+)
+Which also makes it as obvious to students when they are _not_ succeeding in the course and need to get more help.
+
+[The](-) effects of these changes have been interesting to observe.
+Let me share some interesting observations and results.
+
+First, a disclaimer.
+Obviously these changes were part of a complete overhaul that altered many other course components.
+I'm highly-wary of causal claims made outside of a controlled experimental environment.
+So consider yourself warned!
+I will try to argue that specific changes are related to reducing grade uncertainty.
+You are welcome to reject these claims.
+You should at least be skeptical.
+
+One of the most obvious changes was that the drop rate increased.
+Significantly.
+As someone who wants students to succeed in computer science, I'm sensitive to that number, and it hurts when it goes up on my watch.
+However, there was evidence that the course that I inherited was not demanding enough, and that students were drifting on to trouble in later courses.
+Drop-failure-withdraw (DFW) rates in one of our sentinel downstream courses did eventually drop substantially, which I interpreted as a good sign
+^[There's a whole additional post coming about the difficulties in calibrating CS1, particularly at Illinois.
+I've also worked to tackle the problem at the curricular level, by introducing a new required second-semester programming course for all students proceeding to our data structures course.].
+
+But the increase in the drop rate is not the whole story.
+Because when I compared the percentages of students who enrolled that earned an A grade (A- and higher) before and after I arrived, they were the same!
+The percentage of students completing the course with a failing grade had also held steady.
+Instead, the increase in drops was almost _exactly_ mirrored by a drop in students earning middling passing grades: Bs, Cs, and Ds.
+
+[Let](-) me point out a few more salient bits of the story.
+First, our advising office considers anything below an A grade in my course to be a sign of early trouble for our majors.
+A B will at least get you a sit down.
+Anything lower, probably a strong recommendation to retake the course, even with a passing grade.
+Overall majors do extremely well in my class—but they make up a small minority of the total student population, which includes students drawn from all across the university.
+
+At least some of those students may have been trying to transfer into computer science or a related major.
+For these students, anything below an A is equally problematic, but for a different reason: It might drop their GPA below our insanely-high transfer cutoff, and can completely scuttle their chances.
+
+So rather than looking at the failure rate, it makes more sense to me to look at the _success rate_, where success is defined by the expectations of our advising office and transfer process: as an A-level grade.
+Even if the drop rate rose, the success rate of my course did not change after I took over, even as it improved student performance in downstream courses.
+
+[Where](-) did all of the Bs and Cs go?
+I think that they dropped because we reduced grade uncertainty.
+With more knowledge about how they were doing at mid-semester, students are able to avoid earning a mark that was unacceptable to them.
+
+I can already hear you admonishing these poor students: "C'mon, a B is not a bad grade. Stop being so grade obsessed!"
+Maybe that's true.
+Maybe I think so, too.
+But maybe if students are choosing to drop mid-semester rather than earn a B, we should be asking why, and thinking about what we already know.
+Students may be overly anxious about their grades, but that anxiety is grounded in real fears about the impact of poor grades on their academic and professional futures.
+If we want them to worry less, we need to examine and address the roots of their fears, not just dismiss them.
+
+[My](-) hypothesis is that, by reducing grade uncertainty, I'm enabling students to
+make more informed choices.
+My evidence for this is that the number of B and C grades I hand out has dropped, with the increase almost exactly matched with an increase in the number of drops.
+As another piece of evidence, I'll also note that the number of students retaking my course for grade replacement has also dropped, hinting that fewer students end up with a grade in my class that they are unsatisfied with.
+
+Are there other possible explanations?
+Of course!
+We changed a bunch of things all at once, and when you do that it's hard to pin any specific result on any specific change.
+This post is long enough as it is, so I won't enumerate all of the other hypotheses that might be running through your mind right now.
+But one obvious one is that our grading scale is much more completion- and effort-based, might naturally produce more bi-modal distributions.
+
+You also might not like the result.
+By reducing grade _uncertainty_, are we also exacerbating grade _anxiety_?
+Maybe.
+Maybe Robert Pirsig was right, and students knowing their grade is a bad thing.
+But it's hard to accept the premise that either intentionally or unintentionally misleading students about their grade is either good or right.
+I agree that students choosing to drop rather than risk getting a B is a problem, but the solution is not to fool them into getting a grade they aren't satisfied with.
+
+[If](-) you want to reduce grade uncertainty in your course, here are four steps that you can take.
+
+1. Replace few high-stakes assessments with more appropriately-paced lower-stakes assessments.
+There _are_ ways to do this without introducing a huge amount of additional grading.
+1. Make sure your policies encourage students to work at an appropriate pace and not defer a lot of work
+until the end.
+1. Utilize consistent assessment formats so that students know what to expect and can learn how to prepare.
+1. Make sure that you have a consistent definition of _success_ that you can use to evaluate the results.
+
+A lot of these steps are also good for other reasons and will lead to other positive outcomes in your course.
+
+Be prepared for your drop rate to rise, even if your success rates also rise.
+But be confident that your changes are helping students develop more effective study strategies that will help them learn the material in your course.
+And that you are helping them make good decisions, which might include dropping your course.
+
