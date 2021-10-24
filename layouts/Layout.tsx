@@ -144,6 +144,9 @@ const Image: React.FC<{ src: string; alt: string; width: number; height: number;
   )
 }
 
+const ScreenOnly: React.FC = ({ children }) => <div className="screenonly">{children}</div>
+const PrintOnly: React.FC = ({ children }) => <div className="printonly">{children}</div>
+
 const Wrapper: React.FC<{
   frontmatter: {
     title: string
@@ -151,10 +154,11 @@ const Wrapper: React.FC<{
     publishedAt: string
     reading: { text: string }
     noDate?: boolean
+    noTitle?: boolean
     technical?: boolean
   }
 }> = ({ frontmatter, children }) => {
-  const { title, description, technical, publishedAt, reading } = frontmatter
+  const { title, description, technical, publishedAt, reading, noDate, noTitle } = frontmatter
   return (
     <>
       <Head>
@@ -169,22 +173,24 @@ const Wrapper: React.FC<{
       </Head>
       <Header />
       <main className="responsive paddings">
-        <div id="titleContainer">
-          <div style={{ flex: 1 }}>
-            <h1>{title}</h1>
-            {technical && <span className="technical">(Technical)</span>}
-          </div>
-          {!frontmatter.noDate && (
-            <div id="publishedAt">
-              <strong>{publishedAt || "Draft"}</strong>
-              <br />
-              <em>{reading.text}</em>
+        {!noTitle && (
+          <div id="titleContainer">
+            <div style={{ flex: 1 }}>
+              <h1>{title}</h1>
+              {technical && <span className="technical">(Technical)</span>}
             </div>
-          )}
-        </div>
+            {!noDate && (
+              <div id="publishedAt">
+                <strong>{publishedAt || "Draft"}</strong>
+                <br />
+                <em>{reading.text}</em>
+              </div>
+            )}
+          </div>
+        )}
         {children}
       </main>
-      {!frontmatter.noDate && (
+      {!noDate && (
         <div className="thanks">
           Thanks for reading!
           <br />
@@ -197,5 +203,5 @@ const Wrapper: React.FC<{
     </>
   )
 }
-const components = { wrapper: Wrapper, a: A, Code, Footnote, Image }
+const components = { wrapper: Wrapper, a: A, Code, Footnote, Image, ScreenOnly, PrintOnly }
 export default components

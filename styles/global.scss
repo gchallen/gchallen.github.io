@@ -17,9 +17,13 @@ $maxTextWidth: math.div($minTextWidth, $minFontSize) * $maxFontSize;
     line-height: 1.1em;
     margin-top: 0.5em;
   }
-  h2 {
+  h2,
+  .h2 {
     font-size: 1.4em;
     margin-bottom: 0.5em;
+  }
+  @media print {
+    font-size: 16px;
   }
 }
 
@@ -35,8 +39,13 @@ body {
   color: #555555;
   background-color: #fdfdfd;
   &.dark-mode {
-    background-color: #333333;
     color: #cccccc;
+    background-color: #333333;
+  }
+  @media print {
+    color: #555555 !important;
+    background-color: #fdfdfd !important;
+    font-size: 16px;
   }
 }
 h1,
@@ -50,9 +59,15 @@ h6 {
   .dark-mode & {
     color: #dddddd;
   }
+  @media print {
+    color: #555555 !important;
+  }
 }
 div.lead {
   p {
+    font-size: 1.1em;
+  }
+  @media print {
     font-size: 1.1em;
   }
 }
@@ -63,6 +78,9 @@ p {
   max-width: #{$maxTextWidth}px;
   margin-left: auto;
   margin-right: auto;
+  @media print {
+    max-width: 100%;
+  }
 }
 a {
   text-decoration: underline;
@@ -82,6 +100,16 @@ a {
       text-decoration: underline;
     }
   }
+  @media print {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline !important;
+    }
+    color: darkblue !important;
+    &.anchor {
+      color: inherit !important;
+    }
+  }
 }
 h2 a {
   color: inherit;
@@ -96,6 +124,9 @@ hr {
   border-top: 4px solid #eeeeee;
   .dark-mode & {
     border-top: 4px solid #888888;
+  }
+  @media print {
+    border-top: 4px solid #eeeeee !important;
   }
 }
 div.pullquote {
@@ -120,6 +151,10 @@ div.pullquote {
     color: #cccccc;
     border-left: 1px solid #cccccc;
   }
+  @media print {
+    color: #666666 !important;
+    border-left: 1px solid #444444 !important;
+  }
 }
 span.firstword {
   float: left;
@@ -135,6 +170,9 @@ span.restword {
 }
 .paddings {
   padding-top: calc(68px + 2em);
+  @media print {
+    padding-top: 0;
+  }
 }
 sup.footnote {
   vertical-align: top;
@@ -149,6 +187,10 @@ sup.footnote {
   .dark-mode & {
     background-color: #333333 !important;
     color: #cccccc !important;
+  }
+  @media print {
+    color: #555555 !important;
+    background-color: #fefefe !important;
   }
   font-size: 0.8em;
   max-width: 20em;
@@ -189,6 +231,9 @@ a.inverted-link {
   .dark-mode & {
     background-color: #333333;
   }
+  @media print {
+    background-color: #fdfdfd !important;
+  }
   a {
     text-decoration: none;
     &:hover {
@@ -222,6 +267,9 @@ footer {
         text-decoration: underline;
       }
     }
+  }
+  @media print {
+    display: none;
   }
 }
 div#titleContainer {
@@ -266,6 +314,10 @@ header {
       background-color: #333333;
       box-shadow: 0px 3px 8px #222222;
     }
+    @media print {
+      background-color: #fdfdfd !important;
+      box-shadow: 0px 3px 8px #dddddd !important;
+    }
   }
   .box {
     flex: 1;
@@ -295,6 +347,9 @@ header {
     div {
       margin-right: 0.7em;
     }
+  }
+  @media print {
+    display: none;
   }
 }
 .technical {
@@ -332,11 +387,19 @@ header {
       border: 1px solid #aaaaaa;
     }
     .dark-mode & {
-      background-color: #333333;
       color: #cccccc;
+      background-color: #333333;
       border: 1px solid #cccccc;
       &:disabled {
         border: 1px solid #555555;
+      }
+    }
+    @media print {
+      color: #555555 !important;
+      background-color: #fdfdfd !important;
+      border: 1px solid #555555 !important;
+      &:disabled {
+        border: 1px solid #aaaaaa !important;
       }
     }
   }
@@ -357,12 +420,23 @@ a.anchorTarget {
   position: relative;
   top: -100px;
 }
+@media print {
+  a.anchorTarget {
+    display: block;
+    visibility: hidden;
+    position: relative;
+    top: 0px;
+  }
+}
 blockquote {
   padding-left: 16px;
   margin-left: 16px;
   border-left: 1px solid #555555;
   .dark-mode & {
     border-left: 1px solid #cccccc;
+  }
+  @media print {
+    border-left: 1px solid #555555 !important;
   }
 }
 div.thanks {
@@ -374,10 +448,38 @@ div.note {
   .dark-mode & {
     background-color: #444444;
   }
+  @media print {
+    background-color: #eeeeee !important;
+  }
   padding-top: 16px;
   padding-left: 24px;
   padding-right: 24px;
   p:last-of-type {
     padding-bottom: 16px;
+  }
+}
+@page {
+  size: Letter;
+  margin: 0.5in;
+}
+.screenonly {
+  display: none;
+  @media screen {
+    display: block;
+  }
+}
+.printonly {
+  display: none;
+  @media print {
+    display: block;
+  }
+}
+@media print {
+  td {
+    padding-right: 8px;
+  }
+  table {
+    border-spacing: 0;
+    margin-bottom: 1em;
   }
 }

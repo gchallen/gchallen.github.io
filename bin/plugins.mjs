@@ -69,22 +69,23 @@ export function headings() {
     visit(ast, "heading", visitor)
 
     function visitor(node) {
-      const data = node.data || (node.data = {})
-      const props = data.hProperties || (data.hProperties = {})
       const slugId = slugify(toString(node).toLowerCase())
-
-      //data.id = slugId
-      //props.id = slugId
-
       const originalChildren = [...node.children]
 
       node.children = [
-        { type: "link", url: "", data: { hProperties: { className: "anchorTarget", id: slugId } } },
+        { type: "link", url: "#", data: { hProperties: { className: "anchorTarget", id: slugId } } },
         {
           type: "link",
           url: `#${slugId}`,
           data: {
-            hProperties: { className: "anchor" },
+            hProperties: { className: "anchor screenonly" },
+          },
+          children: originalChildren,
+        },
+        {
+          type: "div",
+          data: {
+            hProperties: { className: "printonly" },
           },
           children: originalChildren,
         },

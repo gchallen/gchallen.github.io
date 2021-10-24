@@ -16,6 +16,7 @@ import slugify from "slugify"
 import moment from "moment"
 import { links, headings, pullquotes, highlighter, fixfootnotes, fiximages } from "./plugins.mjs"
 import readingTime from "reading-time"
+import remarkGfm from "remark-gfm"
 
 const parser = new ArgumentParser()
 parser.add_argument("input")
@@ -77,6 +78,7 @@ async function update(source) {
         highlighter,
         fixfootnotes,
         smartypants,
+        remarkGfm,
         [fiximages, { url: path.join("mdx", url) }],
       ],
     })

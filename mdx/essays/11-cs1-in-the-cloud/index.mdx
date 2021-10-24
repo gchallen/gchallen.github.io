@@ -1,0 +1,80 @@
+---
+title: CS1 in the Cloud
+description: >
+  Want to effectively teach CS1 to thousands of students? You're going to need
+  some machines. Lots of machines. I'll describe how we've established our CS1
+  cloud using virtual machines and Kubernetes, and how we arrived at this
+  particular set of design choices.
+published: 2021-08-27
+technical: true
+---
+
+[I](-) teach [CS1](https://www.cs124.org) to thousands of students.
+I also build and deploy lots of custom tools to support their learning.
+
+Deploying these tools and services at scale requires a fair number of computational resources, and the challenges associated with managing them eventually led us to deploy our own private cloud.
+How do we do this, and how did we get here?
+I'm glad you asked!^[Well, maybe you didn't ask, but here we go anyway.]
+It's been quite a journey.
+
+## The Standard Package
+
+[I](-) came to Illinois four years ago from a research faculty position in computer systems at the University at Buffalo, where I administered a smartphone testbed used by hundreds of local students and staff and taught a large course on computer operating systems.
+As a systems faculty, I was used to having access to servers.
+As a testbed administrator, I was used to maintaining backend systems.
+And as an innovative educator, I was already using these abilties to create novel educational experiences for my operating systems students.
+
+So when I arrived at Illinois and was assigned to co-teach a 800-student course, one of my first questions was naturally: Where are my servers?
+I knew that [I was going to need machines.
+_Lots of machines_.](+)
+
+You might think that this would be the most natural request in the world.
+A _computer_ science instructor needs some _computers_ to teach their large course on _computer_ science.
+What was I going to do with these machines?
+Computer science stuff!
+Serve the course website.
+Put up my Discourse course forum so that [I didn't have to inflict Piazza](/essays/2021-06-17-why-i-don't-use-piazza) on my students.
+Run autograding jobs.
+And who knows what else!
+I'm a computer scientist.
+I know how to create code that puts computers to work solving problems.
+If I didn't, I'd be a pretty poor choice to teach students how to do the same thing.
+
+So you'd understand how surprised I was to find that this kind of request was—and still is!—considered fairly unusual.
+I was able to initially obtain what my IT staff referred to as the "standard package", a set of three fairly modest on-campus virtual machines.
+I knew that these wouldn't be sufficient, but I got to work setting them up anyway.
+
+Only to belatedly realize that they all had IP address in private ranges that were only routeable on campus.
+Illinois uses the `172` private IP address range that was previously unfamiliar to me.
+Still not sure why.
+This also has caused conflicts with Docker.
+Obtaining a public IP required several more roundtrips with local IT staff.
+But two weeks into the semester we were finally able to set up the course forum so that students could access it from off campus.
+
+There's a whole separate post coming discussing how poor IT departments are at supporting instructors who want to build innovative educational tools.
+But that's not this point, and I promised to get to details of our current cloud setup.
+
+## Machines. Lots of Machines.
+
+[Clearly](-) I wrote this essay largely so that I could abuse that fantastic quote from the Matrix.
+But it was clear to me fairly quickly that some of the things that I wanted to do were going to need more server power.
+
+For example, previously live coding exercises in class had been done using pen and paper.
+Don't get me started on the pedagogical flaws with this approach.
+But at minimum my inability to write legibly made continuing this practice not an option.
+I was able to quickly build out a server that could run Java code fast enough for interactive use—a predecessor of the [much more sophisticated and safer playground backend that is still in use in my class](https://www.cs124.org/best/#playgrounds).
+
+But I needed somewhere to run it.
+Since this was going to run during class and be used simultaneously by hundreds of students, load spikes were easy to anticipate.
+And as anyone who has stood in front of a room of students knows, there is nothing more demoralizing than having technology fail during class.
+Since a good chunk of class would be spent interacting with this Java playground, it going down would leave me dead in the water.
+
+So I went back to my IT staff and, through some mixture of bribes and threats, was able to get them to spin up my first cluster of twelve machines, each with 4 cores and 4GB of RAM.
+I containerized by Java playground backend, and used Docker Cloud to deploy it across the entire cluster of machines.
+[It was Spring 2018 and I had created my first CS1 cloud.](+)
+
+At that point the playground backend was the only thing running in my cloud.
+Other components of the course backend—including autograding and grade delivery systems—were still deployed on individually-managed machines, usually using `pm2`.
+But this was all about to change.
+
+## Enter Kubernetes
