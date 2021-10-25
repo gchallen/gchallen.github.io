@@ -34,8 +34,7 @@
     "react-icons": "^4.3.1",
     "react-popper-tooltip": "^4.3.1",
     "react-sidebar": "^3.0.2",
-    "rooks": "^5.7.3",
-    "use-dark-mode": "^2.3.1"
+    "rooks": "^5.7.3"
   },
   "devDependencies": {
     "@ngsctt/remark-smartypants": "^0.2.0",

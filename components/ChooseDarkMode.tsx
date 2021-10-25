@@ -1,28 +1,75 @@
-import { CSSProperties, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { FaMoon, FaSun } from "react-icons/fa"
-import useDarkMode from "use-dark-mode"
+
+export interface DarkModeContext {
+  darkMode: boolean
+  setDarkMode: (darkMode: boolean) => void
+}
+export const DarkModeContext = createContext<DarkModeContext>({
+  darkMode: false,
+  setDarkMode: () => {
+    throw "DarkModeContext not available"
+  },
+})
+export const DarkModeProvider: React.FC = ({ children }) => {
+  const [darkMode, setDarkMode] = useState(
+    typeof window !== "undefined" ? document.body.classList.contains("dark-mode") : false
+  )
+
+  useEffect(() => {
+    document.body.classList.add(darkMode ? "dark-mode" : "light-mode")
+    document.body.classList.remove(darkMode ? "light-mode" : "dark-mode")
+    localStorage.setItem("darkMode", darkMode.toString())
+  }, [darkMode])
+
+  useEffect(() => {
+    const onStorage = () => {
+      const currentValue = document.body.classList.contains("dark-mode")
+      const storageValue = localStorage.getItem("darkMode")
+      const newValue = storageValue !== null ? JSON.parse(storageValue) : currentValue
+      if (newValue !== currentValue) {
+        setDarkMode(newValue)
+      }
+    }
+    window.addEventListener("storage", onStorage)
+
+    return () => {
+      window.removeEventListener("storage", onStorage)
+    }
+  }, [])
+
+  return <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>{children}</DarkModeContext.Provider>
+}
+
+const useDarkMode = (): DarkModeContext => {
+  return useContext(DarkModeContext)
+}
 
 const ChooseDarkMode: React.FC<{ text?: boolean }> = ({ text }) => {
-  const darkMode = useDarkMode(false)
+  const { darkMode, setDarkMode } = useDarkMode()
   const [mounted, setMounted] = useState(false)
+
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  const style = { visibility: mounted ? "visible" : "hidden" } as CSSProperties
-
   if (!text) {
-    if (mounted && darkMode.value) {
-      return <FaSun onClick={darkMode.disable} style={{ verticalAlign: "middle" }} />
-    } else {
-      return <FaMoon onClick={darkMode.enable} style={{ verticalAlign: "middle", ...style }} />
-    }
-  } else {
-    if (mounted && darkMode.value) {
-      return <span onClick={darkMode.disable}>Light Mode</span>
+    if (mounted && darkMode) {
+      return <FaSun onClick={() => setDarkMode(false)} style={{ verticalAlign: "middle" }} />
     } else {
       return (
-        <span onClick={darkMode.enable} style={style}>
+        <FaMoon
+          onClick={() => setDarkMode(true)}
+          style={{ verticalAlign: "middle", visibility: mounted ? "visible" : "hidden" }}
+        />
+      )
+    }
+  } else {
+    if (mounted && darkMode) {
+      return <span onClick={() => setDarkMode(false)}>Light Mode</span>
+    } else {
+      return (
+        <span onClick={() => setDarkMode(true)} style={{ visibility: mounted ? "visible" : "hidden" }}>
           Dark Mode
         </span>
       )
