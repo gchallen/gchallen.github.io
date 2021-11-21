@@ -484,3 +484,9 @@ table {
 li > p {
   margin-bottom: 0.2em;
 }
+.ace_editor {
+  background-color: #fdfdfd;
+  .dark-mode & {
+    background-color: #333333;
+  }
+}

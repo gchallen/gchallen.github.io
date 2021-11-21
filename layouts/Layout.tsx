@@ -1,69 +1,12 @@
-import dynamic from "next/dynamic"
 import Head from "next/head"
 import NextImage from "next/image"
 import Link from "next/link"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { onlyText } from "react-children-utilities"
-import { useInView } from "react-hook-inview"
 import { usePopperTooltip } from "react-popper-tooltip"
 import "react-popper-tooltip/dist/styles.css"
+import Code from "../components/Code"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
-
-const Ace = dynamic(() => import("react-ace"), { ssr: false })
-
-const Code: React.FC<{ originalCode: string; mode: string; children: string }> = ({ mode, children, ...props }) => {
-  const code = useMemo(() => Buffer.from(props.originalCode, "base64").toString(), [props.originalCode])
-
-  const [height, setHeight] = useState(0)
-  const [state, setState] = useState<"static" | "loading" | "loaded">("static")
-  const ref = useRef<HTMLDivElement>(null)
-
-  const onEnter = useCallback(() => {
-    setState("loading")
-  }, [])
-
-  const [setRef, _] = useInView({
-    threshold: 0,
-    unobserveOnEnter: true,
-    onEnter,
-  })
-
-  useEffect(() => {
-    setRef(ref.current)
-    setHeight(ref.current?.clientHeight ?? 0)
-  }, [])
-
-  const ace = state !== "static" && (
-    <Ace
-      mode={mode}
-      width="100%"
-      height={`${height}px`}
-      fontSize="1rem"
-      showPrintMargin={false}
-      defaultValue={code}
-      onBeforeLoad={(ace) => {
-        ace.config.set("basePath", `https://cdn.jsdelivr.net/npm/ace-builds@${ace.version}/src-min-noconflict`)
-      }}
-      style={{ display: state === "loaded" ? "block" : "none" }}
-      onLoad={() => {
-        setState("loaded")
-      }}
-    />
-  )
-
-  return (
-    <>
-      <div
-        ref={ref}
-        className="ace_editor"
-        dangerouslySetInnerHTML={{ __html: children }}
-        style={{ display: state !== "loaded" ? "block" : "none" }}
-      />
-      {ace && ace}
-    </>
-  )
-}
 
 const Footnote: React.FC<{ counter: string }> = ({ counter, children }) => {
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip(

@@ -41,7 +41,7 @@ export const DarkModeProvider: React.FC = ({ children }) => {
   return <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>{children}</DarkModeContext.Provider>
 }
 
-const useDarkMode = (): DarkModeContext => {
+export const useDarkMode = (): DarkModeContext => {
   return useContext(DarkModeContext)
 }
 
