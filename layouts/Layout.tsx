@@ -89,6 +89,7 @@ const Image: React.FC<{ src: string; alt: string; width: number; height: number;
 
 const ScreenOnly: React.FC = ({ children }) => <div className="screenonly">{children}</div>
 const PrintOnly: React.FC = ({ children }) => <div className="printonly">{children}</div>
+const Comment: React.FC = () => null
 
 const Wrapper: React.FC<{
   frontmatter: {
@@ -146,5 +147,5 @@ const Wrapper: React.FC<{
     </>
   )
 }
-const components = { wrapper: Wrapper, a: A, Code, Footnote, Image, ScreenOnly, PrintOnly }
+const components = { wrapper: Wrapper, a: A, Code, Footnote, Image, ScreenOnly, PrintOnly, Comment }
 export default components
