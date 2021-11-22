@@ -61,7 +61,7 @@ const Essays: React.FC<{
               ))}
             </>
           )}
-          {drafts && drafts.length > 0 && h1 ? <h2>Published</h2> : <h3>Published</h3>}
+          {drafts && drafts.length > 0 && <>{h1 ? <h2>Published</h2> : <h3>Published</h3>}</>}
           {published.slice(0, limit ? 4 : Infinity).map((essay, i) => (
             <Summary key={i} essay={essay} />
           ))}

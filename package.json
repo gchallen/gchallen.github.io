@@ -13,7 +13,7 @@
     "ncu": "ncu",
     "serve": "next start",
     "start": "run-p start-mdx start-next",
-    "start-mdx": "DEVELOPMENT=true node bin/build.mjs mdx output --clean",
+    "start-mdx": "NEXT_PUBLIC_SHOW_DRAFTS=true node bin/build.mjs mdx output --clean",
     "start-next": "next dev",
     "prettier": "prettier -w --plugin=prettier-plugin-organize-imports . && prettier-package-json --write"
   },
