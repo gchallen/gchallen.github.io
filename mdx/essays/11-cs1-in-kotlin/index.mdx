@@ -82,7 +82,7 @@ He was the first person to suggest Kotlin, only a few weeks before retiring^[He'
 I had never heard of the language, and I'm not sure exactly when I began experimenting with it.
 But by the time I began rebuilding some of my teaching tools a few years later, in the summer of 2019, Kotlin was the language of choice.
 [Jeed](https://github.com/cs125-illinois/jeed), our high-performance Java and Kotlin toolkit and playground backend, is the first large project that I began in Kotlin, and is something that we continue to use and improve today.
-Kotlin is now my primary development language for non-frontend tasks, and I maintain a bunch of different tools in the language—including our containerized autograder, course plugins for both [Gradle](https://github.com/cs125-illinois/gradlegrader) and [IntelliJ](https://github.com/cs125-illinois/intellijlogger), our new small-problem authoring system ([1](https://github.com/cs125-illinois/jenisol), [2](https://github.com/cs125-illinois/questioner)), a small library of [basic CS1 data structures](https://github.com/cs125-illinois/libcs1), and greenfield projects like a new [polyglot playground backend](https://github.com/cs124-illinois/playground).
+Kotlin is now my primary development language for non-frontend tasks, and I maintain a bunch of different tools in the language—including our containerized autograder, course plugins for both [Gradle](https://github.com/cs125-illinois/gradlegrader) and [IntelliJ](https://github.com/cs125-illinois/intellijlogger), our new small-problem authoring system ([1](https://github.com/cs125-illinois/jenisol), [2](https://github.com/cs125-illinois/questioner)), a small library of [basic CS1 data structures](https://github.com/cs125-illinois/libcs1), and greenfield projects like a new [polyglot playground backend](https://github.com/cs124-illinois/playground)^[Which is getting a bit of a debut on this page...].
 
 As I began working in Kotlin I noticed something right away.
 I liked it.
@@ -491,7 +491,7 @@ public class Person {
   }
 }
 // Now we can (finally) write:
-Person person = new Person("Geoffrey", 41);
+Person person = new Person("Geoffrey", 42);
 person.setAge(person.getAge() + 1);
 ```
 
@@ -509,11 +509,11 @@ class Person:
 class Person:
     name: str
     age: int
-person = Person("Geoffrey", 40)
+person = Person("Geoffrey", 42)
 person.name = "Geoffrey Challen"
 
 # Although it's always tempting to just abuse a dictionary...
-# person = { "name": "Geoffrey", "age": 40 }
+# person = { "name": "Geoffrey", "age": 42 }
 print(person)
 ```
 
@@ -522,7 +522,7 @@ Data classes also come with sensible `toString` and copy methods, and support de
 
 ```kotlin
 data class Person(var name: String, var age: Int)
-val person = Person("Geoffrey", 40)
+val person = Person("Geoffrey", 42)
 person.age++
 println(person)
 val (name, age) = person

@@ -110,17 +110,22 @@
   resolved "https://registry.yarnpkg.com/@cs124/jeed-types/-/jeed-types-2021.11.1.tgz#81a4de5571bb57a853f953276b802addcaf2fdb1"
   integrity sha512-M1fCZ8pzxnxMXClTHJsNWs4pAdXIEYROSMdKK7/nrTUkKRzt+3kCfN7z3IJDw4IUQr6FqmY4HnaB5ZIqD8sJlw==
 
-"@cs124/playground-react@^2021.11.2":
-  version "2021.11.2"
-  resolved "https://registry.yarnpkg.com/@cs124/playground-react/-/playground-react-2021.11.2.tgz#f9f72fa2ba37092ebfb56ff9251314355e7d690a"
-  integrity sha512-v4e4SQbUY+pvWPrG5t+FkqFcI8cFqqLAET+j2upl4B5d/EhC3Wwf0B6BqjbXXzmovqF8FXYH9w/yQUk7KZLrWw==
+"@cs124/playground-react@^2021.11.3":
+  version "2021.11.3"
+  resolved "https://registry.yarnpkg.com/@cs124/playground-react/-/playground-react-2021.11.3.tgz#3dc844dfd2c7a2b628b0b95a72cddc76814e10a8"
+  integrity sha512-IZgQAaBSIUwhgLVgNbS22I9HkuerROeqQx3mvt0geQoZfrh5Q3a83HFdY41pwMl8d5hMlWmYHTkdnk0GXFklZA==
   dependencies:
     "@cs124/playground-types" "2021.11.2"
 
-"@cs124/playground-types@2021.11.2", "@cs124/playground-types@^2021.11.2":
+"@cs124/playground-types@2021.11.2":
   version "2021.11.2"
   resolved "https://registry.yarnpkg.com/@cs124/playground-types/-/playground-types-2021.11.2.tgz#1362fd8ae5c8ec008849022d3004c6ab555d957e"
   integrity sha512-h+eWqfsduOe8JsGEgRwl21LU/xd0KgxK/KC9I0f0tHGHQ9kTYxPR05eNWaZw7IVMV8LY0ba2hNdmDTzdUWuIZg==
+
+"@cs124/playground-types@^2021.11.3":
+  version "2021.11.3"
+  resolved "https://registry.yarnpkg.com/@cs124/playground-types/-/playground-types-2021.11.3.tgz#a73fd2075038360b9ee637a309d1079f51b5dbc4"
+  integrity sha512-rhAa3wSQdTsAsFrAhpSfst3sSuNcAv7PqjLzlRp5hYEUB3eFKEbRRdFool4eQuHSYi3SbGDITcekoWs2qbva2g==
 
 "@cspotcode/source-map-consumer@0.8.0":
   version "0.8.0"
@@ -639,10 +644,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@17.0.35":
-  version "17.0.35"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.35.tgz#217164cf830267d56cd1aec09dcf25a541eedd4c"
-  integrity sha512-r3C8/TJuri/SLZiiwwxQoLAoavaczARfT9up9b4Jr65+ErAUX3MIkU0oMOQnrpfgHme8zIqZLX7O5nnjm5Wayw==
+"@types/react@17.0.36":
+  version "17.0.36"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.36.tgz#0d81e0e2419e6a8e9ba6af5e3a0608e70835d7d1"
+  integrity sha512-CUFUp01OdfbpN/76v4koqgcpcRGT3sYOq3U3N6q0ZVGcyeP40NUdVU+EWe3hs34RNaTefiYyBzOpxBBidCc5zw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -3613,10 +3618,10 @@ js-yaml@^4.0.0, js-yaml@^4.1.0:
   dependencies:
     argparse "^2.0.1"
 
-jsdom@^18.1.0:
-  version "18.1.0"
-  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-18.1.0.tgz#43e88a0e4d6d2aeeec0a18810c0934c02b2ae3e4"
-  integrity sha512-q6QFAfSGLEUqRJ+GCV6vn6ItZCMARWh1d33wiJZPxc+wMNw7HK71JPmQ4C2lIZAsBH8TiJu4uplach/UcrC6bQ==
+jsdom@^18.1.1:
+  version "18.1.1"
+  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-18.1.1.tgz#15ec896f5ab7df9669a62375606f47c8c09551aa"
+  integrity sha512-NmJQbjQ/gpS/1at/ce3nCx89HbXL/f5OcenBe8wU1Eik0ROhyUc3LtmG3567dEHAGXkN8rmILW/qtCOPxPHQJw==
   dependencies:
     abab "^2.0.5"
     acorn "^8.5.0"
@@ -6474,10 +6479,10 @@ slash@^3.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
-slugify@^1.6.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.2.tgz#4cb97220a2278e1b86fb017c6da668e6a865354c"
-  integrity sha512-XMtI8qD84LwCpthLMBHlIhcrj10cgA+U/Ot8G6FD6uFuWZtMfKK75JO7l81nzpFJsPlsW6LT+VKqWQJW3+6New==
+slugify@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.3.tgz#325aec50871acfb17976f2d3cb09ee1e7ab563be"
+  integrity sha512-1MPyqnIhgiq+/0iDJyqSJHENdnH5MMIlgJIBxmkRMzTNKlS/QsN5dXsB+MdDq4E6w0g9jFA4XOTRkVDjDae/2w==
 
 smart-buffer@^4.1.0:
   version "4.1.0"
