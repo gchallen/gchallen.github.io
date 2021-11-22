@@ -91,6 +91,37 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@cs124/jeed-output@^2021.11.1":
+  version "2021.11.1"
+  resolved "https://registry.yarnpkg.com/@cs124/jeed-output/-/jeed-output-2021.11.1.tgz#23222e874e90f783f8a4286a0be092c09409032b"
+  integrity sha512-isgWhfOvi7P5d47YXDT9oCRkm4GL2B5+4CUyTmMiwY5b37lbYAtiH9TDpBRF8/OkxG1C8Go4ECACqm2hI5ss+A==
+  dependencies:
+    "@cs124/jeed-types" "2021.11.1"
+
+"@cs124/jeed-react@^2021.11.1":
+  version "2021.11.1"
+  resolved "https://registry.yarnpkg.com/@cs124/jeed-react/-/jeed-react-2021.11.1.tgz#6b553609e47acd399d7b9aeb24ab5c725664dc71"
+  integrity sha512-QOzTOpqBn8R1SFTuyRlYrGzGnklpPzMt7OanrMME+bnV/KX01mZWbat518i//L5pn1mt3HDxjyzh3ksloKZP8w==
+  dependencies:
+    "@cs124/jeed-types" "2021.11.1"
+
+"@cs124/jeed-types@2021.11.1", "@cs124/jeed-types@^2021.11.1":
+  version "2021.11.1"
+  resolved "https://registry.yarnpkg.com/@cs124/jeed-types/-/jeed-types-2021.11.1.tgz#81a4de5571bb57a853f953276b802addcaf2fdb1"
+  integrity sha512-M1fCZ8pzxnxMXClTHJsNWs4pAdXIEYROSMdKK7/nrTUkKRzt+3kCfN7z3IJDw4IUQr6FqmY4HnaB5ZIqD8sJlw==
+
+"@cs124/playground-react@^2021.11.2":
+  version "2021.11.2"
+  resolved "https://registry.yarnpkg.com/@cs124/playground-react/-/playground-react-2021.11.2.tgz#f9f72fa2ba37092ebfb56ff9251314355e7d690a"
+  integrity sha512-v4e4SQbUY+pvWPrG5t+FkqFcI8cFqqLAET+j2upl4B5d/EhC3Wwf0B6BqjbXXzmovqF8FXYH9w/yQUk7KZLrWw==
+  dependencies:
+    "@cs124/playground-types" "2021.11.2"
+
+"@cs124/playground-types@2021.11.2", "@cs124/playground-types@^2021.11.2":
+  version "2021.11.2"
+  resolved "https://registry.yarnpkg.com/@cs124/playground-types/-/playground-types-2021.11.2.tgz#1362fd8ae5c8ec008849022d3004c6ab555d957e"
+  integrity sha512-h+eWqfsduOe8JsGEgRwl21LU/xd0KgxK/KC9I0f0tHGHQ9kTYxPR05eNWaZw7IVMV8LY0ba2hNdmDTzdUWuIZg==
+
 "@cspotcode/source-map-consumer@0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-consumer/-/source-map-consumer-0.8.0.tgz#33bf4b7b39c178821606f669bbc447a6a629786b"
@@ -453,6 +484,11 @@
     "@types/node" "*"
     "@types/responselike" "*"
 
+"@types/capitalize@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/capitalize/-/capitalize-2.0.0.tgz#8efa550b70c7d05bd5a323d39ba762f3f058cdfb"
+  integrity sha512-Jxz08Zch+/J+R3DUcPGmXZ4hNzZImd/FXXij32ByTfclrCQr15+geQjV5teTyFQb3zYPi7O5pRv2/YsyDfRmjA==
+
 "@types/child-process-promise@^2.2.2":
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/@types/child-process-promise/-/child-process-promise-2.2.2.tgz#ac7d640a6289f7caa6102d92d83a0123a07a4937"
@@ -628,6 +664,11 @@
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.1.tgz#18845205e86ff0038517aab7a18a62a6b9f71275"
   integrity sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==
+
+"@types/string-hash@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@types/string-hash/-/string-hash-1.1.1.tgz#4c336e61d1e13ce2d3efaaa5910005fd080e106b"
+  integrity sha512-ijt3zdHi2DmZxQpQTmozXszzDo78V4R3EdvX0jFMfnMH2ZzQSmCbaWOMPGXFUYSzSIdStv78HDjg32m5dxc+tA==
 
 "@types/unist@*", "@types/unist@^2.0.0", "@types/unist@^2.0.2":
   version "2.0.3"
@@ -1350,6 +1391,11 @@ caniuse-lite@^1.0.30001280:
   version "1.0.30001282"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001282.tgz#38c781ee0a90ccfe1fe7fefd00e43f5ffdcb96fd"
   integrity sha512-YhF/hG6nqBEllymSIjLtR2iWDDnChvhnVJqp+vloyt2tEHFG1yBR+ac2B/rOw0qOK0m0lEXU2dv4E/sMk5P9Kg==
+
+capitalize@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/capitalize/-/capitalize-2.0.4.tgz#eed7f94c6699a318eeef6e68967fe139c764b866"
+  integrity sha512-wcSyiFqXRYyCoqu0o0ekXzJAKCLMkqWS5QWGlgTJFJKwRmI6pzcN2hBl5VPq9RzLW5Uf4FF/V/lcFfjCtVak2w==
 
 cardinal@^2.1.1:
   version "2.1.1"
@@ -6256,6 +6302,11 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
+runtypes@^6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/runtypes/-/runtypes-6.5.0.tgz#019c70c8f20659ca0339c95cb1e881573ba30d82"
+  integrity sha512-+jK1mRi6KvZ9m+LGxCYUY9CJMxCLz8LDRiGtBrq5UKvgOv2MocrXMc2D1dDkY7gRR8BzfG64yTsGdS2aC7arpQ==
+
 sade@^1.7.3:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/sade/-/sade-1.7.4.tgz#ea681e0c65d248d2095c90578c03ca0bb1b54691"
@@ -6579,7 +6630,7 @@ stream-parser@^0.3.1:
   dependencies:
     debug "2"
 
-string-hash@1.1.3:
+string-hash@1.1.3, string-hash@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/string-hash/-/string-hash-1.1.3.tgz#e8aafc0ac1855b4666929ed7dd1275df5d6c811b"
   integrity sha1-6Kr8CsGFW0Zmkp7X3RJ1311sgRs=

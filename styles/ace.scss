@@ -29,7 +29,6 @@
   counter-reset: ace_line;
 }
 .ace_editor {
-  margin-bottom: 1em;
   font-family: "Monaco", monospace;
   font-size: 1rem;
   line-height: 1.4;
@@ -283,6 +282,39 @@
     .ace_indent-guide {
       background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYHB3d/8PAAOIAdULw8qMAAAAAElFTkSuQmCC)
         right repeat-y;
+    }
+  }
+}
+.ace-frame {
+  position: relative;
+  border: 1px solid lightgrey;
+  padding-top: 8px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #fefefe;
+
+  .dark-mode & {
+    border: 1px solid #222222;
+    background-color: #222222;
+  }
+
+  div.output {
+    white-space: pre-wrap;
+    min-height: calc(1.5em + 16px);
+    font-family: Monaco, monospace;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: #222222;
+    font-size: 0.8em;
+    color: #dddddd;
+    padding: 8px;
+    max-height: calc(30em + 16px);
+    overflow: scroll;
+    span.error {
+      color: red;
+    }
+    span.warning {
+      color: goldenrod;
     }
   }
 }

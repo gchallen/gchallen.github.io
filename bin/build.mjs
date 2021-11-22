@@ -1,22 +1,22 @@
 #!/usr/bin/env node
 
+import smartypants from "@ngsctt/remark-smartypants"
 import { ArgumentParser } from "argparse"
+import { exec } from "child-process-promise"
 import chokidar from "chokidar"
-import path from "path"
-import { compile } from "xdm"
+import { copy, emptyDir, mkdirs, remove } from "fs-extra"
 import { readFile, writeFile } from "fs/promises"
-import { mkdirs, emptyDir, remove, copy } from "fs-extra"
-import replaceExt from "replace-ext"
 import glob from "glob-promise"
 import matter from "gray-matter"
-import { exec } from "child-process-promise"
-import footnotes from "remark-footnotes"
-import smartypants from "@ngsctt/remark-smartypants"
-import slugify from "slugify"
 import moment from "moment"
-import { links, headings, pullquotes, highlighter, fixfootnotes, fiximages } from "./plugins.mjs"
+import path from "path"
 import readingTime from "reading-time"
+import footnotes from "remark-footnotes"
 import remarkGfm from "remark-gfm"
+import replaceExt from "replace-ext"
+import slugify from "slugify"
+import { compile } from "xdm"
+import { comments, fixfootnotes, fiximages, headings, highlighter, links, pullquotes } from "./plugins.mjs"
 
 const parser = new ArgumentParser()
 parser.add_argument("input")
@@ -71,6 +71,7 @@ async function update(source) {
   const contents = (
     await compile(content, {
       remarkPlugins: [
+        comments,
         [footnotes, { inlineNotes: true }],
         links,
         headings,

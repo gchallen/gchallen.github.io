@@ -1,10 +1,11 @@
-import { visit } from "unist-util-visit"
-import slugify from "slugify"
-import { toString } from "mdast-util-to-string"
-import { highlight } from "./highlight.js"
-import path from "path"
-import { promisify } from "util"
 import _sizeOf from "image-size"
+import { toString } from "mdast-util-to-string"
+import path from "path"
+import slugify from "slugify"
+import stringHash from "string-hash"
+import { visit } from "unist-util-visit"
+import { promisify } from "util"
+import { highlight } from "./highlight.js"
 const sizeOf = promisify(_sizeOf)
 
 export function links() {
@@ -64,6 +65,33 @@ export function pullquotes() {
   return transformer
 }
 
+export function comments() {
+  function transformer(ast) {
+    visit(ast, "paragraph", visitor)
+    function visitor(node) {
+      const children = []
+      for (const child of node.children) {
+        if (child.type === "text") {
+          children.push({
+            type: "text",
+            value: child.value
+              .split("\n")
+              .filter((line) => !line.startsWith("//"))
+              .join("\n"),
+          })
+        } else {
+          children.push(child)
+        }
+      }
+      Object.assign(node, {
+        type: "paragraph",
+        children: [...children],
+      })
+    }
+  }
+  return transformer
+}
+
 export function headings() {
   function transformer(ast) {
     visit(ast, "heading", visitor)
@@ -96,11 +124,20 @@ export function headings() {
 }
 
 export function highlighter() {
+  let counters = {}
+
   function transformer(ast) {
     visit(ast, "code", visitor)
 
     function visitor(node) {
       const { html, css } = highlight(node.value, { mode: node.lang, theme: "twilight" })
+      let id = stringHash(node.value).toString()
+      if (counters[id] !== undefined) {
+        counters[id]++
+        id += `-${counters[id]}`
+      } else {
+        counters[id] = 0
+      }
       const newNode = {
         type: "mdxJsxFlowElement",
         name: "Code",
@@ -117,7 +154,19 @@ export function highlighter() {
             type: "mdxJsxAttribute",
             value: Buffer.from(node.value).toString("base64"),
           },
+          {
+            name: "codeId",
+            type: "mdxJsxAttribute",
+            value: id,
+          },
         ],
+      }
+      if (node.meta) {
+        newNode.attributes.push({
+          name: "meta",
+          type: "mdxJsxAttribute",
+          value: node.meta,
+        })
       }
       Object.assign(node, newNode)
     }

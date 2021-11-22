@@ -10,6 +10,8 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 import { Provider } from "next-auth/client"
 import { NewWindowLoginProvider } from "../components/LoginButton"
 import { DarkModeProvider } from "../components/ChooseDarkMode"
+import { JeedProvider } from "@cs124/jeed-react"
+import { PlaygroundProvider } from "@cs124/playground-react"
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -31,18 +33,22 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <NewWindowLoginProvider>
         <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}>
           <DarkModeProvider>
-            <Head>
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <meta charSet="utf-8" />
-              <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png" />
-              <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-              <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-              <link rel="manifest" href="/site.webmanifest" />
-              <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-              <meta name="msapplication-TileColor" content="#2d89ef" />
-              <meta name="theme-color" content="#ffffff" />
-            </Head>
-            <Component {...pageProps} />
+            <JeedProvider server={process.env.NEXT_PUBLIC_JEED_SERVER as string}>
+              <PlaygroundProvider server={process.env.NEXT_PUBLIC_PLAYGROUND_SERVER as string}>
+                <Head>
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                  <meta charSet="utf-8" />
+                  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png" />
+                  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+                  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+                  <link rel="manifest" href="/site.webmanifest" />
+                  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+                  <meta name="msapplication-TileColor" content="#2d89ef" />
+                  <meta name="theme-color" content="#ffffff" />
+                </Head>
+                <Component {...pageProps} />
+              </PlaygroundProvider>
+            </JeedProvider>
           </DarkModeProvider>
         </GoogleReCaptchaProvider>
       </NewWindowLoginProvider>

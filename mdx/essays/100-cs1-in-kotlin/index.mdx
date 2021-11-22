@@ -6,17 +6,40 @@ description: >
   improvement over other popular options like Python and Java.
 ---
 
+```kotlin
+println("CS1 in Kotlin")
+```
+
+> I'm posting this ahead of a [webinar that I'm joining](https://info.jetbrains.com/kotlin-webinar-november-23-2021.html) hosted by the JetBrains education team.
+> Please stop by!
+
 [This](-) semester^[Fall 2021, if you are reading this in the future...] I began offering [Kotlin](https://kotlinlang.org/) as a language option in [my CS1 course](https://cs124.org)—alongside Java, which we had been using previously for many years.
 When I began using Kotlin three years ago, it seemed like an ideal language for teaching CS1.
 And so far our experiences with it in my course have been extremely positive.
 I'll share how we got here, why I think Kotlin is such a great choice—particularly compared to Python and Java—and some early results from our use of Kotlin alongside Java.
 
-## In the Beginning, There Was Java
+### What is Kotlin?
 
-When I arrived at Illinois in Fall 2017, my first teaching assignment was as a co-instructor for CS1.
+[According](-) to [Wikipedia](https://en.wikipedia.org/wiki/Kotlin_(programming_language)), Kotlin is "a cross-platform, statically typed, general-purpose programming language with type inference."
+
+> Kotlin is designed to interoperate fully with Java, and the JVM version of Kotlin's standard library depends on the Java Class Library, but type inference allows its syntax to be more concise.
+> Kotlin mainly targets the JVM, but also compiles to JavaScript (for e.g. frontend web applications using React) or native code (via LLVM), e.g. for native iOS apps sharing business logic with Android apps.
+> Language development costs are borne by JetBrains, while the Kotlin Foundation protects the Kotlin trademark.
+
+In addition, Kotlin has also been chosen by Google as the [preferred language for Android development](https://techcrunch.com/2019/05/07/kotlin-is-now-googles-preferred-language-for-android-app-development/),
+expanding its usage to the 12 million app developers worldwide—half of the worldwide developer community—half of who develop for Android first.
+
+There are many great online resources for learning about Kotlin, including an official [Kotlin Playground](https://play.kotlinlang.org/)
+[tutorials](https://kotlinlang.org/docs/tutorials/)
+and [exercises](https://play.kotlinlang.org/koans/overview).
+We're also planning on publishing our own CS1 materials for Kotlin soon, which you [can preview here](https://www.cs124.org/lessons/).
+
+## Discovering Kotlin
+
+[When](-) I arrived at Illinois in Fall 2017, my first teaching assignment was as a co-instructor for CS1.
 I took over that course in Spring 2018, and have continued to teach it since.
 
-The course was taught in Java.
+When I arrived, the course was taught in Java.
 I do a lot of programming, and at the time was heavily involved in development projects using JavaScript, Go, and Python.
 But Java was a language that I hadn't used regularly for a long time.
 
@@ -29,11 +52,11 @@ Organizational ridgity.
 And when considering the language from the perspective of a beginner, tack on weaknesses like an intimidating "Hello, world!", avoidable confusion regarding equality, a character-heavy print statement, and the uncompromising objects-first requirement^[I have a strong suspicion that the objects-first educational movement really arose from the fact that instructors just couldn't find any other way to teach Java.].
 To me, Java just didn't seem like a great choice for CS1.
 
-But changing the language in CS1 is itself a herculean and dangerous task, as I'll describe below.
+But changing the language in CS1 is itself a herculean and dangerous task.
 I was new, and was doing my best to go along and get along.
 And Python, the other popular choice, has its own set of serious weaknesses.
 So I stuck it out with Java, and found a few ways around some of the languages more problematic features from a CS1 perspective.
-In particular, we created interactive playgrounds that support what we call _snippet mode_, relaxed Java syntax that supports top-level loose code and method declarations:
+One workaround is that our interactive playgrounds support what we call _snippet mode_, relaxed Java syntax that supports top-level loose code and method declarations:
 
 ```java
 int addOne(int input) {
@@ -43,88 +66,124 @@ int i = 0;
 System.out.println(addOne(i));
 ```
 
-## Discovering Kotlin
+This allows us to work incrementally through the basics of imperative programming without needing to mumble away all of the normal concepts and keywords Java students encounter in just "Hello, world!": classes (`public`, `class`), methods (`main`, `void`), arrays (`String[]`), and even `static`.
 
-But no number of tricks would make some of the more fundamental problems with Java go away.
+[But](-) no number of tricks would make some of the more fundamental problems with Java go away—I'm looking at you, `.equals`.
 So I kept thinking about alternatives.
 
 As it turned out, [Bill Chapman](https://buildingrainbows.com/), my co-instructor my first semester teaching CS1, ended up dropping an important hint.
-He was the first person to suggest Kotlin, only a few weeks before retiring.
+He was the first person to suggest Kotlin, only a few weeks before retiring^[He's off now creating educational materials in Swift, so clearly he was tired of Java too...].
 
-I had never heard of the language.
-I'm still not sure exactly when I began experimenting with it.
+I had never heard of the language, and I'm not sure exactly when I began experimenting with it.
 But by the time I began rebuilding some of my teaching tools a few years later, in the summer of 2019, Kotlin was the language of choice.
 [Jeed](https://github.com/cs125-illinois/jeed), our high-performance Java and Kotlin toolkit and playground backend, is the first large project that I began in Kotlin, and is something that we continue to use and improve today.
+Kotlin is now my primary development language for non-frontend tasks, and I maintain a bunch of different tools in the language—including our containerized autograder, course plugins for both [Gradle](https://github.com/cs125-illinois/gradlegrader) and [IntelliJ](https://github.com/cs125-illinois/intellijlogger), our new small-problem authoring system ([1](https://github.com/cs125-illinois/jenisol), [2](https://github.com/cs125-illinois/questioner)), a small library of [basic CS1 data structures](https://github.com/cs125-illinois/libcs1), and greenfield projects like a new [polyglot playground backend](https://github.com/cs124-illinois/playground).
 
 As I began working in Kotlin I noticed something right away.
-I like it.
+I liked it.
 A lot!
-[Kotlin bills itself as a language that "makes developers happier".
-Not to be a shill, but that has actually been my experience.](+)
+Kotlin bills itself as a language that "makes developers happier".
+Not to be a shill, but that has actually been my experience.
 Minute for minute, hour for hour, day by day, I enjoy working in Kotlin a _lot_ more than in Java, Python, TypeScript, or any other languages I use regularly.
 
-Kotlin is an ideal language for teaching CS1.
-We outline the many reasons below.
-In particular we focus on comparisons with two other common language choices for CS1: Java and Python.
+Over my two-decade career as a software creator, the programming languages that I've used seem to just keep getting better.
+On one hand, that's quite remarkable.
+But on the other, it's rather unsurprising.
+[Newer languages _should_ be better!](+)
+Not only have we learned a lot about language design, but computers have changed in quite astonishing ways.
+The designers of older languages like Java or Python could hardly anticipate how much faster computers would get, and so it's hard to fault them for failing to put those capabilities to work to aid software creation.
 
-Note that this document focuses on why Kotlin is a great language _for CS1_, not why it is a great language overall.
-Which it is!
+Or, as I put it recently in an email to a student: Always bet on the future.
+If you're not willing to, it's hard to enjoy a life in technology.
 
-## What is Kotlin?
+[Even](-) if you're ready to bet on the future, not everyone else is.
+Currently we are teaching Kotlin _alongside_ Java in my CS1 course.
+Perhaps I'll write something else at some point about the language wars that erupt whenever you want to try something new in CS1.
+At this point I'll let the outcome speak for itself.
+I wanted to move to Kotlin, and we ended up with both Kotlin and Java.
+And while that might sound like a compromise, it's a compromise that required someone (me) to do a ton of extra work to try something new while supporting the status quo.
+But was it worth it?
+Yes.
 
-According to [Wikipedia](https://en.wikipedia.org/wiki/Kotlin_(programming_language)):
+## Maximizing Fun, Minimizing Frustration
 
-> Kotlin is a cross-platform, statically typed, general-purpose programming language with type inference.
-> Kotlin is designed to interoperate fully with Java, and the JVM version of Kotlin's standard library depends on the Java Class Library, but type inference allows its syntax to be more concise.
-> Kotlin mainly targets the JVM, but also compiles to JavaScript (for e.g. frontend web applications using React) or native code (via LLVM), e.g. for native iOS apps sharing business logic with Android apps.
-> Language development costs are borne by JetBrains, while the Kotlin Foundation protects the Kotlin trademark.
+[Obviously](-) the fact that I happen to like Kotlin doesn't make it a great choice for CS1.
+So let's step back and consider what makes a language a good choice for introductory courses.
 
-In addition, Kotlin has also been chosen by Google as the [preferred language for Android development](https://techcrunch.com/2019/05/07/kotlin-is-now-googles-preferred-language-for-android-app-development/)
-expanding its usage to the 12 million app developers worldwide—half of the worldwide developer community—half of who develop for Android first.
+Let me start with an important point.
+[Choosing a good language doesn't, by itself, create a good introductory course.](+)
+No programming language can make up for other more important elements of good course structure and design.
+A badly designed course will still be ineffective even if taught in a great language.
 
-There are many great online resources for learning about Kotlin, including an official [Kotlin Playground](https://play.kotlinlang.org/)
-[tutorials](https://kotlinlang.org/docs/tutorials/)
-and [exercises](https://play.kotlinlang.org/koans/overview).
+It's equally true that you _can_ teach a decent CS1 course even using a not-so-good language, since a well-designed course can at least partially overcome the weaknesses of a poor language.
+But this is no excuse for continuing to use languages that are hard on beginners!
+It frustrates me to no end to see introductory courses continue to use languages like C and C++ that represent _extremely_ poor choices for introducing computer science to a general audience.
 
-### Better for Beginners and Students with Prior Experience
+My approach to evaluating languages for CS1 is simple: Maximize fun, minimize frustration:
 
-Many CS1 courses—including mine—mix students with a variety of programming backgrounds: from no to substantial prior experience.
-Many incoming freshman acquired that experience through high school AP CS courses—either AP CS A or AP CS Principles.
-Those courses tend to be taught in Java (AP CS A) or Python (AP CS Principles).
+* **Fun** represents the ability for students to create things that connect with their lived experience of computing.
+It lights the path from "Hello, world!" to making a difference in the world.
+You might also call it impact.
+In 2021, writing a command-line program or text-based game is just not that fun.
+Creating a graph from some data might be a bit more fun, at least for a certain population of students.
+But to get to maximum fun you need to show students how to create something they use every day—meaning either a website or an app.
 
-As a result, many students that do enter college CS1 with prior experience know either Java or Python.
-[By teaching CS1 in a language that is neither Java nor Python, we can level the playing field and provide value to students that already know some programming.](+)
-Learning a second language is admittedly easier than learning a first programming language, but is also definitely harder than reviewing a language that you already know.
+* **Frustration** goes hand and hand with creating software, and teaching students how to cope with frustration has to be a core consideration of CS1.
+But when we're just getting started, we don't want the _language_ itself to introduce added frustration!
+Beginners naturally struggle with translating their ideas about how to solve a problem to working code.
+This is good frustration.
+Language idiosyncracities, confusing compiler errors, problems with the development environment, limited compile-time error checking, and other similar problems represent unnecessary frustration that can be overwhelming for students learning to program.
 
-For this reason Kotlin is a better fit for both beginners (it is more beginner-friendly for reasons outlined below) and for students with some prior experience (it is different than what they already know).
+Note that, at least for beginners, _fun_ is largely a property of what you can _do_ with the language, while _frustration_ is bound up in the syntax of the language and its development environment.
+I think that this makes sense until students get to the point where they are intrisically motivated.
+At this stage in my career, I find Kotlin's elegant syntax and idioms to be inherently enjoyable, but I'm approaching projects with the attitude: I'm definitely going to build this, I'm not just not sure how.
+Beginners aren't there yet.
 
-Exacerbating existing skills gaps by teaching CS1 in a language that many students already know—like Java or Python—also makes calibrating the difficulty level of CS1 more challenging.
-Students that already know Java may provide the instructor with a false sense that most students are following the material, when in fact they are relying on prior knowledge and true beginners are struggling.
-A few times in my CS1 course we've noticed that we see a big experience gap in performance on a quiz, a sure sign that we haven't taught a particular concept well to students that know it, but also a sign that is very easy to miss without appropriate cohort analysis.
-Students with prior experience may also want to see more advanced concepts that are new to them but bewildering to those entirely new to computer science and programming.
+[I](-) consider Kotlin the best choice for CS1 today because it does a great job of both maximizing fun and limiting frustration.
+Now, let me try to convince you.
+As described above, we'll make the case for fun primarily based on what you can create with Kotlin, and the case for frustration primarily based on Kotlin's syntax and features of the language itself.
+And as we go, I'll draw out comparisons to Java and Python, which are probably the two most widely-used alternatives for CS1.
 
-Kotlin is both an excellent introductory language and one that, at least for now, will be unfamiliar to most incoming students—both beginners and those with prior programming experience.
-This makes it an ideal choice for CS1 and a great way to address the incoming skill gap.
+## Frontend Fun
 
-## The Clarity of Python, the Type Safety of Java
+[Students](-) get excited about computer science when they can create the same things they use every day.
+Projects that consist entirely of command-line text interfaces or other backend components are unlikely to excite students who entered the field hoping to solve problems and change the world.
+Nor is it necessary or healthy for students to spend years and years "mining code deep underground"^[quoting the inimitable [Margaret Fleck](https://mfleck.cs.illinois.edu/)] before creating something that they can recognize, or demo to a parent or friend.
+My course has successfully used Android projects for the last several years, allowing students to build entire apps including UI design and implementation.
 
-As many CS1 courses progressed from Java to Python strong typing was abandoned in favor of syntactic clarity.
+Kotlin is fully-supported for Android development since May 2019.
+All of Google's tutorials provide both Kotlin and Java examples, with Kotlin being the default and preferred language.
+Not only does Kotlin allow students to learn by building real apps, but its support from Google ensures that the language is here to stay.
+Kotlin also has support for compiling to JavaScript, allowing it to be run in the browser and support both frontend and full-stack web development.
+And like Java, it can also be used to build standalone desktop apps^[But do people use those anymore?].
+
+Compared to Java, students can have as much fun in Kotlin due to Java inter-op, and even more due to Kotlin's ability to support web frontend development.
+Doing any frontend development in Python requires bringing in all the rest of the web stack, requiring that students learn not only CSS and HTML, but JavaScript, an entirely separate programming language.
+And while data science is the new hotness—and particularly inside the university—creating graphs doesn't quite connect to a student's lived experience of computer science.
+Courses focused on data science also often do a poor job of teaching basic computer science, a topic [I've written about before](/essays/2021-06-03-recipe-programming).
+
+## Minimizing Frustration: Pythonic Clarity, Java's Type Safety
+
+[As](-) many CS1 courses progressed from Java to Python, strong typing was abandoned in favor of syntactic clarity.
 Perhaps that was a necessary tradeoff at the time, given the limitations of Java and Python.
-But Kotlin type inference now gives you much of the best of both worlds: clarity and conciseness for the small programming examples common in CS1, but the added benefit of strong type checking to catch common programming errors.
+But Kotlin type inference now gives you much of the best of both worlds: the clarity and conciseness that are particularly useful for small programming examples in CS1, but the added benefit of strong type checking to catch common mistakes and mimimize frustration.
 
 Put another way—the compiler should be a great friend and aid to CS1 students.
-Unfortunately older compilers required so much syntactic noise before they would help that this got in the way of CS1 instruction.
+Unfortunately older compilers required so much syntactic noise that this got in the way of CS1 instruction.
 Happily, newer compilers—like most other computer software—have become more powerful and effective.
 Today, the small amount of additional syntax the Kotlin compiler requires from CS1 students is worth it for the kinds of mistakes it will help them identify and correct.
+
+Let's examine some code examples to see how Kotlin combines some of the best features of both Python and Java.
 
 ### Clarity
 
 Kotlin is more user-friendly right out of the gate.
-Here is the minimal viable “Hello, world!” in Java, Python, and Kotlin:
+Here is the minimal syntactically-correct "Hello, world!" in all three languages.
 
-```java
-// Java: 4 lines of code
-// Multiple confusing and unfamiliar concepts
+Java's "Hello, world!" is positively terrifying to beginners, full of syntax clutter and unfamiliar concepts:
+
+```java source
+// Java
 public class Example {
   public static void main(String[] unused) {
     System.out.println("Hello, world!");
@@ -132,86 +191,213 @@ public class Example {
 }
 ```
 
+Even just trying to explain what `System.out.println` is to a beginner is daunting.
+The result is a lot of hand-waving and under-rug-brushing that leaves students with the sense that programming is full of arcane secret knowledge, rather that straightforward and ultimately quite comprehensible.
+
+Both Python and Kotlin do much better:
+
 ```python
 # Python
 print("Hello, world!")
 ```
 
-```kotlin
+```kotlin source
+// Kotlin
 fun main() {
   println("Hello, world!")
 }
 ```
 
-### Type Safety
-
-But Kotlin's clarity does not come at the cost of type safety.
-Compare and contrast the following examples of basic type errors in Java, Python, and Kotlin:
-
-```java
-// Java: type information required everywhere
-int i = 0;
-String s = "test";
-i = s; // Fails
-```
-
-```python
-# Python: no type safety
-i = 0
-s = "test"
-i = s; # Doesn't fail!
-```
+And Kotlin also supports scripts that contain top-level code, just like Python:
 
 ```kotlin
-// Kotlin: less type clutter but still type safe
-var i  = 0
-var s = "test"
-i = s // Fails
+// Kotlin script
+println("Hello, world!")
+```
+
+### Type Safety and Inference
+
+But Kotlin's clarity does not come at the cost of type safety.
+Compare and contrast the following examples of basic type errors in Java, Python, and Kotlin.
+In Java, type information is scattered everywhere, even in this simple example.
+But at least it works:
+
+```java
+// Java
+int x = 0;
+String y = "test";
+y = 10;
+System.out.println(y);
+```
+
+Python is cleaner, but at the cost of no type checking:
+
+```python
+# Python
+x = 0
+y = "test"
+y = 10
+print(y)
+```
+
+And yes, I am aware that newer version of Python have introduced type hints.
+But nobody seems to use them, at least not in the CS1 courses I've reviewed.
+I'm sure that they are coming, and that will be a great improvement!
+Done right, gradual typing tools like TypeScript can be pretty fantastic.
+
+Kotlin allows us to omit types from our declarations, but can still infer variable types and examine operations properly:
+
+```kotlin
+// Kotlin
+var x  = 0
+var y = "test"
+y = 10
+println(y)
+```
+
+I think there's an interesting open question about whether Kotlin introductory programmers will actually learn to think more effectively about types, since their own brain has to do the type inference when reading with even simple examples above, rather than being able to rely on the type duplication that Java provides.
+This would be a fascinating question to examine at some point.
+
+### Equality
+
+Now let's discuss possibly _the worst_ Java footgun for introductory computer science: the difference between `==` and `.equals`.
+
+It's reasonable to start beginners in Java working with primitive types.
+So when you teach them about equality, you teach them `==`, which is the correct way to compare primitive types:
+
+```java
+int i = 0;
+int j = 0;
+System.out.println(i == j);
+```
+
+It's also reasonable to have Java `String`s be the first object that you discuss in CS1, since they are both useful and also the only Java object you can create with a literal:
+
+```java
+String s = "test";
+String m = "me";
+System.out.println(s + m);
+```
+
+When you introduce objects, you are careful to remind students that, **when you compare two objects, you must use `.equals`**!
+Yes, it's ugly, you say.
+But you must.
+Really.
+Trust me.
+All the time!
+Try it.
+
+```java
+String s = "test";
+String m = "test";
+System.out.println(s == m);
+System.out.println(s.equals(m));
+```
+
+%$^&!
+What is happening here?
+Unfortunately, Java also implements [`String` interning](https://en.wikipedia.org/wiki/String_interning), meaning that two `String` literals will also be _referentially_ equal.
+Meaning that our first chance to practice with objects (`String`) is also a terrible source of confusion regarding equality.
+
+Yes, I know.
+[Everyone knows this about Java.
+Everyone—except people that don't know Java yet!](+)
+I _cannot tell_ you how many times I see students making this mistake, or variants of it.
+I cannot tell you how many times _I've_ made this mistake myself.
+And yes, a decent IDE will also warn you about this, but introductory students aren't always programming in an IDE, and sometimes it's better for them not to.
+
+So you can plan on fighting this particular bug all semester long.
+Or just use Kotlin, where `==` works properly, and calls `.equals` behind the scenes:
+
+```kotlin
+val s = "test"
+val m = "test"
+println(s == m)
+```
+
+When you actually want referential equality—and you rarely ever do in CS1—you can break out the triple-barrel:
+
+```kotlin
+// required to defeat String interning
+val s = String("test".toCharArray())
+val m = "test"
+println(s === m)
+```
+
+Python also seems to work properly in this regard:
+
+```python
+s = "test"
+m = "test"
+print(s == m)
 ```
 
 ### Containers
 
-Things get worse for Java when using containers, such as lists, that you really want to have in CS1:
+Things get worse for Java when using containers, such as lists, that you really want to have in CS1.
+
+Before you can start working with lists in Java you need to discuss `import` and type parameters,
+and you'll also need to be prepared to answer questions about the difference between interfaces (`List`) and their implementations (`ArrayList`)^[Or just declare your variables as `ArrayList`s, and look like you don't _understand_ the difference between interfaces and implementations...].
+Manipulating lists requires awkward calls to `.set` and `.get`, which clutter the code and are visually extremely distinct from the bracket notation used by arrays, even though they behave identically.
 
 ```java
-// Java: serious type clutter
-
-// Lists are not automatically available... sigh
+// Java
 import java.util.List;
 import java.util.Arrays;
 
 List<String> list = Arrays.asList("test", "me");
-list.set(0, "another"); // No bracket syntax
+list.set(0, "another");
 System.out.println(list);
 ```
 
+So much for computational thinking.
+And as if that weren't bad enough, Java list literals created with `Arrays.asList` are actually immutable by default!
+
+```java
+import java.util.List;
+import java.util.Arrays;
+
+List<String> list = Arrays.asList("test", "me");
+list.add("Oh noes"); // doesn't work
+```
+
+Here's the right way, which requires yet another import and more type clutter:
+
+```java
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+List<String> works = new ArrayList<>(Arrays.asList("test", "me"));
+works.add("another");
+System.out.println(works);
+```
+
+This is one great example of a major Java footgun that primarily affects introductory programming courses.
+It's rare in _real_ code to actually want to create a list literal, since usually you're going to populate it with data flowing in from some other part of the program.
+But when _teaching_ CS1 it's extremely _common_ to want to create list literals, as you demonstrate to students how lists works using small examples with prepopulated data.
+
+In contrast, Python gets this right—no imports, bracket notation:
+
 ```python
-# Python: much cleaner
+# Python
 list = [ "test", "me" ]
 list[0] = "another"
 ```
 
+And Kotlin does as well, particularly when working with list literals where we can utilize type inference:
+
 ```kotlin
-// Kotlin: also quite clean, due to type inference
+// Kotlin
 val list = mutableListOf("test", "me")
 list[0] = "another"
 println(list)
 ```
 
-## Frontend Development
+I actually tend to think that operator overloading is not a great language feature, since it's easy for people to get overly excited about and start to abuse.
+But it's use in Kotlin to facilitate array-like lists and maps might actually make it worth it.
 
-Students get excited about computer science when they can build things similar to what they use every day.
-Projects that consist entirely of command-line text interfaces or other backend components are unlikely to excite students who entered the field hoping to solve problems and change the world.
-CS 125 has successfully used Android projects for the last several years, allowing students to build entire apps including UI design and implementation.
-
-Kotlin is fully-supported for Android development since May 2019.
-All of Google's tutorials provide both Kotlin and Java examples, with Kotlin being the default and preferred language.
-Not only does Kotlin allow students to learn by building exciting and realistic apps, but its support from Google ensures that the language is here to stay.
-
-In addition, Kotlin has support for compiling to JavaScript, allowing it to be run in the browser and support web frontend development.
-Like Java, it can also be used to build standalone desktop apps.
-
-## `null` And `null` Safety
+### `null` And `null` Safety
 
 `null` is both a poor idea and a common stumbling block for novice programmers.
 So the fact that Kotlin places so much attention on improving `null` safety is both great for the language and for CS1.
@@ -219,25 +405,31 @@ So the fact that Kotlin places so much attention on improving `null` safety is b
 Kotlin also chooses a middle ground here—neither eliminating `null` nor allowing you to ignore it, as you can in Java, C++, Python, and pretty much every other older language.
 This is an ideal stance pedagogically, given that CS1 students will need to wrestle with `null` values in other languages for the foreseeable future.
 Kotlin allows you to introduce and discuss `null` while still enabling beginners to write `null`-safe code.
-(Note that this is also a great argument for using a compiler.)
+And of course this is also another great argument for using a compiler.
 
-Again, compare the following code in Java, Python, and Kotlin:
+Again, compare the following code in Java, Python, and Kotlin.
+Java lets you shoot yourself directly in the foot:
 
 ```java
-// Java lets you shoot yourself directly in the foot
+// Java
 // Ready...
 String s = null; // aim...
 System.out.println(s.length()); // ...fire!
 ```
 
+Python isn't much better.
+`null` by any other name is still `null`:
+
 ```python
-# Python isn't much better
+# Python
 s = None
 print(s.length)
 ```
 
+Kotlin's ability to allow you to safely work with `null` is one of its selling points, and a great feature:
+
 ```kotlin
-// Kotlin requires nullable values be handled safely
+// Kotlin
 // This is a non-nullable String
 var s = "test"
 // This will fail, since s cannot be null
@@ -256,35 +448,9 @@ println(t?.length)
 println(t?.trim()?.length)
 ```
 
-## High Quality Online Resources
+About the only place I've seen `null`-safety in Kotlin fall down is when working with maps, but that's a fundamentally hard problem.
 
-While all programmers benefit from good online resources, they are particularly important for CS1 students.
-Not only will CS1 students inevitably search for help online, but as less experienced programmers they are less able to judge the quality of the answers that they find.
-Given that they can also ask their course staff for help when needed, it may actually be preferable for CS1 students to not find an answer online than to find a bad answer online.
-
-Modern languages just seem to have a leg up in this area—probably because they know that they are competing for fickle developers in a crowded space.
-But Kotlin has all of what you expect these days: [attractive documentation](https://kotlinlang.org/docs/reference/) incorporating embedded runnable code snippets, and tutorials for beginners and more advanced programmers.
-The quality of the code used in their documentation and examples is excellent—which is not always the case with Java.
-
-The fact that Kotlin is both new and rapidly increasing in popularity also seems like the sweet spot for finding help on forums like StackOverflow.
-Searching for help for languages like C, C++, Java, JavaScript, and (increasingly) Python too often turns up ancient answers that use ugly or outdated language idioms.
-Searching for help with Kotlin easily yields idiomatic examples (due to its rapid increase in popularity) but the overall quality level of those examples is also high (due to Kotlin being relatively new).
-
-JetBrains is also providing [resources and systems specifically tailored to educators](https://www.jetbrains.com/help/education/for-educators.html) that should allow us to design our own Kotlin-based course while leveraging a fair amount of their infrastructure.
-
-## Support for Multiple Programming Paradigms
-
-CS1 courses may rotate between instructors with different ideas about how to introduce students to programming.
-Best practices also change over time.
-So it is helpful to have a language that naturally supports multiple programming paradigms and styles—without having to resort to specialized libraries or approaches that violate established language norms.
-
-At minimum Kotlin supports what seem to be the most common CS1 programming styles: imperative, object-oriented, and functional.
-Obviously this is because it is less opinionated than say Java (about OO) or Haskell (about functional).
-
-There are straightforward migration paths to Kotlin for CS1 courses taught in Java, Python, C, C++, and many functional languages.
-(It's less clear for functional languages with Scheme-like syntax, since the syntax is just so different. But the concepts should translate.)
-
-## Data Classes to Introduce Object Modeling
+### Classes
 
 One way to introduce objects naturally in CS1 is to present them as a way to represent more complex data than can be stored using primitive types: a person has both a name and an age.
 Students can get a fair amount of mileage out of objects as records even before introducing the idea of object methods—particularly when working with data.
@@ -294,10 +460,11 @@ In only a few lines, students can be introduced to simple compound types and beg
 At some point later data classes can easily be transitioned to classes that provide methods.
 Kotlin's data classes are more convenient that Java's very ceremony-forward classes, or Python's classes, even incorporating recent support for [Python `@dataclass` annotations](https://docs.python.org/3/library/dataclasses.html).
 
-Compare Java, Python, and Kotlin’s approach to create a simple class to model data—one that acts purely as a record linking multiple fields together:
+Compare Java, Python, and Kotlin’s approach to create a simple class to model data—one that acts purely as a record linking multiple fields together.
+Java requires a _ton_ of ceremony even to just link two values together:
 
 ```java
-// Java requires a ton of ceremony to set up a fairly simple class...
+// Java
 public class Person {
   private String name;
   private int age;
@@ -314,24 +481,25 @@ public class Person {
   public int getAge() {
     return age;
   }
-  public int setAge(int setAge) {
+  public void setAge(int setAge) {
     age = setAge;
   }
 }
 // Now we can (finally) write:
 Person person = new Person("Geoffrey", 41);
-person.age++;
+person.setAge(person.getAge() + 1);
 ```
+
+Python is a bit better, and even more so you use recent support for data classes:
 
 ```python
 from dataclasses import dataclass
 
-# Python is a bit better
 class Person:
     def __init__(self, name, age):
         self.name = name
         self.age = age
-# Particularly with @dataclass
+
 @dataclass
 class Person:
     name: str
@@ -340,35 +508,36 @@ person = Person("Geoffrey", 40)
 person.name = "Geoffrey Challen"
 
 # Although it's always tempting to just abuse a dictionary...
-person = { "name": "Geoffrey", "age": 40 }
+# person = { "name": "Geoffrey", "age": 40 }
+print(person)
 ```
+
+Kotlin's primary-constructor syntax on even normal classes already eliminates almost all of Java and Python's excessive ceremony.
+Data classes also come with sensible `toString` and copy methods, and support destructuring assignment:
 
 ```kotlin
 data class Person(var name: String, var age: Int)
 val person = Person("Geoffrey", 40)
 person.age++
-
-// Data classes come with nice built-in toString and
-// copy functions
 println(person)
-// Data classes also support destructuring assignment
 val (name, age) = person
 ```
 
-The fact that data classes are so easy to create and use brings them much closer to JavaScript’s anonymous objects combined with a type checker like Flow.
-Combined with type inference it may be the same number of lines of code to declare and use a Kotlin data class (and achieve strong type guarantees) than to declare and use a JavaScript anonymous object with Flow type checking (and achieve weak type guarantees).
+You want CS1 students to reach for a class when they need to work with structured data, and not be tempted to commit dictionary abuse or an even worse solution^[synchronized arrays, anyone?].
+Java's classes require enormous amounts of syntactic ceremony, and top-level classes much be separated into their own file.
+This causes even simple record-like classes to feel like a heavyweight abstraction.
 
-## Natural Progression from Blocks to Functions to Classes
+### Natural Progression from Blocks to Functions to Classes
 
 One weakness of Java and other non-pedagogical programming languages is that the minimum runnable example forces CS1 students to squint at concepts that they have not been introduced to yet.
-For example, in Java if I want to print “Hello, world!” I need to wrap that in both class and method declarations.
-(The introduction of a REPL in recent versions of Java is helpful but doesn’t really address the problem past one-liners.)
+As show above, in Java if I want to print “Hello, world!” I need to wrap that in both class and method declarations.
 
 Because Kotlin supports both scripts (`.kts` files) and top-level method declarations it naturally supports introducing CS1 students to programming by building up from blocks to methods to classes.
 Note that it shares this desirable feature with Python, so many Python examples used in CS1 should port to Kotlin easily.
 
 We have already compared the simplest possible class between Java, Python, and Kotlin above.
-But also compare Java, Python, and Kotlin in the progression from loose code to functions:
+But also compare Java, Python, and Kotlin in the progression from loose code to functions.
+In Java absolutely everything has to be surrounded by unintelligible class clutter:
 
 ```java
 // Java
@@ -390,6 +559,8 @@ public class Main {
 }
 ```
 
+Python allows you to work from the ground up, seamlessly:
+
 ```python
 # Python
 # Simplest possible statement
@@ -399,6 +570,8 @@ def add(x, y):
     return x + y
 print(add(1, 2))
 ```
+
+And, with support for scripts, you can do the same in syntactically-valid Kotlin:
 
 ```kotlin
 // Kotlin
@@ -414,44 +587,107 @@ println(add(1, 2))
 println(add2(2, 3))
 ```
 
-We have used templating in my CS1 course to work around Java's limitations in this area.
-While this can help, it can also end up confusing students—particularly as you begin to remove the templates and have them write more complete pieces of code.
+As described previously, we have used templating tricks in my CS1 course to work around Java's limitations in this area.
+While this can help, it does engender some mild confusion—particularly as you begin to remove the templates and have them write more complete pieces of code.
 Overall it is desirable to have students writing code that is valid without requiring any magic behind the scenes.
 
-## Consideration of Mutability
+## Other Considerations
 
-Mutability is another place where Kotlin strikes a nice balance between vision and reality.
-If you don’t want to discuss the benefits of immutable values, then you don’t have to.
-If you do, then you can: and every time you declare a variable you can show students how to consider whether the variable should be mutable, and techniques for avoiding mutable variables (and leveraging type inference) whenever possible.
+[In](-) addition to being more fun than and less frustrating than Java or Python, there are several other things that make Kotlin a great choice for an introductory programming course.
 
-Kotlin also provides very nice statements for avoiding unnecessary mutability.
-For example:
+### Leveling the Playing Field
+
+[Many](-) CS1 courses—including mine—mix students with a variety of programming backgrounds: from no to substantial prior experience.
+Many incoming freshman acquired that experience through high school AP CS courses—either AP CS A or AP CS Principles.
+Those courses tend to be taught in Java (AP CS A) or Python (AP CS Principles).
+
+As a result, many students that do enter college CS1 with prior experience know either Java or Python.
+[By teaching CS1 in a language that is neither Java nor Python, we can level the playing field and provide value to students that already know some programming.](+)
+Learning a second language is admittedly easier than learning a first programming language, but is also definitely harder than reviewing a language that you already know.
+
+For this reason Kotlin is a better fit for both beginners (it is more beginner-friendly for reasons outlined below) and for students with some prior experience (it is different than what they already know).
+
+Exacerbating existing skills gaps by teaching CS1 in a language that many students already know—like Java or Python—also makes calibrating the difficulty level of CS1 more challenging.
+Students that already know Java may provide the instructor with a false sense that most students are following the material, when in fact they are relying on prior knowledge and true beginners are struggling.
+A few times in my CS1 course we've noticed a big experience gap in performance on a particular quiz, a sure sign that we haven't taught a particular concept well to students that didn't already know it, but also a sign that is very easy to miss without appropriate cohort analysis.
+// Students with prior experience may also want to see more advanced concepts that are new to them but bewildering to those entirely new to computer science and programming.
+
+Kotlin is both an excellent introductory language and one that, at least for now, will be unfamiliar to most incoming students—both beginners and those with prior programming experience.
+This makes it an ideal choice for CS1 and a great way to address the incoming skill gap.
+
+### High Quality Online Resources
+
+[While](-) all programmers benefit from good online resources, they are particularly important for CS1 students.
+Not only will CS1 students inevitably search for help online, but as less experienced programmers they are less able to judge the quality of the answers that they find.
+Given that they can also ask their course staff for help when needed, it may actually be preferable for CS1 students to _not_ find an answer online than to find a bad one.
+
+Modern languages just seem to have a leg up in this area—probably because they know that they are competing for fickle developers in a crowded space.
+But Kotlin has all of what you expect these days: [attractive documentation](https://kotlinlang.org/docs/reference/) incorporating embedded runnable code snippets, and tutorials for beginners and more advanced programmers.
+The quality of the code used in their documentation and examples is excellent—which is not always the case with Java.
+
+The fact that Kotlin is both new and rapidly increasing in popularity also seems like the sweet spot for finding help on forums like StackOverflow.
+Searching for help for languages like C, C++, Java, JavaScript, and (increasingly) Python too often turns up ancient answers that use ugly or outdated language idioms.
+Searching for help with Kotlin easily yields idiomatic examples (due to its rapid increase in popularity) but the overall quality level of those examples is also high (due to Kotlin being relatively new).
+
+JetBrains is also providing [resources and systems specifically tailored to educators](https://kotlinlang.org/education/) that should allow us to design our own Kotlin-based course while leveraging a fair amount of their infrastructure.
+
+### Support for Multiple Programming Paradigms
+
+[CS1](-) courses may rotate between instructors with different ideas about how to introduce students to programming.
+Best practices also change over time.
+So it is helpful to have a language that naturally supports multiple programming paradigms and styles—without having to resort to specialized libraries or approaches that violate established language norms.
+
+At minimum Kotlin supports what seem to be the most common CS1 programming styles: imperative, object-oriented, and functional.
+Obviously this is because it is less opinionated than say Java (about objects-first) or Haskell (about purely functional).
+There are straightforward migration paths to Kotlin for CS1 courses taught in Java, Python, C, C++, and many functional languages.
+It's less clear for functional languages with Scheme-like syntax, since the syntax is just so different. But the concepts should translate.
+
+Kotlin's syntactic flexibility also makes is a great choice for a multi-course sequence that introduces students to different programming styles along the way.
+You can image a first course in Kotlin that focused on imperative and object-oriented patterns, and then a second course that leverage it's support for functional styles.
+Or you could flip the order!
+Paradigm shifts in many curricula are accomplished by switching languages, but a new language introduces a bunch of other distractors that might drown out the stylistic differences.
+Kotlin allows you to illustrate the differences between an iterative and functional approach to list summation within a few lines in the same language:
 
 ```kotlin
-String isNegative(int value) {
-  String s; // Required temporarily uninitialized value
-  if (value < 0) {
-    s = "negative";
-  } else {
-    s = "positive";
-  }
-  // If the if-else becomes more complicated missing the else becomes problematic
-  return s;
+val numbers = listOf(1, 2, 4)
+// Imperative
+var sum = 0
+for (i in numbers) {
+  sum += i
 }
-System.out.println(isNegative(-1));
-System.out.println(isNegative(1));
+println(sum)
+// Functional
+println(numbers.reduce { it, sum -> it + sum })
 ```
 
-```kotlin
-fun isNegative(value: Int): String {
-  // val can be immutable and the compiler will ensure it is set by the subsequent statement
-  val s = if (value < 0) {
-    "negative"
-  } else {
-    "positive"
-  }
-  return s
-}
-println(isNegative(-1))
-println(isNegative(1))
-```
+We've been building out a toolchain for supporting Kotlin in our course, and as part of it we've developed some feature analysis tools.
+So it may also be possible to even _enforce_ a functional style in Kotlin, by prohibiting looping and certain selection statements.
+That would be fun to try.
+
+## Experiences with Kotlin in CS1
+
+This is fairly long already, and the semester isn't quite over.
+So I'll postpone a full examination of our experiences with Kotlin in my CS1 course for another post.
+
+But as a brief summary, and to whet your appetite.
+We've released Kotlin alongside Java as a first-class language citizen in [CS 124](https://www.cs124.org/), my CS1 course.
+Students complete 70 [daily lessons](https://www.cs124.org/lessons/), all available in Java and Kotlin. In almost all cases, the topics of the Java and Kotlin lessons are the same each day, with only the languages used in the examples and on the problems being different.
+
+The daily lessons include hundreds of [interactive playgrounds](https://www.cs124.org/best/#playgrounds) along with 446 videos and [interactive walkthroughs](https://www.cs124.org/best/#walkthroughs) created by 17 different authors, with primary contributions from me and [Colleen Lewis](https://cs.illinois.edu/about/people/faculty/colleenl).
+Our Java materials have a two-semester head start and are still more comprehensive—1116 videos and interactive walkthroughs from 135 contributors. But our Kotlin content is catching up quickly.
+
+We build programming proficiency through daily practice and homework problems and on weekly proctored quizzes. Our current materials include 58 practice problems, 63 graded homework problems, 37 practice quiz questions, and 36 graded quiz questions, for a total of 194 programming challenges.
+But this is only a subset of our full library of 480 small programming problems, created and graded using our [custom problem authoring framework](https://www.cs124.org/best/#homework)—which is, of course, written in Kotlin!
+Students also complete a [multi-part Android development project](https://www.cs124.org/MP/), which is available in both languages.
+
+We have [201 staff](https://www.cs124.org/info/people/) who know only Java, 13 who know only Kotlin, and 91 able to help students in both languages.
+And, out of 1282 current students, 259 are using Kotlin (20%) and the remainder Java.
+At this point the Kotlin students are doing _a bit better_ than the Java students, overall, but I suspect that this is due to the fact that Kotlin attracted a slightly more experienced group of students.
+
+All in all, the results are fairly easy to summarize.
+[Kotlin works for CS1!](+)
+And the fact that it _already_ works this well, in our first semester, when we still have a lot more staff, materials, and institutional knowledge supporting Java, makes me very excited about the future.
+
+If you would like to use Kotlin in your CS1 course, either alongside Java or on its own, I would love to help!
+We have [all kinds of cool tools](https://www.cs124.org/best/) that I'd love to share with you and work on together, and the format of our materials opens up the possibility for exciting cross-institution collaborations.
+Please [get in touch](mailto:geoffrey.challen@gmail.com).
