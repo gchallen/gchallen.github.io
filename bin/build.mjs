@@ -41,7 +41,7 @@ async function update(source) {
 
   let pagePath
   if (source.startsWith("mdx/essays/")) {
-    if (data.published || process.env.DEVELOPMENT) {
+    if (data.published || process.env.NEXT_PUBLIC_SHOW_DRAFTS) {
       pagePath = path.join(
         "pages/essays",
         moment(data.published || new Date())
