@@ -7,6 +7,7 @@ import "react-popper-tooltip/dist/styles.css"
 import Code from "../components/Code"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
+import YouTube from "../components/YouTube"
 
 const Footnote: React.FC<{ counter: string }> = ({ counter, children }) => {
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip(
@@ -147,5 +148,5 @@ const Wrapper: React.FC<{
     </>
   )
 }
-const components = { wrapper: Wrapper, a: A, Code, Footnote, Image, ScreenOnly, PrintOnly, Comment }
+const components = { wrapper: Wrapper, a: A, Code, Footnote, Image, ScreenOnly, PrintOnly, Comment, YouTube }
 export default components

@@ -9,6 +9,7 @@ import dynamic from "next/dynamic"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useInView } from "react-hook-inview"
 import { FaPlayCircle, FaTimes } from "react-icons/fa"
+import styled from "styled-components"
 
 const Ace = dynamic(() => import("react-ace"), { ssr: false })
 
@@ -23,6 +24,46 @@ const RunButton: React.FC<{ size: number; onClick: () => void }> = ({ size, onCl
 const DEFAULT_FILES = {
   python: "main.py",
 } as Record<string, string>
+
+const AceFrame = styled.div`
+  position: relative;
+  border: 1px solid lightgrey;
+  padding-top: 8px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #fefefe;
+
+  .dark-mode & {
+    border: 1px solid #222222;
+    background-color: #222222;
+  }
+`
+
+const LanguageLabel = styled.div`
+  position: absolute;
+  right: 4px;
+  top: 0;
+  border-top-right-radius: 8px;
+  background-color: transparent;
+  font-size: 0.5em;
+  font-family: "Monaco", monospace;
+  user-select: none;
+`
+
+const Output = styled.div<{ state?: string }>`
+  white-space: pre-wrap;
+  min-height: calc(1.5em + 16px);
+  font-family: Monaco, monospace;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #222222;
+  font-size: 0.8em;
+  color: #dddddd;
+  padding: 8px;
+  max-height: calc(30em + 16px);
+  overflow: scroll;
+  color: ${(props) => (props.state === "error" ? "red" : props.state === "warning" ? "goldenrod" : "#dddddd")};
+`
 
 const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta: string; children: string }> = ({
   codeId,
@@ -261,7 +302,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
   )
 
   return (
-    <div className="ace-frame">
+    <AceFrame>
       <div style={{ position: "relative", paddingBottom: runWithJeed ? 32 : 8 }}>
         <div
           ref={ref}
@@ -271,18 +312,16 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         />
         {ace && ace}
       </div>
-      <div className="language-label">{capitalize(mode)}</div>
+      <LanguageLabel>{capitalize(mode)}</LanguageLabel>
       {output !== undefined && outputOpen && (
         <div style={{ position: "relative" }}>
           <div style={{ position: "absolute", top: 0, right: 0, color: "#888888" }}>
             <FaTimes onClick={() => setOutputOpen(false)} />
           </div>
-          <div className="output">
-            <span className={output.level}>{output.output}</span>
-          </div>
+          <Output state={output.level}>{output.output}</Output>
         </div>
       )}
-    </div>
+    </AceFrame>
   )
 }
 
