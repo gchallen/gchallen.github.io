@@ -111,7 +111,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
     }
   }, [state])
 
-  let runWithJeed = ["java", "kotlin"].includes(mode)
+  let runWithJeed = ["java", "kotlin"].includes(mode) && (!meta || !meta.includes("norun"))
   let runWithPlayground = ["python"].includes(mode)
 
   let snippet = meta === undefined || !meta.includes("source")
@@ -279,6 +279,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         maxLines={Infinity}
         fontSize="1rem"
         showPrintMargin={false}
+        highlightActiveLine={runWithJeed}
         defaultValue={code}
         onBeforeLoad={(ace) => {
           ace.config.set("basePath", `https://cdn.jsdelivr.net/npm/ace-builds@${ace.version}/src-min-noconflict`)
@@ -287,6 +288,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         commands={commands}
         onLoad={(setEditor) => {
           editor.current = setEditor
+          setEditor.moveCursorTo(0, 0)
           setState("loaded")
         }}
       />
@@ -312,7 +314,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         />
         {ace && ace}
       </div>
-      <LanguageLabel>{capitalize(mode)}</LanguageLabel>
+      <LanguageLabel>{mode === "sh" ? "sh" : capitalize(mode)}</LanguageLabel>
       {output !== undefined && outputOpen && (
         <div style={{ position: "relative" }}>
           <div style={{ position: "absolute", top: 0, right: 0, color: "#888888" }}>

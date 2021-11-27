@@ -1,0 +1,231 @@
+---
+title: Windows Line Ending
+description: >
+  In today's advertures in maintaining your own CS1 infrastructure, how Windows
+  line endings and a persistent student combined to bring down our entire
+  homework grading backend.
+published: 2021-11-26
+technical: true
+---
+
+[I](-) have a lot of fun creating and maintaining our CS1 backend infrastructure, which now comprises [multiple novel services](https://www.cs124.org/best) deployed on our own private cloud.
+When you teach thousands of students, the expectation becomes that things students need to use are going to work most of the time—particularly when you teach the course asynchronously.
+And when they _do_ go down, you tend to hear about it—quickly.
+
+As our systems have matured and stabilized, my "pager"^[I don't actually carry a pager, although I've considered it...] has gone off less and less regularly.
+But there's still the occasional outage.
+At best, they make for a few good stories.
+This one definitely did.
+It also provides a nice overview of how we deploy and maintain course systems and infrastructure.
+So keep reading to find out how Windows line endings and a single persistent student managed to crash our homework grading backend for several hours.
+
+[When](-) my class is in session I usually spend a few hours each day on my course forum.
+With the course running asynchronously online, our [Discourse forum](https://www.discourse.org/) serves as the hub of activity.
+I like to hang around to answer questions and interact with students.
+It's also a great way to keep an eye on things, since when something breaks, the forum is where you hear about it first.
+
+But when I need to get some deep work done, I turn the forum off.
+On this particular Monday I was happily hacking away creating something new, when I noticed an email from one of my senior course staff.
+Students in the class know that the best way to contact me is to use the forum, since I tend to redirect email there aggressively during the early part of the semester.
+Most of my course staff also use the forum for course-related communication.
+But my Head Course Assistants know that, when something is broken, email can be a good way to get my attention quickly.
+
+My Head CA Ahmed relayed that students were reporting that our homework grader was down and returning error messages.
+So I stopped what I was doing to take a look.
+
+[My](-) first step was to check on the status of this particular part of our course backend.
+To do this I ran the following commands:
+
+```sh
+$ kubectl config use-context questioner
+$ kubectl get pods
+```
+
+As some background, I deploy my course services to a private cloud managed by Kubernetes.
+Currently our cloud consists of 16 4-core 8GB RAM virtual machines running on on-premise hosts.
+We have a pair of machines with publicly-routeable IP addresses that serve as proxies, and another trio of machines running a MongoDB cluster.
+But otherwise all of the services that I deploy to support my course run on Kubernetes, a list that currently includes backends for several different analytic services, our help site, our quiz system, both homework and project autograders, website playground and editor synchronization, student enrollment management, and a bunch of other things that combine to support my CS1 students.
+
+I'll write up something separately about our experiences with Kubernetes^[This post is going to have several forward references...].
+But overall I find it tremendously convenient for deploying and monitoring our infrastructure—particularly as a mostly-solo developer with a lot of other things to do.
+
+I've found it helpful to separate each of our different services into its own Kubernetes namespaces, which might not be considered a best practice but helps me work effectively with our multiple separate systems.
+So the following two commands (1) switch to a local context that only displays information about the `questioner` namespace, and then (2) display information about all of the pods in that namespace.
+In this case, `questioner` is the namespace that I deploy our homework autograder into.
+
+When things are running normally—like now—here's what the output of this command looks like:
+
+```sh
+$ kubectl config use-context questioner
+$ kubectl get pods
+NAME                                              READY   STATUS    RESTARTS   AGE
+questioner-backend-deployment-6f49fb665c-4ns67    1/1     Running   0          9d
+questioner-backend-deployment-6f49fb665c-rq5v5    1/1     Running   0          17d
+questioner-backend-deployment-6f49fb665c-t72b2    1/1     Running   0          9d
+questioner-backend-deployment-6f49fb665c-vrt6z    1/1     Running   0          9d
+questioner-frontend-deployment-7b69b8b97c-6ltsn   1/1     Running   0          13d
+```
+
+For this particular service we deploy both a thin non-replicated proxy as `questioner-frontend-deployment` and a replicated backend `questioner-backend-deployment`, here shown replicated across four containers.
+The proxy (TypeScript) is responsible for authenticating and logging all incoming requests, while the backend (Kotlin) which is not publicly-exposed is what is actually doing the real work.
+I've found that this pattern helps keep the backend simpler, easier to test, and more reusable, and I find interacting with MongoDB and authentication easier to do in TypeScript with access to the NPM ecosystem.
+
+[Questioner](-) is our [custom system for small-problem authoring and autograding](https://www.cs124.org/best/#homework).
+It's backend server provides an API that allows homework descriptions to be retrieved and submissions to be evaluated.
+Students write and submit code through our [CS 124](https://www.cs124.org) website.
+Submissions issue a `POST` request to the appropriate `questioner` API endpoint, which grades their code and returns the results.
+By utilizing the secure sandbox provided by our [Jeed](https://cs125-illinois.github.io/jeed/) JVM compilation and execution toolkit, we can lint and compile student code and run hundreds of test cases in only a few seconds.
+But the most interesting part of `questioner` is how problems are authored and test cases are generated, which I won't get into here.
+The whole system definitely deserves—and will get—it's own post.
+
+But none of this matters one bit when it's not working.
+And that's what was happening on that fateful Monday afternoon.
+Rather than healthy, the output when I ran `kubectl get pods` contained entries that looked more like this:
+
+```sh
+NAME                                              READY   STATUS    RESTARTS   AGE
+questioner-backend-deployment-6f49fb665c-4ns67    1/1     Error     43          9d
+questioner-backend-deployment-6f49fb665c-rq5v5    1/1     Running   21         17d
+...
+```
+
+I immediately noticed two problems.
+First, the restart counts were skyrocketing.
+Second, some of the pods had been marked in error status by Kubernetes—which can happen when pod containers are crashing soon after being started.
+Both reflected the same problem—something was causing the graders to restart frequently.
+
+The next step was to try and figure out what was happening.
+I have yet to deploy any sophisticated log capture or analysis tools to my cloud.
+But that's mainly because I haven't needed it.
+In this case, Kubernetes keeps log data around for at least one previously-crashed instance of each pod.
+So I was able to examine those logs using the following command:
+
+```sh
+$ kubectl logs questioner-backend-deployment-6f49fb665c-4ns67 --previous
+```
+
+When I did this, the problem became more clear.
+Since the last message emitted by each container before crashing was a complaint from the embedded Kotlin compiler about... Windows line endings!
+
+As a brief explanation for those that may not know or have forgotten, UNIX uses the character `\n` indicate a line ending in multi-line text, while Windows uses the pair of characters `\r\n`.
+Nobody knows why this is, but [it makes everyone sad](https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats).
+
+[How](-) we got here requires a bit more explanation.
+Previous editions of my course were taught in Java.
+But this semester—Fall 2021—was the first time that we were offering [Kotlin as another language option](/essays/2021-11-21-cs1-in-kotlin).
+
+Getting to Kotlin took several years.
+And one of the first steps we took was adding support for in-memory Kotlin compilation to our [Jeed JVM compilation and execution toolkit](https://cs125-illinois.github.io/jeed/).
+
+Kotlin is a younger language than Java, and while I'm a huge fan of Kotlin, at times its youth presents challenges.
+For example, Java ships with a stable compilation toolkit that allows Jeed to compile strings containing Java code to a classloader which can then be executed in our secure sandbox.
+Getting this to work took some doing, but this is one place where Java's love of abstraction helps, since you just need to figure out how to create something that is file-like enough but stores data in memory.
+My implementation of our in-memory compiler was heavily guided by the reference compiler used by [Janino](http://janino-compiler.github.io/janino/), an alternate Java compiler.
+
+```java
+System.out.println("And our Jeed Java compiler works well!");
+```
+
+In contrast, our in-memory Kotlin compiler implementation was created largely by skimming the `kotlinc` source code and trial-and-error and requires opening a private interface.
+I hacked this together in a few late-night sessions a few years ago, and it worked well enough to support playgrounds used by a few initial experiments teaching Kotlin.
+
+```kotlin
+println("Our Jeed Kotlin compiler is also pretty great!");
+```
+
+[One of my definitions of production code is a prototype that hasn't given me trouble in a while.](+)
+So as I moved forward incorporating Kotlin into my CS1 course, what had been a lightly-used experiment suddenly found itself a critical component of several student-facing services, including both our playgrounds and homework autograder.
+And, as became clear fairly quickly, this was a problem, because our Kotlin compiler was leaking memory.
+
+[The](-) memory leak in our Kotlin compiler manifested itself in the backend containers that were supporting our playgrounds and homework system running out of memory.
+The best thing to do at that point was to crash, and so I had initially added a `catch` block to the code surrounding the testing process to make sure that errors would cause the container to restart immediately.
+
+```java norun
+// Heavily simplified
+try {
+  call.respond(Questions.test(submission))
+} catch (e: Error) {
+  e.printStackTrace()
+  exitProcess(-1)
+} catch (e: Exception) {
+  call.respond(HttpStatusCode.BadRequest)
+}
+```
+
+Unfortunately, I also realized that the service would grind to a halt first, since the garbage collector would desperately thrash a bit before failing, and so eventually I added a low-memory monitor to ensure that the containers would restart proactively once memory dropped below a threshold.
+I had convinced myself that this was OK because,
+[I mean, hey, it's the cloud, right?
+Machines are restarting all the time!](+)^[Obligatory link to [funny James Mickens talk](https://vimeo.com/95066828)]
+
+[So](-) when the entire backend caught fire that day, I did consider memory exhaustion a possible culprit.
+But the speed at which containers were failing was surprising, since usually the out-of-memory errors would take longer to occur—particularly since only Kotlin submissions would trigger the problem.
+
+And even before I saw the log message indicating that Windows line endings were somehow involved, I had reason to believe that low memory was not the root cause.
+Because, just a few weeks prior, I had spent a few days instrumenting our in-memory compiler and addressed the memory leak.
+
+For those wondering how Kotlin can leak memory, the problem in this case was my code forgetting to make an appropriate call to [`Disposer.dispose`](https://github.com/cs125-illinois/jeed/blob/227d844c2dfebb94e31e785ab4747483aea64e75/core/src/main/kotlin/Kompile.kt#L231).
+If I hadn't spent a good portion of my adult life hunting down bugs like this, I would probably be upset.
+[But this is what happens when you use and abuse code that is itself complex, poorly-documented, and not intended for extension.](+)
+I was just relieved that I had fixed it.
+And I had fixed it—at least, as far as I can tell at this point.
+Memory usage has been stable since then.
+
+But what I _hadn't_ done yet was remove some of the workarounds I had added.
+The first was that the containers were still restarting immediately on `Error`.
+For those not familiar with Java, there are two types of `Throwable` that can be thrown and caught: `Exception`s, which are more common, and `Error`s, a much smaller category that includes ["serious problems that a reasonable application should not try to catch"](https://docs.oracle.com/javase/7/docs/api/java/lang/Error.html).
+So restarting on `Error` isn't a completely unreasonable thing to do—in fact, it would happen naturally assuming the common catch-all `try-catch` that catches `Exception`s but not `Error`s.
+
+This meant that, the fact that the Kotlin compiler chose to respond to inputs containing Windows line endings by throwing an `Error`—which seems like a bit of an overreaction to me—would cause the grading container to restart.
+
+But unless our grading system was suddenly under attack from a barrage of submissions containing Windows line endings, this still didn't explain why so many pods were restarting so quickly.
+I suspect that anyone who has built a system like this knows exactly what I'm going to mention next.
+Retries.
+
+[As](-) part of my multi-pronged attempt to mask the effect of the Kotlin compilation memory leak, I had introduced retries in the autograder proxy.
+The intention was, if an unlucky student submission happened to be trapped on a container that restarted due to memory pressure, the proxy would automatically retry that submission until it succeeded, avoiding the need for the student to retry manually.
+Of course, students are perfectly capable of resubmitting around failures—and in fact, that was about to become part of the problem.
+But I thought I'd give them a bit of help.
+
+The assumption behind the retry logic was that single submissions did not cause crashes.
+But, if the submission contained Windows line endings, it _would_ crash every backend autograder that touched it.
+And as the proxy retried, it would repeatedly crash containers until it gave up, with a retry count high enough for a single bad submission to have a good shot at crashing every backend replica.
+This accounted both for the rate at which the pods were restarting, and for the fact that some were marked in the "Error" state, since some would reboot fast enough to be crashed again as part of the same set of retries, or by the next attempt from a student just trying to finish their homework.
+
+
+[At](-) this point my first step was clear: Strip the windows line endings!
+This required a small fix to Jeed, and then updates to the core Questioner code.
+I normally publish everything using [JitPack](https://jitpack.io/), but in this case [Maven local](https://www.baeldung.com/maven-local-repository) came in very handy to get a hot fix deployed quickly.
+I used `kubectl` to update the deployment description to use the new version, and the restarts stopped.
+With the hot fix in place I took the time to write some test cases to make sure that we didn't run into this issue again.
+
+As a post-mortem, I was still curious about several things.
+First, where were the Windows line endings coming from?
+A few quick database queries later and I was able to identify the student who, at some point that afternoon, had begun issuing the problematic submissions.
+As I suspected, it was one student.
+And, as I suspected—but was still bemused to discover—they had been completely unaware of their role in the outage.
+They had continued to resubmit their code along with all of the other students for the same reason—because the homework system was down and Geoff hadn't gotten around to fixing it yet.
+
+I was also bewildered by how these poisonous line endings were making their way to our backend in the first place.
+My students author their solutions to our small problems through our website using the [Ace in-browser editor](https://ace.c9.io/).
+It uses UNIX line endings.
+And, on editors used for homework, we disable copy-and-paste to and from the editor as a basic security measure.
+When I ran my query looking for Windows line endings, only a small handful of submissions prior to that day had contained any.
+
+I had initially suspected that this submission had been written in an IDE and pasted into the editor, and was able to confirm this by communicating with the student.
+But how were they able to paste in their code?
+It turned out that they had actually already solved the problem, and were viewing one of the [solution walkthroughs](https://www.cs124.org/best/#walkthroughs) we make available to students after they complete each homework.
+As you've guessed, in _those_ editors copy-and-paste was _not_ disabled.
+
+[So](-) there you have it—the comedy of errors that brought our homework autograding system down for several hours one Monday in October. The ultimate chain of events:
+
+1. [We decided to use Kotlin for CS1](/essays/2021-11-21-cs1-in-kotlin)
+1. The Kotlin compiler decided to throw an `Error` on code containing Windows line endings
+1. That error crashed a single container to restart, behavior that was intended to work around another problem
+1. Retry behavior at a higher level caused the failure to spread horizontally across the entire service
+1. And then retry at an even higher, human level, cause the failure to spread temporally across the entire afternoon
+
+First folly, then `Error`, and then retries all the way up.
+I'm lucky that my students are so patient with me.
+But at least it made for an interesting day.
+
+PS: Does this kind of thing sound like fun to you? If so, please consider [applying to be a teaching faculty at Illinois!](https://go.cs.illinois.edu/teaching-faculty-hiring)
