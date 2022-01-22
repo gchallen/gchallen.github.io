@@ -7,7 +7,7 @@ import "../styles/reset.css"
 import "../styles/global.scss"
 import "../styles/ace.scss"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
-import { Provider } from "next-auth/client"
+import { SessionProvider } from "next-auth/react"
 import { NewWindowLoginProvider } from "../components/LoginButton"
 import { DarkModeProvider } from "../components/ChooseDarkMode"
 import { JeedProvider } from "@cs124/jeed-react"
@@ -29,7 +29,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events])
 
   return (
-    <Provider session={pageProps.session}>
+    <SessionProvider session={pageProps.session}>
       <NewWindowLoginProvider>
         <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}>
           <DarkModeProvider>
@@ -52,6 +52,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           </DarkModeProvider>
         </GoogleReCaptchaProvider>
       </NewWindowLoginProvider>
-    </Provider>
+    </SessionProvider>
   )
 }

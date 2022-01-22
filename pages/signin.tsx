@@ -1,12 +1,12 @@
-import { signIn, useSession } from "next-auth/client"
+import { signIn, useSession } from "next-auth/react"
 import { useEffect, useRef } from "react"
 
 const SignIn: React.FC = () => {
-  const [session, loading] = useSession()
+  const { data: session, status } = useSession()
   const tried = useRef(false)
 
   useEffect(() => {
-    if (loading) {
+    if (status === "loading") {
       return
     }
     if (!session && !tried.current) {
@@ -15,7 +15,7 @@ const SignIn: React.FC = () => {
     } else {
       window.opener?.postMessage("complete", window.location.origin)
     }
-  }, [session, loading])
+  }, [session, status])
   return null
 }
 

@@ -103,7 +103,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
       setRef(ref.current)
       setHeight(ref.current?.clientHeight ?? 0)
     }
-  }, [state])
+  }, [state, setRef])
 
   useEffect(() => {
     if (state === "static" && ref.current) {
@@ -175,7 +175,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         setRunning(false)
       }
     },
-    [mode, runJeed]
+    [mode, runJeed, snippet]
   )
 
   const playground = useCallback(async () => {
@@ -232,7 +232,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         ? { output: result?.error, level: "error" }
         : { output: result?.result?.outputLines.map(({ line }) => line).join("\n") || "" }
     }
-  }, [running, blank, response, result])
+  }, [running, blank, response, result, runWithJeed, runWithPlayground])
 
   const commands = useMemo(() => {
     return [

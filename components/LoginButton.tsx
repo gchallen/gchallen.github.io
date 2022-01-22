@@ -1,5 +1,5 @@
 import { Session } from "next-auth"
-import { useSession } from "next-auth/client"
+import { useSession } from "next-auth/react"
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react"
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa"
 
@@ -22,7 +22,7 @@ const NewWindowLoginContext = createContext<NewWindowLoginContext>({
 })
 
 export const NewWindowLoginProvider: React.FC = ({ children }) => {
-  const [session, loading] = useSession()
+  const { data, status } = useSession()
   const [busy, setBusy] = useState(false)
   const opened = useRef<Window | null>()
   const timer = useRef<ReturnType<typeof setInterval>>()
@@ -66,7 +66,7 @@ export const NewWindowLoginProvider: React.FC = ({ children }) => {
   }, [])
 
   return (
-    <NewWindowLoginContext.Provider value={{ login, logout, busy: loading || busy, session }}>
+    <NewWindowLoginContext.Provider value={{ login, logout, busy: status === "loading" || busy, session: data }}>
       {children}
     </NewWindowLoginContext.Provider>
   )

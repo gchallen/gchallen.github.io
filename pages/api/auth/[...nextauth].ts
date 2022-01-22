@@ -1,6 +1,6 @@
 import NextAuth, { Session } from "next-auth"
 import { JWT } from "next-auth/jwt"
-import Providers from "next-auth/providers"
+import GoogleProvider from "next-auth/providers/google"
 
 const GOOGLE_AUTHORIZATION_URL =
   "https://accounts.google.com/o/oauth2/v2/auth?" +
@@ -49,26 +49,19 @@ async function refreshAccessToken(token: JWT) {
 }
 export default NextAuth({
   providers: [
-    Providers.Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorizationUrl: GOOGLE_AUTHORIZATION_URL,
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      authorization: GOOGLE_AUTHORIZATION_URL,
     }),
   ],
   secret: process.env.SECRET,
-  session: {
-    jwt: true,
-  },
-  jwt: {
-    signingKey: process.env.JWT_SIGNING_KEY,
-    secret: process.env.SECRET,
-  },
   callbacks: {
-    async jwt(token, user, account) {
+    async jwt({ token, user, account }) {
       if (account && user) {
         return {
           accessToken: account.accessToken,
-          accessTokenExpires: Date.now() + account.expires_in!! * 1000,
+          accessTokenExpires: account.expires_at,
           refreshToken: account.refresh_token,
           user,
         }
@@ -78,13 +71,12 @@ export default NextAuth({
       }
       return refreshAccessToken(token)
     },
-    async session(session, token) {
+    async session({ session, token }) {
       if (token) {
         session.user = token.user as Session["user"]
         session.accessToken = token.accessToken
         session.error = token.error
       }
-
       return session
     },
   },
