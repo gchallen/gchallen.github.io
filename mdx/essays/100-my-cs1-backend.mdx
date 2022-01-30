@@ -1,0 +1,87 @@
+---
+title: My CS1 Backend
+description: >
+   I've created an interactive, immersive, and effective online learning experience for my CS1 students.
+   As the first installment in a multi-part series, I'll provide an overview of my course infrastructure, and discuss a bit about how I got here.
+technical: true
+---
+
+[I've](-) created an interactive, immersive, and effective online learning experience for my CS1 students.
+Students experience the website frontend first-hand—where they play with code; learn directly from instructors and course staff; complete homework, practice, and debugging exercises; take quizzes; get help; and view the results.
+But I've never really documented all the work and backend infrastructure that goes in to supporting this online educational experience.
+
+It's time.
+Over a series of future posts, I'll share all of the glorious and gory details of how I created this learning environment.
+
+[I'm](-) doing this now for several reasons.
+First, in my fifth year teaching CS1, and fourth semester teaching online during the pandemic, I finally have time.
+Many of the tools and systems that I'll describe emerged over multiple years, with some of the earliest dating back to the summer of 2019.
+Summer and fall 2020 was a huge push to transition the course into the new online format, and more work went into adding Kotlin as a language option in fall 2021.
+But at this point the course materials and systems are as stable as they have been in several years, so it seems like a good chance to document what I've done.
+
+Second, I'm also starting to make the transition from "What have I done?" to "What have I done!"
+The push to the new online format that I created for Fall 2020 and creating all of the new content for that semester nearly broke me.
+[There were some very dark days](+), and I wondered at times if I had taken on way more than I was capable of.
+I've gotten used to little fires everywhere in my course infrastructure, but that semester was a continuous inferno.
+I thought adding Kotlin as a language option last semester would be easy.
+It wasn't, and the semester became another long slog.
+
+And then, all of a sudden, things got easier.
+A lot of the course content is set up already, and although we're still making changes and improvements, they're new sentences, not entire chapters.
+At this point the systems I've created to support the class are well-tested, stable, and relatively—if definitely not completely—bug-free.
+I no longer sit by my computer during our Tuesday quizzes waiting for the quiz system to crash, or wonder why the homework autograder keeps running out of memory and restarting^[Dumb bug, my fault].
+It helps that my class is smaller in the spring—700 students now instead of the 1400 I had last fall.
+But overall things are just working^[Although I'm at least partially convinced that the simple act of stating this publicly will cause my Kubernetes cluster to crash, my database backups to vanish, and all my students to drop the course. Knock on wood!].
+
+[But](-) my main motivation for delving into these details is that
+I'd like to show other tech-savvy educators what's possible, and maybe inspire them to get out there and create and build.
+
+Most of what I'm going to describe are things that I built myself.
+I did have some help from some very talented students, and I'm excited to highlight their contributions.
+But most of these tools and systems are designed, implemented, and maintained by me.
+I am proud of what I've created, and know how much work went into it.
+I'm not saying this entirely to brag.
+[It is truly remarkable what one person can accomplish today—supported by the tools, frameworks, libraries, and community of modern technology and the open-source movement.](+)
+So I certainly didn't do this alone.
+
+Overall I create teaching tools for the same reason that I teach computer science.
+I tell my students that, by learning computer science, they can change the world.
+I don't just say that—I believe it.
+And, as someone who knows computer science, I have the opportunity to change it as well.
+Or at least my little corner of it.
+
+[But](-) why?
+Not why _now_—just... why?
+I suspect some of you are asking yourselves that question.
+Technology _has_ come a long way.
+Aren't there great tools for teaching introductory computer science?
+Why not just use them, rather than creating your own?
+Wouldn't it be a better use of your time to spend less time writing code, and more time working directly with students?
+
+These are fair questions.
+As I continue this series of posts and examine each system that I've created in turn, I'll try and highlight how it compares with the alternatives.
+However, overall I've created new tools and systems for three primary reasons:
+
+1. **Nothing similar existed**.
+While there is a lot of overlap between teaching technology and using technology, there are certain problems that are unique to educational settings.
+I've spent a fair amount of time on several problems that are somewhat unique to introductory computer science, including how to run small pieces of untrusted code written in the browser quickly and safely, how to accelerate authorship of the kind of small programming problems we write in CS1, how to provide good code _quality_ feedback so that students can learn to write good code, not just correct code, and so on.
+
+1. **Existing solutions aren't great or miss opportunities.**
+Could we do video live coding and embed it in the page that way^[At super high-resolution, because that drives learning!], like everyone else does?
+Sure.
+But building our own animated editor component has both created more interactive live coding walkthroughs, while also allowing course staff to contribute to the course content in new ways.
+Could we just use Zoom or some other videoconferencing solution to help students remotely?
+Sure.
+But building our own help system on top of Jitsi has allowed our staff to work more efficiently and made student queueing more fair.
+
+1. **My time is valuable.**
+Creating course content is one of my primary responsibilities as an instructor, and several major development efforts have helped make my creation processes more efficient.
+It is now easier for me to create high-quality interactive online materials, and _way_ easier for me to create new small programming exercises.
+
+It's also worth pointing out that, once you start to all the different services you need for a course together into one place, creating a fully-integrated experience does encourage you to just finish the job.
+A few things that I've built were inspired by the idea of simply being able to more tightly integrate them with the rest of our site.
+Sometimes I find ways to customize them to the needs of my class.
+But I'm not going to claim that our containerized autograder is that different than anyone else's containerized autograder^[Although we did get it to run on Kubernetes using Docker-in-Docker, which is kind of cool.].
+
+At this point the only off-site service I used is YouTube, for video embeds, and the only third-party service that I run is Discourse, although we host it locally.
+I do not want to self-host video (although I do wish I could remove the overlays), nor do I want to try and reimplement a forum from scratch (although I do wish I could embed discussion closer to our online materials).
