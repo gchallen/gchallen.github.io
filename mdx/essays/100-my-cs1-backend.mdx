@@ -2,16 +2,16 @@
 title: My CS1 Backend
 description: >
    I've created an interactive, immersive, and effective online learning experience for my CS1 students.
-   As the first installment in a multi-part series, I'll provide an overview of my course infrastructure, and discuss a bit about how I got here.
+   As the first installment in a multi-part series, I'll provide an overview of my course infrastructure, and discuss a bit about how I got to this crazy place.
 technical: true
 ---
 
 [I've](-) created an interactive, immersive, and effective online learning experience for my CS1 students.
 Students experience the website frontend first-hand—where they play with code; learn directly from instructors and course staff; complete homework, practice, and debugging exercises; take quizzes; get help; and view the results.
-But I've never really documented all the work and backend infrastructure that goes in to supporting this online educational experience.
+But I've never really documented all the backend infrastructure—and corresponding development—that goes in to supporting this online educational experience.
 
 It's time.
-Over a series of future posts, I'll share all of the glorious and gory details of how I created this learning environment.
+Over a series of future posts, I'll share all of the gorious^[glorious and gory] details of how I created this learning environment.
 
 [I'm](-) doing this now for several reasons.
 First, in my fifth year teaching CS1, and fourth semester teaching online during the pandemic, I finally have time.
@@ -19,19 +19,21 @@ Many of the tools and systems that I'll describe emerged over multiple years, wi
 Summer and fall 2020 was a huge push to transition the course into the new online format, and more work went into adding Kotlin as a language option in fall 2021.
 But at this point the course materials and systems are as stable as they have been in several years, so it seems like a good chance to document what I've done.
 
-Second, I'm also starting to make the transition from "What have I done?" to "What have I done!"
+Second, I'm also starting to make the transition from "What have I done?" to "Look what I've done!"
 The push to the new online format that I created for Fall 2020 and creating all of the new content for that semester nearly broke me.
 [There were some very dark days](+), and I wondered at times if I had taken on way more than I was capable of.
-I've gotten used to little fires everywhere in my course infrastructure, but that semester was a continuous inferno.
+I've gotten used to little fires everywhere in my course infrastructure, but that semester was a conflagration.
 I thought adding Kotlin as a language option last semester would be easy.
 It wasn't, and the semester became another long slog.
 
 And then, all of a sudden, things got easier.
 A lot of the course content is set up already, and although we're still making changes and improvements, they're new sentences, not entire chapters.
-At this point the systems I've created to support the class are well-tested, stable, and relatively—if definitely not completely—bug-free.
-I no longer sit by my computer during our Tuesday quizzes waiting for the quiz system to crash, or wonder why the homework autograder keeps running out of memory and restarting^[Dumb bug, my fault].
+At this point the systems I've created to support the class are well-tested, stable, and relatively—if [definitely not entirely](/essays/2021-11-26-windows-line-ending)—bug-free.
+I no longer sit nervously by my computer during our Tuesday quizzes waiting for the quiz system to crash^[Tuesdays turn out to be a great day to grocery shop], or wonder why the homework autograder keeps running out of memory and restarting^[Dumb bug, my fault].
 It helps that my class is smaller in the spring—700 students now instead of the 1400 I had last fall.
-But overall things are just working^[Although I'm at least partially convinced that the simple act of stating this publicly will cause my Kubernetes cluster to crash, my database backups to vanish, and all my students to drop the course. Knock on wood!].
+But overall things are just working.
+Although I'm at least partially convinced that the simple act of stating this publicly will cause my Kubernetes cluster to crash, my database backups to vanish, and all my students to drop the course.
+Knock on wood!
 
 [But](-) my main motivation for delving into these details is that
 I'd like to show other tech-savvy educators what's possible, and maybe inspire them to get out there and create and build.
@@ -39,16 +41,17 @@ I'd like to show other tech-savvy educators what's possible, and maybe inspire t
 Most of what I'm going to describe are things that I built myself.
 I did have some help from some very talented students, and I'm excited to highlight their contributions.
 But most of these tools and systems are designed, implemented, and maintained by me.
-I am proud of what I've created, and know how much work went into it.
+
+
 I'm not saying this entirely to brag.
-[It is truly remarkable what one person can accomplish today—supported by the tools, frameworks, libraries, and community of modern technology and the open-source movement.](+)
-So I certainly didn't do this alone.
+I am proud of what I've created, and know how much work went into it.
+[But it is also truly remarkable what one developer can accomplish today](+)—supported by the tools, frameworks, libraries, and community of modern technology and the open-source movement.
+So even if I've authored most of the code myself, I definitely didn't do this alone.
 
 Overall I create teaching tools for the same reason that I teach computer science.
-I tell my students that, by learning computer science, they can change the world.
+I tell my students that, by learning computer science, they can create things that change the world.
 I don't just say that—I believe it.
 And, as someone who knows computer science, I have the opportunity to change it as well.
-Or at least my little corner of it.
 
 [But](-) why?
 Not why _now_—just... why?
@@ -64,10 +67,10 @@ However, overall I've created new tools and systems for three primary reasons:
 
 1. **Nothing similar existed**.
 While there is a lot of overlap between teaching technology and using technology, there are certain problems that are unique to educational settings.
-I've spent a fair amount of time on several problems that are somewhat unique to introductory computer science, including how to run small pieces of untrusted code written in the browser quickly and safely, how to accelerate authorship of the kind of small programming problems we write in CS1, how to provide good code _quality_ feedback so that students can learn to write good code, not just correct code, and so on.
+I've spent a fair amount of time on several problems that are somewhat unique to introductory computer science, including how to run small pieces of untrusted Java code written in the browser [quickly and safely](https://jeed.run/), how to accelerate authorship of the kind of small programming problems we write in CS1, how to provide good code _quality_ feedback so that students can learn to write good code, not just correct code, and so on.
 
 1. **Existing solutions aren't great or miss opportunities.**
-Could we do video live coding and embed it in the page that way^[At super high-resolution, because that drives learning!], like everyone else does?
+Could we do video live coding and add it to the page that way^[At super high-resolution, because that drives learning!], like everyone else does?
 Sure.
 But building our own animated editor component has both created more interactive live coding walkthroughs, while also allowing course staff to contribute to the course content in new ways.
 Could we just use Zoom or some other videoconferencing solution to help students remotely?
@@ -75,13 +78,85 @@ Sure.
 But building our own help system on top of Jitsi has allowed our staff to work more efficiently and made student queueing more fair.
 
 1. **My time is valuable.**
-Creating course content is one of my primary responsibilities as an instructor, and several major development efforts have helped make my creation processes more efficient.
+Creating course content is one of my primary responsibilities as an instructor, and several major development efforts have helped make my creation processes much more efficient.
 It is now easier for me to create high-quality interactive online materials, and _way_ easier for me to create new small programming exercises.
+I have the good fortune to be able to make long-term investments into my CS1 course, allowing me to put in the time and energy up front that's needed to make existing approaches much more efficient.
 
-It's also worth pointing out that, once you start to all the different services you need for a course together into one place, creating a fully-integrated experience does encourage you to just finish the job.
+It's also worth pointing out that, once you start to aggregate all the different services you need for a course together into one place, the opportunity to create a fully-integrated experience does encourage you to just finish the job.
 A few things that I've built were inspired by the idea of simply being able to more tightly integrate them with the rest of our site.
 Sometimes I find ways to customize them to the needs of my class.
-But I'm not going to claim that our containerized autograder is that different than anyone else's containerized autograder^[Although we did get it to run on Kubernetes using Docker-in-Docker, which is kind of cool.].
+But I'm not going to claim that our containerized autograder is _that_ different than anyone else's containerized autograder^[Although we did get it to run on Kubernetes using Docker-in-Docker, which is kind of cool.].
+It's not.
 
-At this point the only off-site service I used is YouTube, for video embeds, and the only third-party service that I run is Discourse, although we host it locally.
-I do not want to self-host video (although I do wish I could remove the overlays), nor do I want to try and reimplement a forum from scratch (although I do wish I could embed discussion closer to our online materials).
+At this point I use only a few off-site services or third-party tools:
+
+* [Google login](https://developers.google.com/identity/sign-in/web/sign-in) for authentication
+* [YouTube](https://www.youtube.com/) for video embedding
+* [Discourse](https://discourse.org/) for [my course forum](/essays/2021-06-17-why-i-don't-use-piazza)^[Please [stop using Piazza...](/essays/2021-06-17-why-i-don't-use-piazza)]
+* [Gravatar](https://gravatar.com/) for student and staff photos
+
+All these are examples of great free tools that I have interest in trying to replicate.
+They all do one thing, and do it well.
+
+## Hosting, Frontend, Database
+
+[I'll](-) start by providing an overview of how my CS1 backend is hosted, and then briefly describe the database and frontend components.
+
+My CS1 backend is deployed on 21 cloud servers.
+All servers are virtual machines with 4-core virtual CPUs and 8GB of RAM.
+They constitute three distinct groups based on their function:
+
+1. **2 frontend machines** with public IP addresses and moderate amounts of storage.
+One serves static content for the course website and proxies into our private cloud.
+The second runs our Discourse forum and Discourse forums for a few other things.
+These are the only two machines that are publicly routeable.
+1. **3 database machines** with larger amounts of storage organized into a MongoDB replica set.
+1. **16 cloud workers** with small amounts of storage joined into a single Kubernetes cloud.
+This is where I deploy and manage all backend services, which receive requests via the frontend and persist state in the database.
+The small drives on these machines support a distributed filesystem created using [Rook Ceph](https://rook.io/), to provide persistent storage to a few services that need it.
+
+This is more than enough compute to support thousands of students, while leaving enough left over to support experiments and useful public-facing systems.
+Could I get by with fewer machines?
+Probably.
+But machines are cheap, and optimization time is expensive, and so overprovisioning here seems like the right move.
+
+### Database
+
+I use [MongoDB](https://mongodb.com/).
+So shoot me.
+I take nightly backups.
+
+### Frontend
+
+With a few exceptions, all student interaction is through the main course website: [`https://www.cs124.org/`](https://www.cs124.org/).
+That's where students log on to work through the daily lessons, experiment with code, complete the homework problems and other exercises, take quizzes, and view their project scores.
+Students in my class do most of their programming directly in the browser, including all of the daily homework problems and weekly quizzes.
+They do complete an Android development project during the second half of the semester, which is done in Android Studio.
+
+The course website is a completely static site built using [Gatsby](https://www.gatsbyjs.com/).
+I'm fed up with Gatsby and am in the process of transitioning to [NextJS](https://nextjs.org/).
+But the site will remain largely static.
+I author most content using [MDX](https://mdxjs.com/).
+I'll write this up in more detail in another post.
+
+## Backend Services
+
+Now let's get to the fun stuff!
+My CS1 backend consists of the following microservices, both described and using their development code names.
+Here are the ones that are directly involved in supporting the web frontend:
+
+1. **Site usage tracking** (`element-tracker`), a fine-grained site activity logger
+1. **Identity management** (`personable`), including both periodic tasks and a web API, because it's frustratingly difficult even to just figure out who's in my class at any point in time
+1. **Content delivery** (`shareable`), which allows instructors and staff to update recorded content for our interactive walkthroughs and videos
+1. **Homework autograding** (`questioner`), one of the more novel systems we've created that includes both innovative authoring and evaluation components making it easy to write and deploy Java and Kotlin homework problems, and provides both correctness and code quality feedback to students
+1. **Debugging challenge grading** (`stumper`), a new component supporting a new style of debugging question that we are using for the first time this semester
+1. **Quiz delivery and proctoring** (`questionable`), an appropriate code name for a system that I _probably_ shouldn't have built myself but which works well enough, and makes it much easier to write, deploy, and proctor online quizzes
+1. **Editor synchronization** (`mace`), which saves student work in many of the embedded online editors used heavily throughout our site—a must if you are going to have students doing most of their work online
+1. **Online help site** (`helpable`), which maintains a queue of student help requests and connects students and staff via the Jitsi videoconferencing system
+1. **JVM playground backend** (`jeed`), our fast online Java and Kotlin code runner, which supports all of the many playgrounds embedded throughout the site, the interactive walkthroughs recorded by our course staff, and our homework autograder
+1. **And the miscellaneous API server**, a dumping ground for course-specific endpoints and small experiments that don't and might never require their own microservice
+
+In addition, there are a few services and data pumps that aren't accessed directly through the website, but are still crucial to the student experience:
+
+11. **Project autograding**, our containerized autograder, triggered by GitHub webhooks
+11. **Data pumps** for logging messages generated by our Gradle and IntelliJ plugins, which provide increased visibility into student work on the Android project
