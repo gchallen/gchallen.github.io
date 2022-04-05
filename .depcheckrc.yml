@@ -1,0 +1,5 @@
+ignores: ["@types/*", "prettier-plugin-*", "browserslist"]
+parsers:
+  "**/*.mjs": ["es6"]
+  "**/*.js": ["es6"]
+  "**/*.tsx": ["typescript"]

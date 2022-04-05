@@ -42,3 +42,4 @@ yarn-error.log*
 /public/feed.json
 /public/rss.xml
 /aws
+/tsconfig.tsbuildinfo
