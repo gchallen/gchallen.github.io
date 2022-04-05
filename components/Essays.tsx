@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Essay } from "../lib/getEssays"
+import { useNewWindowLogin } from "./LoginButton"
 import SubscribeButton from "./SubscribeButton"
 
 const Summary: React.FC<{ essay: Essay }> = ({ essay }) => {
@@ -25,6 +26,8 @@ const Essays: React.FC<{
   showSubscribe?: boolean
   limit?: boolean
 }> = ({ published, drafts, h1 = false, showSubscribe = false, limit = false }) => {
+  const { session } = useNewWindowLogin()
+
   return (
     <>
       {published.length > 0 && (
@@ -53,7 +56,7 @@ const Essays: React.FC<{
               <p>Want to know when I post new essays? Subscribe here.</p>
             </SubscribeButton>
           )}
-          {drafts && drafts.length > 0 && (
+          {drafts && drafts.length > 0 && session?.user?.email === "geoffrey.challen@gmail.com" && (
             <>
               {h1 ? <h2>Drafts</h2> : <h3>Drafts</h3>}
               {drafts.map((essay, i) => (
