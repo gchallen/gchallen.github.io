@@ -2751,10 +2751,10 @@ gray-matter@4.0.3:
     section-matter "^1.0.0"
     strip-bom-string "^1.0.0"
 
-hamburger-react@2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/hamburger-react/-/hamburger-react-2.4.1.tgz#44fac99c30720fe8ed098b2a33e919b14b3e007e"
-  integrity sha512-oqG9CrTVi8wM/dyQQh3JJOOfEiol9ChLOqwtjx+hFyRu0nYfe2ymNmzi2wtfQTDyExUdqETdyACZV9KZ9wpApA==
+hamburger-react@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/hamburger-react/-/hamburger-react-2.5.0.tgz#7c0148af8f02f3b693564d69e590d02db8ffc221"
+  integrity sha512-5GSXe+ucxTPJ0SkhIsPQ/PRDweZPIKya1lfahAuExx31SdheeUA4uOPfQIAirbKona8hvo79VDr5LJQzPXsdpw==
 
 has-bigints@^1.0.1:
   version "1.0.1"
@@ -4579,10 +4579,10 @@ npm-bundled@^1.1.1, npm-bundled@^1.1.2:
   dependencies:
     npm-normalize-package-bin "^1.0.1"
 
-npm-check-updates@12.5.7:
-  version "12.5.7"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.5.7.tgz#f51a8a1414f8c7b346ed444bac1a9a9b3da8548b"
-  integrity sha512-WDkqPBevmgphV1UH3FImsDEpTAq2UFvnMZC3GdXPknE2VL701kfKylnae8IA9ZeYfm/uU0249N9gjMXqA/9y3w==
+npm-check-updates@12.5.8:
+  version "12.5.8"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.5.8.tgz#74c4fa7bea466cb41456d629a1f6a26a75133ef4"
+  integrity sha512-8SDZ6qYXI0aKf63zSbByqB9QmK8ygrZ+UVcXg9kGQyvH7dGIcFauFF0ksC0NdThHkU/5QhowJVSHXva9zujkJg==
   dependencies:
     chalk "^4.1.2"
     cint "^8.2.1"
