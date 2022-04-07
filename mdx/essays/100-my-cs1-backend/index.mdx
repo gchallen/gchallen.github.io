@@ -3,6 +3,7 @@ title: My CS1 Backend
 description: >
    I've created an interactive, immersive, and effective online learning experience for my CS1 students.
    As the first installment in a multi-part series, I'll provide an overview of my course infrastructure, and discuss a bit about how I got to this crazy place.
+published: 2022-04-08
 technical: true
 ---
 
@@ -17,16 +18,16 @@ Over a series of future posts, I'll share all of the *gor*ious^[glorious and gor
 First, in my fifth year teaching CS1, and fourth semester teaching online during the pandemic, I finally have time.
 Many of the tools and systems that I'll describe emerged over multiple years, with some of the earliest dating back to the summer of 2019.
 Summer and fall 2020 was a huge push to transition the course into the new online format, and more work went into adding Kotlin as a language option in fall 2021.
-But at this point the course materials and systems are as stable as they have been in several years, so it seems like a good chance to document what I've done.
+But at this point the course materials and systems are as stable as they have been in several years, so it seems like a good time to document what I've done.
 
 Second, I'm also starting to make the transition from "What have I done?" to "Look what I've done!"
 The push to the new online format that I created for Fall 2020 and creating all of the new content for that semester nearly crushed me.
 [There were some very dark days](+), and I wondered at times if I had taken on way more than I was capable of.
 I've gotten used to little fires everywhere in my course infrastructure, but Fall 2020 was a conflagration.
 I thought that I had done enough prep work so that adding Kotlin as a language option for Fall 2021 would be straightforward.
-It wasn't, and the semester became another long slog.
+It wasn't, and the semester became another tough slog.
 
-And then, all of a sudden, things got easier.
+And then, all of a sudden, things calmed.
 A lot of the course content is set up already, and although we're still making changes and improvements, they're new sentences, not entire chapters.
 At this point the systems I've created to support the class are well-tested, stable, and relatively—if [definitely not entirely](/essays/2021-11-26-windows-line-ending)—bug-free.
 I no longer sit nervously by my computer during our Tuesday quizzes waiting for the quiz system to crash^[Tuesdays turn out to be a great day to grocery shop], or wonder why the homework autograder keeps running out of memory and restarting^[Dumb bug, my fault].
@@ -34,7 +35,7 @@ I no longer sit nervously by my computer during our Tuesday quizzes waiting for 
 
 It helps that my class is smaller in the spring—700 students now instead of the 1400 I had last fall.
 But overall things are just working.
-Although I'm at least partially convinced that the simple act of stating this publicly will cause my Kubernetes cluster to crash, my database backups to vanish, and all my students to drop the course.
+Although I'm at least partially convinced that the simple act of stating this publicly will cause my Kubernetes cluster to throw a certificate error, my database backups to vanish, and all my students to drop the course.
 Knock on wood!
 
 [But](-) my main motivation for delving into these details is that
@@ -46,8 +47,8 @@ But most of these tools and systems are designed, implemented, and maintained by
 
 I'm not saying this (entirely) to brag.
 I am proud of what I've created, and know how much work went into it.
-[But it is also truly remarkable what one developer can accomplish today](+)—supported by the tools, frameworks, libraries, and community of modern technology and the open-source movement.
-So even if I've authored most of the code myself, I definitely didn't do this alone.
+[But it is also truly remarkable what one determined developer can accomplish today](+)—supported by the tools, frameworks, libraries, and community of modern technology and the open-source movement.
+So even if I've authored most of the code, I didn't do this alone.
 
 Overall I create teaching tools for the same reason that I teach computer science.
 I tell my students that, by learning computer science, they can create things that change the world.
@@ -84,21 +85,21 @@ It is now easier for me to create high-quality interactive online materials, and
 I have the good fortune to be able to make long-term investments into my CS1 course, allowing me to invest the time and energy needed to make existing approaches much more efficient.
 
 1. **I'm sort of good at this.**
-Different people have different talents and abilities that they bring to teaching.
-I've been fortunate that the last two decades of my training as a computer scientists have left me with the skills and abilities that I need to create new things for my courses.
+Different people bring different talents and abilities to their teaching.
+I've been fortunate that the last two decades of my training in technology have left me with the skills and abilities that I need to create new things for my courses.
 That's my superpower, and I think it's important for me to use it.
 I'm also very fortunate to have the autonomy and infrastructure support at the University of Illinois I need to support my work.
 Surprisingly, that's not true everywhere!
-Talk to a few univeristy computer science educators and you'll quickly hear stories of critical infrastructure running on recycled personal laptops, university mandates requiring the use of poor-quality education technology^[[Piazza](/essays/2021-06-17-why-i-don't-use-piazza), anyone?], institutional resistance to new ideas, and a lot of other barriers to innovation in this space. 
+Talk to a few techy univeristy educators and you'll quickly hear stories of critical infrastructure running on retired personal laptops, university mandates requiring the use of poor-quality education technology^[[Piazza](/essays/2021-06-17-why-i-don't-use-piazza), anyone?], institutional resistance to new ideas, and a lot of other barriers to innovation.
 There's probably enough here for a separate essay, but suffice to say for now that I'm very lucky to be at an institution that both allows and supports my creative vision for computer science education.
 
-It's also worth pointing out that, once you start to aggregate all the different services you need for a course together into one place, the opportunity to create a fully-integrated experience does encourage you to just finish the job.
+It's also worth pointing out that, once you start to aggregate all the different services you need for a course together, the opportunity to create a fully-integrated experience does encourage you to just finish the job.
 A few things that I've built were inspired by the idea of simply being able to more tightly integrate them with the rest of our site.
 Sometimes I find ways to customize them to the needs of my class.
 But I'm not going to claim that our containerized autograder is _that_ different than anyone else's containerized autograder^[Although we did get it to run on Kubernetes using Docker-in-Docker, which is kind of cool.].
 It's not.
 
-At this point I use only a few off-site services or third-party tools:
+At this point I'm using only the following off-site services or third-party tools during production, with a strong preference for things that are open source, can be self-hosted, and if not, are at least free or cheap:
 
 * [Google login](https://developers.google.com/identity/sign-in/web/sign-in) for authentication
 * [YouTube](https://www.youtube.com/) for video embedding
@@ -109,22 +110,22 @@ At this point I use only a few off-site services or third-party tools:
 
 All these are examples of great low-cost tools that I have interest in trying to replicate.
 They all do one thing, and do it well.
-(Just to be clear, my course infrastructure also leverages many more open-source libraries and software tools.)
+Just to be clear, my course infrastructure also leverages many more open-source libraries and software tools, and I use a bunch of other tools and services during development.
 
 ## Hosting, Frontend, Database
 
-[I'll](-) start by providing an overview of how my CS1 backend is hosted, and then briefly describe the database and frontend components.
+[I'll](-) start by providing an overview of how backend is hosted, and then briefly describe the database and frontend components.
 
-My CS1 backend is deployed on 21 cloud servers.
+My CS1 backend is currenly deployed on 21 cloud servers.
 All servers are virtual machines with 4-core virtual CPUs and 8GB of RAM.
 They constitute three distinct groups based on their function:
 
-1. **2 frontend machines** with public IP addresses and moderate amounts of storage.
+- **2 frontend machines** with public IP addresses and moderate amounts of storage.
 One serves static content for the course website and proxies into our private cloud.
 The second runs our Discourse forum and Discourse forums for a few other things.
 These are the only two machines that are publicly routeable.
-1. **3 database machines** with larger amounts of storage organized into a MongoDB replica set.
-1. **16 cloud workers** with small amounts of storage joined into a single Kubernetes cloud.
+- **3 database machines** with larger amounts of storage joined into a MongoDB replica set.
+- **16 cloud workers** with small amounts of storage joined into a single Kubernetes cloud.
 This is where I deploy and manage all backend services, which receive requests via the frontend and persist state in the database.
 The small drives on these machines support a distributed filesystem created using [Rook Ceph](https://rook.io/), to provide persistent storage to a few services that need it.
 
@@ -132,6 +133,7 @@ This is more than enough compute to support thousands of students, while leaving
 Could I get by with fewer machines?
 Probably.
 But machines are cheap, and optimization time is expensive, and so overprovisioning here seems like the right move.
+Spare capacity provides me with the opportunity to try new things and supports useful public services and tools like https://jeed.run and https://learncs.online.
 
 ### Database
 
@@ -154,7 +156,7 @@ I'll write this up in more detail in another post.
 
 ## Backend Services
 
-Now let's get to the fun stuff!
+[Now](-) let's get to the fun stuff!
 My CS1 backend consists of the following microservices, both described and using their internal development names.
 Here are the ones that are directly involved in supporting the web frontend:
 
@@ -173,3 +175,30 @@ In addition, there are a few services and data pumps that aren't accessed direct
 
 11. **Project autograding**, our containerized autograder, triggered by GitHub webhooks
 11. **Data pumps** for logging messages generated by our Gradle and IntelliJ plugins, which provide increased visibility into student work on the Android project
+
+In the essays that follow, I'll go through most of these services one by one.
+Behind pretty much every one, is an interesting story—some about new opportunities, some about institutional dysfunction, some about deployment challenges or fun debugging experiences.
+
+## How It All Comes Together
+
+[Before](-) finishing, I wanted to show an example that involved as many of our backend services as possible.
+Given that I teach a course on computer science and programming, and students do their development in the browser, many of our services converge at the [Ace](https://ace.c9.io/) in-browser editors that appear throughout the site.
+
+Here's one example, taken from a practice problem that appears in our first lesson on recursion.
+Note that this is the staff view, not the student view.
+A small bit of the problem description is not visible at the top of the screen.
+
+![Screenshot showing homework problem and solution walkthrough](~/01.png)
+At least four backend services contributed to this screenshot.
+
+Visible above are integrations with at least four of our twelve backend services:
+
+* (1) `mace` is synchronizing the editor contents, as shown by the green check mark and undo icons in the top right
+* The play button triggers autograding by our (2) `questioner` service, itself built on top of (3) `jeed`, and providing code quality feedback as shown in the output window
+* The solution walkthrough and in-browser recording capabilities are provided by (4) `shareable`
+* And, making less visible contributions, user and role management is being done by (5) `personable`, site usage data tracked by (6) `element-tracker`, and if the student needs help, there's a big "Get Help" button just offscreen that can connect them to our course staff via (7) `helpable`
+
+## Next Up
+
+[In](-) the next installment of this series, I'll dive into one of the oldest and most central parts of our backend: `jeed`, our fast Java and Kotlin execution sandbox and overall code analysis toolkit.
+Jeed is also something I've been able to split out for independent usage, and you can find and use it here: https://jeed.run/.
