@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { useEffect, useMemo, useState } from "react"
 import { Essay } from "../lib/getEssays"
 import { useNewWindowLogin } from "./LoginButton"
 import SubscribeButton from "./SubscribeButton"
@@ -25,8 +26,23 @@ const Essays: React.FC<{
   h1?: boolean
   showSubscribe?: boolean
   limit?: boolean
-}> = ({ published, drafts, h1 = false, showSubscribe = false, limit = false }) => {
+  random?: boolean
+}> = ({ published, drafts, h1 = false, showSubscribe = false, limit = false, random = false }) => {
   const { session } = useNewWindowLogin()
+  const [actualRandom, setActualRandom] = useState(false)
+
+  const latestEssays = useMemo(() => {
+    return published.slice(0, limit ? 4 : Infinity)
+  }, [published, limit])
+
+  const randomEssay = useMemo(() => {
+    const notLatest = published.filter((e) => !latestEssays.map((p) => p.url).includes(e.url))
+    return notLatest[actualRandom ? Math.floor(Math.random() * notLatest.length) : 0]
+  }, [published, latestEssays, actualRandom])
+
+  useEffect(() => {
+    setActualRandom(true)
+  }, [])
 
   return (
     <>
@@ -47,9 +63,12 @@ const Essays: React.FC<{
             programmers who don&apos;t teach.{" "}
           </p>
           {limit && (
-            <p>
-              Here are my latest four essays. For the complete set, click <Link href="/essays/">here</Link>.
-            </p>
+            <>
+              {h1 ? <h2>Latest</h2> : <h3>Latest</h3>}
+              <p>
+                Here are my latest four essays. For the complete set, click <Link href="/essays/">here</Link>.
+              </p>
+            </>
           )}
           {showSubscribe && (
             <SubscribeButton hideAfterSubscribe>
@@ -65,9 +84,16 @@ const Essays: React.FC<{
             </>
           )}
           {drafts && drafts.length > 0 && <>{h1 ? <h2>Published</h2> : <h3>Published</h3>}</>}
-          {published.slice(0, limit ? 4 : Infinity).map((essay, i) => (
+          {latestEssays.map((essay, i) => (
             <Summary key={i} essay={essay} />
           ))}
+          {random && (
+            <>
+              {h1 ? <h2>Random Selection</h2> : <h3>Random Selection</h3>}
+              <p>Here is a random selection from my archive. Enjoy!</p>
+              <Summary essay={randomEssay} />
+            </>
+          )}
           {limit && (
             <p>
               For more essays, click <Link href="/essays/">here</Link>.

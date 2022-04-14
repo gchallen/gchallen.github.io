@@ -57,13 +57,14 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
         </p>
         <p>
           My goal is to teach computer science to as many students as possible. I do this by creating interactive
-          learning environments that scale. <Link href="/about">More about me...</Link>
+          learning environments that scale. Here&apos;s a <Link href="/about">long conversational bio</Link>, or perhaps
+          you&apos;d prefer something <Link href="/bio">much shorter</Link>.
         </p>
         <SubscribeButton hideAfterSubscribe>
           <p>Want to be notified when I post new content? Subscribe here.</p>
         </SubscribeButton>
         <hr />
-        <Essays published={published} limit />
+        <Essays published={published} limit random />
       </div>
       <Footer />
     </div>

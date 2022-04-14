@@ -224,7 +224,7 @@ export function fiximages(options) {
           }
           Object.assign(parent, newNode)
         })
-        .catch((err) => {})
+        .catch((_err) => {})
       promises.push(promise)
     }
   }
