@@ -56,12 +56,19 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           And I write code that helps them learn.
         </p>
         <p>
-          My goal is to teach computer science to as many students as possible. I do this by creating interactive
-          learning environments that scale. Here&apos;s a <Link href="/about">long conversational bio</Link>, or perhaps
-          you&apos;d prefer something <Link href="/bio">much shorter</Link>.
+          My goal is to teach computer science to as many people as possible. I do this by creating interactive learning
+          environments that scale. You can explore an example of my materials at{" "}
+          <Link href="https://learncs.online">
+            <a target="_blank">learncs.online</a>
+          </Link>
+          .
+        </p>
+        <p>
+          Here&apos;s a <Link href="/about">long bio</Link>, or perhaps you&apos;d prefer something{" "}
+          <Link href="/bio">shorter</Link>.
         </p>
         <SubscribeButton hideAfterSubscribe>
-          <p>Want to be notified when I post new content? Subscribe here.</p>
+          <p>Want to be notified when I post new content? Subscribe here:</p>
         </SubscribeButton>
         <hr />
         <Essays published={published} limit random />
