@@ -143,8 +143,8 @@ But Java is one of those languages!
 Remember that whole backstory about how Java used to run in the browser?
 One of the results of that misadventure is that Java has some degree of support for sandboxing itself via a feature called the [security manager](https://docs.oracle.com/javase/tutorial/essential/environment/security.html).
 
-The security manager allows you to enable runtime checks that are triggered by a variety of different program behaviors.
-If the program tries to read from a file, for example, the security manager allows you to install code that examines that read request and determines whether to allow it to proceed. 
+Installing a security manager enables runtime checks that are triggered by a variety of different program behaviors.
+If the program tries to read from a file, for example, your installed security manager can examine that read request and determines whether to allow it to proceed. 
 Failures cause the operation to throw, and don't necessarily crash the entire program unless the exception is unhandled.
 
 Java's security manager architecture itself is fairly powerful and includes checks in many useful places. 
@@ -152,8 +152,8 @@ For example, Jeed allows you to control what libraries untrusted code can access
 It can do this because Java loads classes via a hierarchical class loading mechanism, and the security manager can prevent untrusted code from altering the class loaders it uses.
 Meaning that, if I don’t want a particular piece of student code to use `java.util.List`—maybe a piece of code that is supposed to be implementing a list itself—I can do that^[Similar checks are also applied by Jeed during compilation, but other classes may be loaded during execution and so this mechanism complements the compile-time checks.].
 
-The Java virtual machine can install a security manager before the virtual machine begins executing a program, and so provides a way to control access to your system when running a Java binary.
-But it also allows a security manager to be installed by a program itself as it runs, which allows us to selectively sandbox the execution of just a portion of the program—specifically, the untrusted student code.
+On top of being able to install a security manager, we also need to be able to distinguish trusted and untrusted code.
+Jeed needs trusted code to be able to perform actions that would be completely unsafe to allow untrusted code to complete—for example, accessing the Java compilation framework, using reflection, and manipulating bytecode, among other things.
 
 To do that you need to be able to identify the untrusted code, which you can do in several ways.
 Jeed's approach is to run untrusted code in separate thread groups and use thread group membership to distinguish trusted code or from untrusted code.
@@ -231,10 +231,10 @@ Note that this is recursive because, if you wrap a loop around your `try-catch`,
 The recursive version doesn't suffer from that "weakness".
 
 [And](-) so the Pandora's Box of bytecode rewriting was opened.
-Ben wrote code that examines all `try-catch` blocks in compiled bytecode and, if it finds ones that would catch `ThreadDeath`, rewrites them to prevent that.
+Ben wrote code that examines all `try-catch` blocks in compiled bytecode and, if it finds ones that would catch `ThreadDeath`, rewrites them to prevent that^[Ben continues to claim that _I_ wrote the original version of that bit of bytecode manipulation, which I guess is technically possible, although he very clearly owns that part of the project at this point.].
 Meaning that any code that we load into the sandbox can always be stopped.
 
-More technical readers will note at this point that what we have actually performed is what is called an unclean shutdown.
+Astute readers will note at this point that what we have actually performed is what is called an unclean shutdown.
 The reason that Java's `stop` method is deprecated—which the documentation is quick to point out—is because `stop` is fundamentally unsafe.
 Yes, you can stop a thread.
 But if it was in the middle of doing something that needed to be completed and left a mess behind, that polluted state may cause problems later.
@@ -336,6 +336,8 @@ But it’s not quite the same level of "code as data" that we can accomplish usi
 I'm still slowly puttering away on some new things—recently new mutators and completing feature analysis for Kotlin code.
 But the core components described here are stable.
 There's an [online demo here](https://cs125-illinois.github.io/jeed/) demonstrating a few of Jeed's source analysis capabilities, although it's a bit out of date at this point.
+There's also a nicer web frontend at https://jeed.run.
+
 Here's an example of how to compile and run a short "snippet" of code, which Jeed supports as a relaxed version of Java syntax supporting top-level code and method declarations:
 
 ```kotlin norun
@@ -362,8 +364,8 @@ Plus, it's somewhat dangerous to teach some of the more advanced Java syntax to 
 A lot of Java developers seem stuck on syntax circa Java 8, and you run the risk of a student bewildering an interviewer by trying to use something new-fangled like the [`instanceof` pattern matching operator](https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html)^[introduced in Java 14] during a coding interview.
 Which we do teach, although it's a poor substitute for actual flow typing, and it's quadripartite syntax is awkward.
 
-Ben has also assured me that we could establish a similar level of sandboxing using bytecode rewriting.
-Given how good he's gotten at it, I don’t doubt it.
+Ben has also assured me that we could establish a similar level of sandboxing by combining bytecode rewriting with a [Java agent](https://www.baeldung.com/java-instrumentation)—another powerful feature of Java that he's been utilizing recently.
+Given how good he's gotten at this stuff, I don’t doubt it.
 I've learned not to doubt him when he claims something is possible.
 And a lot will change over the next seven years, so I find it hard to worry too much about this transition.
 

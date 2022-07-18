@@ -7,6 +7,13 @@ published: 2022-04-08
 technical: true
 ---
 
+This post is first in a series.
+Here's an index of the rest:
+
+1. [The Need for Jeed](/essays/2022-06-17-the-need-for-jeed): How and why we run untrusted Java code in a secure in-process sandbox. (tl;dr: It's fast.)
+
+---
+
 [I've](-) created an interactive, immersive, and effective online learning experience for my CS1 students.
 Students experience the website frontend first-hand—where they [play with code](https://www.cs124.org/best/#playgrounds); learn [directly from instructors and course staff](https://www.cs124.org/best/#walkthroughs); complete [programming](https://www.cs124.org/best/#homework) and [debugging](https://www.cs124.org/best/#stumpers) exercises; [take quizzes](https://www.cs124.org/best/#quiz-system); [get help](https://www.cs124.org/best/#help-site); and view the results.
 But I've never documented the backend infrastructure that supports this online educational experience.
@@ -168,7 +175,7 @@ Here are the ones that are directly involved in supporting the web frontend:
 1. **Quiz delivery and proctoring** (`questionable`), an appropriate name for a system that I _probably_ shouldn't have built myself but which works well enough, and makes it much easier to write, deploy, and proctor online quizzes
 1. **Editor synchronization** (`mace`), which saves student work in many of the embedded online editors used heavily throughout our site—a must if you are going to have students doing most of their work online
 1. **Online help site** (`helpable`), which maintains a queue of student help requests and connects students and staff via the Jitsi videoconferencing system
-1. **JVM playground backend** (`jeed`), our fast online Java and Kotlin code runner, which supports all of the many playgrounds embedded throughout the site, the interactive walkthroughs recorded by our course staff, and our homework autograder
+1. **JVM playground backend** (`jeed`), our fast online Java and Kotlin code runner, which supports all of the many playgrounds embedded throughout the site, the interactive walkthroughs recorded by our course staff, and our homework autograder (discussed in [Part 1 of the series](/essays/2022-06-17-the-need-for-jeed))
 1. **And the miscellaneous API server**, a dumping ground for course-specific endpoints and small experiments that don't and might never require their own microservice
 
 In addition, there are a few services and data pumps that aren't accessed directly through the website, but are still crucial to the student experience:
@@ -200,5 +207,12 @@ Visible above are integrations with at least four of our twelve backend services
 
 ## Next Up
 
-[In](-) the next installment of this series, I'll dive into one of the oldest and most central parts of our backend: `jeed`, our fast Java and Kotlin execution sandbox and overall code analysis toolkit.
+[In](-) the [next installment of this series](/essays/2022-06-17-the-need-for-jeed), I'll dive into one of the oldest and most central parts of our backend: `jeed`, our fast Java and Kotlin execution sandbox and overall code analysis toolkit.
 Jeed is also something I've been able to split out for independent usage, and you can find and use it here: https://jeed.run/.
+
+---
+
+This post is first in a series.
+Here's an index of the rest:
+
+1. [The Need for Jeed](/essays/2022-06-17-the-need-for-jeed): How and why we run untrusted Java code in a secure in-process sandbox. (tl;dr: It's fast.)
