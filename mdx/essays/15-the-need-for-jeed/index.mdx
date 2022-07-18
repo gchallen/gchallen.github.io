@@ -1,0 +1,375 @@
+---
+title: The Need for Jeed
+description: >
+  How and why we run untrusted Java code in a secure in-process sandbox. (tl;dr: It's fast.)
+published: 2022-06-17
+technical: true
+---
+
+[To](-) kick off a [series of essays](/essays/2022-04-08-my-cs1-backend) describing my course systems and infrastructure, there's really only one place to start: [Jeed](https://github.com/cs125-illinois/jeed), our fast Java and Kotlin execution and source analysis toolkit.
+Jeed was one of the first serious pieces of courseware that I started working on, and has the most intersection with the other tools and systems that we use today in my courses.
+Jeed is also by far the most mature—with almost 700 test cases and almost three years of semi-continuous development and almost 1000 commits behind it.
+
+So let's discuss [the need for Jeed](https://www.youtube.com/watch?v=7O1ZhHts8MI)^[Sorry, couldn't resist. Have not seen the latest installment.].
+
+[Let](-) me start by pointing out two things.
+First, Jeed has sprawled from its original goals into a gathering point for a lot of generally-useful tools and functionality, particularly for source analysis and manipulation.
+Jeed now contains methods for counting non-commenting lines of source code, detecting bad words in student submissions, computing cyclomatic complexity, identifying syntactic features, and performing source-level mutation of Java and Kotlin code.
+
+Many of these capabilities are interesting and important.
+But I'm going to focus here on the original goal of Jeed, the most interesting bit, and the place where we've invested the most technical effort: safely and _quickly_ executing untrusted Java bytecode.
+Jeed is a portmanteau of Java and speed, and, as the title of this essay hints, speed turns out to be a pretty important design goal, in ways that I'll discuss below.
+
+Second, while I’ve independently built and maintain a great deal of my own courseware, Jeed has benefited from contributions from multiple students.
+[Ben Clarage](https://www.linkedin.com/in/ben-clarage-856820202/) and [Hania Dziurdzik](https://www.mymozaic.com/hdziurdzik) contributed to Jeed's feature analysis and mutation capabilities.
+
+But the person who has had a real significant impact on Jeed—and, through his work, on [CS 124](https://www.cs124.org/) and [`learncs.online`](https://learncs.online/)—is [Ben Nordick](https://github.com/Fleex255).
+His knowledge of Java internals and bytecode far outstrips my own, and I'm not sure that I would have ever been willing to develop such a deep expertise in that area.
+So it's safe to say that, [without Ben's contributions, Jeed would not exist](+).
+And without Jeed, my courses would not exist in their present form.
+It's been a game changer.
+
+To avoid stealing Ben's thunder and also making this essay far too technical, I'm going to only hint at some of the bytecode magic used to achieve what we've accomplished.
+I hope Ben writes up a detailed description himself sometime.
+I'd love to read it.
+
+[Like](-) many interesting tools, Jeed began as a solution to a problem.
+
+<picture style={{ marginBottom: 8 }}>
+<img
+  style={{ display: "block", marginLeft: "auto", marginRight: "auto" }}
+  src="/mdx/essays/2022-06-17-the-need-for-jeed/01.png" width="400px" alt="I have terrible handwriting!" />
+<figcaption>I have terrible handwriting! (What, you can't read that?)</figcaption>
+</picture>
+
+Honestly, it might be more accurate to say that I can't write, given that there’s little recent evidence to support the claim that I can produce any amount of legible text using a pen and paper.
+At some point during college, probably around the time that I was learning to LaTex up even my mathematically-notated problem sets for computer science courses^[the programming assignments were always typed out], my handwriting jumped the shark from basic block printing into whatever you want to call that scrawl above.
+Perhaps someday I can get a job as a calligrapher doing fancy party invitations for Brooklyn hipsters.
+
+And to think I used to know cursive.
+
+You might be wondering: Why is this a problem?
+After all, if my writing facilities have declined—and wow, they have—it's largely because, as a computer scientist and software creator, I don’t write.
+Ever.
+I type.
+Always.
+And I was surprised as you might be when this suddenly became a liability as a computer science professor.
+
+But here's the thing.
+When I arrived at the University of Illinois in 2017 and began teaching introductory computer science, the course was using _paper worksheets_ and handwritten live coding in class.
+Somehow I neglected to notice this during my interview—otherwise I might have never arrived to teach computer science at the University of Illinois in 2017.
+
+I don't _want_ to launch into a long rant about why I think paper worksheets are a terrible way to conduct live coding demonstrations.
+I'll just mention that they encourage terrible programming habits.
+Oh, and they prevent students from being able to compile and run their code and learn to see and fix small mistakes.
+And, on top of that, they turn class into watching some guy's huge hand projected onto a large screen^[Most faculty are not hand models.].
+They also punish students with poor handwriting.
+OK, so that was the short version of the rant.
+But as much as I dislike this approach pedagogically, I had a more practical problem.
+
+I can't write.
+
+[So](-) when I suddenly found out that I was going to be teaching the class solo for the first time in Spring 2018^[another story, but the short version is that the current professor quit and I was the next person up], I knew I needed to find another participatory way to complete live coding exercises in class.
+Because, say what you want about the paper worksheets, but some percentage of students _would_ fill them out.
+
+Now one option is to bust out an IDE and hope for the best.
+But this approach is only slightly better than paper worksheets.
+IDEs tend to be impossible to read from more than a few feet away, even when projected on a large screen, even in presentation mode.
+Fundamentally they are designed to enable data-dense displays that don't work in a classroom.
+You also lose students in the transition between your other materials and the IDE.
+And there's the issue of providing them with starter code or an example to edit.
+
+I knew exactly what I wanted.
+I wanted online slides where, on some slides, you'd have editable code.
+The editable code would be as big as possible, and it would run when you clicked a button.
+Simple!
+I was already familiar with creating HTML slides, so all I needed was a way to edit and run the code on the slide.
+
+The _Java_ code on the slide.
+
+Uh-oh.
+
+[You](-) see, a million years ago, when dinosaurs roamed the Earth, browsers had support for running Java code through something called [_applets_](https://en.wikipedia.org/wiki/Java_applet).
+Raise your hand if you remember applets?
+Just another way of telling me you were born before 1980.
+Applets were slow and ugly, and fairly quickly died off as JavaScript took over as the way to build interactive web sites and applications.
+By 2017, applets were so over that Chrome didn't even support them anymore.
+Like, at all—not even behind a flag or something, or after [forcing you to type "iwantapplets"](https://cybercafe.dev/thisisunsafe-bypassing-chrome-security-warnings/).
+Web technologies tend to die a slow death, but by that point applets were done.
+I mean, even [the Wikipedia page](https://en.wikipedia.org/wiki/Java_applet) starts "Java applets _were_...".
+Burn.
+
+The nice thing about running code in the user's own browser is that, if they write something dumb or malicious, they're only impacting their own machine.
+But Java doesn't run in the browser^[Yes, I suspect that there are a few hobby projects out there for transpiling Java so that I can run in the browser, maybe even into WASM! But they didn’t look production-ready in 2017 and might not be even now.].
+So if we want to run it from a web page, we need to send it somewhere else to be compiled and executed. Meaning that the server will be compiling and executing untrusted Java code.
+
+[Let](-) me stop and point out that there's a standard way of doing this that works for any programming language.
+You move the code into some kind of secure sandbox and compile and run it inside.
+In the past the sandbox was potentially an entire OS-level virtual machine, which worked but was terribly slow. 
+And there were various levels of operating system support for lower-overhead isolation as well, the one I remember being [BSD jails](https://en.wikipedia.org/wiki/FreeBSD_jail).
+
+A modern solution is to use a container.
+Containers provide a similar level of isolation to a separate virtual machine, but have the advantage of starting much faster and consuming fewer resources.
+This is the approach that we've taken to create a simple polyglot playground backend that can run untrusted code written in a variety of languages, which is what powers the following example:
+
+```java slow
+public class Main {
+  public static void main(String[] unused) {
+    System.out.println("Hello, world!");
+  }
+}
+```
+
+While this works, there are still performance concerns with this approach.
+Containers themselves are still not free to launch.
+And we quickly encounter another problem with the compilation and execution steps, which is that most compilers and runtime environments have a minimal if not significant startup cost.
+
+Every time you run the Java compiler or Java virtual machine from a cold start, that program has to do some amount of initialization before it can begin useful work.
+Normally this isn't a huge problem—if you’re compiling a bunch of Java files, or starting a long-lived Java program, those startup costs—including container boot—are quickly amortized.
+
+But if you're compiling and running “Hello, world!” and other similarly small and short-lived introductory student programs, that startup cost can start to rule everything around you.
+And this isn't a case that you'd expect compiler and runtime developers to optimize, since most programs are more substantial and are expected to run for more than a fraction of a second.
+(Happily, container startup time _has_ been the subject of a fair amount of optimization recently, to better support functions-as-a-service and similar approaches.)
+
+[So](-) you can just compile and run untrusted code in a container.
+That works pretty well, although it can have significant overhead when you compare resources needed to useful work done.
+Particularly when running the kind of tiny bits of code that we use when teaching introductory computer science.
+
+For many other languages, this essay would stop right here.
+Because that is, generally speaking, just the best you can do!
+Few languages have even a wisp of support for running untrusted code safely.
+
+But Java is one of those languages!
+Remember that whole backstory about how Java used to run in the browser?
+One of the results of that misadventure is that Java has some degree of support for sandboxing itself via a feature called the [security manager](https://docs.oracle.com/javase/tutorial/essential/environment/security.html).
+
+The security manager allows you to enable runtime checks that are triggered by a variety of different program behaviors.
+If the program tries to read from a file, for example, the security manager allows you to install code that examines that read request and determines whether to allow it to proceed. 
+Failures cause the operation to throw, and don't necessarily crash the entire program unless the exception is unhandled.
+
+Java's security manager architecture itself is fairly powerful and includes checks in many useful places. 
+For example, Jeed allows you to control what libraries untrusted code can access, which turns out to be very useful when grading small programming submissions.
+It can do this because Java loads classes via a hierarchical class loading mechanism, and the security manager can prevent untrusted code from altering the class loaders it uses.
+Meaning that, if I don’t want a particular piece of student code to use `java.util.List`—maybe a piece of code that is supposed to be implementing a list itself—I can do that^[Similar checks are also applied by Jeed during compilation, but other classes may be loaded during execution and so this mechanism complements the compile-time checks.].
+
+The Java virtual machine can install a security manager before the virtual machine begins executing a program, and so provides a way to control access to your system when running a Java binary.
+But it also allows a security manager to be installed by a program itself as it runs, which allows us to selectively sandbox the execution of just a portion of the program—specifically, the untrusted student code.
+
+To do that you need to be able to identify the untrusted code, which you can do in several ways.
+Jeed's approach is to run untrusted code in separate thread groups and use thread group membership to distinguish trusted code or from untrusted code.
+And, yes, we can use the security manager to prevent untrusted code from changing thread groups and escaping the sandbox.
+
+So we can achieve a great degree of control over untrusted code via the security manager.
+In fact, we can use the security manager to prevent untrusted code from doing pretty much all of the nasty things that we'd like it not to do—stuff like trashing the file system, performing network requests, or shutting down the entire server.
+
+But, unfortunately, we're not quite done.
+Because there's one really important thing that we have to make sure that every piece of untrusted code always does.
+Stop running!
+And it's here that we need to utilize a more powerful tool: bytecode rewriting.
+
+[Let's](-) pause for a bit of chronology.
+I hacked together a previous iteration of Jeed called Janini that was based on the [Janino alternative Java compiler](http://janino-compiler.github.io/janino/).
+It wasn't a terribly secure or serious attempt, but it worked well enough to demonstrate the potential of this approach to enable live participatory coding from Spring 2018 through Spring 2019.
+The slides that I was using at the time are still online ([here's an example](https://cs125-old.cs.illinois.edu/learn/2020_04_01_trees_and_recursion/#2)), although at this point the code examples are powered by Jeed.
+I also relied on Janino's codebase to help me understand how to utilize the Java compiler framework, which came in handy later.
+
+Initial work on Jeed started in summer 2019. I had hired Ben Nordick and a few other undergraduates, and we spent a wonderful summer few months together in one of the glass-walled Siebel conference rooms.
+[It was tremendous fun, and I remember cycling back and forth to work each day feeling a deep sense of technical enjoyment](+).
+We were also all learning Kotlin together, which was also really fun.
+Jeed is entirely implemented in Kotlin.
+
+We were making steady progress on the Java sandbox using existing security manager features.
+Ben had suggested bytecode rewriting to solve several other problems, but I was hesitant to use it if we didn't absolutely have to.
+But eventually we absolutely had to.
+Because we couldn't reliably stop untrusted code, for one simple reason: [`ThreadDeath`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/ThreadDeath.html).
+
+[Java](-) has a cooperative threading model, meaning that threads aren’t expected to need to be forcibly stopped.
+The normal thing to do is to interrupt a thread, which is supposed to cooperate and check periodically for interrupts—for example, a the top of a long-running loop—and then exit cleanly.
+But, of course, we didn’t expect untrusted code to do that.
+
+Thankfully, Java does provide a (deprecated) method called [`stop`](https://cr.openjdk.java.net/~iris/se/17/latestSpec/api/java.base/java/lang/Thread.html#stop()), which you can use to initiate a more forcible shutdown.
+When you call `stop`, a `ThreadDeath` exception is triggered in the target thread, which is usually unhandled and will cause a thread to exit.
+
+But, because this is Java, we also have `try-catch`.
+And if you're wondering, can `try-catch` be used to catch and ignore `ThreadDeath`?
+Of course it can!
+
+And so here's the snippet of code—pulled from the Jeed test suite—that finally convinced me that we had to do at least a bit of bytecode rewriting to stop threads in our sandbox:
+
+```java norun
+public class Example implements Runnable {
+    public void run() {
+        while (true) {
+            try {
+                recursive(8);
+            } catch (Throwable t) {}
+        }
+    }
+    private void recursive(int depthToGo) {
+        while (true) {
+            try {
+                Thread thread = new Thread(new Example());
+                thread.start();
+                if (depthToGo > 0) {
+                  recursive(depthToGo - 1);
+                }
+                thread = new Thread(new Example());
+                thread.start();
+            } catch (Throwable t) {}
+        }
+    }
+}
+Thread thread = new Thread(new Example());
+thread.start();
+// Give time for things to get NASTY
+try {
+    Thread.sleep(Long.MAX_VALUE);
+} catch (Throwable t) { }
+```
+
+Note that this is recursive because, if you wrap a loop around your `try-catch`, there is a _tiny_ moment when the untrusted code is catching the exception, and so a well-timed `ThreadDeath` sent by a determined shutdown process can still cause it to exit.
+The recursive version doesn't suffer from that "weakness".
+
+[And](-) so the Pandora's Box of bytecode rewriting was opened.
+Ben wrote code that examines all `try-catch` blocks in compiled bytecode and, if it finds ones that would catch `ThreadDeath`, rewrites them to prevent that.
+Meaning that any code that we load into the sandbox can always be stopped.
+
+More technical readers will note at this point that what we have actually performed is what is called an unclean shutdown.
+The reason that Java's `stop` method is deprecated—which the documentation is quick to point out—is because `stop` is fundamentally unsafe.
+Yes, you can stop a thread.
+But if it was in the middle of doing something that needed to be completed and left a mess behind, that polluted state may cause problems later.
+The only way to avoid this _is_ for threads to cooperate.
+
+We've seen this problem crop up in a few places and had to address it.
+In one case, stopped threads were leaving stale characters behind in a print buffer, which would be flushed by the next unrelated task.
+That we fixed with some ugly but straightforward refactoring.
+
+A more difficult case involves Java's static initializers.
+Classes can provide `static` blocks which run the first time the class is loaded.
+If a static initializer throws an exception—including `ThreadDeath`, if it gets stopped during initialization—that exception is cached and rethrown each time the initializer is reached, essentially preventing the class from ever loading.
+At this point there's really nothing left to do other than restart the entire program, and that's what we do.
+Happily this problem is both rare and detectable.
+
+[Let's](-) step back and examine what we’ve accomplished through all of this engineering.
+
+Through a combination of existing security manager features and bytecode rewriting, we can compile and execute untrusted Java code—and other JVM languages, definitely Kotlin, probably others—in a secure sandbox created _inside_ a running Java program.
+The Jeed server itself runs inside a container for an extra level of isolation and for ease of deployment.
+[So we've eliminated the per-submission container, compiler, and JVM startup costs](+).
+
+As another performance optimization, Jeed also avoids touching the filesystem whenever possible, and all program inputs and outputs are held in memory.
+It's surprisingly hard to get certain tools that we use—specifically `checkstyle` and the Kotlin compiler—to deal with code stored in memory, and we’ve had to add a few ugly hacks or open testing interfaces to work around their determination to start with filesystem inputs.
+
+And so, is it fast?
+It's fast.
+Compiling Java code takes on the order of 30 ms.
+Kotlin's compiler is slower, so on the order of 130s ms.
+Execution times obviously depend on what the code does, but simple examples with no looping can complete in under a millisecond.
+
+You can compare Jeed with the containerized approach below.
+Here's a straightforward invocation of `javac` and `java` wrapped inside a container:
+
+```java slow
+// javac + java inside a container
+public class Main {
+  public static void main(String[] unused) {
+    System.out.println("Hello, world!");
+  }
+}
+```
+
+And here's Jeed:
+
+```java
+// Jeed
+public class Example {
+  public static void main(String[] unused) {
+    System.out.println("Hello, world!");
+  }
+}
+```
+
+The container-based approach isn't quite slow enough to prevent interactive use.
+But that small but noticeable increase in wait time hides a lot of extra resource consumption for our servers, large enough to make deploying that approach at scale a real challenge.
+More on that in a minute.
+
+At some point as a proof of concept I created a containerized execution backend for Jeed, allowing compiled code to be ejected into a container and run.
+For simple examples that approach introduced as much as a 1000x slowdown—from 1ms in our in-process sandbox to 1000ms in a container.
+And note that this is on pre-compiled code.
+It's true that that container initialization is one-time, but the JVM is fast enough that you need to do a lot of work before it catches up with that startup cost, and a _ton_ of work before you amortize it.
+We've built a sophisticated homework grader on top of Jeed, and even running hundreds of tests on student submissions still only takes on the order of hundreds of milliseconds^[And we have more optimizations to complete there.].
+So that 1000ms hurts.
+
+[But](-) let's take another step back and ask—do we really have a need for Jeed's speed?
+Wouldn't it be OK to just run untrusted code in a container?
+That's what everyone else does!
+That speed boost wasn't free—it took a lot of technical effort.
+Is it worth it?
+
+Let me answer that question indirectly.
+
+First, I'll point out that we've made our introductory computer science materials publicly available at https://www.learncs.online/.
+Every [`learncs.online`](https://www.learncs.online/.) playground, walkthrough, and programming exercise is powered by and accelerated by Jeed.
+I hope people find it helpful as they begin their journey in computer science and programming, and I know I can support a ton of usage with a small number of backend machines.
+I wouldn't feel comfortable publishing these materials if they required a more expensive backend.
+Speed makes it possible to share things.
+
+Second, because our Jeed-powered homework autograder can establish correctness so quickly, we have time to examine other aspects of code quality.
+You can find a growing list and examples [here](https://www.beyondgrader.com/demo)^[And yes, we’re working towards commercializing these tools and our small problems.].
+And the bytecode manipulation skills that Ben began acquiring through his work on Jeed underlie a lot of our new code quality analysis capabilities—like the ability to count the number of executed source lines or total memory allocations.
+If testing alone was already slow, adding code quality analysis on top of it might not make sense. Speed makes it possible to do more.
+
+Finally, on [`learncs.online`](https://www.learncs.online/) you can find examples of a [new debugging problem](https://www.learncs.online/best#debugging-challenges) that we created to help beginning programmers learn to fix mistakes.
+Creating those problems required regrading over _8 million_ mutated homework submissions—which, using a toolchain based on Jeed and a beefy machine, completed in around 48 hours.
+(The way we generated these challenges is pretty cool—I’ll write it up separately.)
+This idea would probably have been a non-starter with even a single order-of-magnitude slower homework grader, much less two or three.
+Speed makes it possible to try new things with large amounts of data.
+
+And Jeed's impact goes beyond just speed.
+Being able to compile and execute code in an in-process sandbox has really changed the way that we think about working with student code.
+Building systems that have to integrate with the filesystem and shell-based tools is, I'll argue, fundamentally difficult and produces brittle results.
+Can it be done?
+Sure.
+And containerization should make it much easier to do this kind of thing cleanly, without worrying about what kind of mess they are going to make on disk.
+But it’s not quite the same level of "code as data" that we can accomplish using Jeed, even when working with languages like Java that don’t lend themselves naturally to this kind of metaprogramming.
+
+[At](-) this point Jeed is largely done.
+I'm still slowly puttering away on some new things—recently new mutators and completing feature analysis for Kotlin code.
+But the core components described here are stable.
+There's an [online demo here](https://cs125-illinois.github.io/jeed/) demonstrating a few of Jeed's source analysis capabilities, although it's a bit out of date at this point.
+Here's an example of how to compile and run a short "snippet" of code, which Jeed supports as a relaxed version of Java syntax supporting top-level code and method declarations:
+
+```kotlin norun
+Source.fromSnippet("""System.out.println("Hello, world!");""")
+  .compile()
+  .execute()
+  .also {
+    println(it.output) // prints "Hello, world!"
+  }
+```
+
+If you'd like to use it in your own project, you can find the source code [on GitHub](https://github.com/cs125-illinois/jeed).
+We also publish Docker containers for our Jeed-based playground backend on [Docker Hub](https://hub.docker.com/r/cs125/jeed/).
+When you need help, feel free to get in touch.
+Documentation is not our strong suit.
+
+[On](-) a longer-term horizon Jeed will be impacted by the [imminent removal of the Java security manager](https://openjdk.org/jeps/411) beginning after Java 17.
+Happily, Java 17 is a LTS release and supported through 2029.
+Meaning that we get to look forward to 7 years of angry warnings about the security manager being "terminally deprecated".
+I can live with that.
+
+I guess there's a small possibility that one of the newer Java releases will add some really nice language feature that I'd like to teach, but based on recent releases I find that unlikely.
+Plus, it's somewhat dangerous to teach some of the more advanced Java syntax to students.
+A lot of Java developers seem stuck on syntax circa Java 8, and you run the risk of a student bewildering an interviewer by trying to use something new-fangled like the [`instanceof` pattern matching operator](https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html)^[introduced in Java 14] during a coding interview.
+Which we do teach, although it's a poor substitute for actual flow typing, and it's quadripartite syntax is awkward.
+
+Ben has also assured me that we could establish a similar level of sandboxing using bytecode rewriting.
+Given how good he's gotten at it, I don’t doubt it.
+I've learned not to doubt him when he claims something is possible.
+And a lot will change over the next seven years, so I find it hard to worry too much about this transition.
+
+---
+
+[As](-) a reminder, this essay is a part of a series I’m writing sharing details about the infrastructure that powers my courses.
+You can find the overview [here](/essays/2022-04-08-my-cs1-backend).
+
+For the next installment I'll describe our novel homework autograder, and how I've rapidly and happily authored almost 600 programming exercises without writing a single test case.

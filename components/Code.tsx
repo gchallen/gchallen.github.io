@@ -23,6 +23,7 @@ const RunButton: React.FC<{ size: number; onClick: () => void }> = ({ size, onCl
 
 const DEFAULT_FILES = {
   python: "main.py",
+  java: "Main.java",
 } as Record<string, string>
 
 const AceFrame = styled.div`
@@ -111,8 +112,8 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
     }
   }, [state])
 
-  let runWithJeed = ["java", "kotlin"].includes(mode) && (!meta || !meta.includes("norun"))
-  let runWithPlayground = ["python"].includes(mode)
+  let runWithJeed = ["java", "kotlin"].includes(mode) && (!meta || (!meta.includes("norun") && !meta.includes("slow")))
+  let runWithPlayground = ["python"].includes(mode) || (["java"].includes(mode) && meta && meta.includes("slow"))
 
   let snippet = meta === undefined || !meta.includes("source")
 
