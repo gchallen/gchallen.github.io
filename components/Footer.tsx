@@ -7,38 +7,20 @@ const Footer: React.FC = () => {
     <footer>
       <SubscribeButton />
       <div>
-        <Link href="/">
-          <a>Home</a>
+        <Link href="/">Home</Link>
+        <Link href="/about/">About</Link>
+        <Link href="/CV/">CV</Link>
+        <Link href="https://learncs.online" target="_blank">
+          <kbd>learncs.online</kbd>
         </Link>
-        <Link href="/about/">
-          <a>About</a>
-        </Link>
-        <Link href="/CV/">
-          <a>CV</a>
-        </Link>
-        <Link href="https://learncs.online">
-          <a target="_blank">
-            <kbd>learncs.online</kbd>
-          </a>
-        </Link>
-        <Link href="/essays/">
-          <a>Essays</a>
-        </Link>
+        <Link href="/essays/">Essays</Link>
         <LoginButton text />
-        <Link href="mailto:geoffrey.challen@gmail.com">
-          <a>Contact</a>
-        </Link>
+        <Link href="mailto:geoffrey.challen@gmail.com">Contact</Link>
       </div>
       <div id="feeds">
-        <Link href="/rss.xml">
-          <a>RSS</a>
-        </Link>
-        <Link href="/atom.xml">
-          <a>Atom</a>
-        </Link>
-        <Link href="/feed.json">
-          <a>JSON</a>
-        </Link>
+        <Link href="/rss.xml">RSS</Link>
+        <Link href="/atom.xml">Atom</Link>
+        <Link href="/feed.json">JSON</Link>
       </div>
     </footer>
   )

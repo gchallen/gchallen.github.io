@@ -56,11 +56,7 @@ const A: React.FC<{ href: string }> = ({ href, ...props }) => {
       </>
     )
   } else {
-    return (
-      <Link href={href}>
-        <a {...props} />
-      </Link>
-    )
+    return <Link href={href} {...props} />
   }
 }
 
@@ -77,10 +73,10 @@ const Image: React.FC<{ src: string; alt: string; width: number; height: number;
       <NextImage
         src={src}
         alt={alt}
-        layout="responsive"
         width={width}
         height={height}
         unoptimized={process.env.NODE_ENV === "development"}
+        style={{ height: "auto" }}
         {...props}
       />
       <figcaption>{children}</figcaption>
@@ -104,10 +100,11 @@ const Wrapper: React.FC<{
   }
 }> = ({ frontmatter, children }) => {
   const { title, description, technical, publishedAt, reading, noDate, noTitle } = frontmatter
+  const actualTitle = `Geoffrey Challen : ${title}`
   return (
     <>
       <Head>
-        <title>Geoffrey Challen : {title}</title>
+        <title>{actualTitle}</title>
         <meta property="og:title" content={title} key="ogtitle" />
         {description && (
           <>

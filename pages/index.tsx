@@ -28,7 +28,6 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           width={130}
           height={176}
           priority
-          layout="fixed"
           unoptimized={process.env.NODE_ENV === "development"}
         />
         <nav className={`${styles.nav} responsive`}>
@@ -58,8 +57,8 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
         <p>
           My goal is to teach computer science to as many people as possible. I do this by creating interactive learning
           environments that scale. You can explore an example of my materials at{" "}
-          <Link href="https://learncs.online">
-            <a target="_blank">learncs.online</a>
+          <Link href="https://learncs.online" target="_blank">
+            learncs.online
           </Link>
           .
         </p>

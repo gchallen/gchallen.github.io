@@ -22,22 +22,22 @@ const SidebarContent: React.FC<{ setOpen: (open: boolean) => void }> = ({ setOpe
       <div>
         <h2>
           <SidebarLink href="/" setOpen={setOpen}>
-            <a>Home</a>
+            Home
           </SidebarLink>
         </h2>
         <h2>
           <SidebarLink href="/about/" setOpen={setOpen}>
-            <a>About</a>
+            About
           </SidebarLink>
         </h2>
         <h2>
           <SidebarLink href="/essays/" setOpen={setOpen}>
-            <a>Essays</a>
+            Essays
           </SidebarLink>
         </h2>
         <h2>
           <SidebarLink href="/CV/" setOpen={setOpen}>
-            <a>Curriculum Vitæ</a>
+            Curriculum Vitæ
           </SidebarLink>
         </h2>
       </div>
@@ -50,24 +50,16 @@ const SidebarContent: React.FC<{ setOpen: (open: boolean) => void }> = ({ setOpe
         </h2>
         <hr />
         <h2>
-          <Link href="mailto:geoffrey.challen@gmail.com">
-            <a>Contact</a>
-          </Link>
+          <Link href="mailto:geoffrey.challen@gmail.com">Contact</Link>
         </h2>
         <h2>
-          <Link href="/rss.xml">
-            <a>RSS</a>
-          </Link>
+          <Link href="/rss.xml">RSS</Link>
         </h2>
         <h2>
-          <Link href="/atom.xml">
-            <a>Atom</a>
-          </Link>
+          <Link href="/atom.xml">Atom</Link>
         </h2>
         <h2>
-          <Link href="/feed.json">
-            <a>JSON</a>
-          </Link>
+          <Link href="/feed.json">JSON</Link>
         </h2>
       </div>
     </div>
@@ -101,21 +93,19 @@ const Header: React.FC = () => {
         <div className="container">
           <div className="box">
             <Link href="/">
-              <a>
-                <Image
-                  priority
-                  src="/cartoon-75x102.png"
-                  alt="Geoffrey Challen"
-                  width={46}
-                  height={63}
-                  unoptimized={process.env.NODE_ENV === "development"}
-                />
-              </a>
+              <Image
+                priority
+                src="/cartoon-75x102.png"
+                alt="Geoffrey Challen"
+                width={46}
+                height={63}
+                unoptimized={process.env.NODE_ENV === "development"}
+              />
             </Link>
           </div>
           <div className="box" style={{ justifyContent: "center", fontSize: "1.1em" }}>
             <Link href="/" passHref>
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", height: "100%" }}>
                 <div
                   style={{
                     display: "flex",
@@ -148,24 +138,16 @@ const Header: React.FC = () => {
         </div>
         <div className="links">
           <div>
-            <Link href="/essays">
-              <a>Essays</a>
-            </Link>
+            <Link href="/essays">Essays</Link>
           </div>
           <div>
-            <Link href="/about">
-              <a>About</a>
-            </Link>
+            <Link href="/about">About</Link>
           </div>
           <div>
-            <Link href="/CV">
-              <a>CV</a>
-            </Link>
+            <Link href="/CV">CV</Link>
           </div>
           <div>
-            <Link href="#feeds">
-              <a>Feeds</a>
-            </Link>
+            <Link href="#feeds">Feeds</Link>
           </div>
           <div>
             <ChooseDarkMode />

@@ -27,7 +27,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
   const { published, drafts } = await getEssays()
   return { props: { published, drafts: process.env.NEXT_PUBLIC_SHOW_DRAFTS ? drafts : [] } }
 }

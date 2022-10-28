@@ -10,10 +10,8 @@ const Summary: React.FC<{ essay: Essay }> = ({ essay }) => {
     <div>
       <h3>
         <Link href={`/${url}`}>
-          <a>
-            {publishedAt ? `${publishedAt} : ` : ""}
-            {title}
-          </a>
+          {publishedAt ? `${publishedAt} : ` : ""}
+          {title}
         </Link>
       </h3>
       <p>{description}</p>
@@ -51,10 +49,8 @@ const Essays: React.FC<{
           {h1 ? (
             <h1>Essays</h1>
           ) : (
-            <Link href="/essays/">
-              <a className="inverted-link">
-                <h2>Essays</h2>
-              </a>
+            <Link href="/essays/" className="inverted-link">
+              <h2>Essays</h2>
             </Link>
           )}
           <p>
