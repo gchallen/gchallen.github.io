@@ -1,10 +1,13 @@
 import validator from "email-validator"
 import { useSession } from "next-auth/react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { PropsWithChildren, useCallback, useEffect, useRef, useState } from "react"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import { FaCheckCircle } from "react-icons/fa"
 
-const SubscribeButton: React.FC<{ hideAfterSubscribe?: boolean }> = ({ children, hideAfterSubscribe = false }) => {
+const SubscribeButton: React.FC<PropsWithChildren & { hideAfterSubscribe?: boolean }> = ({
+  children,
+  hideAfterSubscribe = false,
+}) => {
   const { executeRecaptcha } = useGoogleReCaptcha()
   const [, setSubscriberCount] = useState<number | undefined>()
   const { data: session } = useSession()
@@ -43,14 +46,14 @@ const SubscribeButton: React.FC<{ hideAfterSubscribe?: boolean }> = ({ children,
   }, [session, updateEmail])
 
   const onChange = useCallback(
-    (event) => {
+    (event: any) => {
       updateEmail(event.target.value)
     },
     [updateEmail]
   )
 
   const onSubmit = useCallback(
-    async (event) => {
+    async (event: any) => {
       event.preventDefault()
       if (!executeRecaptcha) {
         return

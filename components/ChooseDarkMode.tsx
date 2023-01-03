@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react"
 import { FaMoon, FaSun } from "react-icons/fa"
 
 export interface DarkModeContext {
@@ -11,7 +11,7 @@ export const DarkModeContext = createContext<DarkModeContext>({
     throw "DarkModeContext not available"
   },
 })
-export const DarkModeProvider: React.FC = ({ children }) => {
+export const DarkModeProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [darkMode, setDarkMode] = useState(
     typeof window !== "undefined" ? document.body.classList.contains("dark-mode") : false
   )

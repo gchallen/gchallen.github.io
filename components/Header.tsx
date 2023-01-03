@@ -2,12 +2,16 @@ import { Cross as Hamburger } from "hamburger-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import React, { useState } from "react"
+import React, { PropsWithChildren, useState } from "react"
 import Sidebar from "react-sidebar"
 import ChooseDarkMode from "../components/ChooseDarkMode"
 import LoginButton from "./LoginButton"
 
-const SidebarLink: React.FC<{ href: string; setOpen: (open: boolean) => void }> = ({ href, setOpen, children }) => {
+const SidebarLink: React.FC<PropsWithChildren & { href: string; setOpen: (open: boolean) => void }> = ({
+  href,
+  setOpen,
+  children,
+}) => {
   const { pathname } = useRouter()
   if (href === pathname || href === `${pathname}/`) {
     return <div onClick={() => setOpen(false)}>{children}</div>

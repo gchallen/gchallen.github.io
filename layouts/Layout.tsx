@@ -1,6 +1,7 @@
 import Head from "next/head"
 import NextImage from "next/image"
 import Link from "next/link"
+import { PropsWithChildren } from "react"
 import { onlyText } from "react-children-utilities"
 import { usePopperTooltip } from "react-popper-tooltip"
 import "react-popper-tooltip/dist/styles.css"
@@ -9,7 +10,7 @@ import Footer from "../components/Footer"
 import Header from "../components/Header"
 import YouTube from "../components/YouTube"
 
-const Footnote: React.FC<{ counter: string }> = ({ counter, children }) => {
+const Footnote: React.FC<PropsWithChildren & { counter: string }> = ({ counter, children }) => {
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip(
     {
       placement: "top",
@@ -43,7 +44,7 @@ const Footnote: React.FC<{ counter: string }> = ({ counter, children }) => {
   )
 }
 
-const A: React.FC<{ href: string }> = ({ href, ...props }) => {
+const A: React.FC<PropsWithChildren & { href: string }> = ({ href, ...props }) => {
   if (href === "-") {
     const text = onlyText(props.children)
     const capital = text[0]
@@ -60,14 +61,9 @@ const A: React.FC<{ href: string }> = ({ href, ...props }) => {
   }
 }
 
-const Image: React.FC<{ src: string; alt: string; width: number; height: number; caption?: string }> = ({
-  src,
-  alt,
-  width,
-  height,
-  children,
-  ...props
-}) => {
+const Image: React.FC<
+  PropsWithChildren & { src: string; alt: string; width: number; height: number; caption?: string }
+> = ({ src, alt, width, height, children, ...props }) => {
   return (
     <figure>
       <NextImage
@@ -84,21 +80,23 @@ const Image: React.FC<{ src: string; alt: string; width: number; height: number;
   )
 }
 
-const ScreenOnly: React.FC = ({ children }) => <div className="screenonly">{children}</div>
-const PrintOnly: React.FC = ({ children }) => <div className="printonly">{children}</div>
+const ScreenOnly: React.FC<PropsWithChildren> = ({ children }) => <div className="screenonly">{children}</div>
+const PrintOnly: React.FC<PropsWithChildren> = ({ children }) => <div className="printonly">{children}</div>
 const Comment: React.FC = () => null
 
-const Wrapper: React.FC<{
-  frontmatter: {
-    title: string
-    description: string
-    publishedAt: string
-    reading: { text: string }
-    noDate?: boolean
-    noTitle?: boolean
-    technical?: boolean
+const Wrapper: React.FC<
+  PropsWithChildren & {
+    frontmatter: {
+      title: string
+      description: string
+      publishedAt: string
+      reading: { text: string }
+      noDate?: boolean
+      noTitle?: boolean
+      technical?: boolean
+    }
   }
-}> = ({ frontmatter, children }) => {
+> = ({ frontmatter, children }) => {
   const { title, description, technical, publishedAt, reading, noDate, noTitle } = frontmatter
   const actualTitle = `Geoffrey Challen : ${title}`
   return (

@@ -1,6 +1,6 @@
 import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react"
+import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from "react"
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa"
 
 export interface NewWindowLoginContext {
@@ -21,7 +21,7 @@ const NewWindowLoginContext = createContext<NewWindowLoginContext>({
   session: null,
 })
 
-export const NewWindowLoginProvider: React.FC = ({ children }) => {
+export const NewWindowLoginProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const { data, status } = useSession()
   const [busy, setBusy] = useState(false)
   const opened = useRef<Window | null>()

@@ -20,8 +20,8 @@ const YouTube: React.FC<{ id: string }> = ({ id }) => {
         <YoutubePlayer
           videoId={id}
           opts={{ playerVars: { autoplay: 0, rel: 0, modestbranding: 1 } }}
-          containerClassName={classes.wrapper}
-          className={classes.iframe}
+          className={classes.wrapper}
+          iframeClassName={classes.iframe}
         />
       </Centerer>
     </Outer>
