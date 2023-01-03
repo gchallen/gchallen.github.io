@@ -43,7 +43,7 @@
     "react-hook-inview": "4.5.0",
     "react-icons": "4.7.1",
     "react-popper-tooltip": "4.4.2",
-    "react-sidebar": "gchallen/react-sidebar",
+    "react-sidebar": "https://github.com/gchallen/react-sidebar",
     "react-youtube": "10.1.0",
     "runtypes": "6.6.0",
     "styled-components": "5.3.6"
