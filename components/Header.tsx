@@ -30,13 +30,18 @@ const SidebarContent: React.FC<{ setOpen: (open: boolean) => void }> = ({ setOpe
           </SidebarLink>
         </h2>
         <h2>
-          <SidebarLink href="/about/" setOpen={setOpen}>
-            About
+          <SidebarLink href="/essays/" setOpen={setOpen}>
+            Essays
           </SidebarLink>
         </h2>
         <h2>
-          <SidebarLink href="/essays/" setOpen={setOpen}>
-            Essays
+          <SidebarLink href="/projects/" setOpen={setOpen}>
+            Projects
+          </SidebarLink>
+        </h2>
+        <h2>
+          <SidebarLink href="/about/" setOpen={setOpen}>
+            About
           </SidebarLink>
         </h2>
         <h2>
@@ -143,6 +148,9 @@ const Header: React.FC = () => {
         <div className="links">
           <div>
             <Link href="/essays">Essays</Link>
+          </div>
+          <div>
+            <Link href="/projects">Projects</Link>
           </div>
           <div>
             <Link href="/about">About</Link>

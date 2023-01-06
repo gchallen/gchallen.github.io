@@ -169,7 +169,7 @@ span.restword {
   letter-spacing: 1.5px;
 }
 .paddings {
-  padding-top: calc(68px + 2em);
+  padding-top: calc(68px + 1em);
   @media print {
     padding-top: 0;
   }
@@ -330,14 +330,14 @@ header {
     display: flex;
     div {
       display: none;
-      @media screen and (max-width: 720px) {
+      @media screen and (max-width: 960px) {
         display: block;
       }
     }
   }
   .links {
     display: flex;
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 960px) {
       display: none;
     }
     margin-top: -2em;

@@ -47,17 +47,31 @@ const Essays: React.FC<{
       {published.length > 0 && (
         <>
           {h1 ? (
-            <h1>Essays</h1>
+            <div id="titleContainer">
+              <h1>Essays</h1>
+            </div>
           ) : (
             <Link href="/essays/" className="inverted-link">
               <h2>Essays</h2>
             </Link>
           )}
-          <p>
-            I post essays here on teaching, technology, and the overlap between the two. I try to keep my essays on
-            teaching accessible to teachers who don&apos;t program, and my essays on technology interesting to
-            programmers who don&apos;t teach.{" "}
-          </p>
+          {h1 ? (
+            <>
+              <div className="lead">
+                <p>I post essays here on teaching, technology, and the overlap between the two.</p>
+              </div>
+              <p>
+                I try to keep my essays on teaching accessible to teachers who don&apos;t program, and my essays on
+                technology interesting to programmers who don&apos;t teach.{" "}
+              </p>
+            </>
+          ) : (
+            <p>
+              I post essays here on teaching, technology, and the overlap between the two. I try to keep my essays on
+              teaching accessible to teachers who don&apos;t program, and my essays on technology interesting to
+              programmers who don&apos;t teach.{" "}
+            </p>
+          )}
           {limit && (
             <>
               {h1 ? <h2>Latest</h2> : <h3>Latest</h3>}

@@ -35,13 +35,16 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
             <Link href="/essays">Essays</Link>
           </div>
           <div>
+            <Link href="/projects">Projects</Link>
+          </div>
+          <div>
             <Link href="/about">About</Link>
           </div>
           <div>
             <Link href="/CV">CV</Link>
           </div>
           <div>
-            <Link href="#feeds">Subscribe</Link>
+            <Link href="#feeds">Feeds</Link>
           </div>
           <div>
             <ChooseDarkMode />
