@@ -24,18 +24,110 @@ This was a tough period to live through, but it feels like enough time has passe
 
 We had two lectures scheduled that week.
 Campus was still open, and students were still present.
-Rather than continuing to pack 500 students in the second-largest lecture hall on campus, I decided to practice lecturing from my office using YouTube Live.
-[When you teach a large course you're acutely aware of lectures as an effective disease vector](+), if not only because one of your jobs as the instructor is to avoid getting sick.
+Rather than continuing to pack 500 students into the second-largest lecture hall on campus, I decided to practice lecturing from my office using YouTube Live.
+[When you teach a large course you're acutely aware of lectures as an effective disease vector.](+)
+Partly because one of your jobs as the instructor is to avoid getting sick.
 Also because you hear a lot of coughing.
 And I figured that, if YouTube Live didn't work using the campus internet, it probably wouldn't work better from home.^[For the record, it worked quite well from both locations.]
 
-Students left a few days later uncertain if they would return.
-Some joker in campus administration decided to wait until several day into spring break to notify students that campus was closing and we would transition to virtual instruction for the remainder of the semester.
-Which meant that many students had to return to campus to retrieve their belongings before returning home again.
+Students left for spring break a few days later uncertain if they would return.
+Some joker in administration decided to wait until the middle of the break to notify students that campus was closing and we would transition to virtual instruction for the remainder of the semester.
+Which meant that many students had to add an extra round-trip back and forth to campus to retrieve their belongings before settling at home.
 Nothing like a bit of extra unnecessary travel during the onset of a global health crisis.
 
 In fairness, there was a lot of difficult decision making going on around that time, accompanied by some fairly questionable messaging.
 But it was clear to me and at least some of my colleagues which way things were headed.
-Suzanna and I cancelled a planned spring break trip to Seattle to meet my new niece.
-And so I suddenly had a free week to prepare for what promised to be an unusual half semester.
-At minimum.
+Suzanna and I canceled a planned spring break trip to Seattle to meet my new niece.
+And I suddenly had a free week to prepare for what promised to be an unusual remainder of the semester.
+
+[I](-) anticipated that one of the biggest initial challenges to transitioning to virtual instruction would be finding ways to support students remotely.
+
+At the time, my CS1 course normally ran in-person drop-in tutoring hours 7 days a week for long stretches—usually at least eight hours starting midday and running into the early evening.
+These office hours were held in a basement room in our computer science building.
+Siebel 0403 is an ugly windowless room tucked into a far corner of the basement^[With decor that matches nothing else in the building.].
+But I had fought long and hard to obtain exclusive access it for my course.
+Because it seats forty students, which is 10 times more than the space we were using previously.
+And it was all ours.
+My amazing course staff transformed it into a comfortable and welcoming space for students who needed help at most hours of the day or evening.
+No appointments needed.
+Just drop in, find a seat, open your laptop, and a staff member will be by to start helping you shortly.
+
+Students and staff both get a lot of different benefits out of a drop-in tutoring space.
+For staff, it helps create a sense of community and facilitates them learning from and helping each other.
+If one gets stuck on a particular problem, they can easily ask a colleague for help.
+Usually we'll have a few more senior staff around that may be more prepared to help address trickier questions.
+For new staff, working side by side helps them learn how to maintain a positive and professional demeanor when working with students, who can understandably become frustrated as they attempt to debug their code.
+We’ve all been there.
+
+Obviously students come to our drop-in tutoring hours to get help—and they do.
+But they also benefit from overhearing as staff help other nearby students, and I suspect they absorb a fair amount of knowledge that way as well.
+While they are there they also interact with other students, which can help create social connections.
+And there is definitely some sense of comfort and togetherness in shared struggle, knowing that you are not the only one that struggled with the assignment.
+Other discussions may involve sharing tips or bits of advice.
+Tutoring hours represent a safe space for this kind of interaction, since it occurs under the watchful eye of the course staff, who can help guide students away from interactions that would violate course collaboration policies.
+
+I tend to focus on using technology to support my courses.
+[I'm good at technology and optimistic about what it can accomplish.](+)
+And I feel like that's probably an important attitude for someone who's job is to get students started as software creators.
+
+But there are some things that even great tech can’t replicate.
+Moving lectures and quizzes online as my course moved online was going to have a negative impact on the course, for sure.
+But there are so many different ways that in-person tutoring hours can create a positive and supportive environment for students and staff. 
+This is why I fought so hard to get us access to this space in the first place.
+So losing our tutoring space was going to hurt a lot more.
+I decided to try and address that first.
+
+[Now](-) comes the part where I describe the technical solution that I created.
+And you say: "Wait, you just told me that technical solutions couldn't replicate the sense of community created by an in-person tutoring space!"
+You're not wrong.
+But a crisis is looming, and we’re doing triage.
+If we don’t black tag a few of these positive effects, it’s unlikely we’ll be able to save any of them.
+
+I decided to focus on two things.
+First, making sure that students could get help easily.
+That’s the ultimate point of our tutoring hours, even despite all of the positive wraparound effects.
+
+My second goal was preserving the ability of staff to operate office hours fairly and efficiently.
+We focus a lot on this when we train staff, and specifically on avoiding what I call _help queue meltdown_.
+
+[Help](-) queue meltdown occurs when a positive feedback loop arises between the number of students waiting for help and the amount of time staff spend helping each student.
+As students spend longer waiting for help, they naturally expect more help once they reach the front of the line.
+But as staff spend more time helping each student, the line slows down, and students spend more time waiting.
+And then expect more help.
+And off you go.
+
+This can get very ugly, very quickly.
+Reports of multi-hour wait times are not unusual for some of our larger courses—either because they don't take steps to manage this dynamic, or because they just don’t have enough staff to keep it under control.
+
+The only way to solve this problem is for staff to identify and avoid this dynamic.
+First, having enough staff on hand is a hard requirement.
+Once the student to staff ratio gets too unhealthy, no amount of management or awareness will save you.
+
+[The goal is for staff to avoid spending longer amounts of time helping each student as the line lengthens.](+)
+If you can train them to do this, you can avoid feeding this negative feedback loop.
+Managing student anxiety is also crucial.
+Frequently the line is long because some deadline is approaching, and keeping wait times down helps students stay calm and feel confident that they will have chances to get help before the assignment is due.
+
+This also avoids another huge problem with office hour queue meltdown.
+Not only is the line moving more and more slowly.
+But as student help sessions get longer, staff efficiency also drops.
+Because pretty soon you are sitting there watching the student follow your advice, rather than rotating on to the next problem.
+
+Say the student had a bug and you helped them identify it.
+That's great! Time to move on.
+But they beg you to stay, since the wait is 6 hours due to help queue meltdown and they are worried they'll never get help again.
+So you end up sitting there watching as they fix the bug.
+Maybe they encounter another problem and you help them with that.
+But overall staff start spending a lot of time waiting for students, when it's students that should be waiting for staff^[As a systems person, I recognize this as a processor task scheduling problem—where staff are the processors and student questions are the tasks. And some of the same design principles apply.].
+And the queue grows longer and longer...
+
+We work hard to train our staff to avoid this dynamic.
+Check in, help the student get unstuck, provide some guidance about what to do next, and don't forget to include some encouragement and emotional support.
+Then move on.
+This also promotes active waiting, where students are not just sitting there on Instagram waiting for help from staff, but continuing to keep their feet moving—either acting on advice from a previous course staff member, or acting in anticipation that their next help session is not going to consist of a staff member solving all of their problems at once.
+
+Training staff to work this way is challenging!
+Students implore them not to leave.
+And it's satisfying to stick around and see your advice work out, or just take a breather before moving on to the next confusing bug.
+But if staff can rotate effectively, we can keep wait times down, keep staff efficiency up, and help all students make forward progress.
+It's hard, but it works.
