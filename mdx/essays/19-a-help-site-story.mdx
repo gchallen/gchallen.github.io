@@ -131,3 +131,27 @@ Students implore them not to leave.
 And it's satisfying to stick around and see your advice work out, or just take a breather before moving on to the next confusing bug.
 But if staff can rotate effectively, we can keep wait times down, keep staff efficiency up, and help all students make forward progress.
 It's hard, but it works.
+
+[As](-) it turns out, having a tutoring space also helps avoid help queue meltdown.
+Both students and staff have a sense of what the staffing ratio is and how busy things are.
+For staff working a crowded room, many students waiting gives their work a sense of urgency, and helps them not linger too long with any one student.
+Students waiting for help in a crowded room naturally expect less help than when more staff are available.
+Both of these calibrations help avoid help queue meltdown.
+
+As you would expect, tutoring hours can get quite busy before deadlines.
+We encourage staff to prioritize students differently at that point.
+It's appropriate for them to focus more on students who have started on time and are nearly done, and resist the urge to try to save students who waited until the last minute to start.
+
+[So](-) our online help system had two primary design requirements.
+First, allow students to easily receive individual help.
+Second, encourage staff to work efficiently and avoid help queue meltdown—even while lacking the normal situational awareness that comes from working in a physical tutoring center.
+
+Over Spring Break 2020 I rapidly cobbled together a prototype of the help site that we continued to use for the next three semesters.
+It's a browser-based tool that uses the [Jitsi](https://jitsi.org/) as a videoconferencing backend.
+The first version was a standalone web application built using a [React frontend](https://reactjs.org/), a [`node.js`](https://nodejs.org/en/) backend, and a mixture of a web API and websockets for real-time communication.
+Subsequent versions are architected similarly but have been integrated directly into our course website, which has undergone its own complete transformation since Spring 2020.
+
+I was lucky that I had acquired some familiarity with React using [React Native](https://reactnative.dev/) on an ill-fated attempt to create a cross-platform smartphone app—which, it turns out, was also intended to help us manage office hours.
+You never know when the technical skills that you acquire will come in hand.
+(Not that I didn't think that React wouldn't come in handy at some point.
+It's a common tool used to build interactive websites.)
