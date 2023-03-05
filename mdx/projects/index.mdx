@@ -14,7 +14,7 @@ Most of my projects are published on GitHub, and many are publicly deployed and 
 If you'd like to use something for your own courses and need help, please get in touch!
 I'm happy to help and, to some degree, what I've made publicly available is largely a result of what people have wanted to use.
 
-## `learncs.online`: Learn to Program Online
+## `learncs.online`: Learn to Program Online ((learncsonline))
 
 [`learncs.online`](https://learncs.online) is the freely-available version of the materials developed to support [CS 124](https://www.cs124.org/)—my CS1 course at Illinois.
 
@@ -29,7 +29,7 @@ I'm happy to help and, to some degree, what I've made publicly available is larg
 **Demo**: https://learncs.online/  
 **Credits**: Hundreds of course staff have contributed content to `learncs.online`, resulting in the first crowdsourced CS1 course. Find the [full list of contributors here](https://www.learncs.online/people).
 
-## Interactive Code Walkthroughs
+## Interactive Code Walkthroughs ((walkthroughs))
 
 One of the most distinctive features of the [`learncs.online`](https://learncs.online) and [CS 124](https://cs124.org) materials is their use of [_interactive walkthroughs_](https://www.learncs.online/best#interactive-walkthroughs).
 
@@ -45,7 +45,7 @@ Stay tuned!
 **Demo**: https://www.learncs.online/best#interactive-walkthroughs  
 **Credits**: [Ruisong Li](https://www.ruisong.info/) contributed code to the latest implementation of the interactive walkthrough component.
 
-## Rapid and Accurate Programming Exercise Authoring and Autograding
+## Rapid and Accurate Programming Exercise Authoring and Autograding ((questioner))
 
 Students learning to program benefit from practice—a lot of practice!
 Supporting their success means providing many programming exercises—practice to complete as they learn, homework problems to test their understanding along the way, and additional exercises on regular assessments such as quizzes.
@@ -74,7 +74,7 @@ We are also working to make this tool more broadly available at [`beyondgrader.c
 **Credits**: [Ben Nordick](https://github.com/Fleex255) and [Max Kopinsky](https://www.linkedin.com/in/max-kopinsky-2bbb5719b) worked on an early prototype of the Questioner system.
 Several other students, including [Harsh Deep](https://github.com/harsh183) and [Miguel Fernandez](https://www.linkedin.com/in/migujorg), have authored questions using Questioner.
 
-## Speedy JVM Execution and Analysis
+## Speedy JVM Execution and Analysis ((jeed))
 
 [Jeed](https://jeed.run) ([GitHub](https://github.com/cs124-illinois/jeed)) is the speedy JVM execution and analysis toolkit.
 
@@ -91,3 +91,15 @@ Jeed has been in production use since 2019.
 **Credits**: [Ben Nordick](https://github.com/Fleex255) has made substantial contributions to Jeed, including critical work on bytecode rewriting required to achieve sandbox safety.
 [Ben Clarage](https://www.linkedin.com/in/ben-clarage-856820202/) added initial support for Kotlin source mutation.
 [Hania Dziurdzik](https://www.mymozaic.com/hdziurdzik) provided an initial implementation of Java feature analysis.
+
+## Experiments
+
+Projects described below have either not yet been fully completed or are not yet deployed to production in support of one of my courses.
+
+### Polyglot Playgrounds ((polyplayground))
+
+The approach to providing secure high-speed untrusted Java and Kotlin code execution used by [Jeed](#jeed) relies on unique features of the Java Virtual Machine.
+A more general is to use containerization to protect the host from untrusted code.
+While slower, this allows a single backend to easily support student experimentation with multiple different languages.
+
+**Demo**: https://cs124-illinois.github.io/playground/

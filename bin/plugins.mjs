@@ -93,18 +93,29 @@ export function comments() {
 }
 
 export function headings() {
+  const duplicates = {}
   function transformer(ast) {
     visit(ast, "heading", visitor)
 
     function visitor(node) {
-      const slugId = slugify(toString(node).toLowerCase())
+      const headerAsString = toString(node)
+      let id = slugify(headerAsString.toLowerCase())
+      const match = /^(.*?)\s*\(\(([\w-]+)\)\)$/.exec(headerAsString)
+      if (match && match[1]) {
+        id = match[2]
+        node.children = [{ type: "text", value: match[1] }]
+      }
       const originalChildren = [...node.children]
+      if (id in duplicates) {
+        throw `Duplicate heading ${id}`
+      }
+      duplicates[id] = true
 
       node.children = [
-        { type: "link", url: "#", data: { hProperties: { className: "anchorTarget", id: slugId } } },
+        { type: "link", url: "#", data: { hProperties: { className: "anchorTarget", id } } },
         {
           type: "link",
-          url: `#${slugId}`,
+          url: `#${id}`,
           data: {
             hProperties: { className: "anchor screenonly" },
           },
