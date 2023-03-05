@@ -11,6 +11,8 @@ noDate: true
 
 I create and maintain a variety of software tools to support my courses.
 Most of my projects are published on GitHub, and many are publicly deployed and freely available for educators and students to use and extend.
+If you'd like to use something for your own courses and need help, please get in touch!
+I'm happy to help and, to some degree, what I've made publicly available is largely a result of what people have wanted to use.
 
 ## `learncs.online`: Learn to Program Online
 
@@ -23,6 +25,9 @@ Most of my projects are published on GitHub, and many are publicly deployed and 
 * 2,540 [interactive walkthroughs](https://www.learncs.online/best#interactive-walkthroughs) from [264 instructors](https://www.learncs.online/people)
 * 132 [homework problems](https://www.learncs.online/best#homework) providing both correctness and [code quality feedback](https://www.learncs.online/best#code-quality)
 * novel [debugging challenges](https://www.learncs.online/best#debugging-challenges) that help students learn to fix small mistakes
+
+**Demo**: https://learncs.online/  
+**Credits**: Hundreds of course staff have contributed content to `learncs.online`, resulting in the first crowdsourced CS1 course. Find the [full list of contributors here](https://www.learncs.online/people).
 
 ## Interactive Code Walkthroughs
 
@@ -37,7 +42,39 @@ By lowering the barrier to providing this kind of content, we have been able to 
 We are working on making this explanatory component more broadly available^[[EdStem Lessons](https://edstem.org/lessons) also has a similar feature in beta, if you'd prefer a commercial alternative.].
 Stay tuned!
 
-## Jeed: Speedy JVM Execution and Analysis
+**Demo**: https://www.learncs.online/best#interactive-walkthroughs  
+**Credits**: [Ruisong Li](https://www.ruisong.info/) contributed code to the latest implementation of the interactive walkthrough component.
+
+## Rapid and Accurate Programming Exercise Authoring and Autograding
+
+Students learning to program benefit from practice—a lot of practice!
+Supporting their success means providing many programming exercises—practice to complete as they learn, homework problems to test their understanding along the way, and additional exercises on regular assessments such as quizzes.
+
+The traditional approach to writing autograded programming questions is to author test suites which are run on student submissions.
+However, this is both slow, inaccurate, and ineffective.
+Writing test suites that are resistant to memoization and catch all corner cases requires tediously enumerating many inputs.
+Test suite authoring provides no feedback to instructors about how effective their test suites are, leaving them unsure about how many test cases are needed.
+And software testing frameworks are not designed to be used without access to the tests themselves, which many autograders hide from students during the grading process.
+
+We created a system called Questioner to address these weaknesses.
+Questioner leverages a key difference between typical software testing and autograding—when grading, the solution is known!
+Instead of requiring instructors to write test suites, Questioner has them provide a reference solution, and automates as much of the process past that point.
+A testing strategy is created by identifying the methods and inputs that are part of the solution's public API.
+That strategy is validated for accuracy by ensuring that it can identify incorrect examples, most of which are created automatically by mutating the provided solution.
+And, as a dedicated autograder, Questioner's output is crafted to be explanatory and useful to beginning programmers.
+For example, when testing objects, the entire sequence of calls and inputs that led to the failure is provided, mirroring the information that would normally be gleaned by examining the test suites themselves.
+
+Since Fall 2020 I have used Questioner to author over 700 programming exercises to support my CS1 course, covering all aspects of conceptual thinking taught in the course: from the use of print statements on day 1, to the implementation of recursive sorting algorithms at the end of the semester.
+Questioner has resulted in an order-of-magnitude speed up in the time required to author accurate questions, allowing me to provide new questions for each weekly assessment, as well as a large and growing library of practice problems to support student learning.
+
+Questioner supports the publicly-available problems on [`learncs.online`](https://learncs.online/practice).
+We are also working to make this tool more broadly available at [`beyondgrader.com`](https://www.beyondgrader.com/).
+
+**Demo**: https://www.learncs.online/best#homework  
+**Credits**: [Ben Nordick](https://github.com/Fleex255) and [Max Kopinsky](https://www.linkedin.com/in/max-kopinsky-2bbb5719b) worked on an early prototype of the Questioner system.
+Several other students, including [Harsh Deep](https://github.com/harsh183) and [Miguel Fernandez](https://www.linkedin.com/in/migujorg), have authored questions using Questioner.
+
+## Speedy JVM Execution and Analysis
 
 [Jeed](https://jeed.run) ([GitHub](https://github.com/cs124-illinois/jeed)) is the speedy JVM execution and analysis toolkit.
 
@@ -45,9 +82,12 @@ Jeed's primary purpose is to enable fast and safe execution of untrusted Java an
 It's what powers the Java and Kotlin playgrounds on this site, [`learncs.online`](https://www.learncs.online/best#playgrounds), and the CS 124 website.
 It also powers our novel [homework autograder](https://www.learncs.online/best#homework) and [debugging question generation](https://www.learncs.online/best#debugging-challenges).
 Jeed runs untrusted code in a secure JVM sandbox 1000 times faster than approaches that rely on containerization.
-This huge performance boost makes it possible to support a large amount of interactive use using a small amount of server resources.
+This performance boost makes it possible to support a large amount of interactive use using a small amount of server resources.
 Jeed has been in production use since 2019.
 
 [Find out more about Jeed here](https://www.jeed.run/about), or read [the story of how Jeed was developed](/essays/2022-06-17-the-need-for-jeed).
 
-
+**Demo**: https://www.learncs.online/best#playgrounds, or https://www.jeed.run/  
+**Credits**: [Ben Nordick](https://github.com/Fleex255) has made substantial contributions to Jeed, including critical work on bytecode rewriting required to achieve sandbox safety.
+[Ben Clarage](https://www.linkedin.com/in/ben-clarage-856820202/) added initial support for Kotlin source mutation.
+[Hania Dziurdzik](https://www.mymozaic.com/hdziurdzik) provided an initial implementation of Java feature analysis.
