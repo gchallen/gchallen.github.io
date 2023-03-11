@@ -8,6 +8,8 @@ import { promisify } from "util"
 import { highlight } from "./highlight.js"
 const sizeOf = promisify(_sizeOf)
 
+const redirects = ["/scholar", "/statements/teaching", "/statements/service", "/statements/scholarly"]
+
 export function links() {
   function transformer(ast) {
     visit(ast, "link", visitor)
@@ -15,7 +17,7 @@ export function links() {
       const data = node.data || (node.data = {})
       const props = data.hProperties || (data.hProperties = {})
       const url = node.url
-      if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("//")) {
+      if (redirects.includes(url) || url.startsWith("http://") || url.startsWith("https://") || url.startsWith("//")) {
         props.target = "_blank"
         props.rel = "noopener"
       }
