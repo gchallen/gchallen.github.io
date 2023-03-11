@@ -88,6 +88,8 @@ Only primary teaching assignments are listed.
 
 Links in the items below are usually to pages on [`learncs.online`](https://www.learncs.online/), which contains a publicly-accessible version of the materials and [innovations](https://www.learncs.online/best) I've developed to support my university CS1 course at Illinois, [CS 124](https://cs124.org).
 
+* **2023:** Began work adding support for automated test evaluation to our homework autograder
+* **2023:** Added profiles of diverse computer scientists to our daily lessons as part of a CS People series
 * **2022:** Integrated [debugging exercises](https://www.learncs.online/best#debugging-challenges) throughout our CS1 [daily lessons](https://www.learncs.online/lessons)
 * **2022:** Upgraded our online quiz tool to add improved quiz security features and provide more practice content
 * **2022:** Made most of our highly-successful CS1 materials publicly available at https://www.learncs.online/
@@ -115,7 +117,7 @@ Links in the items below are usually to pages on [`learncs.online`](https://www.
 ### Semester-by-Semester Details
 
 Below I provide a summary of the enrollment for each semester I've taught CS1 at Illinois, along with a detailed description of various changes and improvements made to the course each term.
-Note that substantial changes to course materials and infrastructure are usually deployed in the fall.
+Note that we usually try to deploy substantial changes to course materials and infrastructure in the fall.
 
 #### CS 124: Spring 2023
 
@@ -185,75 +187,63 @@ Note that substantial changes to course materials and infrastructure are usually
 
 (Course website no longer available.)
 
-| | |
-|--|--|
-| Enrollment | 942 |
-| Co-Instructors | None |
-| Teaching Assistants | 12 |
-| Course Assistants | 99 |
+**Enrollment:** 942  
+**Format:** asynchronous online lessons, frequent small assessment
 
 #### CS 125: Spring 2020
 
 [Syllabus](https://cs125-old.cs.illinois.edu/info/2020/spring/syllabus/) // [Staff](https://cs125-old.cs.illinois.edu/info/2020/spring/syllabus/#people)
 
-| | |
-|--|--|
-| Enrollment | 380 |
-| Co-Instructors | None |
-| Teaching Assistants | 12 |
-| Course Assistants | 99 |
+**Enrollment:** 380  
+**Format:** Synchronous online lectures, frequent small assessment
+
+1. Transitioned the course online mid-semester due to onset of the COVID-19 pandemic.
+1. [Over spring break](essays/2023-02-11-a-help-site-story), completed the first version of our online tutoring site to allow staff to efficiently provide remote support.
+1. Began preparing for fully-online instruction the next semester.
 
 #### CS 125: Fall 2019
 
 [Syllabus](https://cs125-old.cs.illinois.edu/info/2019/fall/syllabus/) // [Staff](https://cs125-old.cs.illinois.edu/info/2019/fall/syllabus/#people)
 
-| | |
-|--|--|
-| Enrollment | 696 |
-| Co-Instructors | None |
-| Teaching Assistants | 12 |
-| Course Assistants | 99 |
+**Enrollment:** 696  
+**Format:** Synchronous lectures, frequent small assessment
+
+1. Deployed the first iteration of the Android machine _project_, a multi-part assignment where students build a complete Android app through multiple weekly checkpoints, in a process that more accurately reflects real-world software development.
+1. Created and deployed our first distributed cloud-native continuous autograder, which we have continued to use to perform on-demand containerized grading of student Android programming assignments.
+1. Migrated all course backend systems to new server infrastructure running in our own private cloud managed using Kubernetes.
 
 #### CS 125: Spring 2019
 
 [Website](https://cs125-old.cs.illinois.edu/) // [Syllabus](https://cs125-old.cs.illinois.edu/info/2019/spring/syllabus/) // [Staff](https://cs125-old.cs.illinois.edu/info/2019/spring/syllabus/#people)
 
-| | |
-|--|--|
-| Enrollment | 459 |
-| Co-Instructors | None |
-| Teaching Assistants | 12 |
-| Course Assistants | 99 |
+**Enrollment:** 459  
+**Format**: Synchronous lectures, frequent small assessment
+
+1. Began work on an initial version of [Jeed](/projects#jeed) as an improved backend for the in-class programming examples embedded in the lecture slides.
+1. Improved the test suites for the Android programming assignments.
 
 #### CS 125: Fall 2018
 
 [Website](https://cs125-old.cs.illinois.edu/) // [Syllabus](https://cs125-old.cs.illinois.edu/info/2018/fall/syllabus/) // [Staff](https://cs125-old.cs.illinois.edu/info/2018/fall/syllabus/#people)
 
-| | |
-|--|--|
-| Enrollment | 742 |
-| Co-Instructors | None |
-| Teaching Assistants | 12 |
-| Course Assistants | 99 |
+**Enrollment**: 742  
+**Format:** Synchronous lectures, frequent small assessment
 
-1. Created and deployed an initial set of ~60 daily small programming exercises to accompany and support the CS 125 course content.
-1. Wrote an additional ~45 small programming exercises to accompany each weekly assessment, marking the first time that every CS 125 quiz included programming challenges.
-1. Established a course tutoring center in a dedicated 40-seat room in the basement of the Siebel Center, replacing an undersized office used for the purpose in previous semesters.
+1. Created and deployed an initial set of ~60 daily programming exercises to accompany and support the CS 125 course content.
+1. Wrote an additional ~45 small programming exercises to accompany each weekly assessment, marking the first time that every CS 125 quiz included programming questions.
+1. Eliminated the high-stakes final exam, completing a transition to frequent small assessment.
+1. Established a course tutoring center in a dedicated 40-seat room in the basement of the Siebel Center, replacing a woefully undersized office used for the purpose in previous semesters.
 1. Created several new assignments, including [an adapation of a previous photo manipulation assignment to Android](https://cs125-old.cs.illinois.edu/MP/2018/fall/4/), and [a molecule-naming assignment using graph traversal](https://cs125-old.cs.illinois.edu/MP/2018/fall/5/), developed with course staff member Ben Nordick.
 
 #### CS 125: Spring 2018
 
 [Website](https://cs125-old.cs.illinois.edu/) // [Syllabus](https://cs125-old.cs.illinois.edu/info/2018/spring/syllabus/) // [Staff](https://cs125-old.cs.illinois.edu/info/2018/spring/syllabus/#people)
 
-| | |
-|--|--|
-| Enrollment | 439 |
-| Co-Instructors | None |
-| Teaching Assistants | 10 |
-| Course Assistants | 157 |
+**Enrollment:** 439  
+**Format:** Synchronous lectures, high-stakes assessments
 
 1. Rewrote all lectures to use [interactive online materials](https://cs125-old.cs.illinois.edu/learn/#Spring_2018) and integrate participation tracking and in-class programming examples into classroom presentations.
-1. Deployed the first version of what became [Jeed](https://www.jeed.run/) to support web-based exploration of Java code snippets through safe and high-speed untrusted code execution.
+1. Deployed the first version of what became [Jeed](/projects#jeed) to support web-based exploration of Java code snippets through safe and high-speed untrusted code execution.
 1. Completed and deployed continuous assignment autograding.
 1. Deployed the first CS 125 online gradebook.
 1. Developed Java autograding support for [PrairieLearn](https://prairielearn.org/) to enable programming questions on weekly quizzes, which had previously been entirely multiple-choice questions.
@@ -268,12 +258,9 @@ Note that substantial changes to course materials and infrastructure are usually
 
 [Website](https://cs125-old.cs.illinois.edu/) // [Syllabus](https://cs125-old.cs.illinois.edu/info/2017/fall/syllabus/) // [Staff](https://cs125-old.cs.illinois.edu/info/2017/fall/syllabus/#people)
 
-| | |
-|--|--|
-| Enrollment | 698 |
-| Co-Instructors | Bill Chapman, [Lawrence Angrave](https://cs.illinois.edu/about/people/faculty/angrave) |
-| Teaching Assistants | 10 |
-| Course Assistants | 71 |
+**Enrollment:** 698  
+**Co-Instructors:** Bill Chapman, [Lawrence Angrave](https://cs.illinois.edu/about/people/faculty/angrave)  
+**Format:** Synchronous lectures, high-stakes assessment
 
 1. Updated course assignments and infrastructure while Bill Chapman and Lawrence Angrave gave the lectures.
 1. Rewrote and updated all assignments to use a modern build system (Gradle), exhaustive test cases, linter (`checkstyle`), and modern Java idioms.
