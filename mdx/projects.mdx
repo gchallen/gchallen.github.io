@@ -73,7 +73,7 @@ We are also working to make this tool more broadly available at [`beyondgrader.c
 **Credits**: [Ben Nordick](https://github.com/Fleex255) and [Max Kopinsky](https://www.linkedin.com/in/max-kopinsky-2bbb5719b) worked on an early prototype of the Questioner system.
 Several other students, including [Harsh Deep](https://github.com/harsh183) and [Miguel Fernandez](https://www.linkedin.com/in/migujorg), have authored questions using Questioner.
 
-## Autograding Code Quality ((quality))
+## Code Quality Autograding ((quality))
 
 An oft-cited weakness of autograding is that students don't get feedback on the _quality_ of their code.
 Even correct code can have many undesirable features: It may be overly complex, difficult to read, or use too many resources.
@@ -97,7 +97,10 @@ Our code quality toolchain utilizes [Jeed](#jeed) to perform complexity and feat
 ## Online Tutoring Site ((helpsite))
 
 When the pandemic began in Spring 2020, I rapidly created an online tutoring platform allowing staff to efficiently provide students with remote assistance.
+It was intentionally designed to allow students to receive one-on-one help while providing staff with the situational awareness required to avoid office hour queue meltdown.
+We have continued to use a variant of this tool since Spring 2020, and it has connected thousands of students with course staff for tutoring and significantly lowered the barrier for students to ask questions and receive help.
 
+Read more about [the design and implementation of our tutoring site](/essays/2023-02-11-a-help-site-story), including its role in helping create a supportive environment for students from diverse groups.
 
 ## Speedy JVM Execution and Analysis ((jeed))
 
@@ -128,3 +131,15 @@ A more general is to use containerization to protect the host from untrusted cod
 While slower, this allows a single backend to easily support student experimentation with multiple different languages.
 
 **Demo**: https://cs124-illinois.github.io/playground/
+
+## Retired
+
+Stuff that I don't use anymore but haven't forgotten about.
+
+### Slide-Based Participation Tracking
+
+To measure class participation when teaching synchronously in-person, I developed a slide-activity-based tool to determine whether a student was following along with the web-based slides—and therefor, probably in attendance.
+Student progression through the online slide decks (examples [here](https://cs125-old.cs.illinois.edu/learn/)) was recorded, and their activity overlaid with mine.
+Students who were following along a reasonable percentage of the time were marked as present and received credit for class participation.
+The system represented a non-invasive way of recording participation without requiring a secondary device, and was eventually well-received by students.
+(Note that my feelings about requiring class participation have changed since the pandemic, and I would no longer utilize such a tool.)
