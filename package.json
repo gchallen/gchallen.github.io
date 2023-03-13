@@ -51,7 +51,7 @@
     "@types/child-process-promise": "2.2.2",
     "@types/fs-extra": "11.0.1",
     "@types/gtag.js": "0.0.12",
-    "@types/node": "18.15.0",
+    "@types/node": "18.15.1",
     "@types/react": "18.0.28",
     "@types/replace-ext": "2.0.0",
     "@types/string-hash": "1.1.1",
