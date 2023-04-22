@@ -23,6 +23,7 @@
     "@cs124/jeed-types": "2023.2.3",
     "@cs124/playground-react": "2023.1.0",
     "@cs124/playground-types": "2023.1.0",
+    "@vercel/analytics": "^1.0.0",
     "ace-builds": "1.4.14",
     "capitalize": "2.0.4",
     "email-validator": "2.0.4",

@@ -12,6 +12,7 @@ import { NewWindowLoginProvider } from "../components/LoginButton"
 import { DarkModeProvider } from "../components/ChooseDarkMode"
 import { JeedProvider } from "@cs124/jeed-react"
 import { PlaygroundProvider } from "@cs124/playground-react"
+import { Analytics } from "@vercel/analytics/react"
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -47,6 +48,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                   <meta name="theme-color" content="#ffffff" />
                 </Head>
                 <Component {...pageProps} />
+                <Analytics />
               </PlaygroundProvider>
             </JeedProvider>
           </DarkModeProvider>
