@@ -158,9 +158,10 @@ const Header: React.FC = () => {
           <div>
             <Link href="/CV">CV</Link>
           </div>
-          <div>
+          {/*<div>
             <Link href="#feeds">Feeds</Link>
-          </div>
+                </div>
+                */}
           <div>
             <ChooseDarkMode />
           </div>

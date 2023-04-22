@@ -43,9 +43,10 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           <div>
             <Link href="/CV">CV</Link>
           </div>
+          {/*
           <div>
             <Link href="#feeds">Feeds</Link>
-          </div>
+          </div>*/}
           <div>
             <ChooseDarkMode />
           </div>
