@@ -11,8 +11,10 @@ import matter from "gray-matter"
 import moment from "moment"
 import path from "path"
 import readingTime from "reading-time"
+import mathJax from "rehype-mathjax"
 import footnotes from "remark-footnotes"
 import remarkGfm from "remark-gfm"
+import math from "remark-math"
 import replaceExt from "replace-ext"
 import slugify from "slugify"
 import { compile } from "xdm"
@@ -70,6 +72,7 @@ async function update(source) {
   const reading = readingTime(content)
   const contents = (
     await compile(content, {
+      rehypePlugins: [mathJax],
       remarkPlugins: [
         comments,
         [footnotes, { inlineNotes: true }],
@@ -81,6 +84,7 @@ async function update(source) {
         highlighter,
         remarkGfm,
         [fiximages, { url: path.join("mdx", url) }],
+        math,
       ],
     })
   ).toString()
