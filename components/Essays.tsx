@@ -10,7 +10,7 @@ const Summary: React.FC<{ essay: Essay }> = ({ essay }) => {
     <div>
       <h3>
         <Link href={`/${url}`}>
-          {publishedAt ? `${publishedAt} : ` : ""}
+          {publishedAt ? `${publishedAt}: ` : ""}
           {title}
         </Link>
       </h3>
