@@ -1,9 +1,10 @@
-const withTM = require("next-transpile-modules")(["react-children-utilities"])
+/** @type {import('next').NextConfig} */
 
-module.exports = withTM({
+module.exports = {
   experimental: {
     scrollRestoration: true,
   },
+  transpilePackages: ["react-children-utilities"],
   async redirects() {
     return [
       {
@@ -28,4 +29,4 @@ module.exports = withTM({
       },
     ]
   },
-})
+}
