@@ -42,8 +42,8 @@
     "react-popper-tooltip": "4.4.2",
     "react-sidebar": "https://github.com/gchallen/react-sidebar#9e2b65ba",
     "react-youtube": "10.1.0",
-    "rehype-mathjax": "^4.0.2",
-    "remark-math": "^5.1.1",
+    "rehype-mathjax": "4.0.2",
+    "remark-math": "5.1.1",
     "runtypes": "6.7.0",
     "styled-components": "6.0.3"
   },
