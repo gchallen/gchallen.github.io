@@ -12,11 +12,11 @@ export async function getEssays(): Promise<{ published: Essay[]; drafts: Essay[]
   const essays = await Promise.all(
     (await glob("output/essays/**/*.json"))
       .map((file) => fs.readFile(file))
-      .map(async (content) => JSON.parse((await content).toString()))
+      .map(async (content) => JSON.parse((await content).toString())),
   ).then((essays) =>
     essays.sort(
-      (b: any, a: any) => new Date(a.published ?? new Date()).valueOf() - new Date(b.published ?? new Date()).valueOf()
-    )
+      (b: any, a: any) => new Date(a.published ?? new Date()).valueOf() - new Date(b.published ?? new Date()).valueOf(),
+    ),
   )
   const published = essays.filter((essay) => essay.publishedAt)
   const drafts = essays.filter((essay) => essay.publishedAt === undefined)

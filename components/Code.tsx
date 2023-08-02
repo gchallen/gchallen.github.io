@@ -176,7 +176,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         setRunning(false)
       }
     },
-    [mode, runJeed, snippet]
+    [mode, runJeed, snippet],
   )
 
   const playground = useCallback(async () => {

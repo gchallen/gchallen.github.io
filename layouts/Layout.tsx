@@ -26,7 +26,7 @@ const Footnote: React.FC<PropsWithChildren & { counter: string }> = ({ counter, 
           },
         },
       ],
-    }
+    },
   )
 
   return (

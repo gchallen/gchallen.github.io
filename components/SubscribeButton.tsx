@@ -49,7 +49,7 @@ const SubscribeButton: React.FC<PropsWithChildren & { hideAfterSubscribe?: boole
     (event: any) => {
       updateEmail(event.target.value)
     },
-    [updateEmail]
+    [updateEmail],
   )
 
   const onSubmit = useCallback(
@@ -74,7 +74,7 @@ const SubscribeButton: React.FC<PropsWithChildren & { hideAfterSubscribe?: boole
         }, 2000)
       }
     },
-    [executeRecaptcha, hideAfterSubscribe]
+    [executeRecaptcha, hideAfterSubscribe],
   )
 
   if (hide) {

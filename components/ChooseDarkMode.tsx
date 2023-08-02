@@ -13,7 +13,7 @@ export const DarkModeContext = createContext<DarkModeContext>({
 })
 export const DarkModeProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [darkMode, setDarkMode] = useState(
-    typeof window !== "undefined" ? document.body.classList.contains("dark-mode") : false
+    typeof window !== "undefined" ? document.body.classList.contains("dark-mode") : false,
   )
 
   useEffect(() => {

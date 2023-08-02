@@ -9,9 +9,11 @@ Promise.resolve().then(async () => {
   const essays = await Promise.all(
     (await glob("output/essays/**/*.json"))
       .map((file) => fs.readFile(file))
-      .map(async (content) => JSON.parse((await content).toString()))
+      .map(async (content) => JSON.parse((await content).toString())),
   ).then((essays) =>
-    essays.sort((a, b) => new Date(a.published ?? new Date()).valueOf() - new Date(b.published ?? new Date()).valueOf())
+    essays.sort(
+      (a, b) => new Date(a.published ?? new Date()).valueOf() - new Date(b.published ?? new Date()).valueOf(),
+    ),
   )
   const published = essays
     .filter((essay) => essay.published)

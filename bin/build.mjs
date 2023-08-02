@@ -11,10 +11,10 @@ import matter from "gray-matter"
 import moment from "moment"
 import path from "path"
 import readingTime from "reading-time"
-import mathJax from "rehype-mathjax"
+import rehypeKate from "rehype-katex"
 import footnotes from "remark-footnotes"
 import remarkGfm from "remark-gfm"
-import math from "remark-math"
+import remarkMath from "remark-math"
 import replaceExt from "replace-ext"
 import slugify from "slugify"
 import { compile } from "xdm"
@@ -34,7 +34,7 @@ async function writeGitIgnore() {
     path.join("pages", ".gitignore"),
     Object.keys(pages)
       .map((page) => path.relative("pages", page))
-      .join("\n")
+      .join("\n"),
   )
 }
 
@@ -51,7 +51,7 @@ async function update(source) {
           .format("YYYY-MM-DD") +
           "-" +
           slugify(data.title, { lower: true }) +
-          ".jsx"
+          ".jsx",
       )
     } else {
       return
@@ -72,7 +72,7 @@ async function update(source) {
   const reading = readingTime(content)
   const contents = (
     await compile(content, {
-      rehypePlugins: [mathJax],
+      rehypePlugins: [rehypeKate],
       remarkPlugins: [
         comments,
         [footnotes, { inlineNotes: true }],
@@ -84,7 +84,7 @@ async function update(source) {
         highlighter,
         remarkGfm,
         [fiximages, { url: path.join("mdx", url) }],
-        math,
+        remarkMath,
       ],
     })
   ).toString()
@@ -108,13 +108,13 @@ ${lines.slice(splitPoint + 1).join("\n")}`.trim()
   const publishedAt = data.published ? moment(data.published).utc().format("YYYY-MM-DD") : undefined
   await writeFile(
     dataPath,
-    JSON.stringify(!isEmpty ? { ...data, url, reading, publishedAt } : { url, reading, publishedAt }, null, 2)
+    JSON.stringify(!isEmpty ? { ...data, url, reading, publishedAt } : { url, reading, publishedAt }, null, 2),
   )
 
   const contentImportPath = replaceExt(path.relative(path.dirname(pagePath), contentPath), "")
   const layoutImportPath = path.relative(
     path.dirname(pagePath),
-    path.join("layouts", data.layout ?? args.defaultLayout)
+    path.join("layouts", data.layout ?? args.defaultLayout),
   )
   const frontmatterImportPath = path.relative(path.dirname(pagePath), dataPath)
   const pageContent = `
