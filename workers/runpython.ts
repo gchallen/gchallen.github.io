@@ -1,11 +1,5 @@
-import { RunPythonRequest, RunPythonResponse } from "../types/runpython"
 import { PyodideInterface, loadPyodide } from "pyodide"
-
-/*
-const loadPyodide = new Promise<ReturnType<typeof _loadPyodide>>(async (resolve) => {
-  resolve(_loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/" }))
-})
-*/
+import { RunPythonRequest, RunPythonResponse } from "../types/runpython"
 
 const stdout: string[] = []
 
@@ -24,11 +18,17 @@ addEventListener(
     const request = RunPythonRequest.check(event.data)
 
     stdout.length = 0
-    await pyodide.runPythonAsync(request.code)
-    const result = stdout.join("\n")
+    let result: string | undefined
+    let error: unknown | undefined
+    try {
+      await pyodide.runPythonAsync(request.code)
+      result = stdout.join("\n")
+    } catch (_error) {
+      error = _error
+    }
     stdout.length = 0
 
-    event.ports[0].postMessage(RunPythonResponse.check({ result }))
+    event.ports[0].postMessage(RunPythonResponse.check({ result, error }))
   },
   false,
 )

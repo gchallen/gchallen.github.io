@@ -1,4 +1,4 @@
-ignores: ["@types/*", "prettier-plugin-*", "browserslist"]
+ignores: ["@types/*", "prettier-plugin-*", "browserslist", "pyodide"]
 parsers:
   "**/*.mjs": ["es6"]
   "**/*.js": ["es6"]
