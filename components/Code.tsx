@@ -308,7 +308,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
   const ace = state !== "static" && (
     <>
       <Ace
-        readOnly={!runWithJeed}
+        readOnly={!runWithJeed && !runWithPython}
         name={`ace-${codeId}`}
         className={"ace-ssr"}
         mode={mode}
