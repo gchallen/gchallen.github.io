@@ -10,6 +10,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useInView } from "react-hook-inview"
 import { FaPlayCircle, FaTimes } from "react-icons/fa"
 import styled from "styled-components"
+import { useRunPython } from "./RunPython"
 
 const Ace = dynamic(() => import("react-ace"), { ssr: false })
 
@@ -76,9 +77,11 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
   const code = useMemo(() => Buffer.from(originalCode, "base64").toString(), [originalCode])
   const [response, setResponse] = useState<{ response?: Response; error?: string } | undefined>()
   const [result, setResult] = useState<{ result?: Result; error?: string } | undefined>()
+  const [pythonOutput, setPythonOutput] = useState<{ result?: string; error?: string } | undefined>()
 
   const { run: runJeed } = useJeed()
   const { run: runPlayground } = usePlayground()
+  const { run: runPython } = useRunPython()
   const [blank, setBlank] = useState(false)
   const [running, setRunning] = useState(false)
   const runningTimer = useRef<ReturnType<typeof setTimeout>>()
@@ -112,8 +115,10 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
     }
   }, [state])
 
-  let runWithJeed = ["java", "kotlin"].includes(mode) && (!meta || (!meta.includes("norun") && !meta.includes("slow")))
-  let runWithPlayground = ["python"].includes(mode) || (["java"].includes(mode) && meta && meta.includes("slow"))
+  const runWithJeed =
+    ["java", "kotlin"].includes(mode) && (!meta || (!meta.includes("norun") && !meta.includes("slow")))
+  const runWithPython = ["python"].includes(mode)
+  const runWithPlayground = ["python"].includes(mode) || (["java"].includes(mode) && meta && meta.includes("slow"))
 
   let snippet = meta === undefined || !meta.includes("source")
 
@@ -217,6 +222,33 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
     }
   }, [mode, runPlayground])
 
+  const python = useCallback(async () => {
+    if (!editor.current) {
+      return
+    }
+    const content = editor.current.getValue()
+    if (content.trim() === "") {
+      setResult(undefined)
+      return
+    }
+
+    try {
+      setBlank(true)
+      runningTimer.current = setTimeout(() => {
+        setRunning(true)
+      }, 200)
+      setOutputOpen(true)
+      const result = await runPython(content)
+      setPythonOutput({ result })
+    } catch (error: any) {
+      setPythonOutput({ error: error.toString() })
+    } finally {
+      runningTimer.current && clearTimeout(runningTimer.current)
+      setBlank(false)
+      setRunning(false)
+    }
+  }, [runPython])
+
   const output = useMemo(() => {
     if (running) {
       return { output: "Running..." }
@@ -228,12 +260,16 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         : response?.error
         ? { output: response?.error, level: "error" }
         : undefined
+    } else if (runWithPython) {
+      return pythonOutput?.error
+        ? { output: pythonOutput?.error, level: "error" }
+        : { output: pythonOutput?.result || "" }
     } else if (runWithPlayground) {
       return result?.error
         ? { output: result?.error, level: "error" }
         : { output: result?.result?.outputLines.map(({ line }) => line).join("\n") || "" }
     }
-  }, [running, blank, response, result, runWithJeed, runWithPlayground])
+  }, [running, blank, response, result, pythonOutput, runWithJeed, runWithPlayground, runWithPython])
 
   const commands = useMemo(() => {
     return [
@@ -247,7 +283,8 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
       {
         name: "run",
         bindKey: { win: "Ctrl-Enter", mac: "Ctrl-Enter" },
-        exec: () => (runWithJeed ? jeed("run") : runWithPlayground ? playground() : () => {}),
+        exec: () =>
+          runWithJeed ? jeed("run") : runWithPython ? python() : runWithPlayground ? playground() : () => {},
         readOnly: true,
       },
       {
@@ -257,7 +294,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         readOnly: true,
       },
     ]
-  }, [runWithJeed, runWithPlayground, jeed, playground, setOutputOpen])
+  }, [runWithJeed, runWithPlayground, runWithPython, jeed, playground, python, setOutputOpen])
 
   useEffect(() => {
     commands.forEach((command) => {
@@ -297,7 +334,9 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         <div style={{ position: "absolute", bottom: 0, right: 0 }}>
           <RunButton
             size={32}
-            onClick={() => (runWithJeed ? jeed("run") : runWithPlayground ? playground() : undefined)}
+            onClick={() =>
+              runWithJeed ? jeed("run") : runWithPython ? python() : runWithPlayground ? playground() : undefined
+            }
           />
         </div>
       )}
