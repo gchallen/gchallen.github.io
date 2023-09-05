@@ -52,7 +52,7 @@ const LanguageLabel = styled.div`
   user-select: none;
 `
 
-const Output = styled.div<{ state?: string }>`
+const Output = styled.div<{ $state?: string }>`
   white-space: pre-wrap;
   min-height: calc(1.5em + 16px);
   font-family: Monaco, monospace;
@@ -64,7 +64,7 @@ const Output = styled.div<{ state?: string }>`
   padding: 8px;
   max-height: calc(30em + 16px);
   overflow: scroll;
-  color: ${(props) => (props.state === "error" ? "red" : props.state === "warning" ? "goldenrod" : "#dddddd")};
+  color: ${(props) => (props.$state === "error" ? "red" : props.$state === "warning" ? "goldenrod" : "#dddddd")};
 `
 
 const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta: string; children: string }> = ({
@@ -360,7 +360,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
           <div style={{ position: "absolute", top: 0, right: 0, color: "#888888" }}>
             <FaTimes onClick={() => setOutputOpen(false)} />
           </div>
-          <Output state={output.level}>{output.output}</Output>
+          <Output $state={output.level}>{output.output}</Output>
         </div>
       )}
     </AceFrame>

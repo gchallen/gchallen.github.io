@@ -4,6 +4,9 @@ module.exports = {
   experimental: {
     scrollRestoration: true,
   },
+  compiler: {
+    styledComponents: true,
+  },
   transpilePackages: ["react-children-utilities"],
   async redirects() {
     return [
