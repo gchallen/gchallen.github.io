@@ -50,7 +50,7 @@ import pycodestyle
 from base64 import b64decode
 originalCode = b64decode("${encodedCode}").decode("utf-8")
 pep8style = pycodestyle.StyleGuide()
-count_errors = pep8style.input_file('stdin', lines=originalCode.splitlines(True))
+count_errors = pep8style.input_file('stdin', lines=originalCode.splitlines(True), expected=["E305"])
 count_errors
 `)
     if (errorCount > 0) {
