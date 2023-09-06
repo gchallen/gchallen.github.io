@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from "react"
-import { RunPythonRequest, RunPythonResponse } from "../types/runpython"
+import { RunPythonRequest, RunPythonResponse, StartRunResponse } from "../types/runpython"
 
 export interface RunPythonContext {
   run: (code: string) => Promise<string>
@@ -30,6 +30,16 @@ export const RunPythonProvider: React.FC<PropsWithChildren> = ({ children }) => 
       let timer: ReturnType<typeof setTimeout>
 
       channel.port1.onmessage = (message) => {
+        if (StartRunResponse.guard(message.data)) {
+          clearTimeout(timer)
+          timer = setTimeout(() => {
+            workerRef.current?.terminate()
+            setRestartWorker((r) => !r)
+            reject(new Error("Timeout"))
+          }, 1000)
+          return
+        }
+
         channel.port1.close()
         clearTimeout(timer)
 
@@ -41,12 +51,12 @@ export const RunPythonProvider: React.FC<PropsWithChildren> = ({ children }) => 
         }
       }
 
-      workerRef.current!.postMessage(RunPythonRequest.check({ code }), [channel.port2])
+      workerRef.current!.postMessage(RunPythonRequest.check({ type: "request", code }), [channel.port2])
       timer = setTimeout(() => {
         workerRef.current?.terminate()
         setRestartWorker((r) => !r)
         reject(new Error("Timeout"))
-      }, 1000)
+      }, 60 * 1000)
     })
   }, [])
 
