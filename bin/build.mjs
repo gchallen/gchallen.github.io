@@ -17,7 +17,7 @@ import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import replaceExt from "replace-ext"
 import slugify from "slugify"
-import { compile } from "xdm"
+import { compile } from "@mdx-js/mdx"
 import { comments, fixfootnotes, fiximages, headings, highlighter, links, pullquotes } from "./plugins.mjs"
 
 const parser = new ArgumentParser()
@@ -27,16 +27,6 @@ parser.add_argument("--build", { default: false, action: "store_true" })
 parser.add_argument("--clean", { default: false, action: "store_true" })
 parser.add_argument("--defaultLayout", { default: "Layout" })
 const args = parser.parse_args()
-
-const pages = {}
-async function writeGitIgnore() {
-  await writeFile(
-    path.join("pages", ".gitignore"),
-    Object.keys(pages)
-      .map((page) => path.relative("pages", page))
-      .join("\n"),
-  )
-}
 
 async function update(source) {
   const { content, data, isEmpty } = matter(await readFile(source))
@@ -128,8 +118,6 @@ export default function Page() {
 `.trimStart()
   await mkdirs(path.dirname(pagePath))
   await writeFile(pagePath, pageContent)
-  pages[pagePath] = true
-  await writeGitIgnore()
 }
 
 async function rm(source) {
@@ -139,8 +127,6 @@ async function rm(source) {
   await remove(contentPath)
   await remove(dataPath)
   await remove(pagePath)
-  delete pages[pagePath]
-  await writeGitIgnore()
 }
 
 async function clean() {
@@ -167,6 +153,5 @@ Promise.resolve().then(async () => {
     for (const file of files) {
       await update(file)
     }
-    await writeGitIgnore()
   }
 })
