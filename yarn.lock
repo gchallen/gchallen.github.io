@@ -1094,24 +1094,24 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@cs124/jeed-output@2023.8.0":
-  version "2023.8.0"
-  resolved "https://registry.yarnpkg.com/@cs124/jeed-output/-/jeed-output-2023.8.0.tgz#4a697268ea2d297eba3ceaa64049a35ce332ba86"
-  integrity sha512-0YMMZegLJ8Tb4TIuLVcl5oM4rIAzQgWtGPvd4txjedMLgMdyGUZNHRrFQ4dBCI0LGXeWbMfI3DJuje/ojYg9LQ==
+"@cs124/jeed-output@2023.10.0":
+  version "2023.10.0"
+  resolved "https://registry.yarnpkg.com/@cs124/jeed-output/-/jeed-output-2023.10.0.tgz#41bc412f72573a581e975f04dd3bb74226404c3d"
+  integrity sha512-GUh+HmdsaJZVpjs1ZDvlR11VUA+PuD1ZQnp+4FEQU1zfOrJIsAzQZRlj3isuGvVipVKFjfysg9wE8UVm/9f6RA==
   dependencies:
-    "@cs124/jeed-types" "2023.8.0"
+    "@cs124/jeed-types" "2023.10.0"
 
-"@cs124/jeed-react@2023.8.0":
-  version "2023.8.0"
-  resolved "https://registry.yarnpkg.com/@cs124/jeed-react/-/jeed-react-2023.8.0.tgz#6b269557d815ed97bc0633b83d8cee8f50356f7b"
-  integrity sha512-b9lJdiBuUmssZyDP0lXDkT6jHLc5Hho0eBr6urOLt6T8Qi/bps10jv7k3MQZEpsQnz5OsyMMCulHHuLkylP1eQ==
+"@cs124/jeed-react@2023.10.1":
+  version "2023.10.1"
+  resolved "https://registry.yarnpkg.com/@cs124/jeed-react/-/jeed-react-2023.10.1.tgz#b63bbd1d88dd12ca30d0bc3908c321300f98d0b0"
+  integrity sha512-jZmvoN9K7L0EHw441/RfVvvCcUgfvH5YFwpgFrsSnVll9/9ry8xhIxDYRGACM1063atbcH3xfU3Wna6EHMi6Bw==
   dependencies:
-    "@cs124/jeed-types" "2023.8.0"
+    "@cs124/jeed-types" "2023.10.0"
 
-"@cs124/jeed-types@2023.8.0":
-  version "2023.8.0"
-  resolved "https://registry.yarnpkg.com/@cs124/jeed-types/-/jeed-types-2023.8.0.tgz#c8db519e8727fbd1b70999887255ee9d81bc7a60"
-  integrity sha512-hZRIkay3yaebLPtO8Nxp8+HoqCKeP9iINdP3neoaD9/Gj+KhFUo5iNBUjRK2JxblIg1WntvJ6cemZKyhb+qeuA==
+"@cs124/jeed-types@2023.10.0":
+  version "2023.10.0"
+  resolved "https://registry.yarnpkg.com/@cs124/jeed-types/-/jeed-types-2023.10.0.tgz#7feb6fd7ad043d8a247e15b70b93d686f251214d"
+  integrity sha512-2MdrA04y/QBKGaJ2acNhYRb4y1Ny3Tn+j8zJuYeJDKA/0eeglc4E44D6tEarNSSCV6BaCj7pBVWTCak7CMfuxA==
 
 "@cs124/playground-react@2023.1.0":
   version "2023.1.0"
@@ -1675,10 +1675,19 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.8.tgz#805eae6e8f41bd19e88917d2ea200dc992f405d3"
   integrity sha512-kMpQpfZKSCBqltAJwskgePRaYRFukDkm1oItcAbC3gNELR20XIBcN9VRgg4+m8DKsTfkWeA4m4Imp4DDuWy7FQ==
 
-"@types/react@*", "@types/react@18.2.27":
+"@types/react@*":
   version "18.2.27"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.27.tgz#746e52b06f3ccd5d7a724fd53769b70792601440"
   integrity sha512-Wfv7B7FZiR2r3MIqbAlXoY1+tXm4bOqfz4oRr+nyXdBqapDBZ0l/IGcSlAfvxIHEEJjkPU0MYAc/BlFPOcrgLw==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@18.2.28":
+  version "18.2.28"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.28.tgz#86877465c0fcf751659a36c769ecedfcfacee332"
+  integrity sha512-ad4aa/RaaJS3hyGz0BGegdnSRXQBkd1CCYDCdNjBPg90UUpLgo+WlJqb9fMYUxtehmzF3PJaTWqRZjko6BRzBg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -6952,10 +6961,10 @@ safe-regex-test@^1.0.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@1.69.1:
-  version "1.69.1"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.69.1.tgz#659b3b04452245dcf82f731684831e990ddb0c89"
-  integrity sha512-nc969GvTVz38oqKgYYVHM/Iq7Yl33IILy5uqaH2CWSiSUmRCvw+UR7tA3845Sp4BD5ykCUimvrT3k1EjTwpVUA==
+sass@1.69.3:
+  version "1.69.3"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.69.3.tgz#f8a0c488697e6419519834a13335e7b65a609c11"
+  integrity sha512-X99+a2iGdXkdWn1akFPs0ZmelUzyAQfvqYc2P/MPTrJRuIRoTffGzT9W9nFqG00S+c8hXzVmgxhUuHFdrwxkhQ==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"

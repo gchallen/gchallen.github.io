@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { compile } from "@mdx-js/mdx"
 import smartypants from "@ngsctt/remark-smartypants"
 import { ArgumentParser } from "argparse"
 import { exec } from "child-process-promise"
@@ -17,7 +18,6 @@ import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import replaceExt from "replace-ext"
 import slugify from "slugify"
-import { compile } from "@mdx-js/mdx"
 import { comments, fixfootnotes, fiximages, headings, highlighter, links, pullquotes } from "./plugins.mjs"
 
 const parser = new ArgumentParser()
