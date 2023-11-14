@@ -258,8 +258,8 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
       return response?.response
         ? terminalOutput(response.response)
         : response?.error
-        ? { output: response?.error, level: "error" }
-        : undefined
+          ? { output: response?.error, level: "error" }
+          : undefined
     } else if (runWithPython) {
       return pythonOutput?.error
         ? { output: pythonOutput?.error, level: "error" }
