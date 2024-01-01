@@ -1,6 +1,3 @@
-const JSDOM = require("jsdom").JSDOM
-const jsdom = new JSDOM("<!doctype html><html><body></body></html>")
-global.window = jsdom.window
 require("ace-builds/src-noconflict/ace")
 const highlighter = require("ace-builds/src-noconflict/ext-static_highlight")
 
