@@ -16,7 +16,7 @@ const Ace = dynamic(() => import("react-ace"), { ssr: false })
 
 const RunButton: React.FC<{ size: number; onClick: () => void }> = ({ size, onClick }) => {
   return (
-    <div onClick={onClick} style={{ position: "relative", width: size, height: size }}>
+    <div onClick={onClick} style={{ position: "relative", width: size, height: size, zIndex: 1000 }}>
       <FaPlayCircle style={{ position: "absolute", width: size - 4, height: size - 4, top: 2, left: 2 }} />
     </div>
   )
@@ -347,7 +347,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
 
   return (
     <AceFrame>
-      <div style={{ position: "relative", paddingBottom: runWithJeed ? 32 : 8 }}>
+      <div style={{ position: "relative", paddingBottom: runWithJeed || runWithPython || runWithPlayground ? 32 : 8 }}>
         <div
           ref={ref}
           className="ace_editor ace-ssr"
