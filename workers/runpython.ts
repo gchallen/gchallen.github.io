@@ -12,7 +12,7 @@ const pyodideLoaded = new Promise((resolve) => {
 let pyodide: PyodideInterface
 let loaded = false
 Promise.resolve().then(async () => {
-  pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/" })
+  pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/" })
 
   pyodide.setStdout({
     batched: (line) => {
