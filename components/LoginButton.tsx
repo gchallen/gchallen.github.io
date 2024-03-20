@@ -28,8 +28,9 @@ export const NewWindowLoginProvider: React.FC<PropsWithChildren> = ({ children }
   const timer = useRef<ReturnType<typeof setInterval>>()
 
   useEffect(() => {
-    const listener = (event: MessageEvent) => {
-      if ((event as MessageEvent).origin != window.location.origin) {
+    const listener = (e: MessageEvent) => {
+      const event = e as MessageEvent
+      if (event.origin != window.location.origin || event.data !== "complete") {
         return
       }
       opened.current?.close()

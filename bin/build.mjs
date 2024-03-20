@@ -34,15 +34,10 @@ async function update(source) {
   let pagePath
   if (source.startsWith("mdx/essays/")) {
     if (data.published || process.env.NEXT_PUBLIC_SHOW_DRAFTS) {
-      pagePath = path.join(
-        "pages/essays",
-        moment(data.published || new Date())
-          .utc()
-          .format("YYYY-MM-DD") +
-          "-" +
-          slugify(data.title, { lower: true }) +
-          ".jsx",
-      )
+      const prefix = data.published ? `${moment(data.published).utc().format("YYYY-MM-DD")}-` : ""
+      const postfix = !data.published ? "-draft" : ""
+      const name = `${prefix}${slugify(data.title, { lower: true })}${postfix}.jsx`
+      pagePath = path.join("pages/essays", name)
     } else {
       return
     }
