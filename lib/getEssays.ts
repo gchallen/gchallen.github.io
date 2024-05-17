@@ -1,5 +1,5 @@
 import fs from "fs/promises"
-import glob from "glob-promise"
+import { glob } from "glob"
 
 export interface Essay {
   title: string

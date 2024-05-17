@@ -2,7 +2,7 @@
 
 import { Feed } from "feed"
 import fs from "fs/promises"
-import glob from "glob-promise"
+import { glob } from "glob"
 import moment from "moment"
 
 Promise.resolve().then(async () => {
