@@ -43,16 +43,15 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           <div>
             <Link href="/CV">CV</Link>
           </div>
-          {/*
           <div>
-            <Link href="#feeds">Feeds</Link>
-          </div>*/}
+            <Link href="/opening">Recruiting</Link>
+          </div>
           <div>
             <ChooseDarkMode />
           </div>
         </nav>
       </div>
-      <div className="responsive">
+      <div className="responsive" style={{ marginTop: -32 }}>
         <h1>Hi, I&apos;m Geoff</h1>
         <p className={styles.h2}>
           I love to teach, and I love to code. <br />I teach students to code. <br />
