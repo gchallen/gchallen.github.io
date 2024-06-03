@@ -30,23 +30,28 @@ const SidebarContent: React.FC<{ setOpen: (open: boolean) => void }> = ({ setOpe
           </SidebarLink>
         </h2>
         <h2>
-          <SidebarLink href="/essays/" setOpen={setOpen}>
+          <SidebarLink href="/essays" setOpen={setOpen}>
             Essays
           </SidebarLink>
         </h2>
         <h2>
-          <SidebarLink href="/projects/" setOpen={setOpen}>
+          <SidebarLink href="/projects" setOpen={setOpen}>
             Projects
           </SidebarLink>
         </h2>
         <h2>
-          <SidebarLink href="/about/" setOpen={setOpen}>
+          <SidebarLink href="/about" setOpen={setOpen}>
             About
           </SidebarLink>
         </h2>
         <h2>
-          <SidebarLink href="/CV/" setOpen={setOpen}>
+          <SidebarLink href="/CV" setOpen={setOpen}>
             Curriculum Vitæ
+          </SidebarLink>
+        </h2>
+        <h2>
+          <SidebarLink href="/opening" setOpen={setOpen}>
+            Recruiting
           </SidebarLink>
         </h2>
       </div>
@@ -147,21 +152,20 @@ const Header: React.FC = () => {
         </div>
         <div className="links">
           <div>
-            <Link href="/essays">Essays</Link>
+            <Link href="/essays/">Essays</Link>
           </div>
           <div>
-            <Link href="/projects">Projects</Link>
+            <Link href="/projects/">Projects</Link>
           </div>
           <div>
-            <Link href="/about">About</Link>
+            <Link href="/about/">About</Link>
           </div>
           <div>
-            <Link href="/CV">CV</Link>
+            <Link href="/opening/">Recruiting</Link>
           </div>
-          {/*<div>
-            <Link href="#feeds">Feeds</Link>
-                </div>
-                */}
+          <div>
+            <Link href="/CV/">CV</Link>
+          </div>
           <div>
             <ChooseDarkMode />
           </div>

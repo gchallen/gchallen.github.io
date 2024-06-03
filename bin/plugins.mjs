@@ -16,13 +16,21 @@ export function links() {
     function visitor(node) {
       const data = node.data || (node.data = {})
       const props = data.hProperties || (data.hProperties = {})
-      const url = node.url
       if (node.url !== "+" && node.url.startsWith("+")) {
         node.url = node.url.replace(/^\+/, "")
         props.target = "_blank"
         props.rel = "noopener"
-      }
-      if (redirects.includes(url) || url.startsWith("http://") || url.startsWith("https://") || url.startsWith("//")) {
+      } else if (node.url !== "~" && node.url.startsWith("~")) {
+        node.url = node.url.replace(/^\~/, "")
+        console.log(node.url)
+        props.target = "_blank"
+        props.rel = "noopener"
+      } else if (
+        redirects.includes(node.url) ||
+        node.url.startsWith("http://") ||
+        node.url.startsWith("https://") ||
+        node.url.startsWith("//")
+      ) {
         props.target = "_blank"
         props.rel = "noopener"
       }

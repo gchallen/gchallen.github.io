@@ -445,6 +445,16 @@ div.thanks {
   font-size: 0.9em;
   text-align: right;
 }
+div.opening {
+  margin-top: -8px;
+  margin-bottom: 16px;
+  padding: 16px;
+  font-size: 0.9em;
+  background-color: lighten(lightGreen, 10%);
+  .dark-mode & {
+    background-color: darken(darkGreen, 5%);
+  }
+}
 div.note {
   background-color: #eeeeee;
   .dark-mode & {

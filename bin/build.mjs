@@ -32,7 +32,9 @@ async function update(source) {
   const { content, data, isEmpty } = matter(await readFile(source))
 
   let pagePath
+
   if (source.startsWith("mdx/essays/")) {
+    data.isEssay = true
     if (data.published || process.env.NEXT_PUBLIC_SHOW_DRAFTS) {
       const prefix = data.published ? `${moment(data.published).utc().format("YYYY-MM-DD")}-` : ""
       const postfix = !data.published ? "-draft" : ""
