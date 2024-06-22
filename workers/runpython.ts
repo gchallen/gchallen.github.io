@@ -1,5 +1,8 @@
-import { PyodideInterface, loadPyodide } from "pyodide"
+import type { PyodideInterface, loadPyodide } from "pyodide"
 import { RunPythonRequest, RunPythonResponse, StartRunResponse } from "../types/runpython"
+
+const PYODIDE_VERSION = "0.26.1"
+importScripts(`https://cdn.jsdelivr.net/npm/pyodide@${PYODIDE_VERSION}/pyodide.min.js`)
 
 let lineCount = 0
 const stdout: string[] = []
@@ -9,10 +12,25 @@ const pyodideLoaded = new Promise((resolve) => {
   setPyodideLoaded = resolve
 })
 
+declare global {
+  interface Window {
+    loadPyodide: typeof loadPyodide
+  }
+}
+
 let pyodide: PyodideInterface
-let loaded = false
+
 Promise.resolve().then(async () => {
-  pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.1/full/" })
+  const start = Date.now()
+
+  pyodide = await self.loadPyodide({
+    indexURL: `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`,
+    lockFileURL: "/pyodide-lock.json",
+    packages: ["mypy", "pycodestyle", "typing-extensions", "mypy_extensions"],
+    fullStdLib: false,
+  })
+
+  console.log(`Pyodide loaded in: ${Date.now() - start}ms`)
 
   pyodide.setStdout({
     batched: (line) => {
@@ -25,12 +43,17 @@ Promise.resolve().then(async () => {
     },
   })
 
+  /*
   await pyodide.loadPackage("micropip")
   const micropip = pyodide.pyimport("micropip")
   await micropip.install("pycodestyle")
   await micropip.install("mypy")
   await micropip.install("typing-extensions")
   await micropip.install("mypy_extensions")
+  console.log(micropip.freeze())
+
+  console.log(`Pyodide packages installed in: ${Date.now() - start}ms`)
+  */
 
   // Warm
   await checkCode(`print("Hello, world!")`)
