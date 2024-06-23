@@ -67,6 +67,8 @@ const Output = styled.div<{ $state?: string }>`
   color: ${(props) => (props.$state === "error" ? "red" : props.$state === "warning" ? "goldenrod" : "#dddddd")};
 `
 
+const RUNNING_DELAY = 400
+
 const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta: string; children: string }> = ({
   codeId,
   originalCode,
@@ -81,10 +83,12 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
 
   const { run: runJeed } = useJeed()
   const { run: runPlayground } = usePlayground()
-  const { run: runPython } = useRunPython()
+  const { run: runPython, load: loadPyodide } = useRunPython()
   const [blank, setBlank] = useState(false)
   const [running, setRunning] = useState(false)
+  const [loading, setLoading] = useState(false)
   const runningTimer = useRef<ReturnType<typeof setTimeout>>()
+  const loadingTimer = useRef<ReturnType<typeof setTimeout>>()
   const [outputOpen, setOutputOpen] = useState(false)
 
   const [height, setHeight] = useState(0)
@@ -92,9 +96,15 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
   const ref = useRef<HTMLDivElement>(null)
   const editor = useRef<AceType.Editor>()
 
-  const onEnter = useCallback(() => {
+  const onEnter = useCallback(async () => {
     setState("loading")
-  }, [])
+    setLoading(true)
+    try {
+      await loadPyodide()
+    } finally {
+      setLoading(false)
+    }
+  }, [loadPyodide])
 
   const [setRef, _] = useInView({
     threshold: 0,
@@ -169,7 +179,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         setBlank(true)
         runningTimer.current = setTimeout(() => {
           setRunning(true)
-        }, 200)
+        }, RUNNING_DELAY)
         setOutputOpen(true)
         const response = await runJeed(request, true)
         setResponse({ response })
@@ -205,7 +215,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
       setBlank(true)
       runningTimer.current = setTimeout(() => {
         setRunning(true)
-      }, 200)
+      }, RUNNING_DELAY)
       setOutputOpen(true)
       const result = await runPlayground(submission, true)
       if (result.timedOut) {
@@ -234,23 +244,47 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
 
     try {
       setBlank(true)
-      runningTimer.current = setTimeout(() => {
-        setRunning(true)
-      }, 200)
-      setOutputOpen(true)
+
+      let showedLoading = false
+      loadingTimer.current = setTimeout(() => {
+        setOutputOpen(true)
+        setLoading(true)
+        showedLoading = true
+      }, RUNNING_DELAY)
+
+      const loaded = await loadPyodide()
+      if (!loaded) {
+        setPythonOutput({ error: "Unable to load Pyodide" })
+      }
+      loadingTimer.current && clearTimeout(loadingTimer.current)
+
+      runningTimer.current = setTimeout(
+        () => {
+          setOutputOpen(true)
+          setRunning(true)
+        },
+        showedLoading ? 0 : RUNNING_DELAY,
+      )
+
       const result = await runPython(content)
+      setOutputOpen(true)
       setPythonOutput({ result })
     } catch (error: any) {
+      setOutputOpen(true)
       setPythonOutput({ error: error.toString() })
     } finally {
+      loadingTimer.current && clearTimeout(loadingTimer.current)
       runningTimer.current && clearTimeout(runningTimer.current)
       setBlank(false)
+      setLoading(false)
       setRunning(false)
     }
-  }, [runPython])
+  }, [runPython, loadPyodide])
 
   const output = useMemo(() => {
-    if (running) {
+    if (loading) {
+      return { output: "Loading Pyodide..." }
+    } else if (running) {
       return { output: "Running..." }
     } else if (blank) {
       return { output: "" }
@@ -269,7 +303,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         ? { output: result?.error, level: "error" }
         : { output: result?.result?.outputLines.map(({ line }) => line).join("\n") || "" }
     }
-  }, [running, blank, response, result, pythonOutput, runWithJeed, runWithPlayground, runWithPython])
+  }, [running, loading, blank, response, result, pythonOutput, runWithJeed, runWithPlayground, runWithPython])
 
   const commands = useMemo(() => {
     return [

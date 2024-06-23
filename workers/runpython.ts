@@ -1,16 +1,19 @@
 import type { PyodideInterface, loadPyodide } from "pyodide"
-import { RunPythonRequest, RunPythonResponse, StartRunResponse } from "../types/runpython"
+import {
+  LoadPyodideRequest,
+  LoadPyodideResponse,
+  RunPythonRequest,
+  RunPythonResponse,
+  StartRunResponse,
+} from "../types/runpython"
 
 const PYODIDE_VERSION = "0.26.1"
+const OUTPUT_LIMIT = 1024
+
 importScripts(`https://cdn.jsdelivr.net/npm/pyodide@${PYODIDE_VERSION}/pyodide.min.js`)
 
 let lineCount = 0
 const stdout: string[] = []
-
-let setPyodideLoaded: (value: unknown) => void
-const pyodideLoaded = new Promise((resolve) => {
-  setPyodideLoaded = resolve
-})
 
 declare global {
   interface Window {
@@ -18,56 +21,70 @@ declare global {
   }
 }
 
-let pyodide: PyodideInterface
+let pyodideLoader: Promise<PyodideInterface>
 
-Promise.resolve().then(async () => {
-  const start = Date.now()
+const startPyodide = async (): Promise<PyodideInterface> => {
+  if (!pyodideLoader) {
+    pyodideLoader = new Promise<PyodideInterface>(async (resolve, reject) => {
+      try {
+        console.debug("Loading Pyodide")
+        const start = Date.now()
 
-  pyodide = await self.loadPyodide({
-    indexURL: `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`,
-    lockFileURL: "/pyodide-lock.json",
-    packages: ["mypy", "pycodestyle", "typing-extensions", "mypy_extensions"],
-    fullStdLib: false,
-  })
+        const pyodide = await self.loadPyodide({
+          indexURL: `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`,
+          lockFileURL: "/pyodide-lock.json",
+          packages: ["mypy", "pycodestyle", "typing-extensions", "mypy_extensions"],
+          fullStdLib: false,
+        })
 
-  console.log(`Pyodide loaded in: ${Date.now() - start}ms`)
+        pyodide.setStdout({
+          batched: (line) => {
+            lineCount++
+            if (lineCount <= OUTPUT_LIMIT) {
+              stdout.push(line)
+            } else if (lineCount === OUTPUT_LIMIT + 1) {
+              stdout.push(`(Output truncated after ${OUTPUT_LIMIT} lines)`)
+            }
+          },
+        })
 
-  pyodide.setStdout({
-    batched: (line) => {
-      lineCount++
-      if (lineCount <= 1024) {
-        stdout.push(line)
-      } else if (lineCount === 1025) {
-        stdout.push("(Output truncated)")
+        /*
+        await pyodide.loadPackage("micropip")
+        const micropip = pyodide.pyimport("micropip")
+        await micropip.install("pycodestyle")
+        await micropip.install("mypy")
+        await micropip.install("typing-extensions")
+        await micropip.install("mypy_extensions")
+        console.log(micropip.freeze())
+
+        console.log(`Pyodide packages installed in: ${Date.now() - start}ms`)
+
+        console.log(`Pyodide warmed in: ${Date.now() - start}ms`)
+        */
+
+        console.debug(`Pyodide loaded (+${Date.now() - start}ms)`)
+
+        // Warm
+        await checkCode(`print("Hello, world!")`, pyodide)
+        await runCode(`print("Hello, world!")`, pyodide)
+
+        console.debug(`Pyodide warmed (+${Date.now() - start}ms)`)
+
+        resolve(pyodide)
+      } catch (err) {
+        reject(err)
       }
-    },
-  })
-
-  /*
-  await pyodide.loadPackage("micropip")
-  const micropip = pyodide.pyimport("micropip")
-  await micropip.install("pycodestyle")
-  await micropip.install("mypy")
-  await micropip.install("typing-extensions")
-  await micropip.install("mypy_extensions")
-  console.log(micropip.freeze())
-
-  console.log(`Pyodide packages installed in: ${Date.now() - start}ms`)
-  */
-
-  // Warm
-  await checkCode(`print("Hello, world!")`)
-  await runCode(`print("Hello, world!")`)
-
-  setPyodideLoaded(true)
-})
+    })
+  }
+  return pyodideLoader
+}
 
 function clearStdout() {
   stdout.length = 0
   lineCount = 0
 }
 
-async function checkCode(code: string): Promise<RunPythonResponse | undefined> {
+async function checkCode(code: string, pyodide: PyodideInterface): Promise<RunPythonResponse | undefined> {
   const encodedCode = btoa(code)
   const errorCount = await pyodide.runPythonAsync(`
 import pycodestyle
@@ -78,7 +95,8 @@ count_errors = pep8style.input_file('stdin', lines=originalCode.splitlines(True)
 count_errors
 `)
   if (errorCount > 0) {
-    return RunPythonResponse.check({ type: "response", error: stdout.join("\n") })
+    const error = stdout.join("\n").replaceAll("stdin:", "Line ")
+    return RunPythonResponse.check({ type: "runresponse", error })
   }
 
   clearStdout()
@@ -97,13 +115,14 @@ result[2]
 `)
 
   if (mypyResult != 0) {
-    return RunPythonResponse.check({ type: "response", error: stdout.join("\n") })
+    const error = stdout.join("\n").replaceAll("/snippet.py:", "Line ")
+    return RunPythonResponse.check({ type: "runresponse", error })
   }
 
   return
 }
 
-async function runCode(code: string): Promise<RunPythonResponse> {
+async function runCode(code: string, pyodide: PyodideInterface): Promise<RunPythonResponse> {
   clearStdout()
 
   let result: string | undefined
@@ -118,25 +137,39 @@ async function runCode(code: string): Promise<RunPythonResponse> {
 
   clearStdout()
 
-  return RunPythonResponse.check({ type: "response", result, error })
+  return RunPythonResponse.check({ type: "runresponse", result, error })
 }
 
 addEventListener(
   "message",
   async (event) => {
     const replyPort = event.ports[0]
-    await pyodideLoaded
+
+    let pyodide: PyodideInterface | undefined = undefined
+    try {
+      pyodide = await startPyodide()
+    } catch (err) {}
+
+    if (LoadPyodideRequest.guard(event.data)) {
+      replyPort.postMessage(LoadPyodideResponse.check({ type: "loadresponse", ok: !!pyodide }))
+      return
+    }
+
+    if (!pyodide) {
+      replyPort.postMessage(RunPythonResponse.check({ type: "runresponse", error: "Pyodide not loaded" }))
+      return
+    }
 
     const request = RunPythonRequest.check(event.data)
 
-    const checkResponse = await checkCode(request.code)
+    const checkResponse = await checkCode(request.code, pyodide!)
     if (checkResponse) {
       replyPort.postMessage(checkResponse)
     }
 
     replyPort.postMessage(StartRunResponse.check({ type: "startrun" }))
 
-    const runResponse = await runCode(request.code)
+    const runResponse = await runCode(request.code, pyodide!)
     replyPort.postMessage(runResponse)
   },
   false,
