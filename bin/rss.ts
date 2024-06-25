@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { Feed } from "feed"
 import fs from "fs/promises"
 import { glob } from "glob"

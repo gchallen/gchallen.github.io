@@ -5,6 +5,7 @@ import { usePlayground } from "@cs124/playground-react"
 import { Result, Submission } from "@cs124/playground-types"
 import type { Ace as AceType } from "ace-builds"
 import capitalize from "capitalize"
+import Color from "color"
 import dynamic from "next/dynamic"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useInView } from "react-hook-inview"
@@ -59,12 +60,23 @@ const Output = styled.div<{ $state?: string }>`
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   background-color: #222222;
+  .dark-mode & {
+    background-color: #444444;
+  }
   font-size: 0.8em;
   color: #dddddd;
   padding: 8px;
   max-height: calc(30em + 16px);
   overflow: scroll;
   color: ${(props) => (props.$state === "error" ? "red" : props.$state === "warning" ? "goldenrod" : "#dddddd")};
+  .dark-mode & {
+    color: ${(props) =>
+      props.$state === "error"
+        ? Color("red").lighten(0.2).hex()
+        : props.$state === "warning"
+          ? Color("goldenrod").lighten(0.2).hex()
+          : "#dddddd"};
+  }
 `
 
 const RUNNING_DELAY = 400

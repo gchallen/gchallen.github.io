@@ -1,7 +1,4 @@
-#!/usr/bin/env node
-
 import { compile } from "@mdx-js/mdx"
-import smartypants from "@ngsctt/remark-smartypants"
 import { ArgumentParser } from "argparse"
 import { exec } from "child-process-promise"
 import chokidar from "chokidar"
@@ -16,6 +13,7 @@ import rehypeKate from "rehype-katex"
 import footnotes from "remark-footnotes"
 import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
+import smartypants from "remark-smartypants"
 import replaceExt from "replace-ext"
 import slugify from "slugify"
 import { comments, fixfootnotes, fiximages, headings, highlighter, links, pullquotes } from "./plugins.mjs"
@@ -28,7 +26,7 @@ parser.add_argument("--clean", { default: false, action: "store_true" })
 parser.add_argument("--defaultLayout", { default: "Layout" })
 const args = parser.parse_args()
 
-async function update(source) {
+async function update(source: string) {
   const { content, data, isEmpty } = matter(await readFile(source))
 
   let pagePath
@@ -62,7 +60,7 @@ async function update(source) {
       rehypePlugins: [rehypeKate],
       remarkPlugins: [
         comments,
-        [footnotes, { inlineNotes: true }],
+        [footnotes as any, { inlineNotes: true }],
         links,
         headings,
         pullquotes,
@@ -117,7 +115,7 @@ export default function Page() {
   await writeFile(pagePath, pageContent)
 }
 
-async function rm(source) {
+async function rm(source: string) {
   const contentPath = replaceExt(path.resolve(args.output, path.relative(args.input, source)), ".js")
   const dataPath = replaceExt(path.resolve(args.output, path.relative(args.input, source)), ".json")
   const pagePath = replaceExt(path.resolve("pages", path.relative(args.input, source)), ".jsx")

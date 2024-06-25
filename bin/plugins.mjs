@@ -22,7 +22,6 @@ export function links() {
         props.rel = "noopener"
       } else if (node.url !== "~" && node.url.startsWith("~")) {
         node.url = node.url.replace(/^\~/, "")
-        console.log(node.url)
         props.target = "_blank"
         props.rel = "noopener"
       } else if (

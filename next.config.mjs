@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {
+const config = {
   experimental: {
     scrollRestoration: true,
   },
@@ -33,3 +33,4 @@ module.exports = {
     ]
   },
 }
+export default config
