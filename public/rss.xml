@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Geoffrey Challen, Teaching Faculty</title>
+        <link>https://www.geoffreychallen.com</link>
+        <description>Hi, I'm Geoff Challen. I love to teach, and I love to code. I teach students to code. And I write code that helps them learn.</description>
+        <lastBuildDate>Tue, 25 Jun 2024 23:49:43 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <image>
+            <title>Geoffrey Challen, Teaching Faculty</title>
+            <url>https://www.geoffreychallen.com/cartoon-light.png</url>
+            <link>https://www.geoffreychallen.com</link>
+        </image>
+        <copyright>All rights reserved 2024, Geoffrey Challen</copyright>
+        <item>
+            <title><![CDATA[Recipe Programming]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-06-03-recipe-programming</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-06-03-recipe-programming</guid>
+            <pubDate>Thu, 03 Jun 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Recipe programming comprises working of a set of instructions to produce a program that achieves some desired outcome. While recipe programming is powerful and useful, it should not be confused with teaching the basics of programming, particularly when teaching introductory computer science courses.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Chalkface Nostalgia]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-06-10-chalkface-nostalgia</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-06-10-chalkface-nostalgia</guid>
+            <pubDate>Thu, 10 Jun 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[With the pandemic seemingly drawing to a close, at least in the United States, it’s disappointing to see university students, administrators, and even instructors longing to return to outmoded and ineffective instructional methods. It’s not just a return to classrooms. It’s a return to lecturing, which we know doesn't work.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Why I Don't Use Piazza]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-06-17-why-i-don't-use-piazza</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-06-17-why-i-don't-use-piazza</guid>
+            <pubDate>Thu, 17 Jun 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Piazza is not a forum. It doesn't build community, and it's design goals are oriented around enabling students to extract answers from course staff without engaging in the dialogue that builds understanding. If you are still using Piazza, please consider other much better alternatives.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Quantity Over Quality]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-06-24-quantity-over-quality</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-06-24-quantity-over-quality</guid>
+            <pubDate>Thu, 24 Jun 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Programming is a skill, and if you want students to get better at it, you need to encourage them to practice. A lot. But also discourage them from focusing too much on quality too early.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[One For All]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-07-02-one-for-all</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-07-02-one-for-all</guid>
+            <pubDate>Fri, 02 Jul 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Teaching large courses can have enormous impact. But it's easy for an instructor's effectiveness to decrease as the number of students grows. The trick is to avoiding this is to focus on the things that benefit all students—one for all—and avoid those that only benefit a few students—all for one.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Creating Course Community]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-07-09-creating-course-community</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-07-09-creating-course-community</guid>
+            <pubDate>Fri, 09 Jul 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Not every course needs a community. But I've found that building one among my course staff has made my course both more effective for students and rewarding for myself. Here's how and why we create community in CS1.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Quantifying CS1]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-07-16-quantifying-cs1</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-07-16-quantifying-cs1</guid>
+            <pubDate>Fri, 16 Jul 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Finding ways to measure success or failure is important when teaching any course, but particularly when teaching CS1. I outline five metrics that I use to evaluate CS1, describe how and why to collect them, and present results from my own course.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Computerized Testing for CS1]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-07-23-computerized-testing-for-cs1</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-07-23-computerized-testing-for-cs1</guid>
+            <pubDate>Fri, 23 Jul 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Nothing has been more transformative for my CS1 course than frequent computerized assessments. Including programming questions on weekly proctored quizzes keeps students on track while also helping support many other unproctored assessments. Initially facilitated by an on-campus testing center, we've now successfully transitioned that component of the course online. I'll talk about how and why to use computerized assessments in CS1.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Poorly Structured]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-07-30-poorly-structured</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-07-30-poorly-structured</guid>
+            <pubDate>Fri, 30 Jul 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Why are college courses structured so differently from classes in high-school? And does introducing more structure help our students learn better?
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Grade Uncertainty]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-08-13-grade-uncertainty</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-08-13-grade-uncertainty</guid>
+            <pubDate>Fri, 13 Aug 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Grade uncertainty represents the amount of uncertainty students have about how they are doing in a course. Reducing grade uncertainty has proven positive in my courses, even if it has had some interesting side effects.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[CS1 in Kotlin]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-11-21-cs1-in-kotlin</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-11-21-cs1-in-kotlin</guid>
+            <pubDate>Sun, 21 Nov 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[In Fall 2021 we began offering Kotlin as a language option in my CS1 course. Kotlin has proven to be a great choice, and represents a substantial improvement over other popular options like Python and Java.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Windows Line Ending]]></title>
+            <link>https://www.geoffreychallen.com/essays/2021-11-26-windows-line-ending</link>
+            <guid>https://www.geoffreychallen.com/essays/2021-11-26-windows-line-ending</guid>
+            <pubDate>Fri, 26 Nov 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[In today's advertures in maintaining your own CS1 infrastructure, how Windows line endings and a persistent student combined to bring down our entire homework grading backend.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[My CS1 Backend]]></title>
+            <link>https://www.geoffreychallen.com/essays/2022-04-08-my-cs1-backend</link>
+            <guid>https://www.geoffreychallen.com/essays/2022-04-08-my-cs1-backend</guid>
+            <pubDate>Fri, 08 Apr 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[I've created an interactive, immersive, and effective online learning experience for my CS1 students. As the first installment in a multi-part series, I'll provide an overview of my course infrastructure, and discuss a bit about how I got to this crazy place.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Eliminate Final Exams]]></title>
+            <link>https://www.geoffreychallen.com/essays/2022-04-17-eliminate-final-exams</link>
+            <guid>https://www.geoffreychallen.com/essays/2022-04-17-eliminate-final-exams</guid>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[A single exam isn't the solution to assessment. It's the problem.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[The Need for Jeed]]></title>
+            <link>https://www.geoffreychallen.com/essays/2022-06-17-the-need-for-jeed</link>
+            <guid>https://www.geoffreychallen.com/essays/2022-06-17-the-need-for-jeed</guid>
+            <pubDate>Fri, 17 Jun 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[How and why we run untrusted Java bytecode in a secure in-process sandbox. (tl;dr: It's fast.)
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Evaluating Teaching Faculty Positions]]></title>
+            <link>https://www.geoffreychallen.com/essays/2022-10-28-evaluating-teaching-faculty-positions</link>
+            <guid>https://www.geoffreychallen.com/essays/2022-10-28-evaluating-teaching-faculty-positions</guid>
+            <pubDate>Fri, 28 Oct 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[There's a ton of variation between teaching faculty positions. If you want a good one, here are some of the important questions to ask.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Evaluating Teaching Faculty Positions: Part 2]]></title>
+            <link>https://www.geoffreychallen.com/essays/2022-11-18-evaluating-teaching-faculty-positions:-part-2</link>
+            <guid>https://www.geoffreychallen.com/essays/2022-11-18-evaluating-teaching-faculty-positions:-part-2</guid>
+            <pubDate>Fri, 18 Nov 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[There's a ton of variation between teaching faculty positions. If you want a good one, here are some additional important questions to ask, related to contracts, pay, and leadership opportunities.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Evaluating Teaching Faculty Positions: Part 3]]></title>
+            <link>https://www.geoffreychallen.com/essays/2022-12-27-evaluating-teaching-faculty-positions:-part-3</link>
+            <guid>https://www.geoffreychallen.com/essays/2022-12-27-evaluating-teaching-faculty-positions:-part-3</guid>
+            <pubDate>Tue, 27 Dec 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[There's a ton of variation between teaching faculty positions. If you want a good one, here are some additional important questions to ask, related to teaching assignments, broadening participation, and institutional support.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[A Help Site Story]]></title>
+            <link>https://www.geoffreychallen.com/essays/2023-02-11-a-help-site-story</link>
+            <guid>https://www.geoffreychallen.com/essays/2023-02-11-a-help-site-story</guid>
+            <pubDate>Sat, 11 Feb 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[When the pandemic hit, we scrambled to create an effective approach to providing one-on-one support online. The process also led me to some insights about help site design, community building in CS1, and possible paths towards increasing diversity in our field.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Large Courses Should Be Better]]></title>
+            <link>https://www.geoffreychallen.com/essays/2023-06-14-large-courses-should-be-better</link>
+            <guid>https://www.geoffreychallen.com/essays/2023-06-14-large-courses-should-be-better</guid>
+            <pubDate>Wed, 14 Jun 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Large university courses must and can be better. But they also fail in predictable ways, negatively affecting large numbers of students.
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Ditch the Demo]]></title>
+            <link>https://www.geoffreychallen.com/essays/2024-03-21-ditch-the-demo</link>
+            <guid>https://www.geoffreychallen.com/essays/2024-03-21-ditch-the-demo</guid>
+            <pubDate>Thu, 21 Mar 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Live teaching demonstrations are an ineffective way to interview teaching faculty. There's a better approach.
+]]></description>
+        </item>
+    </channel>
+</rss>

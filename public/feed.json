@@ -1,0 +1,161 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Geoffrey Challen, Teaching Faculty",
+    "home_page_url": "https://www.geoffreychallen.com",
+    "feed_url": "https://www.geoffreychallen.com/feed.json",
+    "description": "Hi, I'm Geoff Challen. I love to teach, and I love to code. I teach students to code. And I write code that helps them learn.",
+    "icon": "https://www.geoffreychallen.com/cartoon-light.png",
+    "author": {
+        "name": "Geoffrey Challen",
+        "url": "https://www.geoffreychallen.com"
+    },
+    "items": [
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-06-03-recipe-programming",
+            "url": "https://www.geoffreychallen.com/essays/2021-06-03-recipe-programming",
+            "title": "Recipe Programming",
+            "summary": "Recipe programming comprises working of a set of instructions to produce a program that achieves some desired outcome. While recipe programming is powerful and useful, it should not be confused with teaching the basics of programming, particularly when teaching introductory computer science courses.\n",
+            "date_modified": "2021-06-03T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-06-10-chalkface-nostalgia",
+            "url": "https://www.geoffreychallen.com/essays/2021-06-10-chalkface-nostalgia",
+            "title": "Chalkface Nostalgia",
+            "summary": "With the pandemic seemingly drawing to a close, at least in the United States, it’s disappointing to see university students, administrators, and even instructors longing to return to outmoded and ineffective instructional methods. It’s not just a return to classrooms. It’s a return to lecturing, which we know doesn't work.\n",
+            "date_modified": "2021-06-10T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-06-17-why-i-don't-use-piazza",
+            "url": "https://www.geoffreychallen.com/essays/2021-06-17-why-i-don't-use-piazza",
+            "title": "Why I Don't Use Piazza",
+            "summary": "Piazza is not a forum. It doesn't build community, and it's design goals are oriented around enabling students to extract answers from course staff without engaging in the dialogue that builds understanding. If you are still using Piazza, please consider other much better alternatives.\n",
+            "date_modified": "2021-06-17T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-06-24-quantity-over-quality",
+            "url": "https://www.geoffreychallen.com/essays/2021-06-24-quantity-over-quality",
+            "title": "Quantity Over Quality",
+            "summary": "Programming is a skill, and if you want students to get better at it, you need to encourage them to practice. A lot. But also discourage them from focusing too much on quality too early.\n",
+            "date_modified": "2021-06-24T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-07-02-one-for-all",
+            "url": "https://www.geoffreychallen.com/essays/2021-07-02-one-for-all",
+            "title": "One For All",
+            "summary": "Teaching large courses can have enormous impact. But it's easy for an instructor's effectiveness to decrease as the number of students grows. The trick is to avoiding this is to focus on the things that benefit all students—one for all—and avoid those that only benefit a few students—all for one.\n",
+            "date_modified": "2021-07-02T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-07-09-creating-course-community",
+            "url": "https://www.geoffreychallen.com/essays/2021-07-09-creating-course-community",
+            "title": "Creating Course Community",
+            "summary": "Not every course needs a community. But I've found that building one among my course staff has made my course both more effective for students and rewarding for myself. Here's how and why we create community in CS1.\n",
+            "date_modified": "2021-07-09T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-07-16-quantifying-cs1",
+            "url": "https://www.geoffreychallen.com/essays/2021-07-16-quantifying-cs1",
+            "title": "Quantifying CS1",
+            "summary": "Finding ways to measure success or failure is important when teaching any course, but particularly when teaching CS1. I outline five metrics that I use to evaluate CS1, describe how and why to collect them, and present results from my own course.\n",
+            "date_modified": "2021-07-16T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-07-23-computerized-testing-for-cs1",
+            "url": "https://www.geoffreychallen.com/essays/2021-07-23-computerized-testing-for-cs1",
+            "title": "Computerized Testing for CS1",
+            "summary": "Nothing has been more transformative for my CS1 course than frequent computerized assessments. Including programming questions on weekly proctored quizzes keeps students on track while also helping support many other unproctored assessments. Initially facilitated by an on-campus testing center, we've now successfully transitioned that component of the course online. I'll talk about how and why to use computerized assessments in CS1.\n",
+            "date_modified": "2021-07-23T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-07-30-poorly-structured",
+            "url": "https://www.geoffreychallen.com/essays/2021-07-30-poorly-structured",
+            "title": "Poorly Structured",
+            "summary": "Why are college courses structured so differently from classes in high-school? And does introducing more structure help our students learn better?\n",
+            "date_modified": "2021-07-30T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-08-13-grade-uncertainty",
+            "url": "https://www.geoffreychallen.com/essays/2021-08-13-grade-uncertainty",
+            "title": "Grade Uncertainty",
+            "summary": "Grade uncertainty represents the amount of uncertainty students have about how they are doing in a course. Reducing grade uncertainty has proven positive in my courses, even if it has had some interesting side effects.\n",
+            "date_modified": "2021-08-13T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-11-21-cs1-in-kotlin",
+            "url": "https://www.geoffreychallen.com/essays/2021-11-21-cs1-in-kotlin",
+            "title": "CS1 in Kotlin",
+            "summary": "In Fall 2021 we began offering Kotlin as a language option in my CS1 course. Kotlin has proven to be a great choice, and represents a substantial improvement over other popular options like Python and Java.\n",
+            "date_modified": "2021-11-21T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2021-11-26-windows-line-ending",
+            "url": "https://www.geoffreychallen.com/essays/2021-11-26-windows-line-ending",
+            "title": "Windows Line Ending",
+            "summary": "In today's advertures in maintaining your own CS1 infrastructure, how Windows line endings and a persistent student combined to bring down our entire homework grading backend.\n",
+            "date_modified": "2021-11-26T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2022-04-08-my-cs1-backend",
+            "url": "https://www.geoffreychallen.com/essays/2022-04-08-my-cs1-backend",
+            "title": "My CS1 Backend",
+            "summary": "I've created an interactive, immersive, and effective online learning experience for my CS1 students. As the first installment in a multi-part series, I'll provide an overview of my course infrastructure, and discuss a bit about how I got to this crazy place.\n",
+            "date_modified": "2022-04-08T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2022-04-17-eliminate-final-exams",
+            "url": "https://www.geoffreychallen.com/essays/2022-04-17-eliminate-final-exams",
+            "title": "Eliminate Final Exams",
+            "summary": "A single exam isn't the solution to assessment. It's the problem.\n",
+            "date_modified": "2022-04-17T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2022-06-17-the-need-for-jeed",
+            "url": "https://www.geoffreychallen.com/essays/2022-06-17-the-need-for-jeed",
+            "title": "The Need for Jeed",
+            "summary": "How and why we run untrusted Java bytecode in a secure in-process sandbox. (tl;dr: It's fast.)\n",
+            "date_modified": "2022-06-17T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2022-10-28-evaluating-teaching-faculty-positions",
+            "url": "https://www.geoffreychallen.com/essays/2022-10-28-evaluating-teaching-faculty-positions",
+            "title": "Evaluating Teaching Faculty Positions",
+            "summary": "There's a ton of variation between teaching faculty positions. If you want a good one, here are some of the important questions to ask.\n",
+            "date_modified": "2022-10-28T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2022-11-18-evaluating-teaching-faculty-positions:-part-2",
+            "url": "https://www.geoffreychallen.com/essays/2022-11-18-evaluating-teaching-faculty-positions:-part-2",
+            "title": "Evaluating Teaching Faculty Positions: Part 2",
+            "summary": "There's a ton of variation between teaching faculty positions. If you want a good one, here are some additional important questions to ask, related to contracts, pay, and leadership opportunities.\n",
+            "date_modified": "2022-11-18T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2022-12-27-evaluating-teaching-faculty-positions:-part-3",
+            "url": "https://www.geoffreychallen.com/essays/2022-12-27-evaluating-teaching-faculty-positions:-part-3",
+            "title": "Evaluating Teaching Faculty Positions: Part 3",
+            "summary": "There's a ton of variation between teaching faculty positions. If you want a good one, here are some additional important questions to ask, related to teaching assignments, broadening participation, and institutional support.\n",
+            "date_modified": "2022-12-27T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2023-02-11-a-help-site-story",
+            "url": "https://www.geoffreychallen.com/essays/2023-02-11-a-help-site-story",
+            "title": "A Help Site Story",
+            "summary": "When the pandemic hit, we scrambled to create an effective approach to providing one-on-one support online. The process also led me to some insights about help site design, community building in CS1, and possible paths towards increasing diversity in our field.\n",
+            "date_modified": "2023-02-11T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2023-06-14-large-courses-should-be-better",
+            "url": "https://www.geoffreychallen.com/essays/2023-06-14-large-courses-should-be-better",
+            "title": "Large Courses Should Be Better",
+            "summary": "Large university courses must and can be better. But they also fail in predictable ways, negatively affecting large numbers of students.\n",
+            "date_modified": "2023-06-14T00:00:00.000Z"
+        },
+        {
+            "id": "https://www.geoffreychallen.com/essays/2024-03-21-ditch-the-demo",
+            "url": "https://www.geoffreychallen.com/essays/2024-03-21-ditch-the-demo",
+            "title": "Ditch the Demo",
+            "summary": "Live teaching demonstrations are an ineffective way to interview teaching faculty. There's a better approach.\n",
+            "date_modified": "2024-03-21T00:00:00.000Z"
+        }
+    ]
+}
