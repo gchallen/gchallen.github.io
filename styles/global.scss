@@ -361,26 +361,25 @@ header {
 .grecaptcha-badge {
   visibility: hidden;
 }
-.subscribe {
-  justify-content: center;
-  align-items: center;
-  & > div {
-    display: flex;
-    align-items: center;
-  }
-  form {
-    width: 100%;
-    max-width: 480px;
+form.subscribe {
+  display: flex;
+  width: 100%;
+  &.center {
+    justify-content: center;
   }
   .email {
     flex: 1;
     font-family: "Monaco", monospace;
+    font-size: 0.8em;
+    .center & {
+      max-width: 40em;
+    }
   }
   .submit {
     display: block;
     margin-left: 0.5em;
     margin-right: 0.5em;
-    font-size: 1.2em;
+    font-size: 0.9em;
     line-height: 1.4em;
     color: #555555;
     background-color: #fdfdfd;
@@ -411,9 +410,15 @@ header {
   }
 }
 div.subscribe {
-  margin-bottom: 1em;
-  body.subscribed &.hideAfterSubscribe {
-    display: none;
+  justify-content: center;
+  align-items: center;
+  transition:
+    max-height 0.5s,
+    opacity 0.5s;
+  overflow: hidden;
+  &.center {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 a.anchorTarget {

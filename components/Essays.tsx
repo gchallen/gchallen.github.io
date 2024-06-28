@@ -81,9 +81,7 @@ const Essays: React.FC<{
             </>
           )}
           {showSubscribe && (
-            <SubscribeButton hideAfterSubscribe>
-              <p>Want to know when I post new essays? Subscribe here.</p>
-            </SubscribeButton>
+            <SubscribeButton hideAfterSubscribe>Want to know when I post new essays? Subscribe here:</SubscribeButton>
           )}
           {drafts && drafts.length > 0 && session?.user?.email === "geoffrey.challen@gmail.com" && (
             <>

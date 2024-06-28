@@ -1,34 +1,49 @@
 import validator from "email-validator"
 import { useSession } from "next-auth/react"
-import { PropsWithChildren, useCallback, useEffect, useRef, useState } from "react"
+import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useRef, useState } from "react"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import { FaCheckCircle } from "react-icons/fa"
 
-const SubscribeButton: React.FC<PropsWithChildren & { hideAfterSubscribe?: boolean }> = ({
+interface SubscribeButtonContext {
+  available: boolean
+  show: boolean
+}
+const SubscribeButtonContext = createContext<SubscribeButtonContext>({
+  available: false,
+  show: false,
+})
+
+export const SubscribeButtonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    fetch("https://lists.geoffreychallen.com/publisher/")
+      .then((res) => res.json())
+      .then(() => {
+        setShow(!localStorage.getItem("subscribed"))
+      })
+      .catch(() => setShow(false))
+  }, [])
+
+  return <SubscribeButtonContext.Provider value={{ available: true, show }}>{children}</SubscribeButtonContext.Provider>
+}
+
+export const useSubscribeButtonContext = () => useContext(SubscribeButtonContext)
+
+const SubscribeButton: React.FC<PropsWithChildren & { center?: boolean; hideAfterSubscribe?: boolean }> = ({
   children,
+  center = false,
   hideAfterSubscribe = false,
 }) => {
   const { executeRecaptcha } = useGoogleReCaptcha()
-  const [, setSubscriberCount] = useState<number | undefined>()
   const { data: session } = useSession()
   const [email, setEmail] = useState<string>("")
   const submitEmail = useRef<string>("")
   const [enabled, setEnabled] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
-  const [hide, setHide] = useState(false)
   const timer = useRef<ReturnType<typeof setTimeout>>()
-
-  useEffect(() => {
-    fetch("https://lists.geoffreychallen.com/publisher/")
-      .then((res) => res.json())
-      .then(({ count }) => {
-        setSubscriberCount(count)
-      })
-      .catch(() => setHide(true))
-    return () => {
-      timer.current && clearTimeout(timer.current)
-    }
-  }, [])
+  const { show } = useSubscribeButtonContext()
+  const [hide, setHide] = useState(false)
 
   const updateEmail = useCallback((newEmail: string) => {
     setEmail(newEmail)
@@ -77,31 +92,38 @@ const SubscribeButton: React.FC<PropsWithChildren & { hideAfterSubscribe?: boole
     [executeRecaptcha, hideAfterSubscribe],
   )
 
-  if (hide) {
-    return null
-  }
+  const actuallyShow = show === true && hide === false
   return (
-    <div className={`subscribe${hideAfterSubscribe ? " hideAfterSubscribe" : ""}`}>
-      {children}
-      <form className="subscribe" onSubmit={onSubmit}>
-        <div>
-          <input
-            className="email"
-            type="text"
-            value={email}
-            onChange={onChange}
-            name="email"
-            placeholder="your@email.com"
-            disabled={session?.user?.email ? true : showSuccess}
-          />
-          <input className="submit" type="submit" value="Subscribe" disabled={!enabled} />
-          <FaCheckCircle
-            className="success"
-            size={"1.4em"}
-            style={{ display: "block", opacity: showSuccess ? 1 : 0 }}
-          />
-        </div>
-      </form>
+    <div
+      style={{
+        maxHeight: actuallyShow ? 128 : 0,
+        opacity: actuallyShow ? 1 : 0,
+        marginBottom: actuallyShow ? "1em" : 0,
+      }}
+      className={`subscribe${hideAfterSubscribe ? " hideAfterSubscribe" : ""}${center ? " center" : ""}`}
+    >
+      {actuallyShow && (
+        <>
+          {children}
+          <form className={`subscribe${center ? " center" : ""}`} onSubmit={onSubmit}>
+            <input
+              className="email"
+              type="text"
+              value={email}
+              onChange={onChange}
+              name="email"
+              placeholder="your@email.com"
+              disabled={session?.user?.email ? true : showSuccess}
+            />
+            <input className="submit" type="submit" value="Subscribe" disabled={!enabled} />
+            <FaCheckCircle
+              className="success"
+              size={"1.4em"}
+              style={{ display: "block", opacity: showSuccess ? 1 : 0 }}
+            />
+          </form>
+        </>
+      )}
     </div>
   )
 }

@@ -5,7 +5,6 @@ import Link from "next/link"
 import ChooseDarkMode from "../components/ChooseDarkMode"
 import Essays from "../components/Essays"
 import Footer from "../components/Footer"
-import SubscribeButton from "../components/SubscribeButton"
 import { Essay, getEssays } from "../lib/getEssays"
 import styles from "../styles/index.module.scss"
 
@@ -69,11 +68,8 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           Here&apos;s a <Link href="/about">long bio</Link>, or perhaps you&apos;d prefer something{" "}
           <Link href="/bio">shorter</Link>.
         </p>
-        <SubscribeButton hideAfterSubscribe>
-          <p>Want to be notified when I post new content? Subscribe here:</p>
-        </SubscribeButton>
-        <hr />
-        <Essays published={published} limit random />
+        <hr style={{ marginTop: 0 }} />
+        <Essays published={published} limit random showSubscribe />
       </div>
       <Footer />
     </div>

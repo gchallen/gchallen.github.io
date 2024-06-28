@@ -2,3 +2,4 @@
 dist
 *.mdx
 output
+pages/**/*.jsx

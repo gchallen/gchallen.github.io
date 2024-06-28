@@ -127,24 +127,24 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@cs124/jeed-output@2024.5.0":
-  version "2024.5.0"
-  resolved "https://registry.yarnpkg.com/@cs124/jeed-output/-/jeed-output-2024.5.0.tgz#77df340818b4a6e68f75ce92419b16649344942c"
-  integrity sha512-3dQbKt6yvu7/p2Iio4kpIjcPaZ/bEyOiLMvvBEEyrEon68hUL1kUmcDc4hxC+TU7tExvpYwuggoso01GNQyzIw==
+"@cs124/jeed-output@2024.6.1":
+  version "2024.6.1"
+  resolved "https://registry.yarnpkg.com/@cs124/jeed-output/-/jeed-output-2024.6.1.tgz#6b7920e87365c94ed86898c39b2c06a236c14f0e"
+  integrity sha512-RRKuwaN8maMqOzv+/zg24KQ6G1bGiOyo4mkUAe+hawTId2/u8pDZc4Ar2GoG67xCmciZjLN0mbl5RKV9my3onw==
   dependencies:
-    "@cs124/jeed-types" "2024.5.0"
+    "@cs124/jeed-types" "2024.6.1"
 
-"@cs124/jeed-react@2024.5.0":
-  version "2024.5.0"
-  resolved "https://registry.yarnpkg.com/@cs124/jeed-react/-/jeed-react-2024.5.0.tgz#1c15695aa30c511f6bcd9bff3d35f6083f633952"
-  integrity sha512-X0ltQ348ssLGy5y6qy9rUazfxDjpKh4O4WSMr8ybpPaYIvqXgsSM3s0HnI2abr0Vrn8jWulUFp8D0dBXDKluVw==
+"@cs124/jeed-react@2024.6.1":
+  version "2024.6.1"
+  resolved "https://registry.yarnpkg.com/@cs124/jeed-react/-/jeed-react-2024.6.1.tgz#e767de2f919be0516aab6c6ac7fff116cfcbed06"
+  integrity sha512-D9ajkbs7lUMgiIpggFkXmGz3WX09cFWMX1ciAnf/W0ffUWOw9RotKmsGSkiy5P429PfY3uFORBOTWmvWeMZ+SA==
   dependencies:
-    "@cs124/jeed-types" "2024.5.0"
+    "@cs124/jeed-types" "2024.6.1"
 
-"@cs124/jeed-types@2024.5.0":
-  version "2024.5.0"
-  resolved "https://registry.yarnpkg.com/@cs124/jeed-types/-/jeed-types-2024.5.0.tgz#240360021062756db52cb61a814b38f08364db7e"
-  integrity sha512-I/00YM5pm3VgCjv7rxwDdyKcScKmmEfDxbZDE18Kf3vmPe1dwUODW2sTOazhb+5HWg68c9P6OoCNAIFB3kKJ0A==
+"@cs124/jeed-types@2024.6.1":
+  version "2024.6.1"
+  resolved "https://registry.yarnpkg.com/@cs124/jeed-types/-/jeed-types-2024.6.1.tgz#1d653c7902e9f07b09352e9c71abb4fa13b92542"
+  integrity sha512-j8YOQ9qMzp7FIYzZvWPBsC7wkRahCWWt2nTLjdjuR8vSTkO791vHIufuM1QvKqPJKf2NlF0rnlAvmI8HBx8lOQ==
 
 "@cs124/playground-react@2023.1.0":
   version "2023.1.0"
@@ -958,10 +958,10 @@
   dependencies:
     "@types/unist" "*"
 
-"@types/node@*", "@types/node@20.14.8":
-  version "20.14.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.14.8.tgz#45c26a2a5de26c3534a9504530ddb3b27ce031ac"
-  integrity sha512-DO+2/jZinXfROG7j7WKFn/3C6nFwxy2lLpgLjEXJz+0XKphZlTLJ14mo8Vfg8X5BWN6XjyESXq+LcYdT7tR3bA==
+"@types/node@*", "@types/node@20.14.9":
+  version "20.14.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.14.9.tgz#12e8e765ab27f8c421a1820c99f5f313a933b420"
+  integrity sha512-06OCtnTXtWOZBJlRApleWndH4JsRVs1pDCc8dLSQp+7PpUpX3ePdHyeNSFTeSe7FtKyQkrlPvHwJOW3SLd8Oyg==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1137,10 +1137,10 @@ abbrev@^1.0.0:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-ace-builds@1.35.0, ace-builds@^1.32.8:
-  version "1.35.0"
-  resolved "https://registry.yarnpkg.com/ace-builds/-/ace-builds-1.35.0.tgz#141fd103016d1a1a7febab57a223af28c75a89bc"
-  integrity sha512-bwDKqjqNccC/MSujqnYTeAS5dIR8UmGLP0R90mvsJY0FRC8NUWBSTfj34+EIzo2NWc/gV8IZTqv4fXaiZJpCtA==
+ace-builds@1.35.1, ace-builds@^1.32.8:
+  version "1.35.1"
+  resolved "https://registry.yarnpkg.com/ace-builds/-/ace-builds-1.35.1.tgz#217545d2b9fd568a6febd5a25109fcfefe20cb32"
+  integrity sha512-WUQMeJVP3K14gPJ5VoFkmwutd2GSa/CZrt8Uvgx/zheVLaLdQI6HjyDW3ZNj/tQGtB+3HpGq9ugzxUausVc15A==
 
 acorn-jsx@^5.0.0, acorn-jsx@^5.3.2:
   version "5.3.2"
@@ -1622,9 +1622,9 @@ camelize@^1.0.0:
   integrity sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==
 
 caniuse-lite@^1.0.30001579:
-  version "1.0.30001636"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001636.tgz#b15f52d2bdb95fad32c2f53c0b68032b85188a78"
-  integrity sha512-bMg2vmr8XBsbL6Lr0UHXy/21m84FTxDLWn2FSqMd5PrlbMxwJlQnC2YWYxVgp66PZE+BBNF2jYQUBKCo1FDeZg==
+  version "1.0.30001638"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001638.tgz#598e1f0c2ac36f37ebc3f5b8887a32ca558e5d56"
+  integrity sha512-5SuJUJ7cZnhPpeLHaH0c/HPAnAHZvS6ElWyHK9GSIbVOQABLzowiI2pjmpvZ1WEbkyz46iFd4UXlOHR5SqgfMQ==
 
 capitalize@2.0.4:
   version "2.0.4"
@@ -3385,11 +3385,6 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-husky@9.0.11:
-  version "9.0.11"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-9.0.11.tgz#fc91df4c756050de41b3e478b2158b87c1e79af9"
-  integrity sha512-AB6lFlbwwyIqMdHYhwPe+kjOC3Oc5P3nThEoW/AaO2BX3vJDjWPFxYLxokUZOo6RNX20He3AaT8sESs9NJcmEw==
-
 iconv-lite@^0.6.2:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.6.3.tgz#a52f80bf38da1952eb5c681790719871a1a72501"
@@ -5017,9 +5012,9 @@ minimatch@^7.4.6:
     brace-expansion "^2.0.1"
 
 minimatch@^9.0.0, minimatch@^9.0.1, minimatch@^9.0.3, minimatch@^9.0.4:
-  version "9.0.4"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-9.0.4.tgz#8e49c731d1749cbec05050ee5145147b32496a51"
-  integrity sha512-KqWh+VchfxcMNRAJjj2tnsSJdNbHsVgnkBhTNrW7AjVo6OvLtxw8zfT9oLw1JSohlFzJ8jCoTgaoXvJ+kHt6fw==
+  version "9.0.5"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-9.0.5.tgz#d74f9dd6b57d83d8e98cfb82133b03978bc929e5"
+  integrity sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==
   dependencies:
     brace-expansion "^2.0.1"
 
@@ -5623,9 +5618,9 @@ parse-entities@^4.0.0:
     is-hexadecimal "^2.0.0"
 
 parse-github-url@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/parse-github-url/-/parse-github-url-1.0.2.tgz#242d3b65cbcdda14bb50439e3242acf6971db395"
-  integrity sha512-kgBf6avCbO3Cn6+RnzRGLkUsv4ZVqv/VfAYkRsyBcgkshNvVBkRn1FEZcW0Jb+npXQWm2vHPnnOqFteZxRRGNw==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/parse-github-url/-/parse-github-url-1.0.3.tgz#2ab55642c8685b63fbe2a196f5abe4ae9bd68abc"
+  integrity sha512-tfalY5/4SqGaV/GIGzWyHnFjlpTPTNpENR9Ea2lLldSJ8EWXMsvacWucqY3m3I4YPtas15IxTLQVQ5NSYXPrww==
 
 parse-json@^4.0.0:
   version "4.0.0"

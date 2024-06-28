@@ -5,7 +5,7 @@ import SubscribeButton from "./SubscribeButton"
 const Footer: React.FC = () => {
   return (
     <footer>
-      <SubscribeButton />
+      <SubscribeButton center />
       <div>
         <Link href="/">Home</Link>
         <Link href="/about">About</Link>
