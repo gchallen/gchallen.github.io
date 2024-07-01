@@ -8,10 +8,12 @@ import {
 } from "../types/runpython"
 
 export interface RunPythonContext {
+  available: boolean
   run: (code: string) => Promise<string>
   load: () => Promise<boolean>
 }
 export const RunPythonContext = createContext<RunPythonContext>({
+  available: false,
   run: () => {
     throw "RunPythonContext not available"
   },
@@ -103,7 +105,7 @@ export const RunPythonProvider: React.FC<PropsWithChildren> = ({ children }) => 
     previouslyStarted.current = true
   }, [restartWorker, load])
 
-  return <RunPythonContext.Provider value={{ run, load }}>{children}</RunPythonContext.Provider>
+  return <RunPythonContext.Provider value={{ run, load, available: true }}>{children}</RunPythonContext.Provider>
 }
 
 export const useRunPython = (): RunPythonContext => {
