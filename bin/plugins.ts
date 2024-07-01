@@ -1,20 +1,32 @@
+import "ace-builds/src-noconflict/ace"
+import aceHighlighter from "ace-builds/src-noconflict/ext-static_highlight"
+import { Mode as Java } from "ace-builds/src-noconflict/mode-java"
+import { Mode as Kotlin } from "ace-builds/src-noconflict/mode-kotlin"
+import { Mode as Python } from "ace-builds/src-noconflict/mode-python"
+import { Mode as Sh } from "ace-builds/src-noconflict/mode-sh"
+import assert from "assert"
 import _sizeOf from "image-size"
+import type { Data } from "mdast"
 import { toString } from "mdast-util-to-string"
 import path from "path"
 import slugify from "slugify"
 import stringHash from "string-hash"
+import type { Node, Parent } from "unist"
 import { visit } from "unist-util-visit"
 import { promisify } from "util"
-import { highlight } from "./highlight.js"
+
 const sizeOf = promisify(_sizeOf)
 
 const redirects = ["/scholar", "/statements/teaching", "/statements/service", "/statements/scholarly"]
 
+type OurNode = Node & { url?: string; value?: string; children?: OurNode[] }
+
 export function links() {
-  function transformer(ast) {
-    visit(ast, "link", visitor)
-    function visitor(node) {
-      const data = node.data || (node.data = {})
+  function transformer(tree: Node) {
+    visit(tree, "link", visitor)
+    function visitor(node: OurNode) {
+      assert(node.url)
+      const data: Data = node.data || (node.data = {})
       const props = data.hProperties || (data.hProperties = {})
       if (node.url !== "+" && node.url.startsWith("+")) {
         node.url = node.url.replace(/^\+/, "")
@@ -39,15 +51,15 @@ export function links() {
 }
 
 export function pullquotes() {
-  function transformer(ast) {
-    visit(ast, "paragraph", visitor)
-    function visitor(node) {
-      let children = []
+  function transformer(tree: Node) {
+    visit(tree, "paragraph", visitor)
+    function visitor(node: OurNode) {
+      let children: Node[] = []
       let sawQuote
-      for (const child of node.children) {
+      for (const child of node.children as (Parent & { url: string })[]) {
         if (child.type === "link" && child.url === "+") {
           if (sawQuote) {
-            throw Exception("Can't have more than one pullquote in a paragraph")
+            throw Error("Can't have more than one pullquote in a paragraph")
           }
           children = [...children, ...child.children]
           sawQuote = [...child.children]
@@ -80,17 +92,18 @@ export function pullquotes() {
 }
 
 export function comments() {
-  function transformer(ast) {
-    visit(ast, "paragraph", visitor)
-    function visitor(node) {
+  function transformer(tree: Node) {
+    visit(tree, "paragraph", visitor)
+    function visitor(node: OurNode) {
       const children = []
-      for (const child of node.children) {
+      for (const child of node.children as OurNode[]) {
         if (child.type === "text") {
+          assert(child.value)
           children.push({
             type: "text",
             value: child.value
               .split("\n")
-              .filter((line) => !line.startsWith("//"))
+              .filter((line: string) => !line.startsWith("//"))
               .join("\n"),
           })
         } else {
@@ -107,11 +120,12 @@ export function comments() {
 }
 
 export function headings() {
-  const duplicates = {}
-  function transformer(ast) {
-    visit(ast, "heading", visitor)
+  const duplicates: { [key: string]: boolean } = {}
+  function transformer(tree: Node) {
+    visit(tree, "heading", visitor)
 
-    function visitor(node) {
+    function visitor(node: OurNode) {
+      assert(node.children)
       const headerAsString = toString(node)
       let id = slugify(headerAsString.toLowerCase())
       const match = /^(.*?)\s*\(\(([\w-]+)\)\)$/.exec(headerAsString)
@@ -148,13 +162,30 @@ export function headings() {
   return transformer
 }
 
+const modes: { [key: string]: any } = {
+  java: Java,
+  kotlin: Kotlin,
+  python: Python,
+  sh: Sh,
+}
+
+export function highlight(content: string, opts: any) {
+  const Mode = opts.mode ? modes[opts.mode as string] : undefined
+  if (opts.mode && opts.mode !== "text" && !Mode) {
+    throw Error(`Unloaded mode: ${opts.mode}`)
+  }
+  const { html, css } = aceHighlighter.renderSync(content, Mode && new Mode(), {})
+  return { html, css }
+}
+
 export function highlighter() {
-  let counters = {}
+  let counters: { [key: string]: number } = {}
 
-  function transformer(ast) {
-    visit(ast, "code", visitor)
+  function transformer(tree: Node) {
+    visit(tree, "code", visitor)
 
-    function visitor(node) {
+    function visitor(node: OurNode & { lang?: string; meta?: any }) {
+      assert(node.value)
       const { html, css } = highlight(node.value, { mode: node.lang, theme: "twilight" })
       let id = stringHash(node.value).toString()
       if (counters[id] !== undefined) {
@@ -202,10 +233,10 @@ export function highlighter() {
 export function fixfootnotes() {
   let counter = 0
 
-  function transformer(ast) {
-    visit(ast, "footnote", visitor)
+  function transformer(tree: Node) {
+    visit(tree, "footnote", visitor)
 
-    function visitor(node) {
+    function visitor(node: OurNode) {
       counter++
       const newNode = {
         type: "mdxJsxFlowElement",
@@ -219,23 +250,27 @@ export function fixfootnotes() {
   return transformer
 }
 
-export function fiximages(options) {
-  async function transformer(ast) {
-    const promises = []
-    visit(ast, "paragraph", visitor)
+export function fiximages(options: { url: string }) {
+  async function transformer(tree: Node) {
+    const promises: Promise<unknown>[] = []
+    visit(tree, "paragraph", visitor)
     await Promise.all(promises)
 
-    function visitor(parent) {
+    function visitor(parent: OurNode) {
+      assert(parent.children)
       if (parent.children.length < 1 || parent.children[0].type !== "image") {
         return
       }
-      const node = parent.children[0]
+      const node = parent.children[0] as OurNode & { alt: unknown }
+      assert(node.url)
       const url = node.url.startsWith("~") ? path.join(options.url, node.url.replace("~", "")) : node.url
       if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("//")) {
         return
       }
       const promise = sizeOf(path.join("public", url))
         .then((dimensions) => {
+          assert(dimensions)
+          assert(parent.children)
           const newNode = {
             type: "mdxJsxFlowElement",
             name: "Image",

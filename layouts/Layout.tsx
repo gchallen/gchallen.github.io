@@ -92,13 +92,14 @@ const Wrapper: React.FC<
       publishedAt: string
       reading: { text: string }
       isEssay: boolean
+      draft?: boolean
       noDate?: boolean
       noTitle?: boolean
       technical?: boolean
     }
   }
 > = ({ frontmatter, children }) => {
-  const { title, description, technical, publishedAt, reading, noDate, noTitle, isEssay } = frontmatter
+  const { title, description, technical, publishedAt, reading, noDate, noTitle, isEssay, draft } = frontmatter
   const actualTitle = `Geoffrey Challen : ${title}`
   return (
     <>
@@ -122,7 +123,7 @@ const Wrapper: React.FC<
             </div>
             {!noDate && (
               <div id="publishedAt">
-                <strong>{publishedAt || "Draft"}</strong>
+                <strong>{!draft ? publishedAt : "Draft"}</strong>
                 <br />
                 <em>{reading.text}</em>
               </div>

@@ -16,7 +16,7 @@ import remarkMath from "remark-math"
 import smartypants from "remark-smartypants"
 import replaceExt from "replace-ext"
 import slugify from "slugify"
-import { comments, fixfootnotes, fiximages, headings, highlighter, links, pullquotes } from "./plugins.mjs"
+import { comments, fixfootnotes, fiximages, headings, highlighter, links, pullquotes } from "./plugins"
 
 const parser = new ArgumentParser()
 parser.add_argument("input")
@@ -33,14 +33,10 @@ async function update(source: string) {
 
   if (source.startsWith("mdx/essays/")) {
     data.isEssay = true
-    if (data.published || process.env.NEXT_PUBLIC_SHOW_DRAFTS) {
-      const prefix = data.published ? `${moment(data.published).utc().format("YYYY-MM-DD")}-` : ""
-      const postfix = !data.published ? "-draft" : ""
-      const name = `${prefix}${slugify(data.title, { lower: true })}${postfix}.jsx`
-      pagePath = path.join("pages/essays", name)
-    } else {
-      return
-    }
+    const prefix = data.published ? `${moment(data.published).utc().format("YYYY-MM-DD")}-` : ""
+    const postfix = data.draft ? "-draft" : ""
+    const name = `${prefix}${slugify(data.title, { lower: true })}${postfix}.jsx`
+    pagePath = path.join("pages/essays", name)
   } else {
     pagePath = replaceExt(path.join("pages", path.relative(args.input, source)), ".jsx")
   }
