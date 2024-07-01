@@ -2,6 +2,7 @@ import type { PyodideInterface, loadPyodide } from "pyodide"
 import {
   LoadPyodideRequest,
   LoadPyodideResponse,
+  RunPythonOptions,
   RunPythonRequest,
   RunPythonResponse,
   StartRunResponse,
@@ -65,7 +66,7 @@ const startPyodide = async (): Promise<PyodideInterface> => {
         console.debug(`Pyodide loaded (+${Date.now() - start}ms)`)
 
         // Warm
-        await checkCode(`print("Hello, world!")`, pyodide)
+        await checkCode(`print("Hello, world!")`, {}, pyodide)
         await runCode(`print("Hello, world!")`, pyodide)
 
         console.debug(`Pyodide warmed (+${Date.now() - start}ms)`)
@@ -84,7 +85,11 @@ function clearStdout() {
   lineCount = 0
 }
 
-async function checkCode(code: string, pyodide: PyodideInterface): Promise<RunPythonResponse | undefined> {
+async function checkCode(
+  code: string,
+  options: RunPythonOptions,
+  pyodide: PyodideInterface,
+): Promise<RunPythonResponse | undefined> {
   const encodedCode = btoa(code)
   const errorCount = await pyodide.runPythonAsync(`
 import pycodestyle
@@ -101,8 +106,9 @@ count_errors
 
   clearStdout()
 
-  pyodide.FS.writeFile("/snippet.py", code, { encoding: "utf-8" })
-  const mypyResult = await pyodide.runPythonAsync(`
+  if (!options.noMyPy) {
+    pyodide.FS.writeFile("/snippet.py", code, { encoding: "utf-8" })
+    const mypyResult = await pyodide.runPythonAsync(`
 import sys
 from mypy import api
 
@@ -114,9 +120,10 @@ if result[1]:
 result[2]
 `)
 
-  if (mypyResult != 0) {
-    const error = stdout.join("\n").replaceAll("/snippet.py:", "Line ")
-    return RunPythonResponse.check({ type: "runresponse", error })
+    if (mypyResult != 0) {
+      const error = stdout.join("\n").replaceAll("/snippet.py:", "Line ")
+      return RunPythonResponse.check({ type: "runresponse", error })
+    }
   }
 
   return
@@ -162,7 +169,7 @@ addEventListener(
 
     const request = RunPythonRequest.check(event.data)
 
-    const checkResponse = await checkCode(request.code, pyodide!)
+    const checkResponse = await checkCode(request.code, request.options ?? {}, pyodide!)
     if (checkResponse) {
       replyPort.postMessage(checkResponse)
     }

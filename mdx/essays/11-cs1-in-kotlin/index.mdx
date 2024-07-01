@@ -202,7 +202,7 @@ The result is a lot of hand-waving and under-rug-brushing that leaves students w
 
 Both Python and Kotlin do much better:
 
-```python
+```python noMyPy
 # Python
 print("Hello, world!")
 ```
@@ -238,7 +238,7 @@ System.out.println(y);
 
 Python is cleaner, but at the cost of no type checking:
 
-```python
+```python noMyPy
 # Python
 x = 0
 y = "test"
@@ -332,7 +332,7 @@ println(s === m)
 
 Python also seems to work properly in this regard:
 
-```python
+```python noMyPy
 s = "test"
 m = "test"
 print(s == m)
@@ -385,7 +385,7 @@ But when _teaching_ CS1 it's extremely _common_ to want to create list literals,
 
 In contrast, Python gets this right—no imports, bracket notation:
 
-```python
+```python noMyPy
 # Python
 list = ["test", "me"]
 list[0] = "another"
@@ -427,7 +427,7 @@ System.out.println(s.length()); // ...fire!
 Python isn't much better.
 `null` by any other name is still `null`:
 
-```python
+```python noMyPy
 # Python
 s = None
 print(s.length)
@@ -499,7 +499,7 @@ person.setAge(person.getAge() + 1);
 
 Python is a bit better, and even more so you use recent support for data classes:
 
-```python
+```python noMyPy
 from dataclasses import dataclass
 
 class Person:
@@ -568,7 +568,7 @@ public class Main {
 
 Python allows you to work from the ground up, seamlessly:
 
-```python
+```python noMyPy
 # Python
 # Simplest possible statement
 print(1 + 2)

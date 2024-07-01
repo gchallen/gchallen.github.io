@@ -2,6 +2,7 @@ import { createContext, PropsWithChildren, useCallback, useContext, useEffect, u
 import {
   LoadPyodideRequest,
   LoadPyodideResponse,
+  RunPythonOptions,
   RunPythonRequest,
   RunPythonResponse,
   StartRunResponse,
@@ -9,7 +10,7 @@ import {
 
 export interface RunPythonContext {
   available: boolean
-  run: (code: string) => Promise<string>
+  run: (code: string, options?: RunPythonOptions) => Promise<string>
   load: () => Promise<boolean>
 }
 export const RunPythonContext = createContext<RunPythonContext>({
@@ -30,7 +31,7 @@ export const RunPythonProvider: React.FC<PropsWithChildren> = ({ children }) => 
   const previouslyStarted = useRef(false)
   const [restartWorker, setRestartWorker] = useState(false)
 
-  const run = useCallback(async (code: string) => {
+  const run = useCallback(async (code: string, options?: RunPythonOptions) => {
     if (!workerRef.current) {
       return Promise.reject(`Python worker not ready`)
     }
@@ -62,7 +63,7 @@ export const RunPythonProvider: React.FC<PropsWithChildren> = ({ children }) => 
         }
       }
 
-      workerRef.current!.postMessage(RunPythonRequest.check({ type: "run", code }), [channel.port2])
+      workerRef.current!.postMessage(RunPythonRequest.check({ type: "run", code, options }), [channel.port2])
       timer = setTimeout(() => {
         workerRef.current?.terminate()
         setRestartWorker((r) => !r)

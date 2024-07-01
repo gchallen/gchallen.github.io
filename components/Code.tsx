@@ -11,6 +11,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useInView } from "react-hook-inview"
 import { FaPlayCircle, FaTimes } from "react-icons/fa"
 import styled from "styled-components"
+import { RunPythonOptions } from "../types/runpython"
 import { useRunPython } from "./RunPython"
 
 const Ace = dynamic(() => import("react-ace"), { ssr: false })
@@ -140,7 +141,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
   const runWithJeed =
     ["java", "kotlin"].includes(mode) && (!meta || (!meta.includes("norun") && !meta.includes("slow")))
   const runWithPython = ["python"].includes(mode)
-  const runWithPlayground = ["python"].includes(mode) || (["java"].includes(mode) && meta && meta.includes("slow"))
+  const runWithPlayground = ["java"].includes(mode) && meta && meta.includes("slow")
 
   let snippet = meta === undefined || !meta.includes("source")
 
@@ -278,7 +279,10 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         showedLoading ? 0 : RUNNING_DELAY,
       )
 
-      const result = await runPython(content)
+      const options = RunPythonOptions.check({
+        noMyPy: meta?.includes("noMyPy"),
+      })
+      const result = await runPython(content, options)
       setOutputOpen(true)
       setPythonOutput({ result })
     } catch (error: any) {
@@ -291,10 +295,10 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
       setLoading(false)
       setRunning(false)
     }
-  }, [runPython, loadPyodide])
+  }, [runPython, loadPyodide, meta])
 
   const output = useMemo(() => {
-    if (loading) {
+    if (runWithPython && loading) {
       return { output: "Loading Pyodide..." }
     } else if (running) {
       return { output: "Running..." }
@@ -307,9 +311,11 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
           ? { output: response?.error, level: "error" }
           : undefined
     } else if (runWithPython) {
-      return pythonOutput?.error
-        ? { output: pythonOutput?.error, level: "error" }
-        : { output: pythonOutput?.result || "" }
+      let pythonConsoleOutput = pythonOutput?.result || ""
+      if (pythonConsoleOutput.trim() === "") {
+        pythonConsoleOutput = "(No output)"
+      }
+      return pythonOutput?.error ? { output: pythonOutput?.error, level: "error" } : { output: pythonConsoleOutput }
     } else if (runWithPlayground) {
       return result?.error
         ? { output: result?.error, level: "error" }
@@ -378,7 +384,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
           setState("loaded")
         }}
       />
-      {(runWithJeed || runWithPlayground) && (
+      {(runWithJeed || runWithPlayground || runWithPython) && (
         <div style={{ position: "absolute", bottom: 0, right: 0 }}>
           <RunButton
             size={32}
