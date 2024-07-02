@@ -96,34 +96,30 @@ const SubscribeButton: React.FC<PropsWithChildren & { center?: boolean; hideAfte
   return (
     <div
       style={{
-        maxHeight: actuallyShow ? 128 : 0,
         opacity: actuallyShow ? 1 : 0,
-        marginBottom: actuallyShow ? "1em" : 0,
       }}
       className={`subscribe${hideAfterSubscribe ? " hideAfterSubscribe" : ""}${center ? " center" : ""}`}
     >
-      {actuallyShow && (
-        <>
-          {children}
-          <form className={`subscribe${center ? " center" : ""}`} onSubmit={onSubmit}>
-            <input
-              className="email"
-              type="text"
-              value={email}
-              onChange={onChange}
-              name="email"
-              placeholder="your@email.com"
-              disabled={session?.user?.email ? true : showSuccess}
-            />
-            <input className="submit" type="submit" value="Subscribe" disabled={!enabled} />
-            <FaCheckCircle
-              className="success"
-              size={"1.4em"}
-              style={{ display: "block", opacity: showSuccess ? 1 : 0 }}
-            />
-          </form>
-        </>
-      )}
+      <>
+        {children}
+        <form className={`subscribe${center ? " center" : ""}`} onSubmit={onSubmit}>
+          <input
+            className="email"
+            type="text"
+            value={email}
+            onChange={onChange}
+            name="email"
+            placeholder="your@email.com"
+            disabled={session?.user?.email ? true : showSuccess}
+          />
+          <input className="submit" type="submit" value="Subscribe" disabled={!enabled} />
+          <FaCheckCircle
+            className="success"
+            size={"1.4em"}
+            style={{ display: "block", opacity: showSuccess ? 1 : 0 }}
+          />
+        </form>
+      </>
     </div>
   )
 }

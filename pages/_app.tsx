@@ -16,7 +16,9 @@ import { Analytics } from "@vercel/analytics/react"
 import RunPythonProvider from "../components/RunPython"
 import { SubscribeButtonContextProvider } from "../components/SubscribeButton"
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp(props: AppProps) {
+  const { Component, pageProps } = props
+
   const router = useRouter()
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events])
 
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider>
       <SubscribeButtonContextProvider>
         <NewWindowLoginProvider>
           <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}>

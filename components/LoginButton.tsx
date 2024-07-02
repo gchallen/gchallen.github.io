@@ -77,7 +77,7 @@ export const useNewWindowLogin = () => useContext(NewWindowLoginContext)
 const LoginButton: React.FC<{ icon?: boolean; text?: boolean }> = ({ icon = false, text = false }) => {
   const { session, login, logout, busy } = useNewWindowLogin()
   return (
-    <>
+    <div className="loginButton">
       {!session && (
         <>
           {text ? (
@@ -100,7 +100,7 @@ const LoginButton: React.FC<{ icon?: boolean; text?: boolean }> = ({ icon = fals
           )}
         </>
       )}
-    </>
+    </div>
   )
 }
 export default LoginButton

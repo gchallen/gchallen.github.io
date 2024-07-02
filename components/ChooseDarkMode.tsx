@@ -48,32 +48,15 @@ export const useDarkMode = (): DarkModeContext => {
 const ChooseDarkMode: React.FC<{ text?: boolean }> = ({ text }) => {
   const { darkMode, setDarkMode } = useDarkMode()
   const [mounted, setMounted] = useState(false)
-
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  if (!text) {
-    if (mounted && darkMode) {
-      return <FaSun onClick={() => setDarkMode(false)} style={{ verticalAlign: "middle" }} />
-    } else {
-      return (
-        <FaMoon
-          onClick={() => setDarkMode(true)}
-          style={{ verticalAlign: "middle", visibility: mounted ? "visible" : "hidden" }}
-        />
-      )
-    }
-  } else {
-    if (mounted && darkMode) {
-      return <span onClick={() => setDarkMode(false)}>Light Mode</span>
-    } else {
-      return (
-        <span onClick={() => setDarkMode(true)} style={{ visibility: mounted ? "visible" : "hidden" }}>
-          Dark Mode
-        </span>
-      )
-    }
-  }
+  return (
+    <div className="chooseDarkMode" onClick={() => setDarkMode(!darkMode)}>
+      <div className="choseLight">{text ? <span>Light Mode</span> : <FaSun style={{ verticalAlign: "middle" }} />}</div>
+      <div className="choseDark">{text ? <span>Dark Mode</span> : <FaMoon style={{ verticalAlign: "middle" }} />}</div>
+    </div>
+  )
 }
 export default ChooseDarkMode

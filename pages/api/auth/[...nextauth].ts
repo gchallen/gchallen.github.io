@@ -1,4 +1,4 @@
-import NextAuth, { Session } from "next-auth"
+import NextAuth, { AuthOptions, Session } from "next-auth"
 import { JWT } from "next-auth/jwt"
 import GoogleProvider from "next-auth/providers/google"
 
@@ -47,7 +47,7 @@ async function refreshAccessToken(token: JWT) {
     }
   }
 }
-export default NextAuth({
+export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -80,4 +80,6 @@ export default NextAuth({
       return session
     },
   },
-})
+}
+
+export default NextAuth(authOptions)

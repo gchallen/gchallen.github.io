@@ -420,6 +420,7 @@ div.subscribe {
     margin-left: auto;
     margin-right: auto;
   }
+  margin-bottom: 1rem;
 }
 a.anchorTarget {
   display: block;
@@ -521,4 +522,33 @@ li > p {
 }
 code {
   font-size: 1em;
+}
+div.chooseDarkMode {
+  margin: 0 !important;
+  cursor: pointer;
+  .choseLight {
+    margin: 0;
+    display: block;
+    .dark-mode & {
+      display: none;
+    }
+  }
+  .choseDark {
+    margin: 0;
+    display: none;
+    .dark-mode & {
+      display: block;
+    }
+  }
+  span {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+div.loginButton {
+  a,
+  span {
+    cursor: pointer;
+  }
 }
