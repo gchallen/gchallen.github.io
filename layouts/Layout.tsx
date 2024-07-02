@@ -143,12 +143,12 @@ const Wrapper: React.FC<
       </main>
       {isEssay && (
         <div id="thanks" className="responsive">
+          <p className="thanks">
+            Thanks for reading! I&apos;d love to hear your take. Feel free to{" "}
+            <a href="mailto:geoffrey.challen@gmail.com">get in touch</a> if you have questions or comments.
+          </p>
           <SubscribeButton hideAfterSubscribe>
-            <p>
-              Thanks for reading! I&apos;d love to hear your take. Feel free to{" "}
-              <a href="mailto:geoffrey.challen@gmail.com">get in touch.</a> Subscribe below to be notified when I post
-              new essays.
-            </p>
+            <span>Subscribe here to be notified when I post new essays:</span>
           </SubscribeButton>
         </div>
       )}
