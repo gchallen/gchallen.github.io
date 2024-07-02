@@ -2,7 +2,7 @@ import { Cross as Hamburger } from "hamburger-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import React, { PropsWithChildren, useState } from "react"
+import React, { Dispatch, PropsWithChildren, SetStateAction, createContext, useContext, useState } from "react"
 import Sidebar from "react-sidebar"
 import ChooseDarkMode from "../components/ChooseDarkMode"
 import LoginButton from "./LoginButton"
@@ -85,8 +85,29 @@ const SidebarContent: React.FC<{ setOpen: (open: boolean) => void }> = ({ setOpe
   )
 }
 
+interface HeaderContext {
+  available: boolean
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+}
+const HeaderContext = createContext<HeaderContext>({
+  available: false,
+  open: false,
+  setOpen: () => {
+    throw "HeaderContext not available"
+  },
+})
+
+export const HeaderContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
+  const [open, setOpen] = useState(false)
+
+  return <HeaderContext.Provider value={{ available: true, open, setOpen }}>{children}</HeaderContext.Provider>
+}
+
+export const useHeaderContext = () => useContext(HeaderContext)
+
 const Header: React.FC = () => {
-  const [isOpen, setOpen] = useState(false)
+  const { open, setOpen } = useHeaderContext()
 
   return (
     <>
@@ -103,7 +124,7 @@ const Header: React.FC = () => {
           },
         }}
         sidebar={<SidebarContent setOpen={setOpen} />}
-        open={isOpen}
+        open={open}
         onSetOpen={setOpen}
       >
         <div></div>
@@ -151,7 +172,7 @@ const Header: React.FC = () => {
           </div>
           <div className="hamburger" style={{ justifyContent: "flex-end", alignItems: "center", paddingRight: 8 }}>
             <div style={{ zIndex: 1000 }}>
-              <Hamburger toggled={isOpen} toggle={setOpen} label={"Open menu"} />
+              <Hamburger toggled={open} toggle={setOpen} label={"Open menu"} />
             </div>
           </div>
         </div>

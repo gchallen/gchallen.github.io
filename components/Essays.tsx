@@ -80,9 +80,10 @@ const Essays: React.FC<{
               </p>
             </>
           )}
-          {showSubscribe && (
-            <SubscribeButton hideAfterSubscribe>Want to know when I post new essays? Subscribe here:</SubscribeButton>
-          )}
+          {drafts && drafts.length > 0 && <>{h1 ? <h2>Published</h2> : <h3>Published</h3>}</>}
+          {latestEssays.map((essay, i) => (
+            <Summary key={i} essay={essay} />
+          ))}
           {drafts && drafts.length > 0 && session?.user?.email === "geoffrey.challen@gmail.com" && (
             <>
               {h1 ? <h2>Drafts</h2> : <h3>Drafts</h3>}
@@ -91,10 +92,6 @@ const Essays: React.FC<{
               ))}
             </>
           )}
-          {drafts && drafts.length > 0 && <>{h1 ? <h2>Published</h2> : <h3>Published</h3>}</>}
-          {latestEssays.map((essay, i) => (
-            <Summary key={i} essay={essay} />
-          ))}
           {random && (
             <>
               {h1 ? <h2>Random Selection</h2> : <h3>Random Selection</h3>}
@@ -106,6 +103,9 @@ const Essays: React.FC<{
             <p>
               For more essays, click <Link href="/essays/">here</Link>.
             </p>
+          )}
+          {showSubscribe && (
+            <SubscribeButton hideAfterSubscribe>Want to know when I post new essays? Subscribe here:</SubscribeButton>
           )}
         </>
       )}

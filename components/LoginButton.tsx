@@ -2,6 +2,7 @@ import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from "react"
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa"
+import { useHeaderContext } from "./Header"
 
 export interface NewWindowLoginContext {
   busy: boolean
@@ -76,14 +77,24 @@ export const useNewWindowLogin = () => useContext(NewWindowLoginContext)
 
 const LoginButton: React.FC<{ icon?: boolean; text?: boolean }> = ({ icon = false, text = false }) => {
   const { session, login, logout, busy } = useNewWindowLogin()
+  const { setOpen } = useHeaderContext()
+
+  const loginOrOut = useCallback(
+    (doLogin: boolean) => {
+      doLogin ? login() : logout()
+      setOpen(false)
+    },
+    [login, logout, setOpen],
+  )
+
   return (
     <div className="loginButton">
       {!session && (
         <>
           {text ? (
-            <a onClick={login}>Login</a>
+            <a onClick={() => loginOrOut(true)}>Login</a>
           ) : (
-            <button disabled={busy} onClick={login}>
+            <button disabled={busy} onClick={() => loginOrOut(true)}>
               {icon ? <FaSignInAlt /> : <span>Login</span>}
             </button>
           )}
@@ -92,9 +103,9 @@ const LoginButton: React.FC<{ icon?: boolean; text?: boolean }> = ({ icon = fals
       {session && (
         <>
           {text ? (
-            <a onClick={logout}>Logout</a>
+            <a onClick={() => loginOrOut(false)}>Logout</a>
           ) : (
-            <button disabled={busy} onClick={logout}>
+            <button disabled={busy} onClick={() => loginOrOut(false)}>
               {icon ? <FaSignOutAlt /> : <span>Logout</span>}
             </button>
           )}

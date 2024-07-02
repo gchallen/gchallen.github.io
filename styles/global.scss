@@ -384,7 +384,9 @@ form.subscribe {
     color: #555555;
     background-color: #fdfdfd;
     border: 1px solid #555555;
+    cursor: pointer;
     &:disabled {
+      color: #aaaaaa;
       border: 1px solid #aaaaaa;
     }
     .dark-mode & {
@@ -392,6 +394,7 @@ form.subscribe {
       background-color: #333333;
       border: 1px solid #cccccc;
       &:disabled {
+        color: #555555;
         border: 1px solid #555555;
       }
     }
@@ -420,7 +423,9 @@ div.subscribe {
     margin-left: auto;
     margin-right: auto;
   }
-  margin-bottom: 1rem;
+  .subscribed & {
+    display: none;
+  }
 }
 a.anchorTarget {
   display: block;
@@ -550,5 +555,17 @@ div.loginButton {
   a,
   span {
     cursor: pointer;
+  }
+}
+#thanks {
+  border-top: 4px solid #eeeeee;
+  .dark-mode & {
+    border-top: 4px solid #888888;
+  }
+  margin-top: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  .thanks {
+    font-size: 0.9rem;
   }
 }

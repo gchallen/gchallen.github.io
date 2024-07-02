@@ -14,14 +14,11 @@ const SubscribeButtonContext = createContext<SubscribeButtonContext>({
 })
 
 export const SubscribeButtonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(true)
 
   useEffect(() => {
     fetch("https://lists.geoffreychallen.com/publisher/")
       .then((res) => res.json())
-      .then(() => {
-        setShow(!localStorage.getItem("subscribed"))
-      })
       .catch(() => setShow(false))
   }, [])
 
@@ -96,7 +93,8 @@ const SubscribeButton: React.FC<PropsWithChildren & { center?: boolean; hideAfte
   return (
     <div
       style={{
-        opacity: actuallyShow ? 1 : 0,
+        maxHeight: actuallyShow ? 256 : 0,
+        marginBottom: actuallyShow ? "1rem" : 0,
       }}
       className={`subscribe${hideAfterSubscribe ? " hideAfterSubscribe" : ""}${center ? " center" : ""}`}
     >

@@ -9,6 +9,7 @@ import Code from "../components/Code"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import YouTube from "../components/YouTube"
+import SubscribeButton from "../components/SubscribeButton"
 
 const Footnote: React.FC<PropsWithChildren & { counter: string }> = ({ counter, children }) => {
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip(
@@ -141,12 +142,14 @@ const Wrapper: React.FC<
         {children}
       </main>
       {isEssay && (
-        <div className="thanks">
-          Thanks for reading!
-          <br />
-          I&apos;d love to know what you think.
-          <br />
-          Feel free to <a href="mailto:geoffrey.challen@gmail.com">get in touch.</a>
+        <div id="thanks" className="responsive">
+          <SubscribeButton hideAfterSubscribe>
+            <p>
+              Thanks for reading! I&apos;d love to hear your take. Feel free to{" "}
+              <a href="mailto:geoffrey.challen@gmail.com">get in touch.</a> Subscribe below to be notified when I post
+              new essays.
+            </p>
+          </SubscribeButton>
         </div>
       )}
       <Footer />

@@ -1,5 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react"
 import { FaMoon, FaSun } from "react-icons/fa"
+import { useHeaderContext } from "./Header"
 
 export interface DarkModeContext {
   darkMode: boolean
@@ -47,13 +48,16 @@ export const useDarkMode = (): DarkModeContext => {
 
 const ChooseDarkMode: React.FC<{ text?: boolean }> = ({ text }) => {
   const { darkMode, setDarkMode } = useDarkMode()
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const { setOpen } = useHeaderContext()
 
   return (
-    <div className="chooseDarkMode" onClick={() => setDarkMode(!darkMode)}>
+    <div
+      className="chooseDarkMode"
+      onClick={() => {
+        setDarkMode(!darkMode)
+        setOpen(false)
+      }}
+    >
       <div className="choseLight">{text ? <span>Light Mode</span> : <FaSun style={{ verticalAlign: "middle" }} />}</div>
       <div className="choseDark">{text ? <span>Dark Mode</span> : <FaMoon style={{ verticalAlign: "middle" }} />}</div>
     </div>
