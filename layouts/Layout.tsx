@@ -143,7 +143,7 @@ const Wrapper: React.FC<
       </main>
       {isEssay && (
         <div id="thanks" className="responsive">
-          <p className="thanks">
+          <p className="thanks small">
             Thanks for reading! I&apos;d love to hear your take. Feel free to{" "}
             <a href="mailto:geoffrey.challen@gmail.com">get in touch</a> if you have questions or comments.
           </p>

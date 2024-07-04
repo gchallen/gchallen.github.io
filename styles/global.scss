@@ -6,10 +6,11 @@ $minTextWidth: 480;
 $maxTextWidth: math.div($minTextWidth, $minFontSize) * $maxFontSize;
 
 .responsive {
-  font-size: calc(
+  $base: calc(
     #{$minFontSize}px + (max(min(100vw, #{$maxTextWidth}px), #{$minTextWidth}px) - #{$minTextWidth}px) /
       (#{$maxTextWidth - $minTextWidth}) * (#{$maxFontSize - $minFontSize})
   );
+  font-size: $base;
   h1,
   .h1 {
     font-size: 2em;
@@ -24,6 +25,9 @@ $maxTextWidth: math.div($minTextWidth, $minFontSize) * $maxFontSize;
   }
   @media print {
     font-size: 16px;
+  }
+  .small {
+    font-size: calc(0.8 * $base);
   }
 }
 
