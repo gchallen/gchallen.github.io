@@ -169,7 +169,7 @@ const modes: { [key: string]: any } = {
   sh: Sh,
 }
 
-export function highlight(content: string, opts: any) {
+function highlight(content: string, opts: any) {
   const Mode = opts.mode ? modes[opts.mode as string] : undefined
   if (opts.mode && opts.mode !== "text" && !Mode) {
     throw Error(`Unloaded mode: ${opts.mode}`)

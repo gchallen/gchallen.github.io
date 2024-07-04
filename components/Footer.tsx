@@ -1,6 +1,5 @@
 import Link from "next/link"
 import LoginButton from "./LoginButton"
-import SubscribeButton from "./SubscribeButton"
 
 const Footer: React.FC = () => {
   return (

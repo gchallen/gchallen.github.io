@@ -8,8 +8,8 @@ import "react-popper-tooltip/dist/styles.css"
 import Code from "../components/Code"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
-import YouTube from "../components/YouTube"
 import SubscribeButton from "../components/SubscribeButton"
+import YouTube from "../components/YouTube"
 
 const Footnote: React.FC<PropsWithChildren & { counter: string }> = ({ counter, children }) => {
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip(
