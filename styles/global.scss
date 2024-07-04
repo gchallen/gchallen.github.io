@@ -5,11 +5,12 @@ $maxFontSize: 24;
 $minTextWidth: 480;
 $maxTextWidth: math.div($minTextWidth, $minFontSize) * $maxFontSize;
 
+$base: calc(
+  #{$minFontSize}px + (max(min(100vw, #{$maxTextWidth}px), #{$minTextWidth}px) - #{$minTextWidth}px) /
+    (#{$maxTextWidth - $minTextWidth}) * (#{$maxFontSize - $minFontSize})
+);
+
 .responsive {
-  $base: calc(
-    #{$minFontSize}px + (max(min(100vw, #{$maxTextWidth}px), #{$minTextWidth}px) - #{$minTextWidth}px) /
-      (#{$maxTextWidth - $minTextWidth}) * (#{$maxFontSize - $minFontSize})
-  );
   font-size: $base;
   h1,
   .h1 {
@@ -26,8 +27,8 @@ $maxTextWidth: math.div($minTextWidth, $minFontSize) * $maxFontSize;
   @media print {
     font-size: 16px;
   }
-  .small {
-    font-size: calc(0.8 * $base);
+  &.small {
+
   }
 }
 
@@ -164,7 +165,7 @@ span.firstword {
   float: left;
   padding-right: 4px;
   font-size: 3em;
-  line-height: 1;
+  line-height: 0.99;
   margin-right: 4px;
 }
 span.restword {
@@ -562,15 +563,11 @@ div.loginButton {
   }
 }
 #thanks {
+  font-size: calc(0.8 * $base);
   border-top: 4px solid #eeeeee;
   .dark-mode & {
     border-top: 4px solid #888888;
   }
   margin-top: 2rem;
-  padding-top: 2rem;
-  padding-bottom: 1rem;
-  p.thanks {
-    margin-left: 2rem;
-    margin-right: 2rem;
-  }
+  padding: 1rem 2rem;
 }
