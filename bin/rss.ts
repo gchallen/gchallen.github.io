@@ -14,7 +14,7 @@ Promise.resolve().then(async () => {
     ),
   )
   const published = essays
-    .filter((essay) => essay.published)
+    .filter((essay) => essay.published && !essay.draft)
     .map((essay) => {
       return { ...essay, publishedAt: moment(essay.published).utc().format("YYYY-MM-DD") }
     })
