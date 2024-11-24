@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @use "sass:math";
 
 $minFontSize: 16;
@@ -135,18 +137,9 @@ div.pullquote {
   float: right;
   font-size: 1.2em;
   max-width: 40%;
-  @media screen and (max-width: 640px) {
-    max-width: 60%;
-    font-size: 1.1em;
-    font-weight: bold;
-    line-height: 1.2em;
-    margin-left: 0.5em;
-    padding-left: 0.5em;
-    margin-bottom: 0;
-  }
   line-height: 1.2em;
-  padding-left: 0.5em;
   margin-left: 0.5em;
+  padding-left: 0.5em;
   color: #666666;
   border-left: 1px solid #444444;
   .dark-mode & {
@@ -156,6 +149,12 @@ div.pullquote {
   @media print {
     color: #666666 !important;
     border-left: 1px solid #444444 !important;
+  }
+  @media screen and (max-width: 640px) {
+    max-width: 60%;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 0;
   }
 }
 span.firstword {
@@ -186,16 +185,16 @@ sup.footnote {
 .tooltip-container {
   color: #555555 !important;
   background-color: #fefefe !important;
+  font-size: 0.8em;
+  max-width: 20em;
   .dark-mode & {
-    background-color: #333333 !important;
     color: #cccccc !important;
+    background-color: #333333 !important;
   }
   @media print {
     color: #555555 !important;
     background-color: #fefefe !important;
   }
-  font-size: 0.8em;
-  max-width: 20em;
 }
 figure {
   margin-bottom: 1em;
@@ -339,9 +338,6 @@ header {
   }
   .links {
     display: flex;
-    @media screen and (max-width: 960px) {
-      display: none;
-    }
     margin-top: -2em;
     font-size: 1.1em;
     font-family: "Georgia", serif;
@@ -350,6 +346,9 @@ header {
     padding-right: 0.5em;
     div {
       margin-right: 0.7em;
+    }
+    @media screen and (max-width: 960px) {
+      display: none;
     }
   }
   @media print {
@@ -463,24 +462,24 @@ div.opening {
   margin-bottom: 16px;
   padding: 16px;
   font-size: 0.9em;
-  background-color: lighten(lightGreen, 10%);
+  background-color: color.adjust(lightGreen, $lightness: 10%, $space: hsl);
   .dark-mode & {
-    background-color: darken(darkGreen, 5%);
+    background-color: color.adjust(darkGreen, $lightness: -5%, $space: hsl);
   }
 }
 div.note {
   background-color: #eeeeee;
-  .dark-mode & {
-    background-color: #444444;
-  }
-  @media print {
-    background-color: #eeeeee !important;
-  }
   padding-top: 16px;
   padding-left: 24px;
   padding-right: 24px;
   p:last-of-type {
     padding-bottom: 16px;
+  }
+  .dark-mode & {
+    background-color: #444444;
+  }
+  @media print {
+    background-color: #eeeeee !important;
   }
 }
 @page {

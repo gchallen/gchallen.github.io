@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const config = {
+  sassOptions: {
+    silenceDeprecations: ['legacy-js-api'],
+  },
   experimental: {
     scrollRestoration: true,
   },
