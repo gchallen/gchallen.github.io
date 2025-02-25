@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "geoffreychallen.com",
-  "version": "2024.11.0",
+  "version": "2025.2.0",
   "type": "module",
   "scripts": {
     "prebuild": "tsx bin/build.ts mdx output --build --clean && tsx bin/rss.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
