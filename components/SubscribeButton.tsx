@@ -38,7 +38,7 @@ const SubscribeButton: React.FC<PropsWithChildren & { center?: boolean; hideAfte
   const submitEmail = useRef<string>("")
   const [enabled, setEnabled] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
-  const timer = useRef<ReturnType<typeof setTimeout>>()
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { show } = useSubscribeButtonContext()
   const [hide, setHide] = useState(false)
 

@@ -174,7 +174,10 @@ function highlight(content: string, opts: any) {
   if (opts.mode && opts.mode !== "text" && !Mode) {
     throw Error(`Unloaded mode: ${opts.mode}`)
   }
-  const { html, css } = aceHighlighter.renderSync(content, Mode && new Mode(), {})
+  const { html, css } = aceHighlighter.renderSync(content, Mode && new Mode(), {}, 1, false) as {
+    html: string
+    css: string
+  }
   return { html, css }
 }
 

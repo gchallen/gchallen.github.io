@@ -2,7 +2,7 @@
 
 const config = {
   sassOptions: {
-    silenceDeprecations: ['legacy-js-api'],
+    silenceDeprecations: ["legacy-js-api"],
   },
   experimental: {
     scrollRestoration: true,

@@ -107,7 +107,7 @@ count_errors
   clearStdout()
 
   if (!options.noMyPy) {
-    pyodide.FS.writeFile("/snippet.py", code, { encoding: "utf-8" })
+    pyodide.FS.writeFile("/snippet.py", code)
     const mypyResult = await pyodide.runPythonAsync(`
 import sys
 from mypy import api

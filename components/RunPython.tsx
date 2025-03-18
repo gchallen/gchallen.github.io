@@ -26,7 +26,7 @@ export const RunPythonContext = createContext<RunPythonContext>({
 const BIG_TIMEOUT = process.env.NODE_ENV === "development" ? 10 : 60
 
 export const RunPythonProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const workerRef = useRef<Worker>()
+  const workerRef = useRef<Worker | null>(null)
 
   const previouslyStarted = useRef(false)
   const [restartWorker, setRestartWorker] = useState(false)

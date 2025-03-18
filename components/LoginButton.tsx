@@ -25,8 +25,8 @@ const NewWindowLoginContext = createContext<NewWindowLoginContext>({
 export const NewWindowLoginProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const { data, status } = useSession()
   const [busy, setBusy] = useState(false)
-  const opened = useRef<Window | null>()
-  const timer = useRef<ReturnType<typeof setInterval>>()
+  const opened = useRef<Window | null>(null)
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     const listener = (e: MessageEvent) => {

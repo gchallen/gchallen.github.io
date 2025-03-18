@@ -100,14 +100,14 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
   const [blank, setBlank] = useState(false)
   const [running, setRunning] = useState(false)
   const [loading, setLoading] = useState(false)
-  const runningTimer = useRef<ReturnType<typeof setTimeout>>()
-  const loadingTimer = useRef<ReturnType<typeof setTimeout>>()
+  const runningTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const loadingTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [outputOpen, setOutputOpen] = useState(false)
 
   const [height, setHeight] = useState(0)
   const [state, setState] = useState<"static" | "loading" | "loaded">("static")
   const ref = useRef<HTMLDivElement>(null)
-  const editor = useRef<AceType.Editor>()
+  const editor = useRef<AceType.Editor | null>(null)
 
   const onEnter = useCallback(async () => {
     setState("loading")
