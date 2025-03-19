@@ -1,10 +1,10 @@
 {
   "private": true,
   "name": "geoffreychallen.com",
-  "version": "2025.3.0",
+  "version": "2025.3.1",
   "type": "module",
   "scripts": {
-    "prebuild": "tsx bin/build.ts mdx output --build --clean && tsx bin/rss.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
+    "prebuild": "tsx bin/build.ts mdx output --build --clean && tsx bin/rss.ts && tsx bin/pyodide.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
     "build": "next build",
     "checker": "npm run depcheck && npm run prettier && npm run eslint && npm run tsc",
     "depcheck": "depcheck --ignores=node-fetch,@types/*,prettier-plugin-*,pyodide,unist,mdast",
