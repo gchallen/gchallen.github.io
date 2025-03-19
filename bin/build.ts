@@ -122,7 +122,9 @@ async function rm(source: string) {
 
 async function clean() {
   await emptyDir(args.output)
-  await exec("git clean pages -fX")
+  try {
+    await exec("git clean pages -fX")
+  } catch (err) {}
 }
 
 Promise.resolve().then(async () => {

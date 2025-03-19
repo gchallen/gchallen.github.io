@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const config = {
+  output: "standalone",
   sassOptions: {
     silenceDeprecations: ["legacy-js-api"],
   },
