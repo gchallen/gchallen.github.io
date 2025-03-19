@@ -197,7 +197,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         const response = await runJeed(request, true)
         setResponse({ response })
       } catch (error: any) {
-        setResponse({ error })
+        setResponse({ error: error.toString() })
       } finally {
         runningTimer.current && clearTimeout(runningTimer.current)
         setBlank(false)
