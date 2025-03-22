@@ -12,7 +12,6 @@ import { NewWindowLoginProvider } from "../components/LoginButton"
 import { DarkModeProvider } from "../components/ChooseDarkMode"
 import { JeedProvider } from "@cs124/jeed-react"
 import { PlaygroundProvider } from "@cs124/playground-react"
-import { Analytics } from "@vercel/analytics/react"
 import RunPythonProvider from "../components/RunPython"
 import { SubscribeButtonContextProvider } from "../components/SubscribeButton"
 import { HeaderContextProvider } from "../components/Header"
@@ -57,7 +56,6 @@ export default function MyApp(props: AppProps) {
                       </Head>
                       <Component {...pageProps} />
                     </RunPythonProvider>
-                    <Analytics />
                   </PlaygroundProvider>
                 </JeedProvider>
               </DarkModeProvider>

@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "geoffreychallen.com",
-  "version": "2025.3.1",
+  "version": "2025.3.2",
   "type": "module",
   "scripts": {
     "prebuild": "tsx bin/build.ts mdx output --build --clean && tsx bin/rss.ts && tsx bin/pyodide.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
@@ -35,7 +35,6 @@
     "@cs124/jeed-types": "2025.3.0",
     "@cs124/playground-react": "2023.1.0",
     "@cs124/playground-types": "2023.1.0",
-    "@vercel/analytics": "1.5.0",
     "ace-builds": "1.39.0",
     "capitalize": "2.0.4",
     "color": "5.0.0",
