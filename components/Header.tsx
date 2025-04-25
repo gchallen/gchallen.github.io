@@ -186,9 +186,11 @@ const Header: React.FC = () => {
           <div>
             <Link href="/about/">About</Link>
           </div>
-          <div>
-            <Link href="/opening/">Recruiting</Link>
-          </div>
+          {process.env.NEXT_PUBLIC_SHOW_OPENING && (
+            <div>
+              <Link href="/opening/">Recruiting</Link>
+            </div>
+          )}
           <div>
             <Link href="/CV/">CV</Link>
           </div>

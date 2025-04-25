@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
         <Link href="mailto:geoffrey.challen@gmail.com">Contact</Link>
       </div>
       <div>
-        <Link href="/opening">Recruiting</Link>
+        {process.env.NEXT_PUBLIC_SHOW_OPENING && <Link href="/opening">Recruiting</Link>}
         <Link href="/promotion">Promotional Materials</Link>
         <LoginButton text />
       </div>

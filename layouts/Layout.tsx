@@ -131,7 +131,7 @@ const Wrapper: React.FC<
             )}
           </div>
         )}
-        {isEssay && (
+        {isEssay && process.env.NEXT_PUBLIC_SHOW_OPENING && (
           <div className="opening">
             I&apos;m recruiting a Ph.D. student.{" "}
             <a href="/opening" target="_blank">

@@ -42,9 +42,11 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           <div>
             <Link href="/CV">CV</Link>
           </div>
-          <div>
-            <Link href="/opening">Recruiting</Link>
-          </div>
+          {process.env.NEXT_PUBLIC_SHOW_OPENING && (
+            <div>
+              <Link href="/opening">Recruiting</Link>
+            </div>
+          )}
           <div>
             <ChooseDarkMode />
           </div>
