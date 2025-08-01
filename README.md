@@ -20,7 +20,7 @@ This is a Next.js-based academic website with a custom MDX content management sy
 ## Prerequisites
 
 - Node.js 22.15.0
-- Yarn 1.22.22
+- npm (comes with Node.js)
 - Docker (for containerization)
 - kubectl (for Kubernetes deployment)
 
@@ -34,7 +34,7 @@ cd geoffreychallen.com
 
 2. Install dependencies:
 ```bash
-yarn install
+npm install
 ```
 
 3. Set up environment variables:
@@ -52,7 +52,7 @@ RECAPTCHA_KEY=your_recaptcha_key
 
 Start the development server:
 ```bash
-yarn start
+npm start
 ```
 
 This runs both the MDX processing pipeline and Next.js dev server with Turbopack.
@@ -61,7 +61,7 @@ This runs both the MDX processing pipeline and Next.js dev server with Turbopack
 
 Build for production:
 ```bash
-yarn build
+npm run build
 ```
 
 This will:
@@ -73,15 +73,15 @@ This will:
 
 Run all checks:
 ```bash
-yarn checker
+npm run checker
 ```
 
 Individual checks:
 ```bash
-yarn prettier   # Format code
-yarn eslint     # Lint code
-yarn tsc        # TypeScript checking
-yarn depcheck   # Check dependencies
+npm run prettier   # Format code
+npm run eslint     # Lint code
+npm run tsc        # TypeScript checking
+npm run depcheck   # Check dependencies
 ```
 
 ## Content Management
@@ -121,25 +121,25 @@ public class Hello {
 
 Build and push Docker image:
 ```bash
-yarn publish:latest
+npm run publish:latest
 ```
 
 ### Kubernetes
 
 Deploy to production:
 ```bash
-yarn deploy:prod
+npm run deploy:prod
 ```
 
 Deploy to development:
 ```bash
-yarn deploy:dev
+npm run deploy:dev
 ```
 
 Monitor logs:
 ```bash
-yarn k8s:logs      # Production logs
-yarn k8s:devLogs   # Development logs
+npm run k8s:logs      # Production logs
+npm run k8s:devLogs   # Development logs
 ```
 
 ## Project Structure

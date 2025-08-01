@@ -10,31 +10,31 @@ Personal academic website for Geoffrey Challen built with Next.js, featuring a c
 
 ### Core Development
 ```bash
-yarn start          # Run dev server with MDX processing and Turbopack
-yarn build          # Full production build (MDX → Next.js → static)
-yarn checker        # Run all checks: depcheck, prettier, eslint, tsc
+npm start           # Run dev server with MDX processing and Turbopack
+npm run build       # Full production build (MDX → Next.js → static)
+npm run checker     # Run all checks: depcheck, prettier, eslint, tsc
 ```
 
 ### Build Pipeline Steps
 ```bash
-yarn build:mdx      # Process MDX files to React components
-yarn build:rss      # Generate RSS/Atom feeds
-yarn build:static   # Build static Next.js site
+npm run build:mdx   # Process MDX files to React components
+npm run build:rss   # Generate RSS/Atom feeds
+npm run build:static # Build static Next.js site
 ```
 
 ### Code Quality
 ```bash
-yarn depcheck       # Check for unused dependencies
-yarn prettier       # Format code
-yarn eslint         # Lint code
-yarn tsc            # TypeScript type checking
+npm run depcheck    # Check for unused dependencies
+npm run prettier    # Format code
+npm run eslint      # Lint code
+npm run tsc         # TypeScript type checking
 ```
 
 ### Deployment
 ```bash
-yarn publish:latest # Build and push Docker image (multi-arch)
-yarn deploy:prod    # Deploy to production Kubernetes
-yarn deploy:dev     # Deploy to development Kubernetes
+npm run publish:latest # Build and push Docker image (multi-arch)
+npm run deploy:prod    # Deploy to production Kubernetes
+npm run deploy:dev     # Deploy to development Kubernetes
 ```
 
 ## Architecture Overview
