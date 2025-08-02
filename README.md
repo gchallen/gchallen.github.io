@@ -27,18 +27,21 @@ This is a Next.js-based academic website with a custom MDX content management sy
 ## Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/gchallen/geoffreychallen.com.git
 cd geoffreychallen.com
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up environment variables:
-Create a `.env.local` file with the following variables:
+   Create a `.env.local` file with the following variables:
+
 ```
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
@@ -51,6 +54,7 @@ RECAPTCHA_KEY=your_recaptcha_key
 ## Development
 
 Start the development server:
+
 ```bash
 npm start
 ```
@@ -60,11 +64,13 @@ This runs both the MDX processing pipeline and Next.js dev server with Turbopack
 ## Building
 
 Build for production:
+
 ```bash
 npm run build
 ```
 
 This will:
+
 1. Process MDX files into React components
 2. Generate RSS/Atom feeds
 3. Build the Next.js static site
@@ -72,11 +78,13 @@ This will:
 ## Code Quality
 
 Run all checks:
+
 ```bash
 npm run checker
 ```
 
 Individual checks:
+
 ```bash
 npm run prettier   # Format code
 npm run eslint     # Lint code
@@ -89,6 +97,7 @@ npm run depcheck   # Check dependencies
 ### Writing Content
 
 1. Blog posts go in `/mdx/essays/` with frontmatter:
+
 ```mdx
 ---
 title: "Your Post Title"
@@ -120,6 +129,7 @@ public class Hello {
 ### Docker
 
 Build and push Docker image:
+
 ```bash
 npm run publish:latest
 ```
@@ -127,16 +137,19 @@ npm run publish:latest
 ### Kubernetes
 
 Deploy to production:
+
 ```bash
 npm run deploy:prod
 ```
 
 Deploy to development:
+
 ```bash
 npm run deploy:dev
 ```
 
 Monitor logs:
+
 ```bash
 npm run k8s:logs      # Production logs
 npm run k8s:devLogs   # Development logs

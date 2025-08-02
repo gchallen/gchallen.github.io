@@ -6,8 +6,8 @@
   "scripts": {
     "prebuild": "tsx bin/build.ts mdx output --build --clean && tsx bin/rss.ts && tsx bin/pyodide.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
     "build": "next build",
-    "checker": "npm run depcheck && npm run prettier && npm run eslint && npm run tsc",
-    "depcheck": "depcheck --ignores=node-fetch,@types/*,prettier-plugin-*,pyodide,unist,mdast",
+    "check": "npm run depcheck && npm run prettier && npm run eslint && npm run tsc",
+    "depcheck": "depcheck --ignores=node-fetch,@types/*,prettier-plugin-*,pyodide,unist,mdast,@eslint/js,eslint-config-next",
     "docker:build": "docker build --build-arg VERSION=$npm_package_version --build-arg GIT_COMMIT=$(git show --no-patch --format=%h) --build-arg BUILD_DATE=`date -u +\"%Y-%m-%dT%H:%M:%SZ\"` . -t geoffreychallen/www:latest && npm run docker:tag",
     "docker:push": "docker buildx build . --platform=linux/amd64,linux/arm64/v8 --builder multiplatform --tag geoffreychallen/www:latest --tag geoffreychallen/www:$npm_package_version --push",
     "docker:tag": "docker tag geoffreychallen/www:latest geoffreychallen/www:$npm_package_version",
@@ -57,6 +57,8 @@
     "styled-components": "6.1.19"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "3.3.1",
+    "@eslint/js": "9.32.0",
     "@mdx-js/mdx": "3.1.0",
     "@types/argparse": "2.0.17",
     "@types/capitalize": "2.0.2",
@@ -74,7 +76,7 @@
     "child-process-promise": "2.2.1",
     "chokidar": "4.0.3",
     "depcheck": "1.4.7",
-    "eslint": "8.57.0",
+    "eslint": "9.32.0",
     "eslint-config-next": "15.4.5",
     "feed": "5.1.0",
     "fs-extra": "11.3.0",
