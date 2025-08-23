@@ -34,6 +34,14 @@ faiss_index/
 *.pkl
 *.index
 
+# Test vector databases (in tests/ directory)
+tests/*vector_db/
+tests/*.pkl
+tests/*.index
+
+# Generated HTML files (from MDX build process)
+html/
+
 # Logs
 *.log
 logs/
