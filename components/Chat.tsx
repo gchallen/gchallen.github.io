@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 import { RAG_CONFIG } from "../lib/ragConfig"
 import { useRagServer } from "../hooks/useRagServer"
+import ReactMarkdown from "react-markdown"
 
 interface ChatMessage {
   role: "user" | "assistant"
@@ -72,7 +73,11 @@ const MessageBubble: React.FC<{
     >
       <div className="messageContent">
         <div className="messageText">
-          {message.content}
+          {isUser ? (
+            message.content
+          ) : (
+            <ReactMarkdown>{message.content}</ReactMarkdown>
+          )}
         </div>
         <div className="messageTime">
           {new Date(message.timestamp).toLocaleTimeString()}
@@ -81,36 +86,25 @@ const MessageBubble: React.FC<{
       
       {!isUser && message.sources && message.sources.length > 0 && (
         <div className="sources">
-          <div className="sourcesHeader">
-            <span>📚 Sources ({message.sources.length})</span>
-          </div>
-          <div className="sourcesList">
-            {message.sources.map((source, index) => (
-              <div key={index} className="source">
-                <div className="sourceHeader">
-                  <a 
-                    href={createTextFragmentUrl(source.url, source.content_preview)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="sourceTitle"
-                  >
-                    {source.title}
-                  </a>
-                  {source.similarity_score && (
-                    <span className="similarityScore">
-                      {Math.round(source.similarity_score * 100)}% match
-                    </span>
-                  )}
-                </div>
-                <div className="sourceUrl">
-                  {source.url}
-                </div>
-                <div className="sourcePreview">
-                  {source.content_preview}
-                </div>
-              </div>
-            ))}
-          </div>
+          <span className="sourcesHeader">Sources: </span>
+          {message.sources.map((source, index) => (
+            <span key={index} className="source">
+              {index + 1}){"\u00A0"}<a 
+                href={createTextFragmentUrl(source.url, source.content_preview)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sourceLink"
+              >
+                {source.title}
+              </a>
+              {source.similarity_score && (
+                <span className="similarityScore">
+                  {" "}({Math.round(source.similarity_score * 100)}%)
+                </span>
+              )}
+              {index < message.sources.length - 1 && ", "}
+            </span>
+          ))}
         </div>
       )}
     </div>
@@ -372,7 +366,6 @@ export default function Chat() {
         {/* Show suggestions below input when chat hasn't started */}
         {!hasStartedChat && (
           <div className="suggestionsSection">
-            <p className="suggestionsLabel">Here are some ideas:</p>
             <div className="suggestions">
               <button onClick={() => sendMessage("What's your approach to teaching introductory programming?")}>
                 What's your approach to teaching introductory programming?
