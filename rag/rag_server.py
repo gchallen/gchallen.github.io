@@ -9,6 +9,7 @@ Provides two main endpoints:
 """
 
 import os
+import logging
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 
@@ -243,6 +244,22 @@ async def conversational_rag(request: ChatRequest):
         # Retrieve relevant documents with adaptive filtering
         retrieved_docs = vector_loader.search(search_query, k=5, use_adaptive_threshold=True)
         
+        # Check if any relevant documents were found
+        if not retrieved_docs:
+            # No relevant documents found - refuse to answer
+            refusal_response = "I don't have enough relevant information in my knowledge base to answer that question confidently. Could you try asking about something more specific related to my teaching, research, or work at the University of Illinois?"
+            
+            # Still add to memory for conversation continuity
+            memory.chat_memory.add_user_message(request.message)
+            memory.chat_memory.add_ai_message(refusal_response)
+            
+            return ChatResponse(
+                response=refusal_response,
+                session_id=request.session_id,
+                timestamp=datetime.now().isoformat(),
+                sources=[]
+            )
+        
         # Build context from retrieved documents
         context_parts = []
         for doc in retrieved_docs:
@@ -251,9 +268,9 @@ async def conversational_rag(request: ChatRequest):
         
         # Create the prompt template
         prompt = ChatPromptTemplate.from_messages([
-            ("system", """You are Geoffrey Challen, a Teaching Professor at the University of Illinois. You're answering questions about your work, teaching, and thoughts based on your website content.
+            ("system", """You are Geoffrey Challen, a Teaching Professor at the University of Illinois. You're answering questions about your work, teaching, and thoughts based ONLY on your website content provided below.
 
-Use the following context from your website to answer the question. If the context doesn't contain relevant information, say so honestly. Always maintain your authentic voice and perspective.
+IMPORTANT: Only use information from the context provided. Do not add information from your general knowledge or make assumptions beyond what's in the context. If the context doesn't fully answer the question, acknowledge the limitations.
 
 Be conversational and engaging, as if you're speaking directly to the person asking. Reference specific details from the context when relevant, and feel free to connect ideas across different parts of your work.
 
@@ -297,6 +314,7 @@ Context from your website:
                 "url": doc["citation_url"],
                 "title": title,
                 "content_preview": doc["content"][:200] + "..." if len(doc["content"]) > 200 else doc["content"],
+                "content_full": doc["content"],  # Full content for text fragments
                 "similarity_score": doc.get("score", 0.0)  # Include similarity score for debugging
             })
         
