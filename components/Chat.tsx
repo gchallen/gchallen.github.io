@@ -11,6 +11,7 @@ interface ChatMessage {
     url: string
     title: string
     content_preview: string
+    content_full?: string
     similarity_score?: number
   }>
 }
@@ -19,6 +20,7 @@ interface Source {
   url: string
   title: string
   content_preview: string
+  content_full?: string
   similarity_score?: number
 }
 
@@ -90,7 +92,7 @@ const MessageBubble: React.FC<{
           {message.sources.map((source, index) => (
             <span key={index} className="source">
               {index + 1}){"\u00A0"}<a 
-                href={createTextFragmentUrl(source.url, source.content_preview)}
+                href={createTextFragmentUrl(source.url, source.content_full || source.content_preview)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="sourceLink"
@@ -115,7 +117,7 @@ const TypingIndicator: React.FC = () => (
   <div className="message assistantMessage">
     <div className="messageContent">
       <div className="typingIndicator">
-        <span>Geoffrey is thinking</span>
+        <span>Geoffbot is thinking</span>
         <div className="typingDots">
           <span></span>
           <span></span>
@@ -240,6 +242,18 @@ export default function Chat() {
     } catch (err) {
       console.error("Chat error:", err)
       
+      // Handle AbortError specifically (timeout or manual abort)
+      if (err instanceof Error && err.name === 'AbortError') {
+        setError("Request timed out. Please try again.")
+        const errorMessage: ChatMessage = {
+          role: "assistant",
+          content: "I'm sorry, that request took too long to process. Please try asking your question again.",
+          timestamp: new Date().toISOString(),
+        }
+        setMessages(prev => [...prev, errorMessage])
+        return
+      }
+      
       // Check if it's a connection error (RAG server not running)
       const isConnectionError = err instanceof TypeError || 
         (err instanceof Error && err.message.includes("fetch"))
@@ -281,19 +295,22 @@ export default function Chat() {
     inputRef.current?.focus()
   }
   
+  // If server is offline, show only the offline message
+  if (isConnected === false) {
+    return (
+      <div className="chatContainer">
+        <div className="serverOffline">
+          Server Offline. Please try again later.
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="chatContainer">
       {/* Show warnings and welcome message only before chat starts */}
       {!hasStartedChat && (
         <>
-          {isConnected === false && (
-            <div className="statusBanner">
-              <span className="statusIndicator">🔴</span>
-              <strong>Server Offline:</strong> The RAG server at {serverUrl} is not responding. 
-              Please start it with 'npm run rag:run' or check your network connection.
-            </div>
-          )}
-          
           {error && (
             <div className="errorBanner">
               <strong>Error:</strong> {error}
@@ -301,7 +318,7 @@ export default function Chat() {
           )}
           
           <div className="disclaimer">
-            You're chatting with an AI assistant powered by Geoffrey's writings and website content. This is not a direct conversation with Geoffrey himself.
+            You're chatting with Geoffbot, an AI assistant powered by Geoffrey's writings and website content. This is not a direct conversation with Geoffrey himself.
           </div>
         </>
       )}
@@ -337,7 +354,7 @@ export default function Chat() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder={hasStartedChat ? "Reply to Geoffrey..." : "Ask me anything about teaching, computer science, or my work..."}
+            placeholder={hasStartedChat ? "Reply to Geoffbot..." : "Ask me anything about teaching, computer science, or my work..."}
             className="input"
             rows={2}
             disabled={isLoading}
@@ -367,18 +384,36 @@ export default function Chat() {
         {!hasStartedChat && (
           <div className="suggestionsSection">
             <div className="suggestions">
-              <button onClick={() => sendMessage("What's your approach to teaching introductory programming?")}>
-                What's your approach to teaching introductory programming?
-              </button>
-              <button onClick={() => sendMessage("Tell me about your work with online education.")}>
-                Tell me about your work with online education.
-              </button>
-              <button onClick={() => sendMessage("What do you think about the future of computer science education?")}>
-                What do you think about the future of CS education?
-              </button>
-              <button onClick={() => sendMessage("How do you make large courses more effective?")}>
-                How do you make large courses more effective?
-              </button>
+              <div>
+                <button onClick={() => sendMessage("What's your approach to teaching introductory programming?")}>
+                  What's your approach to teaching introductory programming?
+                </button>
+              </div>
+              <div>
+                <button onClick={() => sendMessage("Tell me about your work with online education.")}>
+                  Tell me about your work with online education.
+                </button>
+              </div>
+              <div>
+                <button onClick={() => sendMessage("What do you think about the future of computer science education?")}>
+                  What do you think about the future of CS education?
+                </button>
+              </div>
+              <div>
+                <button onClick={() => sendMessage("How do you make large courses more effective?")}>
+                  How do you make large courses more effective?
+                </button>
+              </div>
+              <div>
+                <button onClick={() => sendMessage("What was your name before you got married?")}>
+                  What was your name before you got married?
+                </button>
+              </div>
+              <div>
+                <button onClick={() => sendMessage("What kind of music do you like?")}>
+                  What kind of music do you like?
+                </button>
+              </div>
             </div>
           </div>
         )}

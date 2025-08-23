@@ -590,6 +590,21 @@ div.loginButton {
   }
 }
 
+.serverOffline {
+  margin: 0 0 1rem 0;
+  padding: 1rem;
+  background-color: #f8d7da;
+  border-radius: 8px;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  font-size: 0.9em;
+  .dark-mode & {
+    background-color: #422026;
+    border-color: #66353f;
+    color: #f5c6cb;
+  }
+}
+
 .messagesArea {
   max-width: 800px;
   margin: 0 auto;
