@@ -87,6 +87,37 @@ python run_server.py
 python run_server.py --production
 ```
 
+### Docker Deployment
+
+```bash
+# Build the RAG server container
+npm run rag:build
+
+# Run with Docker Compose (production)
+npm run rag:run
+
+# Run in development mode with hot reload
+npm run rag:dev
+
+# Stop the service
+npm run rag:stop
+```
+
+#### Manual Docker Commands
+
+```bash
+# Build the image
+docker build -t rag-server .
+
+# Run the container
+docker run -p 8000:8000 \
+  -e AZURE_OPENAI_CHAT_ENDPOINT="your_endpoint" \
+  -e AZURE_OPENAI_CHAT_API_KEY="your_key" \
+  -e AZURE_OPENAI_EMBEDDINGS_ENDPOINT="your_endpoint" \
+  -e AZURE_OPENAI_EMBEDDINGS_API_KEY="your_key" \
+  rag-server
+```
+
 ### API Endpoints
 
 #### Semantic Search
