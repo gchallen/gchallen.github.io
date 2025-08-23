@@ -42,6 +42,7 @@ tests/*.index
 
 # Test vector databases (in rag/ directory)
 *_vector_db/
+vector_db_test/
 
 # Generated HTML files (from MDX build process)
 html/
