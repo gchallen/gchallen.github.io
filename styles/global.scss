@@ -567,3 +567,150 @@ div.loginButton {
   margin-top: 2rem;
   padding: 1rem 2rem;
 }
+
+/* Chat component styles */
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+.disclaimer {
+  margin: 0 0 1rem 0;
+  padding: 1rem;
+  background-color: #fff9c4;
+  border-radius: 8px;
+  border: 1px solid #f5d700;
+  color: inherit;
+  font-size: 0.9em;
+  .dark-mode & {
+    background-color: #3d3d1a;
+    border-color: #666633;
+  }
+}
+
+.messagesArea {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.staticInput {
+  position: static;
+  box-shadow: none;
+}
+
+.fixedInput {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.inputContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  background-color: #fdfdfd;
+  .dark-mode & {
+    background-color: #333333;
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.buttonColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input {
+  flex: 1;
+  min-height: 50px;
+  padding-left: 1rem;
+  background: transparent;
+  color: inherit;
+}
+
+.suggestionsSection {
+  margin-top: 1.5rem;
+}
+
+.suggestions button {
+  font-size: 0.8em;
+  margin-bottom: 0.5rem;
+  background: transparent;
+  color: inherit;
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.sendButton {
+  background: #e6f7e6;
+  color: inherit;
+  opacity: 0.9;
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  .dark-mode & {
+    background: #2d4a2d;
+  }
+}
+
+.clearButton {
+  background: #f0f0f0;
+  color: inherit;
+  opacity: 0.9;
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  .dark-mode & {
+    background: #4a4a4a;
+  }
+}
+
+/* Message styles */
+.message {
+  margin-bottom: 0;
+}
+
+.userMessage {
+  .messageContent {
+    background: #f0f0f0;
+    padding: 1rem 1rem 0.25rem 1rem;
+    border-radius: 12px;
+    .dark-mode & {
+      background: #4a4a4a;
+    }
+  }
+  
+  .messageTime {
+    font-size: 0.8em;
+    text-align: right;
+    margin-top: 0;
+    opacity: 0.7;
+  }
+}
+
+.assistantMessage {
+  .messageContent {
+    padding: 1rem 0 0.25rem 0;
+  }
+  
+  .messageTime {
+    font-size: 0.8em;
+    text-align: right;
+    margin-top: 0;
+    opacity: 0.7;
+  }
+}
