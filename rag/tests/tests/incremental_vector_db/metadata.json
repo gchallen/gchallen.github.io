@@ -1,0 +1,68 @@
+[
+  {
+    "source": "../html/bio.html",
+    "chunk_id": 0,
+    "length": 527,
+    "content_hash": "6e09d2384f5844cd0a53d3f6e3c17b42d62ac60d2f141b19411359e63ca4756c",
+    "title": "",
+    "source_file": "../html/bio.html",
+    "citation_url": "/bio",
+    "page_title": "Professional Bio",
+    "page_description": ""
+  },
+  {
+    "source": "../html/about.html",
+    "chunk_id": 1,
+    "length": 1886,
+    "content_hash": "2fcc2613e0d7ae3b6d66c212ce6510bf659704a7340b5d7badaad8a7fc06923f",
+    "title": "",
+    "source_file": "../html/about.html",
+    "citation_url": "/about",
+    "page_title": "About Me",
+    "page_description": ""
+  },
+  {
+    "source": "../html/about.html",
+    "chunk_id": 2,
+    "length": 1989,
+    "content_hash": "38c48d0dcfcfdb86e3e6a4c69b0daec795b164c94c7eba453b3b681e0082bfbe",
+    "title": "",
+    "source_file": "../html/about.html",
+    "citation_url": "/about",
+    "page_title": "About Me",
+    "page_description": ""
+  },
+  {
+    "source": "../html/about.html",
+    "chunk_id": 3,
+    "length": 1930,
+    "content_hash": "73ba719be1549b6677d022f5f385dbc4499758fa89cd7883102b78580c300bfe",
+    "title": "",
+    "source_file": "../html/about.html",
+    "citation_url": "/about",
+    "page_title": "About Me",
+    "page_description": ""
+  },
+  {
+    "source": "../html/about.html",
+    "chunk_id": 4,
+    "length": 1578,
+    "content_hash": "c0475d0c48d23076195711bed258b09b201ab156980586749a6ca0d5d81448b1",
+    "title": "",
+    "source_file": "../html/about.html",
+    "citation_url": "/about",
+    "page_title": "About Me",
+    "page_description": ""
+  },
+  {
+    "source": "../html/promotion.html",
+    "chunk_id": 5,
+    "length": 1363,
+    "content_hash": "b28b57d088d71c5d0015c4a6e00e32b1564dc404f9f7104ecb1632b36597d9ef",
+    "title": "",
+    "source_file": "../html/promotion.html",
+    "citation_url": "/promotion",
+    "page_title": "Promotional Materials",
+    "page_description": ""
+  }
+]

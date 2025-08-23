@@ -1,0 +1,52 @@
+[
+  {
+    "source": "../html/bio.html",
+    "chunk_id": 0,
+    "length": 527,
+    "title": "",
+    "source_file": "../html/bio.html",
+    "citation_url": "/bio",
+    "page_title": "Professional Bio",
+    "page_description": ""
+  },
+  {
+    "source": "../html/about.html",
+    "chunk_id": 1,
+    "length": 1886,
+    "title": "",
+    "source_file": "../html/about.html",
+    "citation_url": "/about",
+    "page_title": "About Me",
+    "page_description": ""
+  },
+  {
+    "source": "../html/about.html",
+    "chunk_id": 2,
+    "length": 1989,
+    "title": "",
+    "source_file": "../html/about.html",
+    "citation_url": "/about",
+    "page_title": "About Me",
+    "page_description": ""
+  },
+  {
+    "source": "../html/about.html",
+    "chunk_id": 3,
+    "length": 1930,
+    "title": "",
+    "source_file": "../html/about.html",
+    "citation_url": "/about",
+    "page_title": "About Me",
+    "page_description": ""
+  },
+  {
+    "source": "../html/about.html",
+    "chunk_id": 4,
+    "length": 1578,
+    "title": "",
+    "source_file": "../html/about.html",
+    "citation_url": "/about",
+    "page_title": "About Me",
+    "page_description": ""
+  }
+]
