@@ -73,6 +73,53 @@ python vector_db_loader.py "machine learning"
 python vector_db_loader.py "student engagement" custom_vector_db
 ```
 
+## RAG Server
+
+The system includes a FastAPI server providing semantic search and conversational AI endpoints.
+
+### Running the Server
+
+```bash
+# Development mode (localhost:8000)
+python run_server.py
+
+# Production mode (0.0.0.0:8000)
+python run_server.py --production
+```
+
+### API Endpoints
+
+#### Semantic Search
+```bash
+curl -X POST "http://localhost:8000/search" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "teaching programming", "k": 5}'
+```
+
+#### Conversational Chat
+```bash
+curl -X POST "http://localhost:8000/chat" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "What do you think about lecturing?", "session_id": "user123"}'
+```
+
+#### Session Management
+```bash
+# Get conversation history
+curl "http://localhost:8000/sessions/user123/history"
+
+# Clear conversation history
+curl -X DELETE "http://localhost:8000/sessions/user123"
+```
+
+### Server Features
+
+- **Semantic Search**: Vector similarity search over website content
+- **Conversational RAG**: Chat with memory and context awareness
+- **Session Management**: Per-user conversation histories
+- **Citation Support**: All responses include source references
+- **CORS Enabled**: Ready for web frontend integration
+
 ## Testing
 
 ### Quick Testing (Recommended)
@@ -135,7 +182,10 @@ rag/
 ├── citation_utils.py      # Citation extraction utilities
 ├── vector_db_builder.py   # Production database builder
 ├── vector_db_loader.py    # Production database loader
+├── rag_server.py          # FastAPI server with RAG endpoints
+├── run_server.py          # Server launcher script
 ├── vector_db/             # Production vector database (created by builder)
+├── html/                  # Generated HTML files (created by build)
 ├── tests/                 # Test files and test databases
 │   ├── test_endpoints.py           # Test Azure OpenAI endpoints
 │   ├── test_document_processing.py # Test HTML loading/splitting
@@ -143,6 +193,7 @@ rag/
 │   ├── test_incremental_embeddings.py # Test incremental updates
 │   ├── test_minimal_embeddings.py  # Test minimal pipeline
 │   ├── test_citations.py           # Test citation extraction
+│   ├── test_rag_server.py          # Test RAG server endpoints
 │   ├── run_fast_tests.py           # Optimized test runner
 │   └── *vector_db/                 # Test vector databases (git ignored)
 └── venv/                  # Python virtual environment (not in git)
@@ -201,11 +252,17 @@ The incremental approach means only changed content gets reprocessed, making CI/
 5. **✅ Incremental Updates**: Only reprocess changed content using content hashing
 6. **✅ Citation Support**: Every chunk maintains reference to source page with relative URLs
 
+### ✅ **Recently Implemented**
+
+7. **✅ RAG Server**: FastAPI server with semantic search and conversational endpoints
+8. **✅ Memory Management**: Session-based conversation history with LangChain
+9. **✅ Context-Aware Queries**: Intelligent query reformulation using conversation history
+
 ### 🚧 **Next Steps**
 
-1. **RAG Chain**: Combine retrieval with LLM generation
-2. **API Integration**: Create endpoints for the website to use
-3. **Production Deployment**: Integrate with existing build pipeline
+1. **Frontend Integration**: Create web UI to interact with RAG endpoints
+2. **Production Deployment**: Deploy RAG server alongside main website
+3. **Advanced Features**: Multi-step retrieval, query expansion, response ranking
 
 ## Citation Support
 
