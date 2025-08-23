@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+tests/
+pyproject.toml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+
+# Test databases and temporary files (but keep production vector_db/)
+*_vector_db/
+vector_db_test/
+tests/*vector_db/
+tests/*.pkl
+tests/*.index
+test_*vector_db/
+*.tmp
+*.temp
+
+# Logs
+*.log
+logs/
+
+# macOS
+.DS_Store
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Generated HTML files are copied during build
+# html/

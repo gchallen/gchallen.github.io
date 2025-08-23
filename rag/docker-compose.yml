@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  rag-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      # Azure OpenAI credentials (set these in .env file or environment)
+      - AZURE_OPENAI_CHAT_ENDPOINT=${AZURE_OPENAI_CHAT_ENDPOINT}
+      - AZURE_OPENAI_CHAT_API_KEY=${AZURE_OPENAI_CHAT_API_KEY}
+      - AZURE_OPENAI_EMBEDDINGS_ENDPOINT=${AZURE_OPENAI_EMBEDDINGS_ENDPOINT}
+      - AZURE_OPENAI_EMBEDDINGS_API_KEY=${AZURE_OPENAI_EMBEDDINGS_API_KEY}
+      # Optional overrides
+      - VECTOR_DB_PATH=${VECTOR_DB_PATH:-vector_db}
+    volumes:
+      # Mount .env file if it exists for local development
+      - ./.env:/app/.env:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Optional: Development service with hot reload
+  rag-server-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      - PORT=8000
+      - AZURE_OPENAI_CHAT_ENDPOINT=${AZURE_OPENAI_CHAT_ENDPOINT}
+      - AZURE_OPENAI_CHAT_API_KEY=${AZURE_OPENAI_CHAT_API_KEY}
+      - AZURE_OPENAI_EMBEDDINGS_ENDPOINT=${AZURE_OPENAI_EMBEDDINGS_ENDPOINT}
+      - AZURE_OPENAI_EMBEDDINGS_API_KEY=${AZURE_OPENAI_EMBEDDINGS_API_KEY}
+    volumes:
+      # Mount source code for development (excludes vector_db and html for hot reload)
+      - .:/app
+      - /app/vector_db
+      - /app/html
+    command: ["python", "run_server.py"]
+    profiles: ["dev"]
