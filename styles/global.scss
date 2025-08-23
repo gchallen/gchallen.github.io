@@ -642,6 +642,7 @@ div.loginButton {
   padding-left: 1rem;
   background: transparent;
   color: inherit;
+  resize: none;
 }
 
 .suggestionsSection {
@@ -707,10 +708,87 @@ div.loginButton {
     padding: 1rem 0 0.25rem 0;
   }
   
+  .messageText {
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
   .messageTime {
     font-size: 0.8em;
     text-align: right;
     margin-top: 0;
     opacity: 0.7;
   }
+}
+
+/* Typing indicator animation */
+.typingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.typingDots {
+  display: flex;
+  gap: 0.25rem;
+  
+  span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+    opacity: 0.4;
+    animation: typing 1.4s infinite ease-in-out;
+    
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+    
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@keyframes typing {
+  0%, 80%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Sources styling */
+.sources {
+  font-size: 0.8rem;
+  margin-top: 1rem;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+.sourcesHeader {
+  font-weight: bold;
+}
+
+.sourceLink {
+  color: inherit;
+  text-decoration: underline;
+  
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.similarityScore {
+  opacity: 0.7;
 }
