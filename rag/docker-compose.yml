@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   rag-server:
     build:
@@ -33,7 +31,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8001:8000"
+      - "8000:8000"
     environment:
       - PORT=8000
       - AZURE_OPENAI_CHAT_ENDPOINT=${AZURE_OPENAI_CHAT_ENDPOINT}

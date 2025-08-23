@@ -41,12 +41,11 @@ def main():
     import uvicorn
     
     # Determine host and port
-    host = "127.0.0.1"
+    host = "0.0.0.0"  # Use 0.0.0.0 for Docker container accessibility
     port = 8000
     reload = True
     
     if len(sys.argv) > 1 and sys.argv[1] == "--production":
-        host = "0.0.0.0"
         port = int(os.getenv("PORT", 8000))
         reload = False  # Disable reload in production
         print(f"Production mode: {host}:{port}")
