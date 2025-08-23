@@ -40,6 +40,9 @@ tests/*vector_db/
 tests/*.pkl
 tests/*.index
 
+# Test vector databases (in rag/ directory)
+*_vector_db/
+
 # Generated HTML files (from MDX build process)
 html/
 
