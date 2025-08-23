@@ -29,6 +29,7 @@ htmlcov/
 .env.*.local
 
 # Vector databases
+vector_db/
 chroma_db/
 faiss_index/
 *.pkl
