@@ -87,8 +87,16 @@ class ProductionVectorLoader:
         print(f"   Index vectors: {self.index.ntotal}")
         print(f"   Embedding dimension: {self.index.d}")
         
-    def search(self, query: str, k: int = 5) -> List[Dict[str, Any]]:
-        """Search for similar documents."""
+    def search(self, query: str, k: int = 10, use_adaptive_threshold: bool = True, min_threshold: float = 0.3) -> List[Dict[str, Any]]:
+        """
+        Search for similar documents with adaptive filtering.
+        
+        Args:
+            query: Search query
+            k: Maximum number of results to retrieve (default 10)
+            use_adaptive_threshold: Use adaptive similarity filtering based on best result (default True)
+            min_threshold: Minimum absolute threshold to prevent very low quality results (default 0.3)
+        """
         if self.index is None or self.embeddings_model is None:
             raise ValueError("Database not properly loaded")
             
@@ -96,23 +104,69 @@ class ProductionVectorLoader:
         query_embedding = np.array([self.embeddings_model.embed_query(query)], dtype=np.float32)
         faiss.normalize_L2(query_embedding)
         
-        # Search
-        scores, indices = self.index.search(query_embedding, k)
+        # Search with higher k to allow filtering
+        search_k = min(k * 3, len(self.documents))  # Get more candidates for adaptive filtering
+        scores, indices = self.index.search(query_embedding, search_k)
         
-        # Format results with citation information
-        results = []
+        # Format all candidate results
+        all_results = []
         for score, idx in zip(scores[0], indices[0]):
             if idx < len(self.documents) and idx >= 0:  # Valid index
+                # Apply minimum threshold to prevent very poor matches
+                if score < min_threshold:
+                    continue
+                    
                 result_meta = self.metadata[idx]
-                results.append({
+                
+                # Get proper title with fallback hierarchy
+                page_title = result_meta.get('page_title', '').strip()
+                if not page_title:
+                    # Try to extract from citation_url
+                    citation_url = result_meta.get('citation_url', '')
+                    if citation_url and citation_url != '/':
+                        # Convert URL to readable title
+                        url_parts = citation_url.strip('/').split('/')
+                        page_title = url_parts[-1].replace('-', ' ').title()
+                
+                # Final fallback
+                if not page_title:
+                    page_title = "Website Content"
+                
+                all_results.append({
                     'score': float(score),
                     'content': self.documents[idx],
                     'metadata': result_meta,
                     'citation_url': result_meta.get('citation_url', ''),
-                    'page_title': result_meta.get('page_title', ''),
-                    'citation': f"{result_meta.get('page_title', 'Unknown')} ({result_meta.get('citation_url', 'Unknown URL')})"
+                    'page_title': page_title,
+                    'citation': f"{page_title} ({result_meta.get('citation_url', '/')})"
                 })
-                
+        
+        # Sort by score (higher is better)
+        all_results.sort(key=lambda x: x['score'], reverse=True)
+        
+        if not all_results:
+            return []
+            
+        # Apply adaptive filtering if enabled
+        if use_adaptive_threshold and len(all_results) > 1:
+            best_score = all_results[0]['score']
+            adaptive_threshold = best_score / 2.0  # Use half of the best score
+            
+            # Filter results using adaptive threshold
+            filtered_results = []
+            for result in all_results:
+                if result['score'] >= adaptive_threshold:
+                    filtered_results.append(result)
+                else:
+                    # Stop adding results once we hit the threshold
+                    break
+            
+            # Always include at least the best result, but cap at k results
+            results = filtered_results[:k] if filtered_results else [all_results[0]]
+        else:
+            # No adaptive filtering, just return top k
+            results = all_results[:k]
+        
         return results
     
     def get_stats(self) -> Dict[str, Any]:
@@ -132,10 +186,10 @@ def load_vector_db(db_path: str = "vector_db") -> ProductionVectorLoader:
     """Load production vector database."""
     return ProductionVectorLoader(db_path)
 
-def search_documents(query: str, db_path: str = "vector_db", k: int = 5) -> List[Dict[str, Any]]:
-    """Quick search function."""
+def search_documents(query: str, db_path: str = "vector_db", k: int = 5, use_adaptive_threshold: bool = True) -> List[Dict[str, Any]]:
+    """Quick search function with adaptive filtering."""
     loader = ProductionVectorLoader(db_path)
-    return loader.search(query, k)
+    return loader.search(query, k, use_adaptive_threshold)
 
 
 if __name__ == "__main__":
@@ -152,12 +206,20 @@ if __name__ == "__main__":
     print(f"Searching for: '{query}'")
     
     try:
-        results = search_documents(query, db_path, k=3)
+        results = search_documents(query, db_path, k=3, use_adaptive_threshold=True)
         
-        for i, result in enumerate(results, 1):
-            print(f"\nResult {i} (score: {result['score']:.3f}):")
-            print(f"Citation: {result['citation']}")
-            print(f"Content: {result['content'][:200]}...")
+        if results:
+            best_score = results[0]['score']
+            adaptive_threshold = best_score / 2.0
+            print(f"\n🎯 Adaptive filtering: best score {best_score:.3f}, threshold {adaptive_threshold:.3f}")
+            print(f"📊 Showing {len(results)} relevant results:")
+            
+            for i, result in enumerate(results, 1):
+                print(f"\nResult {i} (score: {result['score']:.3f}):")
+                print(f"Citation: {result['citation']}")
+                print(f"Content: {result['content'][:200]}...")
+        else:
+            print("\n❌ No results found above minimum quality threshold")
             
     except Exception as e:
         print(f"Error: {e}")
