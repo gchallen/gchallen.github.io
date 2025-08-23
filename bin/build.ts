@@ -1,4 +1,4 @@
-import { compile } from "@mdx-js/mdx"
+import { compile, evaluateSync } from "@mdx-js/mdx"
 import { ArgumentParser } from "argparse"
 import { exec } from "child-process-promise"
 import chokidar from "chokidar"
@@ -17,6 +17,9 @@ import smartypants from "remark-smartypants"
 import replaceExt from "replace-ext"
 import slugify from "slugify"
 import { comments, fixfootnotes, fiximages, headings, highlighter, links, pullquotes } from "./plugins"
+import { renderToString } from "react-dom/server"
+import * as runtime from "react/jsx-runtime"
+import { createElement } from "react"
 
 const parser = new ArgumentParser()
 parser.add_argument("input")
@@ -70,6 +73,68 @@ async function update(source: string) {
     })
   ).toString()
 
+  // Generate HTML for RAG
+  try {
+    // Simple fallback components for HTML generation
+    const htmlComponents = {
+      Image: ({ src, alt, width, height, children }: any) => 
+        createElement('figure', null, 
+          createElement('img', { src, alt, width, height, style: { height: 'auto' } }),
+          children && createElement('figcaption', null, children)
+        ),
+      Code: ({ children }: any) => createElement('pre', null, createElement('code', null, children)),
+      YouTube: ({ id }: any) => createElement('div', { className: 'youtube-placeholder' }, `[YouTube Video: ${id}]`),
+      Footnote: ({ counter, children }: any) => createElement('sup', { className: 'footnote' }, `(${counter}: ${children})`),
+      ScreenOnly: ({ children }: any) => createElement('div', { className: 'screenonly' }, children),
+      PrintOnly: ({ children }: any) => createElement('div', { className: 'printonly' }, children),
+      Comment: () => null,
+      a: ({ href, children, ...props }: any) => {
+        if (href === '-') {
+          return createElement('span', null, children)
+        }
+        return createElement('a', { href, ...props }, children)
+      }
+    }
+
+    const mdxModule = evaluateSync(content, {
+      ...runtime as any,
+      remarkPlugins: [
+        remarkGfm,
+        [footnotes as any, { inlineNotes: true }],
+        remarkMath,
+        smartypants,
+      ],
+      rehypePlugins: [rehypeKate],
+    })
+    
+    const htmlContent = renderToString(createElement(mdxModule.default as any, { components: htmlComponents }))
+    
+    // Create HTML file path in rag/html directory
+    const htmlPath = replaceExt(path.resolve("rag/html", path.relative(args.input, source)), ".html")
+    await mkdirs(path.dirname(htmlPath))
+    
+    // Write HTML with metadata
+    const htmlWithMetadata = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="source" content="${source}">
+  <meta name="title" content="${data.title || ''}">
+  <meta name="description" content="${data.description || ''}">
+  <meta name="url" content="${url}">
+  ${data.published ? `<meta name="published" content="${data.published}">` : ''}
+  ${data.draft ? `<meta name="draft" content="true">` : ''}
+</head>
+<body>
+  ${htmlContent}
+</body>
+</html>`
+    
+    await writeFile(htmlPath, htmlWithMetadata)
+  } catch (error) {
+    console.error(`Failed to generate HTML for ${source}:`, error)
+  }
+
   const contentPath = replaceExt(path.resolve(args.output, path.relative(args.input, source)), ".js")
   const dataPath = replaceExt(path.resolve(args.output, path.relative(args.input, source)), ".json")
   const frontmatterString = Object.keys(data)
@@ -115,13 +180,16 @@ async function rm(source: string) {
   const contentPath = replaceExt(path.resolve(args.output, path.relative(args.input, source)), ".js")
   const dataPath = replaceExt(path.resolve(args.output, path.relative(args.input, source)), ".json")
   const pagePath = replaceExt(path.resolve("pages", path.relative(args.input, source)), ".jsx")
+  const htmlPath = replaceExt(path.resolve("rag/html", path.relative(args.input, source)), ".html")
   await remove(contentPath)
   await remove(dataPath)
   await remove(pagePath)
+  await remove(htmlPath)
 }
 
 async function clean() {
   await emptyDir(args.output)
+  await emptyDir("rag/html")
   try {
     await exec("git clean pages -fX")
   } catch (err) {}

@@ -4,6 +4,7 @@
   "version": "2025.8.0",
   "type": "module",
   "scripts": {
+    "build:mdx": "tsx bin/build.ts mdx output --build --clean",
     "prebuild": "tsx bin/build.ts mdx output --build --clean && tsx bin/rss.ts && tsx bin/pyodide.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
     "build": "next build",
     "check": "npm run depcheck && npm run prettier && npm run eslint && npm run tsc",
@@ -68,6 +69,7 @@
     "@types/gtag.js": "0.0.20",
     "@types/node": "24.3.0",
     "@types/react": "19.1.11",
+    "@types/react-dom": "^19.1.7",
     "@types/replace-ext": "2.0.2",
     "@types/string-hash": "1.1.3",
     "@types/styled-components": "5.1.34",
