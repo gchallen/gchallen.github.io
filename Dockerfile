@@ -1,6 +1,6 @@
 # syntax=docker.io/docker/dockerfile:1
 
-FROM node:24.5.0-alpine AS base
+FROM node:24.6.0-alpine AS base
 RUN apk add --no-cache git
 
 # Install dependencies only when needed
@@ -20,7 +20,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build
+RUN npm run build --turbopack
 
 # Production image, copy all the files and run next
 FROM base AS runner
