@@ -40,6 +40,9 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
             <Link href="/about">About</Link>
           </div>
           <div>
+            <Link href="/chat">Chat</Link>
+          </div>
+          <div>
             <Link href="/CV">CV</Link>
           </div>
           {process.env.NEXT_PUBLIC_SHOW_OPENING && (
