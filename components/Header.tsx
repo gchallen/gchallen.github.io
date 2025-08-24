@@ -183,21 +183,19 @@ const Header: React.FC = () => {
         </div>
         <div className="links">
           <div>
-            <Link href="/essays/">Essays</Link>
+            <Link href="/essays">Essays</Link>
           </div>
           <div>
-            <Link href="/projects/">Projects</Link>
+            <Link href="/projects">Projects</Link>
           </div>
           <div>
-            <Link href="/about/">About</Link>
+            <Link href="/about">About</Link>
           </div>
-          {process.env.NEXT_PUBLIC_SHOW_OPENING && (
-            <div>
-              <Link href="/opening/">Recruiting</Link>
-            </div>
-          )}
           <div>
-            <Link href="/CV/">CV</Link>
+            <Link href="/chat">Chat</Link>
+          </div>
+          <div>
+            <Link href="/CV">CV</Link>
           </div>
           <div>
             <ChooseDarkMode />

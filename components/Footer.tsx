@@ -7,6 +7,7 @@ const Footer: React.FC = () => {
       <div>
         <Link href="/">Home</Link>
         <Link href="/about">About</Link>
+        <Link href="/chat">Chat</Link>
         <Link href="/CV">CV</Link>
         <Link href="https://learncs.online" target="_blank">
           <kbd>learncs.online</kbd>
