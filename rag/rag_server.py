@@ -368,4 +368,4 @@ if __name__ == "__main__":
             port = int(os.getenv("PORT", 8000))
     
     print(f"Starting RAG server on {host}:{port}")
-    uvicorn.run(app, host=host, port=port, reload=False)
+    uvicorn.run(app, host=host, port=port, reload=False, access_log=False)

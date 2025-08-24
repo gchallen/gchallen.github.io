@@ -54,7 +54,7 @@ def main():
         print("Add --production flag for production mode")
     
     # Use import string format for reload to work properly
-    uvicorn.run("rag_server:app", host=host, port=port, reload=reload)
+    uvicorn.run("rag_server:app", host=host, port=port, reload=reload, access_log=False)
 
 if __name__ == "__main__":
     main()
