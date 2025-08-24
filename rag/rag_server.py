@@ -19,12 +19,10 @@ from pydantic import BaseModel
 import uvicorn
 
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage, AIMessage, trim_messages
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
-from langchain.memory import ConversationBufferWindowMemory
-from langchain.schema import BaseMessage
 
 from vector_db_loader import ProductionVectorLoader
 
@@ -74,7 +72,7 @@ app.add_middleware(
 vector_loader: Optional[ProductionVectorLoader] = None
 chat_model: Optional[AzureChatOpenAI] = None
 embeddings: Optional[AzureOpenAIEmbeddings] = None
-conversation_memories: Dict[str, ConversationBufferWindowMemory] = {}
+conversation_histories: Dict[str, List[HumanMessage | AIMessage]] = {}
 
 def extract_azure_config(endpoint_url: str):
     """Extract Azure OpenAI configuration from endpoint URL."""
@@ -140,14 +138,28 @@ def initialize_services():
     )
     print("✅ Azure OpenAI services initialized")
 
-def get_memory_for_session(session_id: str) -> ConversationBufferWindowMemory:
-    """Get or create conversation memory for a session."""
-    if session_id not in conversation_memories:
-        conversation_memories[session_id] = ConversationBufferWindowMemory(
-            k=10,  # Keep last 10 exchanges
-            return_messages=True
-        )
-    return conversation_memories[session_id]
+def get_conversation_history(session_id: str) -> List[HumanMessage | AIMessage]:
+    """Get conversation history for a session."""
+    if session_id not in conversation_histories:
+        conversation_histories[session_id] = []
+    return conversation_histories[session_id]
+
+def add_to_conversation_history(session_id: str, message: HumanMessage | AIMessage):
+    """Add a message to conversation history and trim to keep window size."""
+    if session_id not in conversation_histories:
+        conversation_histories[session_id] = []
+    
+    conversation_histories[session_id].append(message)
+    
+    # Trim to keep only the last 20 messages (10 exchanges)
+    conversation_histories[session_id] = trim_messages(
+        conversation_histories[session_id],
+        max_tokens=20,  # Keep last 20 messages (10 user + 10 assistant)
+        strategy="last",
+        token_counter=lambda msgs: len(msgs),
+        start_on="human",
+        allow_partial=False
+    )
 
 def create_context_aware_query(message: str, history: List[ChatMessage]) -> str:
     """Create a context-aware search query from the current message and history."""
@@ -226,17 +238,19 @@ async def conversational_rag(request: ChatRequest):
         raise HTTPException(status_code=500, detail="RAG services not initialized")
     
     try:
-        # Get conversation memory for this session
-        memory = get_memory_for_session(request.session_id)
+        # Get conversation history for this session
+        history_messages = get_conversation_history(request.session_id)
         
-        # Add history to memory if provided (for session restoration)
+        # Add history if provided (for session restoration)
         if request.history:
-            memory.clear()  # Clear existing memory
+            conversation_histories[request.session_id] = []  # Clear existing history
             for msg in request.history:
                 if msg.role == "user":
-                    memory.chat_memory.add_user_message(msg.content)
+                    add_to_conversation_history(request.session_id, HumanMessage(content=msg.content))
                 elif msg.role == "assistant":
-                    memory.chat_memory.add_ai_message(msg.content)
+                    add_to_conversation_history(request.session_id, AIMessage(content=msg.content))
+            # Refresh history after adding
+            history_messages = get_conversation_history(request.session_id)
         
         # Create context-aware search query
         search_query = create_context_aware_query(request.message, request.history)
@@ -249,9 +263,9 @@ async def conversational_rag(request: ChatRequest):
             # No relevant documents found - refuse to answer
             refusal_response = "I don't have enough relevant information in my knowledge base to answer that question confidently. Could you try asking about something more specific related to my teaching, research, or work at the University of Illinois?"
             
-            # Still add to memory for conversation continuity
-            memory.chat_memory.add_user_message(request.message)
-            memory.chat_memory.add_ai_message(refusal_response)
+            # Still add to conversation history for continuity
+            add_to_conversation_history(request.session_id, HumanMessage(content=request.message))
+            add_to_conversation_history(request.session_id, AIMessage(content=refusal_response))
             
             return ChatResponse(
                 response=refusal_response,
@@ -280,8 +294,7 @@ Context from your website:
             ("human", "{question}")
         ])
         
-        # Get conversation history from memory
-        history_messages = memory.chat_memory.messages
+        # Use the conversation history we already retrieved
         
         # Create the chain
         chain = (
@@ -298,9 +311,9 @@ Context from your website:
         # Generate response
         response = chain.invoke(request.message)
         
-        # Add to memory
-        memory.chat_memory.add_user_message(request.message)
-        memory.chat_memory.add_ai_message(response)
+        # Add to conversation history
+        add_to_conversation_history(request.session_id, HumanMessage(content=request.message))
+        add_to_conversation_history(request.session_id, AIMessage(content=response))
         
         # Extract source information
         sources = []
@@ -331,13 +344,11 @@ Context from your website:
 @app.get("/sessions/{session_id}/history")
 async def get_session_history(session_id: str):
     """Get conversation history for a session."""
-    if session_id not in conversation_memories:
+    if session_id not in conversation_histories:
         return {"session_id": session_id, "history": []}
     
-    memory = conversation_memories[session_id]
     messages = []
-    
-    for msg in memory.chat_memory.messages:
+    for msg in conversation_histories[session_id]:
         if isinstance(msg, HumanMessage):
             messages.append({"role": "user", "content": msg.content})
         elif isinstance(msg, AIMessage):
@@ -348,8 +359,8 @@ async def get_session_history(session_id: str):
 @app.delete("/sessions/{session_id}")
 async def clear_session(session_id: str):
     """Clear conversation history for a session."""
-    if session_id in conversation_memories:
-        conversation_memories[session_id].clear()
+    if session_id in conversation_histories:
+        conversation_histories[session_id] = []
         return {"message": f"Session {session_id} cleared"}
     else:
         return {"message": f"Session {session_id} not found"}
