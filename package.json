@@ -26,6 +26,7 @@
     "k8s:logs": "kubectl config use-context geoffreychallen && kubectl logs -f --tail=-1 -l app=www-geoffreychallen-com --all-containers",
     "k8s:restart": "kubectl config use-context geoffreychallen && kubectl rollout restart deployment www-geoffreychallen-com-deployment",
     "k8s:restartDev": "kubectl config use-context geoffreychallen && kubectl rollout restart deployment dev-geoffreychallen-com-deployment",
+    "k8s:restartRAG": "kubectl config use-context geoffreychallen && kubectl rollout restart deployment rag-geoffreychallen-com-deployment",
     "k8s:startDev": "kubectl config use-context geoffreychallen && kubectl scale deployment dev-geoffreychallen-com-deployment --replicas=1",
     "k8s:stopDev": "kubectl config use-context geoffreychallen && kubectl scale deployment dev-geoffreychallen-com-deployment --replicas=0",
     "lint": "next lint && eslint",
