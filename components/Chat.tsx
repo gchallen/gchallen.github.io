@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { RAG_CONFIG } from "../lib/ragConfig"
 import { useRagServer } from "../hooks/useRagServer"
 import ReactMarkdown from "react-markdown"
@@ -63,8 +63,8 @@ function createTextFragmentUrl(url: string, text: string): string {
 const MessageBubble: React.FC<{ 
   message: ChatMessage 
   isLatest: boolean
-  assistantRef?: React.RefObject<HTMLDivElement>
-  userRef?: React.RefObject<HTMLDivElement>
+  assistantRef?: React.RefObject<HTMLDivElement | null>
+  userRef?: React.RefObject<HTMLDivElement | null>
 }> = ({ message, isLatest, assistantRef, userRef }) => {
   const isUser = message.role === "user"
   
@@ -104,7 +104,7 @@ const MessageBubble: React.FC<{
                   {" "}({Math.round(source.similarity_score * 100)}%)
                 </span>
               )}
-              {index < message.sources.length - 1 && ", "}
+              {index < (message.sources?.length || 0) - 1 && ", "}
             </span>
           ))}
         </div>
@@ -145,7 +145,7 @@ export default function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
   
-  const scrollToElementWithHeaderOffset = (element: HTMLDivElement | null, isUserMessage = false) => {
+  const scrollToElementWithHeaderOffset = useCallback((element: HTMLDivElement | null, isUserMessage = false) => {
     if (!element) return
     
     // Header height from CSS (.paddings has padding-top: calc(68px + 1em))
@@ -160,15 +160,15 @@ export default function Chat() {
       top: Math.max(0, offsetTop), // Ensure we don't scroll to negative values
       behavior: "smooth"
     })
-  }
+  }, [])
   
-  const scrollToLastAssistantMessage = () => {
+  const scrollToLastAssistantMessage = useCallback(() => {
     scrollToElementWithHeaderOffset(lastAssistantMessageRef.current, false)
-  }
+  }, [scrollToElementWithHeaderOffset])
   
-  const scrollToLastUserMessage = () => {
+  const scrollToLastUserMessage = useCallback(() => {
     scrollToElementWithHeaderOffset(lastUserMessageRef.current, true)
-  }
+  }, [scrollToElementWithHeaderOffset])
   
   useEffect(() => {
     // Only scroll when a new user message is added (not for assistant responses or loading states)
@@ -180,7 +180,7 @@ export default function Chat() {
       }
       // Don't scroll for assistant messages - let them appear below the user message
     }
-  }, [messages])
+  }, [messages, scrollToLastUserMessage])
   
   // Check if we have started a conversation
   const hasStartedChat = messages.length > 0
@@ -318,7 +318,7 @@ export default function Chat() {
           )}
           
           <div className="disclaimer">
-            You're chatting with Geoffbot, an AI assistant powered by Geoffrey's writings and website content. This is not a direct conversation with Geoffrey himself.
+            You&apos;re chatting with Geoffbot, an AI assistant powered by Geoffrey&apos;s writings and website content. This is not a direct conversation with Geoffrey himself.
           </div>
         </>
       )}
@@ -361,7 +361,7 @@ export default function Chat() {
           />
           <div className="buttonColumn">
             <button 
-              onClick={sendMessage} 
+              onClick={() => sendMessage()} 
               disabled={!inputValue.trim() || isLoading}
               className="sendButton"
               type="button"
@@ -386,7 +386,7 @@ export default function Chat() {
             <div className="suggestions">
               <div>
                 <button onClick={() => sendMessage("What's your approach to teaching introductory programming?")}>
-                  What's your approach to teaching introductory programming?
+                  What&apos;s your approach to teaching introductory programming?
                 </button>
               </div>
               <div>

@@ -24,7 +24,7 @@ export default function ChatPage() {
           <div style={{ flex: 1 }}>
             <h1>Chat with Geoffbot</h1>
             <p style={{ marginTop: "0.5rem", color: "var(--gray)", fontSize: "0.9rem" }}>
-              Powered by AI and Geoffrey's writings
+              Powered by AI and Geoffrey&apos;s writings
             </p>
           </div>
         </div>
