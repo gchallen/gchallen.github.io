@@ -26,38 +26,31 @@ interface Source {
 
 // Generate text fragment URL for deep linking
 function createTextFragmentUrl(url: string, text: string): string {
-  // Clean text for URL fragment - be more selective about what to remove
+  // Clean text for URL fragment - minimal normalization
   const cleanText = text
-    .replace(/[""'']/g, '"') // Normalize quotes
-    .replace(/[—–]/g, '-') // Normalize dashes  
+    .replace(/[—–−]/g, '-') // Normalize all dash variations
+    .replace(/…/g, '...') // Normalize ellipsis
     .replace(/\s+/g, ' ') // Normalize whitespace
+    .replace(/\.{3,}$/, '') // Remove trailing ellipsis if present
     .trim()
   
-  // Take first meaningful words, avoiding very short words at the end
+  if (cleanText.length === 0) return url
+  
+  // Split text into words for start/end selection
   const words = cleanText.split(' ')
-  let selectedWords: string[] = []
-  let charCount = 0
   
-  for (const word of words) {
-    // Stop if we have enough characters and words
-    if (selectedWords.length >= 6 && charCount > 50) break
-    // Avoid ending with very short connector words
-    if (selectedWords.length >= 4 && word.length <= 2 && 
-        ['a', 'an', 'the', 'to', 'of', 'in', 'at', 'by', 'or', 'and'].includes(word.toLowerCase())) {
-      break
-    }
-    selectedWords.push(word)
-    charCount += word.length + 1 // +1 for space
-    if (selectedWords.length >= 10) break // Hard limit
+  // Use first few words as textStart and last few words as textEnd
+  // This helps anchor the selection even if the exact middle text varies
+  const startWords = words.slice(0, 5).join(' ')
+  const endWords = words.slice(-5).join(' ')
+  
+  // If text is short (10 words or less), just use the simple text fragment
+  if (words.length <= 10) {
+    return `${url}#:~:text=${encodeURIComponent(cleanText)}`
   }
   
-  const fragment = selectedWords.join(' ')
-  
-  if (fragment.length > 0) {
-    return `${url}#:~:text=${encodeURIComponent(fragment)}`
-  }
-  
-  return url
+  // For longer text, use textStart,textEnd format for better matching
+  return `${url}#:~:text=${encodeURIComponent(startWords)},${encodeURIComponent(endWords)}`
 }
 
 const MessageBubble: React.FC<{ 
