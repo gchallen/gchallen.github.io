@@ -8,6 +8,7 @@ import os
 import json
 import pickle
 import hashlib
+import re
 from pathlib import Path
 from typing import List, Dict, Any, Set, Tuple
 import numpy as np
@@ -17,10 +18,161 @@ from dotenv import load_dotenv
 
 from langchain_community.document_loaders import BSHTMLLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain.text_splitter import TextSplitter
 from langchain_openai import AzureOpenAIEmbeddings
+from langchain.schema import Document
 from citation_utils import enrich_chunk_metadata
+from bs4 import BeautifulSoup
 
 load_dotenv()
+
+class HierarchicalHTMLSplitter:
+    """Hierarchical splitter that respects HTML document structure."""
+    
+    def __init__(self, min_paragraph_length: int = 100, max_paragraphs_per_chunk: int = 3, 
+                 overlap_paragraphs: int = 1):
+        """
+        Initialize the hierarchical HTML splitter.
+        
+        Args:
+            min_paragraph_length: Minimum length for a paragraph to be considered valid
+            max_paragraphs_per_chunk: Maximum number of paragraphs to include in a single chunk
+            overlap_paragraphs: Number of paragraphs to overlap between chunks
+        """
+        self.min_paragraph_length = min_paragraph_length
+        self.max_paragraphs_per_chunk = max_paragraphs_per_chunk
+        self.overlap_paragraphs = overlap_paragraphs
+    
+    def split_html_file(self, html_file_path: str) -> List[Document]:
+        """Load and split an HTML file hierarchically: first by sections, then by paragraphs."""
+        chunks = []
+        
+        # Read the HTML file
+        with open(html_file_path, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+        
+        # Parse HTML with BeautifulSoup
+        soup = BeautifulSoup(html_content, 'html.parser')
+        
+        # Find body content
+        body = soup.find('body')
+        if not body:
+            print(f"   Warning: No body tag found in {Path(html_file_path).name}")
+            return chunks
+        
+        # Extract sections based on headings
+        sections = self._extract_sections(body)
+        
+        print(f"   Found {len(sections)} sections in {Path(html_file_path).name}")
+        
+        # Process each section independently
+        for section_idx, section in enumerate(sections):
+            section_chunks = self._process_section(section, section_idx, html_file_path)
+            chunks.extend(section_chunks)
+        
+        print(f"   Total chunks created: {len(chunks)}")
+        return chunks
+    
+    def _extract_sections(self, body):
+        """Extract sections from the body, split by headings and code blocks."""
+        sections = []
+        current_section = {
+            'heading': None,
+            'heading_level': None,
+            'paragraphs': []
+        }
+        
+        # Iterate through all children of body
+        for element in body.descendants:
+            if element.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+                # Save current section if it has content
+                if current_section['paragraphs']:
+                    sections.append(current_section)
+                
+                # Start new section
+                heading_text = element.get_text(separator=' ', strip=True)
+                heading_text = ' '.join(heading_text.split())
+                current_section = {
+                    'heading': heading_text,
+                    'heading_level': element.name,
+                    'paragraphs': []
+                }
+                
+            elif element.name == 'pre' or (element.name == 'code' and element.parent.name == 'pre'):
+                # Code blocks should create section breaks
+                # Only process the outermost pre element to avoid double processing
+                if element.name == 'pre':
+                    # Save current section if it has content
+                    if current_section['paragraphs']:
+                        sections.append(current_section)
+                    
+                    # Create a new section after the code block
+                    current_section = {
+                        'heading': None,
+                        'heading_level': None,
+                        'paragraphs': []
+                    }
+                
+            elif element.name == 'p':
+                # Add paragraph to current section
+                text = element.get_text(separator=' ', strip=True)
+                text = ' '.join(text.split())
+                # Fix spacing issues around punctuation that can occur with separator=' '
+                text = re.sub(r'\s+([.,:;!?])', r'\1', text)
+                
+                if len(text) >= self.min_paragraph_length:
+                    current_section['paragraphs'].append(text)
+        
+        # Don't forget the last section
+        if current_section['paragraphs']:
+            sections.append(current_section)
+        
+        return sections
+    
+    def _process_section(self, section, section_idx, html_file_path):
+        """Process a single section, creating chunks from its paragraphs."""
+        chunks = []
+        paragraphs = section['paragraphs']
+        
+        if not paragraphs:
+            return chunks
+        
+        section_name = section['heading'] or f"Section {section_idx + 1}"
+        print(f"     Processing section: {section_name} ({len(paragraphs)} paragraphs)")
+        
+        # Group paragraphs into chunks with overlap, but never cross section boundaries
+        i = 0
+        chunk_num = 0
+        
+        while i < len(paragraphs):
+            # Collect up to max_paragraphs_per_chunk paragraphs
+            chunk_paragraphs = []
+            for j in range(min(self.max_paragraphs_per_chunk, len(paragraphs) - i)):
+                chunk_paragraphs.append(paragraphs[i + j])
+            
+            if chunk_paragraphs:
+                # Create a Document object for this chunk
+                chunk_text = '\n\n'.join(chunk_paragraphs)
+                
+                # Add section context to metadata
+                metadata = {
+                    'source': str(html_file_path),
+                    'section': section_name,
+                    'section_level': section['heading_level'] or 'none'
+                }
+                
+                doc = Document(
+                    page_content=chunk_text,
+                    metadata=metadata
+                )
+                chunks.append(doc)
+                chunk_num += 1
+                print(f"       Chunk {chunk_num}: {len(chunk_paragraphs)} paragraphs, {len(chunk_text)} chars")
+            
+            # Move forward, considering overlap (but only within this section)
+            i += max(1, self.max_paragraphs_per_chunk - self.overlap_paragraphs)
+        
+        return chunks
 
 class ProductionVectorDB:
     """Production vector database builder with incremental updates."""
@@ -217,7 +369,8 @@ class ProductionVectorDB:
         print(f"   Documents: {docs_path} ({docs_path.stat().st_size:,} bytes)")
 
 
-def build_production_database(html_dir: str, output_dir: str, chunk_size: int = 1000, chunk_overlap: int = 200):
+def build_production_database(html_dir: str, output_dir: str, min_paragraph_length: int = 100, 
+                             max_paragraphs_per_chunk: int = 3, overlap_paragraphs: int = 1):
     """Build production vector database from HTML files."""
     
     print("🏭 Building Production Vector Database")
@@ -258,11 +411,11 @@ def build_production_database(html_dir: str, output_dir: str, chunk_size: int = 
     html_files = list(Path(html_dir).rglob("*.html"))
     print(f"📁 Found {len(html_files)} HTML files")
     
-    # Set up text splitter
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap,
-        length_function=len,
+    # Set up hierarchical HTML splitter
+    html_splitter = HierarchicalHTMLSplitter(
+        min_paragraph_length=min_paragraph_length,
+        max_paragraphs_per_chunk=max_paragraphs_per_chunk,
+        overlap_paragraphs=overlap_paragraphs,
     )
     
     # Process files
@@ -271,14 +424,10 @@ def build_production_database(html_dir: str, output_dir: str, chunk_size: int = 
         print(f"   Processing {html_file.relative_to(html_dir)}")
         
         try:
-            # Load document
-            loader = BSHTMLLoader(str(html_file))
-            docs = loader.load()
+            # Use HTML-aware splitter to load and split the document
+            chunks = html_splitter.split_html_file(str(html_file))
             
-            # Split into chunks
-            chunks = text_splitter.split_documents(docs)
-            
-            # Add source info to metadata
+            # Add source info to metadata and prepare for processing
             for chunk in chunks:
                 chunk.metadata['source_file'] = str(html_file)
                 all_docs_with_meta.append((chunk, chunk.metadata))
@@ -316,8 +465,12 @@ def main():
     parser = argparse.ArgumentParser(description="Build production vector database")
     parser.add_argument("--html-dir", default="../html", help="Directory containing HTML files")
     parser.add_argument("--output-dir", default="vector_db", help="Output directory for vector database")
-    parser.add_argument("--chunk-size", type=int, default=1000, help="Text chunk size")
-    parser.add_argument("--chunk-overlap", type=int, default=200, help="Text chunk overlap")
+    parser.add_argument("--min-paragraph-length", type=int, default=100, 
+                       help="Minimum length for a paragraph to be considered valid (default: 100)")
+    parser.add_argument("--max-paragraphs", type=int, default=3, 
+                       help="Maximum number of paragraphs per chunk (default: 3)")
+    parser.add_argument("--overlap-paragraphs", type=int, default=1, 
+                       help="Number of paragraphs to overlap between chunks (default: 1)")
     parser.add_argument("--clean", action="store_true", help="Start with clean database (ignore existing)")
     
     args = parser.parse_args()
@@ -333,8 +486,9 @@ def main():
     build_production_database(
         html_dir=args.html_dir,
         output_dir=args.output_dir,
-        chunk_size=args.chunk_size,
-        chunk_overlap=args.chunk_overlap
+        min_paragraph_length=args.min_paragraph_length,
+        max_paragraphs_per_chunk=args.max_paragraphs,
+        overlap_paragraphs=args.overlap_paragraphs
     )
 
 
