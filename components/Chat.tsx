@@ -39,9 +39,9 @@ function createTextFragmentUrl(url: string, text: string): string {
   // Split text into words for start/end selection
   const words = cleanText.split(' ')
   
-  // Use first few words as textStart and last few words as textEnd
-  // This helps anchor the selection even if the exact middle text varies
-  const startWords = words.slice(0, 5).join(' ')
+  // Skip first word in textStart to avoid issues with firstword/restword spans
+  // Use words 2-6 as textStart and last 5 words as textEnd
+  const startWords = words.slice(1, 6).join(' ')
   const endWords = words.slice(-5).join(' ')
   
   // If text is short (10 words or less), just use the simple text fragment
