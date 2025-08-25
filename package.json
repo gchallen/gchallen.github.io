@@ -6,6 +6,7 @@
   "scripts": {
     "build:mdx": "tsx bin/build.ts mdx output --build --clean",
     "build:vector": "npm run build:mdx && cd rag && source venv/bin/activate && python vector_db_builder.py --html-dir html --output-dir vector_db && deactivate",
+    "build:vector:clean": "npm run build:mdx && cd rag && source venv/bin/activate && python vector_db_builder.py --clean --html-dir html --output-dir vector_db && deactivate",
     "prebuild": "npm run build:mdx && tsx bin/rss.ts && tsx bin/pyodide.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
     "build": "next build --turbopack",
     "chat": "tsx bin/chat.ts",
