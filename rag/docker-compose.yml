@@ -39,9 +39,10 @@ services:
       - AZURE_OPENAI_EMBEDDINGS_ENDPOINT=${AZURE_OPENAI_EMBEDDINGS_ENDPOINT}
       - AZURE_OPENAI_EMBEDDINGS_API_KEY=${AZURE_OPENAI_EMBEDDINGS_API_KEY}
     volumes:
-      # Mount source code for development (excludes vector_db and html for hot reload)
+      # Mount source code for development
       - .:/app
-      - /app/vector_db
+      # Mount local vector_db over the container's vector_db
+      - ./vector_db:/app/vector_db:ro
       - /app/html
     command: ["python", "run_server.py"]
     profiles: ["dev"]
