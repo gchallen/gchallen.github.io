@@ -4,3 +4,4 @@ dist
 output
 pages/**/*.jsx
 public/onload.js
+rag

@@ -1,6 +1,6 @@
 import Head from "next/head"
-import Header from "../components/Header"
 import Chat from "../components/Chat"
+import Header from "../components/Header"
 
 export default function ChatPage() {
   return (
@@ -8,14 +8,14 @@ export default function ChatPage() {
       <Head>
         <title>Chat with Geoffbot</title>
         <meta property="og:title" content="Chat with Geoffbot" key="ogtitle" />
-        <meta 
-          name="description" 
-          content="Chat with Geoffbot, an AI assistant powered by Geoffrey Challen's writings and website content. Ask questions about teaching, computer science, and educational technology." 
+        <meta
+          name="description"
+          content="Chat with Geoffbot, an AI assistant powered by Geoffrey Challen's writings and website content. Ask questions about teaching, computer science, and educational technology."
         />
-        <meta 
-          property="og:description" 
-          content="Chat with Geoffbot, an AI assistant powered by Geoffrey Challen's writings and website content. Ask questions about teaching, computer science, and educational technology." 
-          key="ogdesc" 
+        <meta
+          property="og:description"
+          content="Chat with Geoffbot, an AI assistant powered by Geoffrey Challen's writings and website content. Ask questions about teaching, computer science, and educational technology."
+          key="ogdesc"
         />
       </Head>
       <Header />
@@ -28,7 +28,7 @@ export default function ChatPage() {
             </p>
           </div>
         </div>
-        
+
         <Chat />
       </main>
     </>
