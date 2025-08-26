@@ -5,16 +5,19 @@ The `/chat` page provides an AI-powered chat interface that lets visitors intera
 ## Features
 
 ### 🤖 AI Chat Interface
+
 - **Conversational AI**: Powered by Geoffrey's writings and website content
 - **Memory**: Maintains conversation context across messages
 - **Real-time responses**: Streaming-like experience with typing indicators
 
 ### 📚 Smart Citations
+
 - **Deep linking**: Citations use Text Fragments for precise content linking
 - **Source transparency**: Shows similarity scores and content previews
 - **Rich metadata**: Displays page titles, URLs, and relevant excerpts
 
 ### 🎨 User Experience
+
 - **Responsive design**: Works on desktop, tablet, and mobile
 - **Dark mode support**: Respects user's system preference
 - **Suggestion prompts**: Helpful starting questions for new users
@@ -53,12 +56,14 @@ NEXT_PUBLIC_RAG_SERVER_URL=http://localhost:8000
 For production deployment:
 
 1. **Deploy RAG Server**: Use Docker or direct deployment
+
    ```bash
    npm run rag:build  # Build container
    npm run rag:run    # Deploy server
    ```
 
 2. **Configure Frontend**: Set the production RAG server URL
+
    ```env
    NEXT_PUBLIC_RAG_SERVER_URL=https://rag.yourdomain.com
    ```
@@ -74,6 +79,7 @@ The chat interface generates [Text Fragment](https://developer.mozilla.org/en-US
 - **Fallback graceful**: Falls back to regular URLs if fragments fail
 
 Example generated URL:
+
 ```
 /essays/chalkface-nostalgia#:~:text=lecturing%20was%20not%20an%20effective%20way
 ```
@@ -83,11 +89,13 @@ Example generated URL:
 ### Running Locally
 
 1. **Start RAG Server**:
+
    ```bash
    npm run rag:run
    ```
 
 2. **Start Next.js**:
+
    ```bash
    npm run dev
    ```
@@ -97,6 +105,7 @@ Example generated URL:
 ### Server Health Monitoring
 
 The chat interface automatically:
+
 - **Monitors connection**: Checks RAG server health every 30 seconds
 - **Shows status**: Displays connection indicator when server is offline
 - **Handles errors**: Provides helpful error messages and recovery suggestions
@@ -104,22 +113,26 @@ The chat interface automatically:
 ### Customizing the Interface
 
 #### Chat Suggestions
+
 Edit the welcome message suggestions in `Chat.tsx`:
+
 ```tsx
-<button onClick={() => setInputValue("Your custom question here")}>
-  Your custom question here
-</button>
+<button onClick={() => setInputValue("Your custom question here")}>Your custom question here</button>
 ```
 
 #### Styling
+
 Modify `Chat.module.css` to customize:
+
 - **Colors**: Update CSS custom properties
 - **Layout**: Adjust container dimensions and spacing
 - **Typography**: Change fonts and sizes
 - **Dark mode**: Modify dark mode color scheme
 
 #### Connection Config
+
 Update `ragConfig.ts` to change:
+
 - **Server URL**: Default endpoint configuration
 - **Timeouts**: Request timeout duration
 - **Endpoints**: Available API endpoints
@@ -157,7 +170,7 @@ Update `ragConfig.ts` to change:
 ## Future Enhancements
 
 - **Response streaming**: Real-time response display
-- **Voice input**: Speech-to-text integration  
+- **Voice input**: Speech-to-text integration
 - **Export conversations**: Save chat history
 - **Share conversations**: Generate shareable links
 - **Advanced citations**: Multiple text fragments per source

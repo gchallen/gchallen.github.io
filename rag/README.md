@@ -121,6 +121,7 @@ docker run -p 8000:8000 \
 ### API Endpoints
 
 #### Semantic Search
+
 ```bash
 curl -X POST "http://localhost:8000/search" \
   -H "Content-Type: application/json" \
@@ -128,6 +129,7 @@ curl -X POST "http://localhost:8000/search" \
 ```
 
 #### Conversational Chat
+
 ```bash
 curl -X POST "http://localhost:8000/chat" \
   -H "Content-Type: application/json" \
@@ -135,6 +137,7 @@ curl -X POST "http://localhost:8000/chat" \
 ```
 
 #### Session Management
+
 ```bash
 # Get conversation history
 curl "http://localhost:8000/sessions/user123/history"
@@ -196,6 +199,7 @@ pytest tests/ -s
 ### Test Optimization
 
 Tests have been optimized to reduce API usage:
+
 - **Fewer files**: Process only 2-3 HTML files instead of all
 - **Larger chunks**: 2000 character chunks instead of 1000 (fewer API calls)
 - **Minimal test**: Single smallest file for quick validation
@@ -233,26 +237,31 @@ rag/
 ## Development Workflow
 
 1. **Always activate the virtual environment** before working:
+
    ```bash
    source venv/bin/activate
    ```
 
 2. **Run tests** to ensure everything is working:
+
    ```bash
    cd tests && python run_fast_tests.py
    ```
 
 3. **Build production database** after content changes:
+
    ```bash
    python vector_db_builder.py
    ```
 
 4. **Check installed packages**:
+
    ```bash
    pip list
    ```
 
 5. **Install new packages** and update requirements:
+
    ```bash
    pip install package_name
    pip freeze > requirements.txt
@@ -309,6 +318,7 @@ for result in results:
 ```
 
 Citations are automatically extracted from HTML metadata:
+
 - **Relative URLs**: `/bio`, `/essays/2021-06-10-chalkface-nostalgia`
 - **Page titles**: From HTML `<title>` or `<meta name="title">`
 - **Publication dates**: From `<meta name="published">` (for essays)
@@ -343,15 +353,18 @@ python -c "print('hello')"       # Run inline Python code
 ## Troubleshooting
 
 ### Import errors
+
 - Make sure virtual environment is activated
 - Verify packages are installed: `pip list`
 - Reinstall requirements: `pip install -r requirements.txt`
 
 ### Environment variable issues
+
 - Check `.env` file exists and has correct values
 - Verify variables are loaded: `python -c "import os; from dotenv import load_dotenv; load_dotenv(); print(os.getenv('AZURE_OPENAI_CHAT_ENDPOINT'))"`
 
 ### API errors
+
 - Verify API keys are correct
 - Check endpoint URLs are complete (including `/openai/deployments/...`)
 - Run endpoint tests: `python test_endpoints.py`

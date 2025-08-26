@@ -78,19 +78,19 @@ docker run -d \
 
 ### Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `AZURE_OPENAI_CHAT_ENDPOINT` | Yes | Chat completion endpoint URL |
-| `AZURE_OPENAI_CHAT_API_KEY` | Yes | Chat API key |
-| `AZURE_OPENAI_EMBEDDINGS_ENDPOINT` | Yes | Embeddings endpoint URL |
-| `AZURE_OPENAI_EMBEDDINGS_API_KEY` | Yes | Embeddings API key |
-| `PORT` | No | Server port (default: 8000) |
-| `VECTOR_DB_PATH` | No | Vector database path (default: vector_db) |
+| Variable                           | Required | Description                               |
+| ---------------------------------- | -------- | ----------------------------------------- |
+| `AZURE_OPENAI_CHAT_ENDPOINT`       | Yes      | Chat completion endpoint URL              |
+| `AZURE_OPENAI_CHAT_API_KEY`        | Yes      | Chat API key                              |
+| `AZURE_OPENAI_EMBEDDINGS_ENDPOINT` | Yes      | Embeddings endpoint URL                   |
+| `AZURE_OPENAI_EMBEDDINGS_API_KEY`  | Yes      | Embeddings API key                        |
+| `PORT`                             | No       | Server port (default: 8000)               |
+| `VECTOR_DB_PATH`                   | No       | Vector database path (default: vector_db) |
 
 ### Docker Compose Production
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   rag-server:
     image: geoffreychallen/rag-server:latest
@@ -155,34 +155,35 @@ spec:
         app: rag-server
     spec:
       containers:
-      - name: rag-server
-        image: geoffreychallen/rag-server:latest
-        ports:
-        - containerPort: 8000
-        envFrom:
-        - configMapRef:
-            name: rag-server-config
-        - secretRef:
-            name: rag-server-secrets
-        # No volume mounts needed - content is built into container
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8000
-          initialDelaySeconds: 10
-          periodSeconds: 30
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8000
-          initialDelaySeconds: 5
-          periodSeconds: 10
+        - name: rag-server
+          image: geoffreychallen/rag-server:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: rag-server-config
+            - secretRef:
+                name: rag-server-secrets
+          # No volume mounts needed - content is built into container
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
       # No volumes needed - content is built into container
 ```
 
 ## Monitoring
 
 The container includes:
+
 - Health check endpoint at `GET /`
 - Structured logging to stdout
 - Graceful shutdown handling
@@ -194,7 +195,7 @@ The container includes:
 
 1. **Container won't start**: Check environment variables are set
 2. **Vector database not found**: Ensure `npm run build:mdx` was run before building container
-3. **HTML content missing**: Ensure `npm run build:mdx` was run before building container  
+3. **HTML content missing**: Ensure `npm run build:mdx` was run before building container
 4. **API errors**: Verify Azure OpenAI credentials and endpoints
 5. **Build failures**: Check that `vector_db/` and `html/` directories exist with content
 
