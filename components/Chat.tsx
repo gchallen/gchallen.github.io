@@ -282,7 +282,7 @@ export default function Chat() {
   if (isConnected === false) {
     return (
       <div className="chatContainer">
-        <div className="serverOffline">Server Offline. Please try again later.</div>
+        <div className="serverOffline">Server offline. Please try again later.</div>
       </div>
     )
   }
@@ -301,6 +301,10 @@ export default function Chat() {
           <div className="disclaimer">
             You&apos;re chatting with Geoffbot, an AI assistant powered by Geoffrey&apos;s writings and website content.
             This is not a direct conversation with Geoffrey himself.
+            <br />
+            <small style={{ opacity: 0.7, fontSize: '0.9em' }}>
+              Rate limited to 10 messages per minute to ensure optimal performance.
+            </small>
           </div>
         </>
       )}
@@ -398,6 +402,16 @@ export default function Chat() {
               <div>
                 <button onClick={() => sendMessage("What kind of music do you like?")}>
                   What kind of music do you like?
+                </button>
+              </div>
+              <div>
+                <button onClick={() => sendMessage("Did you used to fall asleep in class?")}>
+                  Did you used to fall asleep in class?
+                </button>
+              </div>
+              <div>
+                <button onClick={() => sendMessage("Do you lecture in your courses?")}>
+                  Do you lecture in your courses?
                 </button>
               </div>
             </div>
