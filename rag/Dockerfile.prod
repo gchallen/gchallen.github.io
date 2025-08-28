@@ -1,0 +1,45 @@
+# Production Dockerfile for RAG server
+FROM python:3.11-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
+    PORT=8000 \
+    WORKERS=4
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user for security
+RUN useradd --create-home --shell /bin/bash --uid 1001 raguser
+
+# Set work directory
+WORKDIR /app
+
+# Copy requirements first for better Docker layer caching
+COPY requirements-prod.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements-prod.txt
+
+# Copy application code
+COPY --chown=raguser:raguser . .
+
+# Create logs directory
+RUN mkdir -p /app/logs && chown raguser:raguser /app/logs
+
+# Switch to non-root user
+USER raguser
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:$PORT/ || exit 1
+
+# Expose port
+EXPOSE $PORT
+
+# Production command using Gunicorn
+CMD ["gunicorn", "--config", "gunicorn.conf.py", "rag_server:app"]

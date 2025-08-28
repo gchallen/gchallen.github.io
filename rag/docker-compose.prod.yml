@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  rag-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8000:8000"
+    environment:
+      # Server configuration
+      - WORKERS=4
+      - PORT=8000
+      - LOG_LEVEL=info
+      
+      # CORS configuration - restrict to your domains
+      - ALLOWED_ORIGINS=https://geoffreychallen.com,https://www.geoffreychallen.com
+      
+      # Azure OpenAI configuration (set these in your environment or .env file)
+      - AZURE_OPENAI_CHAT_ENDPOINT=${AZURE_OPENAI_CHAT_ENDPOINT}
+      - AZURE_OPENAI_CHAT_API_KEY=${AZURE_OPENAI_CHAT_API_KEY}
+      - AZURE_OPENAI_EMBEDDINGS_ENDPOINT=${AZURE_OPENAI_EMBEDDINGS_ENDPOINT}
+      - AZURE_OPENAI_EMBEDDINGS_API_KEY=${AZURE_OPENAI_EMBEDDINGS_API_KEY}
+      
+      # Vector database path
+      - VECTOR_DB_PATH=/app/vector_db
+    
+    volumes:
+      # Mount vector database (build this first)
+      - ./vector_db:/app/vector_db:ro
+      # Mount logs directory for persistence
+      - ./logs:/app/logs
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Resource limits for production
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+    
+    # Security
+    security_opt:
+      - no-new-privileges:true
+    user: "1001:1001"  # Use non-root user
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: Add Redis for distributed rate limiting
+  # redis:
+  #   image: redis:7-alpine
+  #   restart: unless-stopped
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis-data:/data
+  #   command: redis-server --appendonly yes
+
+# volumes:
+#   redis-data:

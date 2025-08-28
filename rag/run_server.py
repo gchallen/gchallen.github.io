@@ -45,17 +45,32 @@ def main():
     host = "0.0.0.0"  # Use 0.0.0.0 for Docker container accessibility
     port = 8000
     reload = True
+    workers = 1
 
     if len(sys.argv) > 1 and sys.argv[1] == "--production":
         port = int(os.getenv("PORT", 8000))
         reload = False  # Disable reload in production
-        print(f"Production mode: {host}:{port}")
+        workers = int(os.getenv("WORKERS", 4))  # 4 workers for production
+        print(f"Production mode: {host}:{port} with {workers} workers")
     else:
         print(f"Development mode: {host}:{port}")
         print("Add --production flag for production mode")
 
     # Use import string format for reload to work properly
-    uvicorn.run("rag_server:app", host=host, port=port, reload=reload, access_log=False)
+    if reload:
+        # Development mode - single worker with reload
+        uvicorn.run("rag_server:app", host=host, port=port, reload=reload, access_log=False)
+    else:
+        # Production mode - multiple workers, no reload
+        uvicorn.run(
+            "rag_server:app", 
+            host=host, 
+            port=port, 
+            workers=workers,
+            reload=False,
+            access_log=False,
+            log_level="info"
+        )
 
 
 if __name__ == "__main__":

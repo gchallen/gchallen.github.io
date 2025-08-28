@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "geoffreychallen.com",
-  "version": "2025.8.1",
+  "version": "2025.8.2",
   "type": "module",
   "scripts": {
     "prebuild": "npm run build:mdx && tsx bin/rss.ts && tsx bin/pyodide.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
@@ -31,6 +31,7 @@
     "prettier": "prettier --cache -w --plugin=prettier-plugin-organize-imports . && prettier-package-json --write && cd rag && source venv/bin/activate && ruff format . && deactivate",
     "rag:build": "npm run build:vector && cd rag && docker build -t geoffreychallen/rag-server:latest -t geoffreychallen/rag-server:$npm_package_version .",
     "rag:dev": "cd rag && docker compose --profile dev up rag-server-dev",
+    "rag:prod": "cd rag && python run_production.py",
     "rag:push": "npm run build:vector && cd rag && docker buildx build . --platform=linux/amd64,linux/arm64/v8 --builder multiplatform --tag geoffreychallen/rag-server:latest --tag geoffreychallen/rag-server:$npm_package_version --push",
     "rag:run": "cd rag && docker compose up rag-server",
     "rag:stop": "cd rag && docker compose down",
