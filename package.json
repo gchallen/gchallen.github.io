@@ -19,6 +19,7 @@
     "eslint": "eslint components layouts pages workers",
     "k8s:devLogs": "kubectl config use-context geoffreychallen && kubectl logs -f --tail=-1 -l app=dev-geoffreychallen-com --all-containers",
     "k8s:edit": "kubectl config use-context geoffreychallen && kubectl edit deployment www-geoffreychallen-com-deployment",
+    "k8s:editRAG": "kubectl edit deployment rag-geoffreychallen-com-deployment -n geoffreychallen",
     "k8s:editDev": "kubectl config use-context geoffreychallen && kubectl edit deployment dev-geoffreychallen-com-deployment",
     "k8s:logs": "kubectl config use-context geoffreychallen && kubectl logs -f --tail=-1 -l app=www-geoffreychallen-com --all-containers",
     "k8s:restart": "kubectl config use-context geoffreychallen && kubectl rollout restart deployment www-geoffreychallen-com-deployment",
