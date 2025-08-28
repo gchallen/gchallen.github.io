@@ -343,7 +343,7 @@ async def startup_event():
 @limiter.limit("60/minute")  # Allow 60 health checks per minute
 async def root(request: Request):
     """Health check endpoint."""
-    logger.info("Health check requested")
+    logger.log(5, "Health check requested")  # TRACE level (5)
     return {
         "message": "Geoffrey Challen RAG Server",
         "status": "running",
