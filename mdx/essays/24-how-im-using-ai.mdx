@@ -1,0 +1,414 @@
+---
+title: How I'm Using AI
+description: >
+  I started using generative AI late, but now I'm using it constantly: for
+  course stuff, for ugly stuff, for fun stuff, and for personal stuff.
+---
+
+[After](-) months of hearing a lot of talk about generative AI, I finally
+starting using it myself during the summer of 2025. I came to the party late and
+with some reluctance. But I work at the intersection of two areas destined to be
+fundamentally transformed by AI&mdash;technology and education&mdash;and I so I
+decided I needed to see what all the excitement was about.
+
+My first experiment was a brief foray using Cursor for a personal side project.
+Looking back, I must have grasped enough of the technology's promise to make a
+bigger investment, because the next thing I did was sign up for the $100 / month
+Claude Code Max plan. But I still wasn't completely sold. When I forked over my
+first benjamin in late June, I remember thinking: "I hope I get my money's
+worth."
+
+Three months later and I'm using Claude Code constantly&mdash;absolutely for all
+of my coding tasks, but in many other ways as well. Coding with Claude has
+enriched and improved my programming practice, and I'm continuing to find new
+ways to leverage its capabilities. In my experience, collaborating with AI
+agents more productive, more enjoyable, and creative than traditional
+programming. This is definitely the future of programming, and I'm [adjusting my
+CS1 course](https://www.cs124.org/ai) to ensure that my students are prepared
+for that future.
+
+At some point I'd like to explore the many ways that collobarating with AI leads
+to a healthier coding practice: the conversational paradigm, the ability to
+externalize mistakes, the opportunity to focus on design, and so on. But to
+start, I'd like to just share some of how I've been using coding agents,
+specifically Claude Code, to support my own programming practice.
+
+This is at least in part to try to encourage other educators who have yet to
+explore the capabilities generative AI to support their own work. I'm worried by
+the number of CS educators I have spoken with who admit to having no first-hand
+experience with these tools. This is the future! And while it's true that there
+are legitimate concerns about the rise of AI and the impact it will have on
+technology, education, and society, it's hard to have an useful conversation
+about the pros and cons with someone who only understands the cons. Because
+there are pros. There are definitely pros.
+
+[For](-) the sake of organization, I've divided this list into four overlapping
+categories: course stuff, ugly stuff, fun stuff, and personal stuff. I'll start
+by discussing ways that I'm using AI to support my primary professional
+activity: teaching [CS 124](https://www.cs124.org), the introductory computer
+science course at the University of Illinois. I do a lot of software development
+to support my course, but I know that not all educators do, so I'll include a
+mix of both programming and non-programming tasks in the group, and of course
+supporting a course also includes tasks that are both fun and ugly, so there's a
+bit of both of those groups mixed in here too.
+
+## Rolling Out And Reviewing CS 124 Lessons
+
+Preparing CS 124 for each new semester involves a variety of tasks, as I work to
+make sure our materials and infrastructure are ready for a new group of
+students. Most tasks are specific to how our materials are maintained and
+organized. For example, CS 124 teaches computer science through a series of
+daily lessons, which students can complete in either Kotlin or Java. Each lesson
+in stored in a single MDX file, MDX being Markdown with extensions allowing the
+integration of interactive content.
+
+I have chosen to store each semester's worth of lessons in a separate directory.
+Some lessons we reuse essentially unaltered from semester to semester, but
+others are rewritten more frequently. While different file organizations that
+would make the task I'm about to describe easier are certainly possible,
+maintaining per-semester directories is simple and has the benefit of preserving
+lessons from previous semesters side-by-side in the same Git repository^[Yes, of
+course, everything is checked in to Git; and yes, of course, you could use
+tagging or other Git features to preserve previous semester content, but not
+side-by-side.].
+
+As a result, one of the first steps in rolling out a new semester is `cp -R
+Spring2025 Fall2025`. Unfortunately, it's not quite that easy! Because each
+lesson has metadata that includes the data, and a filename that indicates
+position of the lesson within the semester to enable easy command line
+navigation. For example, lesson `013_loops.mdx` is on the third day of the
+second week of the course, and contains YAML front matter that includes `date:
+2025-01-29`. All of this needs to be corrected each semester. Not only do the
+dates change, but the position of holidays within the semester also changes,
+which can cause lessons filenames to change.
+
+Previously I would put on a good playlist and grit my teeth and spend the hour
+or so it took to do this by hand. This fall I did it conversationally with
+Claude. It was quickly able to understand the lesson file naming convention and
+metadata, as well as the Illinois academic calendar, and quickly corrected all
+dates and moved all files into the right place.
+
+But Claude's ability to migrate lessons went beyond these fairly easy patterns.
+Because the lessons also end up containing other temporary anchors that need to
+be changed. Some of them are, like the date metadata, straightforward to
+correct: fixing the links that point to the `Spring2025` syllabus to point to
+the `Fall2025` syllabus. But others are more subtle. For example, an programming
+example from an early lesson on variables with values indicating that it's hot
+outside. Appropriate for the summer and fall terms, yes; not so much for the
+spring session, when this lesson falls in late January. Claude spotted that. I
+also sometimes add announcements to lessons---either from student groups, or
+based on what's currently going on in the course. Claude spotted a few of those
+as well.
+
+Once I noticed Claude demonstrating a reasonable understanding of the lesson
+content, I started using it to do more holistic review. Most of these lessons
+date back to 2020 (Java) or 2021 (Kotlin), and have been reviewed by hundreds of
+course staff and used by thousands of students. But Claude is still noticing
+small typos, grammatical errors, and other mistakes. We could all use help
+reviewing and improving our course materials^[I frequently encounter _very_
+sloppy content when reviewing other ccourse websites and assignments...], and
+Claude is capable of this task.
+
+Interestingly, I've also found Claude capable of comparing the Kotlin and Java
+versions of our lessons and other course content to ensure alignment---we're
+teaching the same concepts in either language. I'll return to its ability to
+review course materials below.
+
+## Migrating CS 124 Walkthrough Transcription from Otter to WhisperX
+
+Early on I confined my use of Claude for coding tasks to new standalone
+projects, unsure of how it would fare in my larger, older, and more
+mission-critical repositories. For example, after a conversation with a
+colleague that ended in a challenge, I let Claude work independently to create
+[this interactive website demonstrating the Monty Hall problem]().
+
+But as I gained confidence in its abilities I eventually decided to let it work
+in my main CS 124 monorepo, which contains all the code supporting the main
+websites and NodeJS microservices. (But not several important backend services
+that are implemented in Kotlin and run on the JVM&mdash;these live in their own
+repositories.) Around the same time I was using Claude to create several useful
+deployment and cluster maintenance scripts: For example, one that ensures that
+all microservice containers are running on our Kubernetes cluster at their
+latest version. But I think that this was the first significant new courseware
+feature that Claude and I worked on together.
+
+One of the primary ways that CS 124 delivers instructional content is through
+what we call _interactive walkthroughs_. These combine an animated Ace editor
+with an audio voiceover. People sometime confuse the result for a video showing
+someone programming&mdash;but it's not, because the code remains fully
+interactive. Students can pause the explanation at any point and interact with
+the code, modifying and running it to perform their own experiments.
+Interactive walkthroughs also have the benefit of having significantly lower
+bandwidth requirements than video, and also avoid the stupidity of taking data
+in a useful format (code) and converting it to a much less useful format
+(pixels) that also happens to take up a lot more space.
+
+Each interactive walkthrough includes an audio track. And, for each audio track,
+we generate a transcript. Transcripts are essential for students who have
+trouble hearing, but they are also useful for other students, and I've always
+considered it important to provide them. I'll admit I was also thinking forward
+to implementing retrieval-augmented generation (RAG) for the CS 124 website, and
+wanted the transcripts for that purpose as well.
+
+Initially we did this using Otter.ai, which was recommended to use by our campus
+accessibility group. This worked, but it had several drawbacks. Otter's "API"
+involved moving files back and forth from a Dropbox folder, which was possible
+to automate using `rclone` but ugly. And that "API" was also expensive, and
+while Illinois would reimburse that cost, the paperwork and lead time involved
+was annoying.
+
+I had investigated options like AssemblyAI, which seems to improve on Otter in
+terms of accuracy and _definitely_ has a better API. But what I really wanted to
+try was Whisper. One of the peculiar things about developing courseware at
+Illinois is that it's frequently easier to get machines that it is to get the
+university to pay a small amount of money for an external service^[Yes, this is
+stupid.]. I have ample compute to support CS 124, so the promise of performing
+transcription on premises was appealing. Around this time I noticed an article
+on WhisperX on Hacker News, and that's what reminded me to get started on this.
+
+To support Claude completing this task I adopted the development pattern that
+I've continued to use and refine when working with agentic AI in mature
+codebases. First, I move the repository to a branch. Next, I write up an initial
+specification describing the task that I want Claude to accomplish. Then I put
+Claude into plan mode and have it produce a plan based on the specification.
+Usually we iterate for a bit at this point. Initially I respond to its plan by
+improving the specification, but eventually as the plan improves I begin
+refining the details through chat interaction.
+
+Once I'm reasonably happy with the plan I allow Claude to begin implementing the
+requested functionality. Usually the plan includes some way to test its work
+before deployment. For the WhisperX transcription support, I installed WhisperX
+on my development machine, and the pre-deployment testing was done through a
+standalone script that I had it develop to reprocess old audio files using
+WhisperX. Running that script allowed me to gain confidence in its
+implementation, while also doing a few spot checks along the way.
+
+In my experience Claude works quickly and gets a lot right on the first pass.
+And while it's not perfect, there's an excitement to having so much working so
+quickly that draws me in to working with it to fix its mistakes and complete the
+task. It's also great at getting tedious things right&mdash;like all of the
+command-line arguments needed to run WhisperX, or the various `Dockerfile`
+incantations needed to add it to the containerized interactive walkthrough
+backend.
+
+If my memory serves it took a few hours spread over a few days to go from no
+familiarity with WhisperX to having it completely replace Otter to generate
+transcripts for our interactive walkthroughs. And keep in mind that the
+interface to the two tools is entirely different. No longer do we need to use
+periodic `rclone` tasks to move audio and transcripts back and forth to Otter.
+Once the WhisperX support was working and deployed, the final task I completed
+on this branch was to have Claude remove all traces of Otter support. That felt
+very satisfying.
+
+Reflecting on how I used AI to help complete this task, two ways in which my AI
+coding assistant was helpful stand out to me. As described above, Claude was
+able to grok how to use and deploy WhisperX much faster than I could have. But
+it was also allowed me to skip an important first step I would have had to
+complete had I done the migration myself: Reviewing the current Otter-based
+implementation. Yes, of course, that code was written by me. But I work across a
+lot of different codebases, hadn't seen that code in a while, and certainly had
+forgotten many important details I would have needed to reload into my brain had
+I completed the WhisperX migration myself.
+
+## Improving CS 124 Quizzes
+
+I'm a strong believer in frequent small assessment. CS 124 was giving weekly
+quizzes when I took over the class in 2017, and I've continued that practice
+while also adding programming and debugging questions to the multiple-choice
+questions students were completing previously. I've published work on our system
+for rapidly authoring programming questions, and at this point our bank of
+programming questions is large enough to support multiple programming questions
+on each weekly quiz, multiple variants of each programming question to create
+unique exams, _and_ provide students with plenty of practice programming
+questions on a practice quiz they use for preparation. But we have far fewer
+multiple choice questions, and an perennial student complaint has been that the
+handful that are included on the practice quiz aren't adequate preparation for
+the larger number they have to complete during their weekly assessment.
+
+I know exactly what's preventing us from providing more practice multiple-choice
+questions: Me! I don't like writing them! Creating more has been on my list of
+things to do for several years, but it always gets pushed to the bottom by
+improvements to the course that I consider more important&mdash;although it's
+fair to wonder if some aren't simply things I consider more interesting. So once
+I observed how effective Claude was at reviewing my CS 124 lessons during
+pre-semester preparation, I figured I might as well explore how well it was able
+to write new multiple-choice questions.
+
+Initially I knew that I only wanted it to author multiple-choice questions for
+our practice quizzes, to ensure that any broken questions that I failed to spot
+wouldn't affect actual student assessment. I also quickly realized that I wanted
+both a way to mark these questions as experimental, and a new reporting
+mechanism allowing students and staff to report problems with them. That way
+we'd warn students that these questions might have problems, and have a way to
+identify ones that _don't_ have problems that might be candidates to rotate onto
+graded assessments in the future. I was able to complete both of these new
+features quickly through collaboration with Claude.
+
+I currently use the following project-specific command to have Claude generate
+new multiple-choice questions for practice quizzes. Note that it uses the graded
+quiz as a model, creating a checklist of questions to either locate or generate
+on the practice quiz. The "create a checklist" framework is one that I saw
+recommended online as a way to keep Claude focused when working on longer tasks,
+to avoid it declaring victory halfway through. I'm also careful to instruct it
+to not create practice questions that are identical to questions from the graded
+quiz, although a few mistakes here would not be the end of the world.
+
+So far this seems to be working quite well. Student complaints about not having
+enough practice multiple-choice questions are down. And while I have yet to
+analyze the data generated by the reporting feature, students have brought
+several bugged questions to my attention on our course forum. In each case,
+given a bit of a hint, Claude was able to find a fix the question itself.
+
+Which brings me to another meta-level observation about generative AI models.
+In my experience they are generally very good at correcting their mistakes. At
+first I thought this was because my corrections were providing additional
+context that they were using in their debugging process&mdash;which is often the
+case when providing error messages or descriptions of incorrect or missing
+behavior. But I've realized that sometimes it's sufficient just to tell them
+that something is wrong: "One of the practice multiple-choice questions on PQ4
+contains a mistake."
+
+You can draw clear comparisons with how we work with other humans. Sometimes the
+right thing to do with a junior colleague&mdash;or one of your graduate
+students&mdash;is just send them back to review their work with the instruction
+to "think harder". But what might constitute a learning experience for a human
+represents an annoyonce when working with AI. Why didn't you spot that mistake
+the first time? It might have been important!
+
+It's certainly possible that this is the result of the current agentic AI
+pricing models, particularly the "all you can eat" pricing for agents like
+Claude Code. The best thing for Anthropic is for Claude to declare victory as
+quickly as possible to avoid consuming unnecessary resources. But in my
+experience that often produces what seem like avoidable mistakes, particularly
+when the agent could have spotted them by reviewing its own work. And it could
+also be possible that this is due to fluctuating model quality or the stochastic
+nature of AI itself.
+
+My guess that is that we'll soon see better mechanisms for developers to
+designate certain tasks as important to ensure that AI agents either spend more
+time or use higher-quality models when working on them. My current workaround
+here, which I sense is also used by other developers, is to manually drag Claude
+back to certain tasks to review or doublecheck or critique its own work, with
+the terminology fluctuating based on my mood or the time of day.
+
+## RAG for CS 124 Course Content
+
+[Claude](-) definitely shines for me when working on CS 124. But I've found it
+invaluable for completing other types of tasks as well. To conclude, I'll
+provide on example drawn from each of three categories: ugly stuff, fun stuff,
+and personal stuff.
+
+## Ugly Stuff: Handouts For My Reading Seminar
+
+I suspect that many using Claude will agree with me when I say that generative
+AI is _great_ at helping you do things that you don't want to do! P articularly
+those terrible awful no-good very bad programming tasks that just have to be
+done even though there's not an ounce of joy or glory in them. Web automation to
+enter dozens of CS 124 staff appoinments? Done. Generating reports for our
+meaningless ABET accreditation process? Done^[And done again when I realized I
+needed a second variety of meaningless report.]. Creating a script to determine
+the rate limits being applied to my Azure GPT endpoints? Done. Removing filler
+words and creating paragraph breaks in a five-hour interview transcript? Done.
+Several other awful coding tasks that, happily, I didn't have to work on long
+enough to remember? Done, done, done!
+
+For some ugly coding tasks, ugly is as ugly does: The output does the job but is
+nothing to be proud of. But I'll describe this one in more detail because the
+output is pretty nice, even if the code is definitely not.
+
+In addition to CS 124, I also teach a small seminar on the intersection between
+technology and society. Each week students complete a reading, discuss it in
+pairs, and perform experiments to examine their own personal relationship with
+technology. I assign selections from books on relevant topics, and do my best to
+have students read some of the best writing from the best thinkers on these
+topics. The entire reading list is available on the course website.
+
+The class is small, and given our focus on device-free interaction, I prefer
+students have access to paper copies of the readings. That means preparing PDFs
+and then printing and copying them each week. The chapters are all from books that I
+have purchased electronically. But in the past, extracting the selected chapters
+from each eBook was a tedious manual process, and one that also produced
+inconsistently-formatted output, despite my best efforts with Calibre.
+
+My goal here was simple. Starting with a DRM-free eBook and list of chapters,
+extract the chapter content in a way that would allow it to be printed with a
+consistent format. My starting point for Claude was a single StackOverflow post
+indicating that this was possible, and providing some general guidance on how to
+accomplish it. I put Claude into vibe code mode and we worked one book at a
+time. We'd get one to work, the next one would be a bit different, we'd make
+some adjustments, and continue the process.
+
+Did this take longer than I had wanted? Yes, it did, although to be fair, I
+wanted it to take about five minutes. Were the results worth it? I think so.
+After many iterations I now have beautifully-formatted handouts for every week
+of the course that meet all of my original design requirements, using a
+framework that makes it easy for me to add, remove, and reorder readings as
+needed.
+
+[As](-) with all of my prior Claude Code projects, this one provided new
+opportunities for learning how to work with AI agents effectively and resulted
+in new observations about their failure modalities.
+
+For example, early on when working on this task we needed a way to convert HTML
+documents to PDFs. Claude find a library that it wanted to use, but it quickly
+became apparent that its chosen library did not support modern CSS styling,
+resulting in illegible output. I suggested that we instead use Puppeteer, which
+allows programmatic control of the Chrome web browser. This is a much heavier
+solution, and starting an entire feature-complete web browser just to generate a
+PDF from HTML might seem like overkill. But it does produce properly-formatted
+output.
+
+When working on another part of the project later and struggling again with HTML
+to PDF conversion, it took me a minute to notice that Claude had _again_ decided
+to use the broken HTML to PDF conversion library rather than the Puppeteer
+approach. True, this was a different part of the project&mdash;formatting the
+discussion questions I author as Markdown so that they could be combined with
+the reading PDFs. But still, it was essentially the same task, and using the
+same buggy library led to the same incorrect results. I'll admit that I may have
+yelled at Claude a bit when I noticed this. Of course, it was quick to correct
+its mistake.
+
+This was also one of the first times that I noticed Claude going to
+inappropriate lengths to complete a task as specified. At some point I had the
+bright idea that, if I could just give it the Amazon product number, it could
+extract the book title and author just from that information, reducing the
+amount of data I would need to provide in the YAML file that laid out the books
+and chapters assigned each week. I had assumed that either Amazon would provide
+an API exposing this information, or that it could easily be web scraped from
+their product listings.
+
+Whoops! Apparently, not so much. Not only is there no API, but Claude quickly
+hit rate limits when trying to web scrape the data. So, instead, I guess to
+satisfy me, it hard-coded the data into one of the the scripts it was working
+on. While this did in fact complete the task in the short term, since it could
+now map a limited number of Amazon product IDs, obviously it completely missed
+the point, which was to be able to look up this information when needed for new
+readings. I eventually just decided to include the title and author information
+in the YAML, and just have Claude double-check that for me. But it was good to
+note that its eagerness to complete a task can result in an implementation that
+entirely missed the mark. I'm wise to this behavior now, and have seen it a few
+more times.
+
+## Fun Stuff: KEXP Double Plays
+
+## Personal Stuff: Claude As Ultimate Frisbee Coach
+
+My final example falls squarely into the category of a personal project, and one
+with only limited overlap with software development.
+I've turned Claude into my personal ultimate frisbee coach!
+
+I restarted playing ultimate frisbee in 2021 after a long hiatus. I was never a
+serious player earlier in my life&mdash;I played on the B Team for Harvard's
+club team Red Line for one semester, and might have attended one day of one
+tournament with them. Maybe. Past that point it was just recreational, primarily
+through intramural contents during undergraduate and graduate school. After we
+moved to Buffalo in 2010 I forgot about the sport entirely.
+
+Since I started playing again in 2020 I've been taking the sport and my own
+fitness more seriously. This year I went to my first tournament in February, and
+was even lucky enough to play at USAU Club Nationals in the Grand Masters age
+division&mdash;which means I'm over fourty. If all goes according to plan I'll
+have played in eight weekend tournaments in 2025 with several different teams,
+as well as playing several times a week through local league and pickup games.
+Returning to the sport has been incredibly beneficial to my physical and mental
+health.
