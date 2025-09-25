@@ -302,7 +302,7 @@ export default function Chat() {
             You&apos;re chatting with Geoffbot, an AI assistant powered by Geoffrey&apos;s writings and website content.
             This is not a direct conversation with Geoffrey himself.
             <br />
-            <small style={{ opacity: 0.7, fontSize: '0.9em' }}>
+            <small style={{ opacity: 0.7, fontSize: "0.9em" }}>
               Rate limited to 10 messages per minute to ensure optimal performance.
             </small>
           </div>
