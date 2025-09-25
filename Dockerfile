@@ -1,7 +1,15 @@
 # syntax=docker.io/docker/dockerfile:1
 
-FROM node:24.6.0-alpine AS base
+# Stage 1: Build Bun
+FROM oven/bun:alpine AS bun_builder
+
+# Stage 2: Build your Node.js Alpine image and copy Bun
+FROM node:24.8.0-alpine AS base
 RUN apk add --no-cache git
+
+# Copy the Bun executable from the bun_builder stage
+COPY --from=bun_builder /usr/local/bin/bun /usr/local/bin/bun
+RUN chmod +x /usr/local/bin/bun
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -10,8 +18,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json package-lock.json* ./
-RUN npm ci
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -20,7 +28,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build --turbopack
+RUN bun build:next
 
 # Production image, copy all the files and run next
 FROM base AS runner
