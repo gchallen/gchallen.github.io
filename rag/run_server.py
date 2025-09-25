@@ -59,17 +59,19 @@ def main():
     # Use import string format for reload to work properly
     if reload:
         # Development mode - single worker with reload
-        uvicorn.run("rag_server:app", host=host, port=port, reload=reload, access_log=False)
+        uvicorn.run(
+            "rag_server:app", host=host, port=port, reload=reload, access_log=False
+        )
     else:
         # Production mode - multiple workers, no reload
         uvicorn.run(
-            "rag_server:app", 
-            host=host, 
-            port=port, 
+            "rag_server:app",
+            host=host,
+            port=port,
             workers=workers,
             reload=False,
             access_log=False,
-            log_level="info"
+            log_level="info",
         )
 
 

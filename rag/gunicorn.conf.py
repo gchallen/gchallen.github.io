@@ -27,7 +27,7 @@ graceful_timeout = 30
 # Logging
 loglevel = os.getenv("LOG_LEVEL", "info")
 accesslog = "-"  # stdout
-errorlog = "-"   # stderr
+errorlog = "-"  # stderr
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" %(D)s'
 
 # Process naming
@@ -49,21 +49,26 @@ certfile = os.getenv("SSL_CERTFILE")
 max_requests = 1000
 max_requests_jitter = 100
 
+
 def post_fork(server, worker):
     """Called after a worker has been forked."""
     server.log.info(f"Worker spawned (pid: {worker.pid})")
+
 
 def pre_fork(server, worker):
     """Called before a worker is forked."""
     pass
 
+
 def when_ready(server):
     """Called when the server is ready to accept connections."""
     server.log.info("RAG Server ready to accept connections")
 
+
 def worker_int(worker):
     """Called when a worker receives the INT signal."""
     worker.log.info(f"Worker {worker.pid} received INT signal")
+
 
 def on_exit(server):
     """Called when the server is stopping."""
