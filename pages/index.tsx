@@ -70,8 +70,9 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           .
         </p>
         <p>
-          Here&apos;s a <Link href="/about">long bio</Link>, or perhaps you&apos;d prefer something{" "}
-          <Link href="/bio">shorter</Link>.
+          Here&apos;s a <Link href="/about">long bio</Link>.
+          Perhaps you&apos;d prefer something <Link href="/bio">shorter</Link>?
+          Or you could <Link href="/chat">chat</Link> with my AI assistant?
         </p>
         <hr style={{ marginTop: 0 }} />
         <Essays published={published} limit random showSubscribe />
