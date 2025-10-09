@@ -25,7 +25,7 @@ Practice makes perfect.
 
 Starting in Fall 2018 we began requiring students to complete a daily homework problem in CS1.
 We also included several small programming problems on the weekly quizzes given in our [computer-based testing facility](https://cbtf.engr.illinois.edu/).^[More on this facility soon. It's the single most effective tool I've found for teaching CS1.]
-In Fall 2018 students completed 108 small programming problems in both unproctored and unproctored environments, writing approximately 14,000 non-commenting lines of code per student, or around 133 lines per student per day over a 15-week semester.
+In Fall 2018 students completed 108 small programming problems in both proctored and unproctored environments, writing approximately 14,000 non-commenting lines of code per student, or around 133 lines per student per day over a 15-week semester.
 By Spring 2020 that number had risen a bit to around 19,000 lines-per-student.
 
 Students start the semester writing snippets that merely declare and initialize variables, but finish by implementing Quicksort partition and sophisticated recursive algorithms on binary trees.
@@ -109,7 +109,7 @@ Faculty?
 Now I’m laughing.
 And recruit undergraduate course staff and now it's the blind leading the blind.
 
-[I](-) do think that we can should do more with the low-end code quality aspects described above, the ones that we can identify automatically.
+[I](-) do think that we should do more with the low-end code quality aspects described above, the ones that we can identify automatically.
 When I started teaching CS1 I began requiring running all student code through the [`checkstyle`](https://checkstyle.sourceforge.io/) Java linter.
 Our `checkstyle` configuration is based on the original Sun rules and mainly checks style, enforcing rules related to whitespace, brace placement, indentation, and the like.
 
@@ -120,7 +120,7 @@ Consistency is the key.
 I usually get a few students that want to argue about brace placement, but they tend to fall in line quickly.
 
 The second more pragmatic reason is that it really helps the course staff
-Reading lots of unfamiliar is hard enough for inexperienced course staff.
+Reading lots of unfamiliar code is hard enough for inexperienced course staff.
 There's no reason to make it harder by letting every student make their own choices about formatting.
 Go really gets this right by having a language standard.
 Java doesn’t, but by using `checkstyle` we make sure that all student code looks as similar as possible.
