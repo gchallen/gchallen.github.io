@@ -1,7 +1,7 @@
 import { signOut, useSession } from "next-auth/react"
 import { useEffect, useRef } from "react"
 
-const SignIn: React.FC = () => {
+const SignOut: React.FC = () => {
   const { data: session, status } = useSession()
   const tried = useRef(false)
 
@@ -19,4 +19,4 @@ const SignIn: React.FC = () => {
   return null
 }
 
-export default SignIn
+export default SignOut
