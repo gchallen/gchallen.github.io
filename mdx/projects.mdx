@@ -39,7 +39,7 @@ This novel component combines the best features of recorded live coding—being 
 Because the interactive walkthrough is an animated editor and _not_ a video, students can pause at any point and edit or execute the code.
 
 Interactive walkthroughs are also recorded _in-situ_ directly on the page where they are viewed, providing authors with awareness of how that explanation is used within the context of the surrounding information.
-By lowering the barrier to providing this kind of content, we have been able to incorporate contributions [hundreds of CS 124 course staff](https://www.learncs.online/people), significantly diversifying the course's voice.
+By lowering the barrier to providing this kind of content, we have been able to incorporate contributions from [hundreds of CS 124 course staff](https://www.learncs.online/people), significantly diversifying the course's voice.
 
 We are working on making this explanatory component more broadly available^[[EdStem Lessons](https://edstem.org/lessons) also has a similar feature in beta, if you'd prefer a commercial alternative.].
 Stay tuned!
@@ -50,7 +50,7 @@ Stay tuned!
 ## Rapid and Accurate Programming Exercise Authoring and Autograding ((questioner))
 
 Students learning to program benefit from practice.
-But the traditional approach to writing autograded programming questions by authoring test suite is slow, inaccurate, and ineffective.
+But the traditional approach to writing autograded programming questions by authoring test suites is slow, inaccurate, and ineffective.
 Writing test suites that are resistant to memoization and catch all corner cases requires tediously enumerating many inputs.
 Test suite authoring provides no feedback to instructors about how effective their test suites are, leaving them unsure about how many test cases are needed.
 And software testing frameworks are not designed to be used without access to the tests themselves, which many autograders hide from students during the grading process.
@@ -102,7 +102,7 @@ Beginning programmers make mistakes, and learning how to fix those mistakes is c
 I tell students: You never stop making mistakes when writing code, you just get better at fixing them.
 
 Students get a certain amount of practice making mistakes simply from completing programming tasks.
-However, they still make not make _enough_ mistakes to learn how to identify and fix them efficiently and without getting flustered.
+However, they still may not make _enough_ mistakes to learn how to identify and fix them efficiently and without getting flustered.
 We observed students who were otherwise well-prepared for our weekly programming quizzes still getting stuck after making a small error—unable to utilize the error output to diagnose and correct the problem.
 
 To provide students more practice with debugging we created a tool that autogenerates incorrect submissions to our [programming exercises](#questioner).
@@ -164,7 +164,7 @@ To provide students with practice writing tests, we are working on an approach t
 Given the reference solution provided to [Questioner](#questioner), we use the same combination of mutation and manually-labeled examples to produce a set of incorrect submissions.
 Next, we require that students provide a test suite which can accurately distinguish the correct submissions from the incorrect ones.
 
-Once complete, this new system will instantly add debugging exercises to nearly every problem in our existing library of over 700 Java and Kotlin programming exercises.
+Once complete, this new system will instantly add testing exercises to nearly every problem in our existing library of over 700 Java and Kotlin programming exercises.
 We plan to deploy this in [CS 124](https://cs124.org/) and on [`learncs.online`](https://learncs.online) by Fall 2023.
 
 **GitHub**: Being implemented as part of [Questioner](https://github.com/cs124-illinois/questioner)
@@ -176,7 +176,7 @@ Projects described below have either not yet been fully completed or are not yet
 ### Polyglot Playgrounds ((polyplayground))
 
 The approach to providing secure high-speed untrusted Java and Kotlin code execution used by [Jeed](#jeed) relies on unique features of the Java Virtual Machine.
-A more general is to use containerization to protect the host from untrusted code.
+A more general approach is to use containerization to protect the host from untrusted code.
 While slower, this allows a single backend to easily support student experimentation with multiple different languages.
 
 **Demo**: https://cs124-illinois.github.io/playground/
@@ -187,7 +187,7 @@ Stuff that I don't use anymore but haven't forgotten about.
 
 ### Slide-Based Participation Tracking
 
-To measure class participation when teaching synchronously in-person, I developed a slide-activity-based tool to determine whether a student was following along with the web-based slides—and therefor, probably in attendance.
+To measure class participation when teaching synchronously in-person, I developed a slide-activity-based tool to determine whether a student was following along with the web-based slides—and therefore, probably in attendance.
 Student progression through the online slide decks (examples [here](https://cs125-old.cs.illinois.edu/learn/)) was recorded, and their activity overlaid with mine.
 Students who were following along a reasonable percentage of the time were marked as present and received credit for class participation.
 The system represented a non-invasive way of recording participation without requiring a secondary device, and was eventually well-received by students.
