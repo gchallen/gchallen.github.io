@@ -20,18 +20,23 @@ const config = {
         permanent: true,
       },
       {
+        source: "/promotion",
+        destination: "/statements",
+        permanent: false,
+      },
+      {
         source: "/statements/teaching",
-        destination: "https://docs.google.com/document/d/1FYIgw9qJ2Gmprm6m7WthTDax7cB5PaUXfDEE-x3DHM0/edit?usp=sharing",
+        destination: "/teaching",
         permanent: false,
       },
       {
         source: "/statements/scholarly",
-        destination: "https://docs.google.com/document/d/134kO2Eo70Suh_DS_42o7DXsj-Ox2pj_OHC1Ep3Nfvnk/edit?usp=sharing",
+        destination: "/scholarship",
         permanent: false,
       },
       {
         source: "/statements/service",
-        destination: "https://docs.google.com/document/d/1cvbJq5BLkqOVBAQP-Gt1vjfmi0jGe8LnKr1yr2SxarM/edit?usp=sharing",
+        destination: "/service",
         permanent: false,
       },
     ]
