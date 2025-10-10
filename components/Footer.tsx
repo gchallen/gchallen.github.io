@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
       </div>
       <div>
         {process.env.NEXT_PUBLIC_SHOW_OPENING && <Link href="/opening">Recruiting</Link>}
-        <Link href="/promotion">Promotional Materials</Link>
+        <Link href="/statements">Statements</Link>
         <LoginButton text />
       </div>
       <div id="feeds">

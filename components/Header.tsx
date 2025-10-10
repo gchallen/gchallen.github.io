@@ -60,8 +60,8 @@ const SidebarContent: React.FC<{ setOpen: (open: boolean) => void }> = ({ setOpe
           </SidebarLink>
         </h2>
         <h2>
-          <SidebarLink href="/promotion" setOpen={setOpen}>
-            Promotional Materials
+          <SidebarLink href="/statements" setOpen={setOpen}>
+            Statements
           </SidebarLink>
         </h2>
       </div>
