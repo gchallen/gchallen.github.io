@@ -810,3 +810,151 @@ div.loginButton {
 .similarityScore {
   opacity: 0.7;
 }
+
+/* Table of Contents styles */
+.contentWithToc {
+  position: relative;
+}
+
+.mainContent {
+  // Normal content flow, no changes needed
+}
+
+.tocSidebar {
+  position: fixed;
+  top: calc(68px + 1.5rem);
+  right: max(1rem, calc((100vw - #{$maxTextWidth}px) / 2 - 240px - 2rem));
+  width: 240px;
+  max-height: calc(100vh - 68px - 3rem);
+  overflow-y: auto;
+  padding-top: 1.5rem;
+
+  @media screen and (max-width: calc(#{$maxTextWidth}px + 240px + 240px)) {
+    display: none;
+  }
+
+  @media print {
+    display: none;
+  }
+
+  // Scrollbar styling for dark mode
+  scrollbar-width: thin;
+  scrollbar-color: #cccccc #fdfdfd;
+  .dark-mode & {
+    scrollbar-color: #555555 #333333;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #fdfdfd;
+    .dark-mode & {
+      background: #333333;
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #cccccc;
+    border-radius: 3px;
+    .dark-mode & {
+      background: #555555;
+    }
+  }
+}
+
+.tableOfContents {
+  font-size: 0.95em;
+  line-height: 1.3;
+
+  .tocTitle {
+    font-size: 1.15em;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: #555555;
+    .dark-mode & {
+      color: #dddddd;
+    }
+  }
+
+  .tocList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: #666666;
+      transition: color 0.2s;
+      line-height: 1.25;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .dark-mode & {
+        color: #aaaaaa;
+      }
+
+      &:hover {
+        color: #444444;
+        text-decoration: underline;
+
+        .dark-mode & {
+          color: #dddddd;
+        }
+      }
+
+      &.active {
+        color: #222222;
+        font-weight: bold;
+
+        .dark-mode & {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  .tocNested {
+    list-style: none;
+    margin: 0.2rem 0 0 0;
+    padding-left: 1rem;
+
+    li {
+      margin-bottom: 0.3rem;
+      font-size: 0.95em;
+    }
+  }
+
+  .tocToggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 0.25rem;
+    color: #888888;
+    font-size: 0.85em;
+    line-height: 1;
+    width: 1em;
+    text-align: center;
+
+    .dark-mode & {
+      color: #aaaaaa;
+    }
+
+    &:hover {
+      color: #444444;
+
+      .dark-mode & {
+        color: #dddddd;
+      }
+    }
+  }
+}

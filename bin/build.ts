@@ -19,7 +19,7 @@ import remarkMath from "remark-math"
 import smartypants from "remark-smartypants"
 import replaceExt from "replace-ext"
 import slugify from "slugify"
-import { comments, fixfootnotes, fiximages, headings, highlighter, links, pullquotes } from "./plugins"
+import { comments, extractToc, fixfootnotes, fiximages, headings, highlighter, links, pullquotes } from "./plugins"
 
 const parser = new ArgumentParser()
 parser.add_argument("input")
@@ -54,24 +54,25 @@ async function update(source: string) {
     }
   }
   const reading = readingTime(content)
-  const contents = (
-    await compile(content, {
-      rehypePlugins: [rehypeKate],
-      remarkPlugins: [
-        comments,
-        [footnotes as any, { inlineNotes: true }],
-        links,
-        headings,
-        pullquotes,
-        fixfootnotes,
-        smartypants,
-        highlighter,
-        remarkGfm,
-        [fiximages, { url: path.join("mdx", url) }],
-        remarkMath,
-      ],
-    })
-  ).toString()
+  const compiled = await compile(content, {
+    rehypePlugins: [rehypeKate],
+    remarkPlugins: [
+      comments,
+      [footnotes as any, { inlineNotes: true }],
+      links,
+      extractToc,
+      headings,
+      pullquotes,
+      fixfootnotes,
+      smartypants,
+      highlighter,
+      remarkGfm,
+      [fiximages, { url: path.join("mdx", url) }],
+      remarkMath,
+    ],
+  })
+  const toc = (compiled.data as any)?.toc || []
+  const contents = compiled.toString()
 
   // Generate HTML for RAG
   try {
@@ -152,7 +153,11 @@ ${lines.slice(splitPoint + 1).join("\n")}`.trim()
   const publishedAt = data.published ? moment(data.published).utc().format("YYYY-MM-DD") : undefined
   await writeFile(
     dataPath,
-    JSON.stringify(!isEmpty ? { ...data, url, reading, publishedAt } : { url, reading, publishedAt }, null, 2),
+    JSON.stringify(
+      !isEmpty ? { ...data, url, reading, publishedAt, toc } : { url, reading, publishedAt, toc },
+      null,
+      2,
+    ),
   )
 
   const contentImportPath = replaceExt(path.relative(path.dirname(pagePath), contentPath), "")

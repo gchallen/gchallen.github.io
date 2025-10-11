@@ -9,6 +9,7 @@ import Code from "../components/Code"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import SubscribeButton from "../components/SubscribeButton"
+import TableOfContents, { TocHeading } from "../components/TableOfContents"
 import YouTube from "../components/YouTube"
 
 const Footnote: React.FC<PropsWithChildren & { counter: string }> = ({ counter, children }) => {
@@ -97,10 +98,13 @@ const Wrapper: React.FC<
       noDate?: boolean
       noTitle?: boolean
       technical?: boolean
+      showTOC?: boolean
+      toc?: TocHeading[]
     }
   }
 > = ({ frontmatter, children }) => {
-  const { title, description, technical, publishedAt, reading, noDate, noTitle, isEssay, draft } = frontmatter
+  const { title, description, technical, publishedAt, reading, noDate, noTitle, isEssay, draft, showTOC, toc } =
+    frontmatter
   const actualTitle = `Geoffrey Challen : ${title}`
   return (
     <>
@@ -141,6 +145,11 @@ const Wrapper: React.FC<
         )}
         {children}
       </main>
+      {showTOC && toc && toc.length > 0 && (
+        <aside className="tocSidebar">
+          <TableOfContents headings={toc} />
+        </aside>
+      )}
       {isEssay && (
         <div id="thanks">
           <p className="thanks">

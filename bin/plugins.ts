@@ -293,3 +293,68 @@ export function fiximages(options: { url: string }) {
   }
   return transformer
 }
+
+export interface TocHeading {
+  text: string
+  id: string
+  depth: number
+  children?: TocHeading[]
+}
+
+export function extractToc() {
+  function transformer(tree: Node & { data?: any }, file: any) {
+    // Start with a "Top" entry
+    const toc: TocHeading[] = [
+      {
+        text: "Top",
+        id: "top",
+        depth: 1,
+      },
+    ]
+
+    visit(tree, "heading", visitor)
+
+    function visitor(node: OurNode & { depth?: number }) {
+      // Only extract h2 and h3
+      if (!node.depth || node.depth < 2 || node.depth > 3) {
+        return
+      }
+
+      // Extract the text from the heading
+      const text = toString(node)
+
+      // Extract the ID (matches the logic from headings() plugin)
+      let id = slugify(text.toLowerCase())
+      const match = /^(.*?)\s*\(\(([\w-]+)\)\)$/.exec(text)
+      if (match && match[1]) {
+        id = match[2]
+      }
+
+      const heading: TocHeading = {
+        text: match ? match[1] : text,
+        id,
+        depth: node.depth,
+      }
+
+      if (node.depth === 2) {
+        // Top-level h2
+        toc.push(heading)
+      } else if (node.depth === 3 && toc.length > 0) {
+        // h3 - nest under the last h2
+        const parent = toc[toc.length - 1]
+        if (!parent.children) {
+          parent.children = []
+        }
+        parent.children.push(heading)
+      }
+    }
+
+    // Attach TOC to file data (vfile) so it can be accessed later
+    if (!file.data) {
+      file.data = {}
+    }
+    file.data.toc = toc
+  }
+
+  return transformer
+}
