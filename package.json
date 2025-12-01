@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build:mdx": "tsx bin/build.ts mdx output --build --clean",
-    "build:next": "next build --turbopack",
+    "build:next": "next build",
     "build:vector": "bun build:mdx && cd rag && source venv/bin/activate && python vector_db_builder.py --html-dir html --output-dir vector_db && deactivate",
     "build:vector:clean": "bun build:mdx && cd rag && source venv/bin/activate && python vector_db_builder.py --clean --html-dir html --output-dir vector_db && deactivate",
     "buildAndPush": "bun build:vector && bun build:next && bun docker:push && bun rag:push",
