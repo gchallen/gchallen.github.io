@@ -40,14 +40,25 @@ async function update(source: string) {
     const postfix = data.draft ? "-draft" : ""
     const name = `${prefix}${slugify(data.title, { lower: true })}${postfix}.jsx`
     pagePath = path.join("pages/essays", name)
+  } else if (source.startsWith("mdx/talks/")) {
+    data.isTalk = true
+    const prefix = data.published ? `${moment(data.published).utc().format("YYYY-MM-DD")}-` : ""
+    const name = `${prefix}${slugify(data.title, { lower: true })}.jsx`
+    pagePath = path.join("pages/talks", name)
+    // Derive slides URL from directory name by convention (talks use index.mdx in directories)
+    const talkDir = source.endsWith("/index.mdx") ? path.basename(path.dirname(source)) : path.basename(source, ".mdx")
+    data.slidesUrl = `/talks/${talkDir}/slides.html`
   } else {
     pagePath = replaceExt(path.join("pages", path.relative(args.input, source)), ".jsx")
   }
 
   const url = replaceExt(pagePath.replace("pages/", ""), "")
   if (source.endsWith("/index.mdx")) {
-    const otherFiles = (await glob(path.join(path.dirname(source), "*"))).filter((path) => path !== source)
-    const publicDir = path.join("public/mdx", url)
+    const otherFiles = (await glob(path.join(path.dirname(source), "*"))).filter((p) => p !== source)
+    // For talks, copy to public/talks/{talkDir}/, otherwise public/mdx/{url}/
+    const publicDir = data.isTalk
+      ? path.join("public/talks", path.basename(path.dirname(source)))
+      : path.join("public/mdx", url)
     await mkdirs(publicDir)
     for (const otherFile of otherFiles) {
       await copy(otherFile, path.join(publicDir, path.basename(otherFile)))

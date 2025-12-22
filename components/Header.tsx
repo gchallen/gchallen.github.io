@@ -45,6 +45,11 @@ const SidebarContent: React.FC<{ setOpen: (open: boolean) => void }> = ({ setOpe
           </SidebarLink>
         </h2>
         <h2>
+          <SidebarLink href="/talks" setOpen={setOpen}>
+            Talks
+          </SidebarLink>
+        </h2>
+        <h2>
           <SidebarLink href="/about" setOpen={setOpen}>
             About
           </SidebarLink>
@@ -193,6 +198,9 @@ const Header: React.FC = () => {
           </div>
           <div>
             <Link href="/chat">Chat</Link>
+          </div>
+          <div>
+            <Link href="/talks">Talks</Link>
           </div>
           <div>
             <Link href="/CV">CV</Link>

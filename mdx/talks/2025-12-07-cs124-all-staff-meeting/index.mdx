@@ -1,0 +1,79 @@
+---
+title: CS 124 All-Staff Meeting
+description: >
+  Staff meeting discussing the impact of AI on CS assignments, reflecting on
+  this semester's experiments, and planning the transition to student-driven
+  projects.
+published: 2025-12-07
+audience: CS 124 Staff
+---
+
+## Summary
+
+For those who couldn't attend, here's a summary of what we discussed at our staff meeting.
+
+## Introduction
+
+I wanted this to be a chance for us to come together as staff and communicate with each other. We should do this more often—it's something I've wanted to do for a few semesters but just haven't in the past. One of the reasons I wanted to do it this year is because of the changes we've made to accommodate AI and introduce it into the course. I also wanted to talk about next semester and how we're going to continue to try to improve with some new ideas for spring.
+
+## Traditional CS Assignment Structure
+
+Traditional assignments for computer science courses typically have a certain structure. The instructor comes up with an idea, then translates that idea into a specification for the assignment. That specification is what gets given to students so they can complete the assignment. If we're talking about programming assignments, this is a model followed by almost every programming assignment you've done here at Illinois. The student receives the specification, writes code to implement it, and submits that code for evaluation. The specification is then used again during evaluation to determine whether the student has completed the assignment.
+
+The specification plays this central role—it's incredibly important because without it, students don't know what to do and they don't know how they're going to be evaluated. It's really an interface between the staff and the students, and like any other interface, we have to be careful to make sure it's properly specified. This is especially true when using autograders, because the code is graded by a computer. The specification has to be quite precise, and any mismatch between the autograder and the specification causes a lot of frustration for students.
+
+As an example, consider what happened with MP3. I essentially broke the mapping between the specification and the autograder by not providing enough information. The test suites were using one way of toggling a button, and students had to register a particular event handler to receive those events. That's the kind of nitty-gritty detail you have to describe when writing a specification for an auto-graded assignment.
+
+## How AI Coding Agents Changed Everything
+
+Traditionally, before generative AI, what we were testing was really a student's ability to translate a specification into code. That is the assignment—everything else is just a wrapper. There have always been ways for students to work around this expectation, which we call cheating. The obvious approach for frequently reused assignments is to find someone who already wrote the code and submit it as your own. We've worked around this by rotating assignments regularly. Over the past three or four years, CS124 has used a new machine project almost every year so students aren't finding solutions from previous semesters.
+
+But here's the problem today. Coding agents have fundamentally changed this picture. The reason we rotated assignments is because if students couldn't find someone who had already done the work, they were out of luck—there was no tool to take a specification and translate it into code. But now we've built that tool. It's called a coding agent, and it's very good at taking specifications and translating them into code.
+
+Over the summer, once I started working with Claude and got a sense of what it was capable of, I took the specification for the previous MP and put Claude into "vibe code mode." I watched it do the entire assignment essentially unaided. There was one place where I had to provide some information, but it was minimal. This was eye-opening because it showed me both what these tools are capable of and the fact that this type of assignment has essentially very little value for a student using a good AI coding agent. If the agent can do the entire assignment, the student is doing little to nothing.
+
+This led me in two directions. First, I decided to introduce coding agents into the course—we're not forcing anyone, but we're allowing and encouraging their use because this is how people are going to write code in the future. I do acknowledge, as an aside, that this is a very anxious time for many of us, myself included. This is going to have a huge impact and will affect things in ways that aren't always positive for all of us. It's going to be harder to get jobs. If you're a junior or senior in particular, this is not great timing because we spent several years training you how to do one thing, and now that skill is of much lower value than it used to be. I just wanted to acknowledge that because I think the discomfort people are feeling is driven by these changes, and it's important for us to confront this together.
+
+## This Semester's Approach
+
+So how do we respond to agents being able to take specifications and turn them into code? There's the approach of just telling students not to use AI. I have two problems with that. First, I don't think it works very well—some students will still use AI and get very little out of the assignment if we don't make changes to accommodate AI usage. Second, I don't think it's the right thing to do. Students should be learning how to utilize AI coding agents, collaborate with them effectively, and use them to generate, debug, and understand code. I want students coming out of this class to be very aware of what these tools are capable of.
+
+This semester, we tried to provide specifications that were less precise and complete. We used to provide students with all the test suites for each MP checkpoint, which was great for transparency and reduced autograder load. But those test suites are too much when working with a coding agent. The goal of the assignment is for students to learn something by doing something. If students aren't actually doing much, they're not going to learn much.
+
+So we decided not to provide full test suites, which put us in the category of courses that use hidden test suites. I've actually been an outspoken opponent of hidden test suites because I think they cause problems with how students relate to testing. Tests in a good software development project are a source of happiness and joy—the projects I like to work on most are the ones with good test suites. But I don't think students come away feeling that way about tests when they take computer science courses. When you're using tests in a realistic way, you always have access to the test suite. You're never writing code to pass some hidden set of tests that someone else won't show you. That's bizarre and weird, and that's only something we do to students during autograding.
+
+Hidden tests create other problems too. Because students don't do their own local testing, they're more likely to submit more often to the autograder, using it to "hill climb." They submit, take the feedback, hand it to Claude, and inch forward on the assignment. This creates extra load for our autograder, which is already slow—it takes several minutes to grade each commit because we're doing full system emulation to test the Android UI properly. Homework submissions take about 100-200 milliseconds; the MP might take 300 seconds.
+
+We also tried providing specifications in non-written form, like video instructions for MP3 integration tests, hoping students would have to translate the video into English for Claude. Unfortunately, my mistake with the test suites made it hard to evaluate whether this approach worked.
+
+I will say that overall, students seem able to complete the MP and tutoring wait times have been reasonable even around deadlines. The MP is a lot easier than it used to be. But I also think students aren't learning very much. So I consider this to be a failed experiment, and I'll be honest with students about that. There's an inherent tension: the more accurate the specification, the more useful it is to a coding agent and the more likely it is that students don't have to do anything. But the less accurate the specification, the more likely we're just frustrating students with ambiguities. This is almost an impossible tension to resolve.
+
+## Spring Semester Plan: "My Project"
+
+Let's go back to the model: instructor comes up with idea, instructor translates idea to specification, student translates specification to code. Where do AI agents come into this picture? It's really the translation of specification to code that they're really good at, and we want students to use them for that purpose. So let's imagine the AI agent is translating specification into code. Where is the human left?
+
+The human is left translating the idea they have in their mind into a specification for the coding agent to follow. And that's what we're going to have students do next spring. This implies that every student will be doing their own project—essentially an independent project. I thought about calling it the IP, but I think it's funnier to call it "My Project." When I started teaching CS124 (which used to be CS125), we gave students a series of machine problems. When we unified them into a single Android app, we started calling it the machine project. Now we're going from "machine problem" to "My Project" by way of "machine project"—we've managed to retire both original words while keeping the MP acronym.
+
+Here's how it will work. Students will spend their discussion sections over the first half of the course coming up with an idea for their app, running that idea by other people, maybe doing some writing about it, doing some app design, talking about different activities, and drawing pictures of what screens will look like. About six weeks of idea development while we teach them enough code to begin working on Android. Around the same time—maybe a little earlier—we'll get them started installing Android. Then they'll use Claude to take their idea and turn it into a working application over the second half of the semester.
+
+This requires some changes. We'll be using Tuesday discussions for student work and requiring attendance, so we'll need to staff them. We'll probably put more priority during hiring, particularly for tutors, to make sure we have enough people to supervise those discussion sections. The MP lesson content will also need to become much more general—I'll need to figure out what general-purpose content will be useful to most students regardless of what idea they're working on. The one constraint is that students have to build an Android app so they're continuing to work in the Java/Kotlin ecosystem.
+
+## Maintaining Classical Programming
+
+One thing that's really important to keep in mind is that we are still going to be testing students about their ability to perform basic programming tasks in the CBTF. That part of the course is not going away. The grade component for CBTF quizzes may actually increase—it went from 60% to 70% this semester and might go to 80% next semester. So we might end up with 80% CBTF, 10% homework, 10% My Project.
+
+We're going to maintain that foundation of authentic ability at what I'm going to start calling "classical programming." I don't want to change everything about the class at once, but I'm increasingly uncertain about whether this is an appropriate thing to teach, or at least whether the way we're teaching it is appropriate. I will continue to defend learning classical programming from the perspective of mental development. Learning how to write code to solve simple problems is a great way to learn how to think more clearly and express yourself more accurately. There's reading comprehension involved. These are all really good things—it's a great mental activity, like a crossword puzzle.
+
+But I think classical programming is increasingly not going to be directly connected to software development practice because people will use coding agents that have less and less interaction with actual source code. There's definitely a future arriving where agents might just write assembly code directly because no human ever has to look at it. A compiler just generates assembly code because no one ever looks at it—you can hand-optimize assembly and do better than a compiler in certain cases, but nobody does because the compiler is good enough.
+
+So we'll keep doing classical programming through lessons and CBTF quizzes. What we might think about going forward is whether we want to change how we teach classical programming to lean into the parts about learning how to think, and maybe away from parts that were previously more connected to software development practice.
+
+## Call for Feedback
+
+I want to open up the floor for questions, discussion, and commentary. It's particularly important now, given that we're challenged by changes around us, to be honest and frank with each other about the course. I'm very interested in hearing critical feedback, particularly from people who are in the arena with me. Staff feedback is much more valuable because I know you care about the course and are invested in it. We're not always going to agree about everything, and that's okay. I'm someone you can disagree with safely, and I really welcome that.
+
+I will say that I'm excited about "My Project" because I think it'll be tremendously cool for students to be able to build their own apps. That's something we used to do in CS125 as a final project, but we ran out of time in the current version of the course. The reality was that students without prior programming experience weren't ready to build their own apps—but now, by collaborating with AI, they are. I think we'll see a larger number of really interesting apps from a larger spectrum of students.
+
+This is another experiment in spring. It has risks and we're not necessarily going to get it right the first time. But unlike this semester, I think the upside potential is much higher. If we can get students thinking about their own ideas and their own problems they want to solve, some of them are going to have a blast. They're going to dig in and learn way more than we would have ever taught them because they're working on something they care about. When you work on something you care about, it sucks you in more effectively and you get personally attached to it in a way that no one is ever going to do with an MP that a thousand students have to do.
+
+Thanks, everybody, for listening. Looking forward to the conversation.

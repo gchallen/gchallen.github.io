@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CS 124 All-Staff Meeting</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Raleway:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --r-background-color: #f8f8f8;
+        --r-main-color: #1a1a1a;
+        --r-heading-color: #0a0a0a;
+        --r-link-color: #2a5db0;
+        --r-heading-font: "Montserrat", sans-serif;
+        --r-main-font: "Raleway", sans-serif;
+      }
+      .reveal h1,
+      .reveal h2,
+      .reveal h3 {
+        text-transform: none;
+        font-family: "Montserrat", sans-serif;
+      }
+      .reveal {
+        font-family: "Raleway", sans-serif;
+      }
+      .reveal section {
+        text-align: left;
+      }
+      .reveal ul,
+      .reveal ol {
+        display: block;
+      }
+      .reveal li {
+        margin: 0.5em 0;
+      }
+      .reveal blockquote {
+        width: 90%;
+        font-style: italic;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        border-left: 4px solid #2a5db0;
+      }
+      .reveal .center {
+        text-align: center;
+      }
+      .reveal .small {
+        font-size: 0.7em;
+      }
+      .reveal table {
+        margin: 0.5em 0;
+      }
+      .reveal td {
+        padding: 0.3em 0.5em;
+      }
+      .reveal .slides section {
+        transition-duration: 0.15s !important;
+      }
+      .slide-title {
+        position: fixed;
+        bottom: 16px;
+        left: 20px;
+        font-size: 0.5em;
+        color: #666;
+        font-family: "Montserrat", sans-serif;
+        z-index: 100;
+      }
+      .slide-logo {
+        position: fixed;
+        top: 0;
+        right: 20px;
+        width: 80px;
+        height: 80px;
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slide-title">CS 124 All-Staff Meeting</div>
+      <img class="slide-logo" src="https://www.cs124.org/images/logo-460x460.png" alt="CS 124" />
+      <div class="slides">
+        <!-- Title Slide -->
+        <section class="center">
+          <h1>CS 124 All-Staff Meeting</h1>
+          <h3>AI, Assignments, and the Path Forward</h3>
+          <p class="small">December 7, 2025</p>
+        </section>
+
+        <!-- Thank You -->
+        <section class="center">
+          <h2>Thank You</h2>
+          <p>To all of the CS 124 staff for your hard work this semester.</p>
+          <p>This has been a challenging time, and I appreciate everything you do.</p>
+        </section>
+
+        <!-- Acknowledging Anxiety - moved up -->
+        <section>
+          <h2>An Anxious Time</h2>
+          <ul>
+            <li>This will affect our profession</li>
+            <li>Harder to get jobs</li>
+            <li>Skills we learned are of lower value</li>
+          </ul>
+          <p>It's important to confront this together.</p>
+        </section>
+
+        <!-- Introduction -->
+        <section>
+          <h2>Why We're Here</h2>
+          <ul>
+            <li>Staff communication and collaboration</li>
+            <li>Discuss AI changes this semester</li>
+            <li>Talk about plans for spring</li>
+          </ul>
+        </section>
+
+        <!-- Traditional Model -->
+        <section>
+          <h2>Traditional CS Assignments</h2>
+          <h3>The Standard Model</h3>
+          <ol>
+            <li>Instructor comes up with <strong>idea</strong></li>
+            <li>Instructor translates idea to <strong>specification</strong></li>
+            <li>Student translates specification to <strong>code</strong></li>
+            <li>Code is evaluated against specification</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>The Central Role of Specification</h2>
+          <ul>
+            <li>Interface between staff and students</li>
+            <li>Must be precise for autograding</li>
+            <li>Mismatch = frustration</li>
+          </ul>
+          <p class="small">Example: MP3 button event handler issue</p>
+        </section>
+
+        <!-- The Problem -->
+        <section>
+          <h2>How AI Changed Everything</h2>
+          <p>Traditional assignments tested one thing:</p>
+          <blockquote>Specification &rarr; Code translation</blockquote>
+        </section>
+
+        <section>
+          <h2>The Old Anti-Cheating Approach</h2>
+          <ul>
+            <li>Rotate assignments every semester</li>
+            <li>Students can't find old solutions</li>
+            <li>No tool existed to translate spec &rarr; code</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>But Now...</h2>
+          <blockquote>We've built that tool. It's called a coding agent.</blockquote>
+          <p>Claude completed last year's MP essentially unaided in "vibe code mode"</p>
+        </section>
+
+        <section>
+          <h2>The Implication</h2>
+          <p>If the agent can do the entire assignment...</p>
+          <p><strong>...the student is doing little to nothing.</strong></p>
+        </section>
+
+        <!-- This Semester -->
+        <section>
+          <h2>This Semester's Approach</h2>
+          <h3>Why Not Just Ban AI?</h3>
+          <ol>
+            <li>Won't work &mdash; some will still use it</li>
+            <li>Wrong approach &mdash; students should learn AI tools</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>Hidden Test Suites</h2>
+          <ul>
+            <li>Removed full test suites to make specs less complete</li>
+            <li>I've opposed hidden tests &mdash; they create adversarial relationship</li>
+            <li>In real development, you always have access to tests</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Problems with Hidden Tests</h2>
+          <ul>
+            <li>Students "hill climb" with autograder</li>
+            <li>Submit &rarr; get feedback &rarr; give to Claude &rarr; repeat</li>
+            <li>Autograder strain: 300s for MP vs 200ms for homework</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Other Attempts</h2>
+          <ul>
+            <li>Video instructions instead of written specs</li>
+            <li>Hope: students translate video to text for Claude</li>
+            <li>MP3 test suite mistake made evaluation difficult</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Assessment: A Failed Experiment</h2>
+          <ul>
+            <li>Students can complete MP</li>
+            <li>Tutoring wait times reasonable</li>
+            <li>MP is easier than before</li>
+            <li><strong>But: students aren't learning much</strong></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>The Impossible Tension</h2>
+          <ul>
+            <li>Accurate spec = AI can do it all</li>
+            <li>Vague spec = student frustration</li>
+          </ul>
+          <p>This is almost impossible to resolve.</p>
+        </section>
+
+        <!-- Spring Plan -->
+        <section>
+          <h2>Spring: "My Project"</h2>
+          <h3>A New Model</h3>
+          <table>
+            <tr>
+              <td><strong>AI handles:</strong></td>
+              <td>Specification &rarr; Code</td>
+            </tr>
+            <tr>
+              <td><strong>Student handles:</strong></td>
+              <td>Idea &rarr; Specification</td>
+            </tr>
+          </table>
+        </section>
+
+        <section class="center">
+          <h2>Name Evolution</h2>
+          <p style="font-size: 1.2em">
+            Machine Problems<br />&darr;<br />
+            Machine Project<br />&darr;<br />
+            <strong>My Project</strong>
+          </p>
+          <p class="small">(Still "MP"!)</p>
+        </section>
+
+        <section>
+          <h2>First Half: Idea Development</h2>
+          <ul>
+            <li>Brainstorming in discussion sections</li>
+            <li>Writing about the idea</li>
+            <li>App design & screen mockups</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Second Half: Build with Claude</h2>
+          <ul>
+            <li>Students use Claude to build their app</li>
+            <li>Must be an Android app (Java/Kotlin)</li>
+            <li>Every student has their own unique project</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Required Changes</h2>
+          <ul>
+            <li>Tuesday discussions: mandatory attendance</li>
+            <li>Need tutors for discussion sections</li>
+            <li>MP lessons: more general-purpose content</li>
+          </ul>
+        </section>
+
+        <!-- Classical Programming -->
+        <section>
+          <h2>Keeping Classical Programming</h2>
+          <ul>
+            <li>CBTF quizzes remain</li>
+            <li>May increase: 70% &rarr; 80%</li>
+            <li>Possible: 80% CBTF, 10% HW, 10% My Project</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Classical Programming as Mental Training</h2>
+          <ul>
+            <li>Clear thinking</li>
+            <li>Accurate expression</li>
+            <li>Reading comprehension</li>
+          </ul>
+          <p>Like a crossword puzzle for the mind.</p>
+        </section>
+
+        <section>
+          <h2>The Future</h2>
+          <p>Coding agents may eventually bypass source code entirely.</p>
+          <p class="small">(Compilers generate assembly no one reads...)</p>
+        </section>
+
+        <!-- Feedback -->
+        <section>
+          <h2>Why I'm Excited</h2>
+          <ul>
+            <li>Students building their own apps is exciting</li>
+            <li>AI enables beginners to build real apps</li>
+            <li>Personal investment &rarr; deeper learning</li>
+            <li>Will take a few semesters to refine</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Call for Feedback</h2>
+          <ul>
+            <li>Staff feedback is especially valuable</li>
+            <li>We won't always agree &mdash; that's okay</li>
+            <li>It's safe to disagree with me</li>
+          </ul>
+        </section>
+
+        <!-- End -->
+        <section>
+          <h2>Questions?</h2>
+          <p class="small" style="margin-bottom: 0.5em">What we covered:</p>
+          <ul class="small">
+            <li>How AI coding agents broke traditional assignments</li>
+            <li>This semester's hidden test experiment (a failed experiment)</li>
+            <li>Spring plan: "My Project" &mdash; students build their own apps</li>
+            <li>Keeping classical programming for mental training</li>
+          </ul>
+          <p style="margin-top: 1em">Let's discuss.</p>
+        </section>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        slideNumber: "c / t",
+        transition: "fade",
+        transitionSpeed: "fast",
+      })
+    </script>
+  </body>
+</html>

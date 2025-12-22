@@ -43,6 +43,9 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
             <Link href="/chat">Chat</Link>
           </div>
           <div>
+            <Link href="/talks">Talks</Link>
+          </div>
+          <div>
             <Link href="/CV">CV</Link>
           </div>
           {process.env.NEXT_PUBLIC_SHOW_OPENING && (
@@ -55,7 +58,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           </div>
         </nav>
       </div>
-      <div className="responsive" style={{ marginTop: -32 }}>
+      <div className="responsive" style={{ marginTop: -64 }}>
         <h1>Hi, I&apos;m Geoff</h1>
         <p className={styles.h2}>
           I love to teach, and I love to code. <br />I teach students to code. <br />

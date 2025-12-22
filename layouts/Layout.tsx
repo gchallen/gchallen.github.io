@@ -93,7 +93,10 @@ const Wrapper: React.FC<
       description: string
       publishedAt: string
       reading: { text: string }
-      isEssay: boolean
+      isEssay?: boolean
+      isTalk?: boolean
+      audience?: string
+      slidesUrl?: string
       draft?: boolean
       noDate?: boolean
       noTitle?: boolean
@@ -103,8 +106,22 @@ const Wrapper: React.FC<
     }
   }
 > = ({ frontmatter, children }) => {
-  const { title, description, technical, publishedAt, reading, noDate, noTitle, isEssay, draft, showTOC, toc } =
-    frontmatter
+  const {
+    title,
+    description,
+    technical,
+    publishedAt,
+    reading,
+    noDate,
+    noTitle,
+    isEssay,
+    isTalk,
+    audience,
+    slidesUrl,
+    draft,
+    showTOC,
+    toc,
+  } = frontmatter
   const actualTitle = `Geoffrey Challen : ${title}`
   return (
     <>
@@ -130,7 +147,15 @@ const Wrapper: React.FC<
               <div id="publishedAt">
                 <strong>{!draft ? publishedAt : "Draft"}</strong>
                 <br />
-                <em>{reading.text}</em>
+                <em>{isTalk && audience ? audience : reading.text}</em>
+                {isTalk && slidesUrl && (
+                  <>
+                    <br />
+                    <Link href={slidesUrl} target="_blank">
+                      View Slides
+                    </Link>
+                  </>
+                )}
               </div>
             )}
           </div>
