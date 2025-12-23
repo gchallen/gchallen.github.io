@@ -9,10 +9,12 @@ Provides two main endpoints:
 """
 
 import os
+import json
 import logging
 import time
 import threading
 import asyncio
+from pathlib import Path
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from collections import defaultdict
@@ -33,6 +35,21 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 
 from vector_db_loader import ProductionVectorLoader
+
+
+def load_topics() -> List[str]:
+    """Load aggregated topics from topics.json."""
+    topics_path = Path(__file__).parent / "topics.json"
+    if topics_path.exists():
+        with open(topics_path, "r") as f:
+            topics_data = json.load(f)
+            # Get top topics (count >= 2) for the prompt
+            return [t["topic"] for t in topics_data if t.get("count", 0) >= 2]
+    return []
+
+
+# Global topics list (loaded at startup)
+WEBSITE_TOPICS: List[str] = []
 
 
 # Request/Response models
@@ -340,9 +357,12 @@ def start_cleanup_task():
 @app.on_event("startup")
 async def startup_event():
     """Initialize services when the server starts."""
+    global WEBSITE_TOPICS
     try:
         initialize_services()
         start_cleanup_task()
+        WEBSITE_TOPICS = load_topics()
+        print(f"✅ Loaded {len(WEBSITE_TOPICS)} topics for prompt context")
     except Exception as e:
         print(f"❌ Failed to initialize services: {e}")
         raise
@@ -445,8 +465,17 @@ async def conversational_rag(request: Request, chat_request: ChatRequest):
 
         # Check if any relevant documents were found
         if not retrieved_docs:
-            # No relevant documents found - refuse to answer
-            refusal_response = "I don't have enough relevant information in my knowledge base to answer that question confidently. Could you try asking about something more specific related to my teaching, research, or work at the University of Illinois?"
+            # No relevant documents found - refuse to answer with helpful guidance
+            topics_hint = ""
+            if WEBSITE_TOPICS:
+                sample_topics = ", ".join(WEBSITE_TOPICS[:8])
+                topics_hint = (
+                    f" I can help with questions about: {sample_topics}, and more."
+                )
+
+            refusal_response = (
+                f"I don't have information about that on my website.{topics_hint}"
+            )
 
             # Still add to conversation history for continuity
             add_to_conversation_history(
@@ -469,19 +498,31 @@ async def conversational_rag(request: Request, chat_request: ChatRequest):
             context_parts.append(f"From {doc['citation_url']}: {doc['content']}")
         context = "\n\n".join(context_parts)
 
+        # Build topics list for prompt
+        topics_for_prompt = (
+            ", ".join(WEBSITE_TOPICS[:15])
+            if WEBSITE_TOPICS
+            else "CS education, teaching, University of Illinois"
+        )
+
         # Create the prompt template
         prompt = ChatPromptTemplate.from_messages(
             [
                 (
                     "system",
-                    """You are Geoffrey Challen, a Teaching Professor at the University of Illinois. You're answering questions about your work, teaching, and thoughts based ONLY on your website content provided below.
+                    f"""You are Geoffrey Challen, a Teaching Professor at the University of Illinois. You're answering questions about your work, teaching, and thoughts based ONLY on your website content provided below.
 
-IMPORTANT: Only use information from the context provided. Do not add information from your general knowledge or make assumptions beyond what's in the context. If the context doesn't fully answer the question, acknowledge the limitations.
+CRITICAL INSTRUCTIONS:
+1. ONLY use information from the context provided below. Do not add information from your general knowledge.
+2. If the context doesn't contain information to answer the question, say "I don't have information about that on my website" - do NOT attempt to answer from general knowledge.
+3. Do not make assumptions or inferences beyond what's explicitly stated in the context.
+
+Topics I discuss on my website include: {topics_for_prompt}
 
 Be conversational and engaging, as if you're speaking directly to the person asking. Reference specific details from the context when relevant, and feel free to connect ideas across different parts of your work.
 
 Context from your website:
-{context}""",
+{{context}}""",
                 ),
                 MessagesPlaceholder(variable_name="history"),
                 ("human", "{question}"),

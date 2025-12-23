@@ -1,0 +1,334 @@
+[
+  {
+    "topic": "CS education",
+    "count": 29
+  },
+  {
+    "topic": "CS1",
+    "count": 15
+  },
+  {
+    "topic": "University of Illinois",
+    "count": 11
+  },
+  {
+    "topic": "personal",
+    "count": 5
+  },
+  {
+    "topic": "teaching faculty",
+    "count": 5
+  },
+  {
+    "topic": "assessment",
+    "count": 4
+  },
+  {
+    "topic": "educational technology",
+    "count": 4
+  },
+  {
+    "topic": "Jeed",
+    "count": 4
+  },
+  {
+    "topic": "autograding",
+    "count": 4
+  },
+  {
+    "topic": "academic jobs",
+    "count": 4
+  },
+  {
+    "topic": "infrastructure",
+    "count": 4
+  },
+  {
+    "topic": "teaching",
+    "count": 3
+  },
+  {
+    "topic": "AI in education",
+    "count": 3
+  },
+  {
+    "topic": "large courses",
+    "count": 3
+  },
+  {
+    "topic": "teaching at scale",
+    "count": 3
+  },
+  {
+    "topic": "career advice",
+    "count": 3
+  },
+  {
+    "topic": "course structure",
+    "count": 3
+  },
+  {
+    "topic": "Kotlin",
+    "count": 3
+  },
+  {
+    "topic": "hiring",
+    "count": 2
+  },
+  {
+    "topic": "interactive walkthroughs",
+    "count": 2
+  },
+  {
+    "topic": "learncs.online",
+    "count": 2
+  },
+  {
+    "topic": "course design",
+    "count": 2
+  },
+  {
+    "topic": "pandemic teaching",
+    "count": 2
+  },
+  {
+    "topic": "course community",
+    "count": 2
+  },
+  {
+    "topic": "grading",
+    "count": 2
+  },
+  {
+    "topic": "student learning",
+    "count": 2
+  },
+  {
+    "topic": "active learning",
+    "count": 2
+  },
+  {
+    "topic": "teaching methods",
+    "count": 2
+  },
+  {
+    "topic": "programming assignments",
+    "count": 2
+  },
+  {
+    "topic": "course staff",
+    "count": 2
+  },
+  {
+    "topic": "Java",
+    "count": 2
+  },
+  {
+    "topic": "Kubernetes",
+    "count": 2
+  },
+  {
+    "topic": "Python",
+    "count": 2
+  },
+  {
+    "topic": "teaching philosophy",
+    "count": 1
+  },
+  {
+    "topic": "service",
+    "count": 1
+  },
+  {
+    "topic": "scholarship",
+    "count": 1
+  },
+  {
+    "topic": "curriculum",
+    "count": 1
+  },
+  {
+    "topic": "recruiting",
+    "count": 1
+  },
+  {
+    "topic": "PhD",
+    "count": 1
+  },
+  {
+    "topic": "biography",
+    "count": 1
+  },
+  {
+    "topic": "career",
+    "count": 1
+  },
+  {
+    "topic": "publications",
+    "count": 1
+  },
+  {
+    "topic": "generative AI",
+    "count": 1
+  },
+  {
+    "topic": "Claude Code",
+    "count": 1
+  },
+  {
+    "topic": "programming",
+    "count": 1
+  },
+  {
+    "topic": "interview",
+    "count": 1
+  },
+  {
+    "topic": "interviews",
+    "count": 1
+  },
+  {
+    "topic": "tutoring",
+    "count": 1
+  },
+  {
+    "topic": "help site",
+    "count": 1
+  },
+  {
+    "topic": "final exams",
+    "count": 1
+  },
+  {
+    "topic": "web development",
+    "count": 1
+  },
+  {
+    "topic": "NextJS",
+    "count": 1
+  },
+  {
+    "topic": "technical",
+    "count": 1
+  },
+  {
+    "topic": "personal website",
+    "count": 1
+  },
+  {
+    "topic": "student success",
+    "count": 1
+  },
+  {
+    "topic": "college teaching",
+    "count": 1
+  },
+  {
+    "topic": "course metrics",
+    "count": 1
+  },
+  {
+    "topic": "data-driven teaching",
+    "count": 1
+  },
+  {
+    "topic": "gender equity",
+    "count": 1
+  },
+  {
+    "topic": "course policies",
+    "count": 1
+  },
+  {
+    "topic": "programming practice",
+    "count": 1
+  },
+  {
+    "topic": "code quality",
+    "count": 1
+  },
+  {
+    "topic": "linting",
+    "count": 1
+  },
+  {
+    "topic": "lecturing",
+    "count": 1
+  },
+  {
+    "topic": "online courses",
+    "count": 1
+  },
+  {
+    "topic": "student projects",
+    "count": 1
+  },
+  {
+    "topic": "security sandbox",
+    "count": 1
+  },
+  {
+    "topic": "bytecode",
+    "count": 1
+  },
+  {
+    "topic": "microservices",
+    "count": 1
+  },
+  {
+    "topic": "debugging",
+    "count": 1
+  },
+  {
+    "topic": "programming languages",
+    "count": 1
+  },
+  {
+    "topic": "Android",
+    "count": 1
+  },
+  {
+    "topic": "cloud computing",
+    "count": 1
+  },
+  {
+    "topic": "teaching assistants",
+    "count": 1
+  },
+  {
+    "topic": "Piazza",
+    "count": 1
+  },
+  {
+    "topic": "Discourse",
+    "count": 1
+  },
+  {
+    "topic": "course forums",
+    "count": 1
+  },
+  {
+    "topic": "programming pedagogy",
+    "count": 1
+  },
+  {
+    "topic": "data science",
+    "count": 1
+  },
+  {
+    "topic": "introductory CS",
+    "count": 1
+  },
+  {
+    "topic": "computerized testing",
+    "count": 1
+  },
+  {
+    "topic": "CBTF",
+    "count": 1
+  },
+  {
+    "topic": "proctored exams",
+    "count": 1
+  }
+]

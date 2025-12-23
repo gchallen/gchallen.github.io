@@ -209,6 +209,34 @@ async function clean() {
   } catch (err) {}
 }
 
+async function aggregateTopics() {
+  const jsonFiles = await glob(path.join(args.output, "**/*.json"))
+  const topicCounts: Record<string, number> = {}
+
+  for (const jsonFile of jsonFiles) {
+    try {
+      const content = JSON.parse((await readFile(jsonFile)).toString())
+      if (content.topics && Array.isArray(content.topics)) {
+        for (const topic of content.topics) {
+          topicCounts[topic] = (topicCounts[topic] || 0) + 1
+        }
+      }
+    } catch (error) {
+      // Skip files that can't be parsed
+    }
+  }
+
+  // Sort topics by frequency
+  const sortedTopics = Object.entries(topicCounts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([topic, count]) => ({ topic, count }))
+
+  await mkdirs("rag")
+  await writeFile("rag/topics.json", JSON.stringify(sortedTopics, null, 2))
+
+  console.log(`Aggregated ${sortedTopics.length} unique topics from ${jsonFiles.length} files`)
+}
+
 Promise.resolve().then(async () => {
   args.clean && (await clean())
   if (!args.build) {
@@ -228,5 +256,7 @@ Promise.resolve().then(async () => {
     for (const file of files) {
       await update(file)
     }
+    // Aggregate topics after all files are processed
+    await aggregateTopics()
   }
 })
