@@ -97,9 +97,7 @@ def format_citation(metadata: dict[str, str]) -> str:
         try:
             from datetime import datetime
 
-            pub_date = datetime.fromisoformat(
-                metadata["published"].replace("Z", "+00:00")
-            )
+            pub_date = datetime.fromisoformat(metadata["published"].replace("Z", "+00:00"))
             parts.append(f"Published: {pub_date.strftime('%B %d, %Y')}")
         except Exception:
             pass

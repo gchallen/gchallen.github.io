@@ -109,15 +109,11 @@ class ProductionVectorLoader:
             raise ValueError("Database not properly loaded")
 
         # Get query embedding
-        query_embedding = np.array(
-            [self.embeddings_model.embed_query(query)], dtype=np.float32
-        )
+        query_embedding = np.array([self.embeddings_model.embed_query(query)], dtype=np.float32)
         faiss.normalize_L2(query_embedding)
 
         # Search with higher k to allow filtering
-        search_k = min(
-            k * 3, len(self.documents)
-        )  # Get more candidates for adaptive filtering
+        search_k = min(k * 3, len(self.documents))  # Get more candidates for adaptive filtering
         scores, indices = self.index.search(query_embedding, search_k)
 
         # Format all candidate results

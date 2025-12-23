@@ -170,13 +170,11 @@ def initialize_services():
         raise ValueError("Missing required Azure OpenAI environment variables")
 
     # Parse chat configuration
-    chat_base_endpoint, chat_deployment, chat_api_version = extract_azure_config(
-        chat_endpoint
-    )
+    chat_base_endpoint, chat_deployment, chat_api_version = extract_azure_config(chat_endpoint)
 
     # Parse embeddings configuration
-    embeddings_base_endpoint, embeddings_deployment, embeddings_api_version = (
-        extract_azure_config(embeddings_endpoint)
+    embeddings_base_endpoint, embeddings_deployment, embeddings_api_version = extract_azure_config(
+        embeddings_endpoint
     )
 
     # Initialize Azure OpenAI services
@@ -214,9 +212,7 @@ def cleanup_old_sessions():
             session_timestamps.pop(session_id, None)
 
         if sessions_to_remove:
-            logger.info(
-                f"Cleaned up {len(sessions_to_remove)} old conversation sessions"
-            )
+            logger.info(f"Cleaned up {len(sessions_to_remove)} old conversation sessions")
 
 
 def get_conversation_history(session_id: str) -> list[HumanMessage | AIMessage]:
@@ -285,9 +281,7 @@ def create_context_aware_query(message: str, history: list[ChatMessage]) -> str:
         "her",
         "their",
     ]
-    if len(message.split()) <= 3 or any(
-        pronoun in message.lower() for pronoun in pronouns
-    ):
+    if len(message.split()) <= 3 or any(pronoun in message.lower() for pronoun in pronouns):
         return f"Previous context: {context}\n\nCurrent question: {message}"
     else:
         return message
@@ -346,9 +340,7 @@ def start_cleanup_task():
 
     cleanup_thread = threading.Thread(target=cleanup_worker, daemon=True)
     cleanup_thread.start()
-    logger.info(
-        f"Started background cleanup task (interval: {CLEANUP_INTERVAL_MINUTES} minutes)"
-    )
+    logger.info(f"Started background cleanup task (interval: {CLEANUP_INTERVAL_MINUTES} minutes)")
 
 
 @app.on_event("startup")
@@ -429,9 +421,7 @@ async def conversational_rag(request: Request, chat_request: ChatRequest):
 
         # Add history if provided (for session restoration)
         if chat_request.history:
-            conversation_histories[
-                chat_request.session_id
-            ] = []  # Clear existing history
+            conversation_histories[chat_request.session_id] = []  # Clear existing history
             for msg in chat_request.history:
                 if msg.role == "user":
                     add_to_conversation_history(
@@ -445,55 +435,22 @@ async def conversational_rag(request: Request, chat_request: ChatRequest):
             history_messages = get_conversation_history(chat_request.session_id)
 
         # Create context-aware search query
-        search_query = create_context_aware_query(
-            chat_request.message, chat_request.history
-        )
+        search_query = create_context_aware_query(chat_request.message, chat_request.history)
         search_start = time.time()
         logger.info(f"Starting vector search for query: {search_query[:100]}...")
 
         # Retrieve relevant documents with adaptive filtering
-        retrieved_docs = vector_loader.search(
-            search_query, k=5, use_adaptive_threshold=True
-        )
+        retrieved_docs = vector_loader.search(search_query, k=5, use_adaptive_threshold=True)
         search_time = time.time() - search_start
         logger.info(
             f"Vector search completed in {search_time:.2f}s, found {len(retrieved_docs)} documents"
         )
 
-        # Check if any relevant documents were found
-        if not retrieved_docs:
-            # No relevant documents found - refuse to answer with helpful guidance
-            topics_hint = ""
-            if WEBSITE_TOPICS:
-                sample_topics = ", ".join(WEBSITE_TOPICS[:8])
-                topics_hint = (
-                    f" I can help with questions about: {sample_topics}, and more."
-                )
-
-            refusal_response = (
-                f"I don't have information about that on my website.{topics_hint}"
-            )
-
-            # Still add to conversation history for continuity
-            add_to_conversation_history(
-                chat_request.session_id, HumanMessage(content=chat_request.message)
-            )
-            add_to_conversation_history(
-                chat_request.session_id, AIMessage(content=refusal_response)
-            )
-
-            return ChatResponse(
-                response=refusal_response,
-                session_id=chat_request.session_id,
-                timestamp=datetime.now().isoformat(),
-                sources=[],
-            )
-
         # Build context from retrieved documents
         context_parts = []
         for doc in retrieved_docs:
             context_parts.append(f"From {doc['citation_url']}: {doc['content']}")
-        context = "\n\n".join(context_parts)
+        context = "\n\n".join(context_parts) if context_parts else "(No relevant content found)"
 
         # Build topics list for prompt
         topics_for_prompt = (
@@ -507,16 +464,15 @@ async def conversational_rag(request: Request, chat_request: ChatRequest):
             [
                 (
                     "system",
-                    f"""You are Geoffrey Challen, a Teaching Professor at the University of Illinois. You're answering questions about your work, teaching, and thoughts based ONLY on your website content provided below.
+                    f"""You are Geoffrey Challen, a Teaching Professor at the University of Illinois. You're answering questions about your work, teaching, and thoughts based on your website content.
 
-CRITICAL INSTRUCTIONS:
-1. ONLY use information from the context provided below. Do not add information from your general knowledge.
-2. If the context doesn't contain information to answer the question, say "I don't have information about that on my website" - do NOT attempt to answer from general knowledge.
-3. Do not make assumptions or inferences beyond what's explicitly stated in the context.
+INSTRUCTIONS:
+1. For greetings and pleasantries (like "hi", "hello", "how are you"): Respond warmly and briefly introduce yourself. Mention that you can answer questions about topics like {topics_for_prompt}.
+2. For substantive questions: ONLY use information from the context provided below. Do not add information from your general knowledge.
+3. If the context doesn't contain information to answer a substantive question, say "I don't have information about that on my website" and suggest what topics you can help with.
+4. Do not make assumptions or inferences beyond what's explicitly stated in the context.
 
-Topics I discuss on my website include: {topics_for_prompt}
-
-Be conversational and engaging, as if you're speaking directly to the person asking. Reference specific details from the context when relevant, and feel free to connect ideas across different parts of your work.
+Be conversational and engaging, as if you're speaking directly to the person asking.
 
 Context from your website:
 {{context}}""",
@@ -557,9 +513,7 @@ Context from your website:
         add_to_conversation_history(
             chat_request.session_id, HumanMessage(content=chat_request.message)
         )
-        add_to_conversation_history(
-            chat_request.session_id, AIMessage(content=response)
-        )
+        add_to_conversation_history(chat_request.session_id, AIMessage(content=response))
 
         # Extract source information
         sources = []

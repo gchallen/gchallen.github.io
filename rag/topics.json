@@ -288,6 +288,10 @@
     "count": 1
   },
   {
+    "topic": "cloud computing",
+    "count": 1
+  },
+  {
     "topic": "computerized testing",
     "count": 1
   },
@@ -325,10 +329,6 @@
   },
   {
     "topic": "introductory CS",
-    "count": 1
-  },
-  {
-    "topic": "cloud computing",
     "count": 1
   }
 ]

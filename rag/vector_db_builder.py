@@ -97,9 +97,7 @@ class HierarchicalHTMLSplitter:
                     "paragraphs": [],
                 }
 
-            elif element.name == "pre" or (
-                element.name == "code" and element.parent.name == "pre"
-            ):
+            elif element.name == "pre" or (element.name == "code" and element.parent.name == "pre"):
                 # Code blocks should create section breaks
                 # Only process the outermost pre element to avoid double processing
                 if element.name == "pre":
@@ -221,9 +219,7 @@ class ProductionVectorDB:
 
         # Reconstruct embeddings from FAISS index
         if self.index.ntotal > 0:
-            self.embeddings = np.zeros(
-                (self.index.ntotal, self.index.d), dtype=np.float32
-            )
+            self.embeddings = np.zeros((self.index.ntotal, self.index.d), dtype=np.float32)
             self.index.reconstruct_n(0, self.index.ntotal, self.embeddings)
 
         # Build content hash lookup
@@ -480,9 +476,7 @@ def build_production_database(
 def main():
     """Main entry point."""
     parser = argparse.ArgumentParser(description="Build production vector database")
-    parser.add_argument(
-        "--html-dir", default="../html", help="Directory containing HTML files"
-    )
+    parser.add_argument("--html-dir", default="../html", help="Directory containing HTML files")
     parser.add_argument(
         "--output-dir", default="vector_db", help="Output directory for vector database"
     )
