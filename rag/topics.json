@@ -288,7 +288,15 @@
     "count": 1
   },
   {
-    "topic": "cloud computing",
+    "topic": "computerized testing",
+    "count": 1
+  },
+  {
+    "topic": "CBTF",
+    "count": 1
+  },
+  {
+    "topic": "proctored exams",
     "count": 1
   },
   {
@@ -320,15 +328,7 @@
     "count": 1
   },
   {
-    "topic": "computerized testing",
-    "count": 1
-  },
-  {
-    "topic": "CBTF",
-    "count": 1
-  },
-  {
-    "topic": "proctored exams",
+    "topic": "cloud computing",
     "count": 1
   }
 ]

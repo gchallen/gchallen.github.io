@@ -34,6 +34,7 @@
     "prettier": "prettier --cache -w --plugin=prettier-plugin-organize-imports . && prettier-package-json --write && cd rag && source venv/bin/activate && ruff format . && deactivate",
     "rag:build": "bun build:vector && cd rag && docker build -t geoffreychallen/rag-server:latest -t geoffreychallen/rag-server:$npm_package_version .",
     "rag:dev": "cd rag && docker compose --profile dev up rag-server-dev",
+    "rag:start": "bun rag:build && bun rag:dev",
     "rag:lint": "cd rag && source venv/bin/activate && ruff check . && deactivate",
     "rag:ncu": "cd rag && source venv/bin/activate && pip-review --local && deactivate",
     "rag:prod": "cd rag && python run_production.py",
