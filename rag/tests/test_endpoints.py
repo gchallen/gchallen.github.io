@@ -1,5 +1,5 @@
 import os
-import pytest
+
 from dotenv import load_dotenv
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 
@@ -43,7 +43,7 @@ def test_chat_endpoint():
     assert response.content, "Response has no content"
     assert len(response.content) > 0, "Response content is empty"
 
-    print(f"✓ Chat endpoint test passed")
+    print("✓ Chat endpoint test passed")
     print(f"  Response: {response.content[:100]}...")
 
 
@@ -90,7 +90,7 @@ def test_embeddings_endpoint():
         "Embedding vector contains non-numeric values"
     )
 
-    print(f"✓ Embeddings endpoint test passed")
+    print("✓ Embeddings endpoint test passed")
     print(f"  Embedding dimension: {len(embedding_vector)}")
     print(f"  First 5 values: {embedding_vector[:5]}")
 

@@ -5,8 +5,8 @@ Runs a subset of tests optimized for speed and reduced API calls.
 """
 
 import subprocess
-import time
 import sys
+import time
 from pathlib import Path
 
 
@@ -103,20 +103,20 @@ def main():
     total_time = time.time() - total_start
 
     print(f"\n{'=' * 50}")
-    print(f"🎯 TEST SUMMARY")
+    print("🎯 TEST SUMMARY")
     print(f"{'=' * 50}")
     print(f"✅ Passed: {passed}")
     print(f"❌ Failed: {failed}")
     print(f"⏱️  Total time: {total_time:.1f}s")
 
     if failed == 0:
-        print(f"\n🎉 All tests passed! RAG system is ready.")
-        print(f"💡 Optimizations used:")
-        print(f"   - Only 2-3 files processed per test")
-        print(f"   - Larger chunk sizes (fewer API calls)")
-        print(f"   - Incremental processing demonstrated")
+        print("\n🎉 All tests passed! RAG system is ready.")
+        print("💡 Optimizations used:")
+        print("   - Only 2-3 files processed per test")
+        print("   - Larger chunk sizes (fewer API calls)")
+        print("   - Incremental processing demonstrated")
     else:
-        print(f"\n⚠️  Some tests failed. Check output above.")
+        print("\n⚠️  Some tests failed. Check output above.")
         sys.exit(1)
 
 

@@ -4,25 +4,23 @@ Production vector database builder for RAG system.
 Builds embeddings from HTML files and saves to production vector database.
 """
 
-import os
-import json
-import pickle
-import hashlib
-import re
-from pathlib import Path
-from typing import List, Dict, Any, Set, Tuple
-import numpy as np
-import faiss
 import argparse
-from dotenv import load_dotenv
+import hashlib
+import json
+import os
+import pickle
+import re
+from datetime import datetime
+from pathlib import Path
 
-from langchain_community.document_loaders import BSHTMLLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain.text_splitter import TextSplitter
-from langchain_openai import AzureOpenAIEmbeddings
-from langchain.schema import Document
-from citation_utils import enrich_chunk_metadata
+import faiss
+import numpy as np
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+from langchain_core.documents import Document
+from langchain_openai import AzureOpenAIEmbeddings
+
+from citation_utils import enrich_chunk_metadata
 
 load_dotenv()
 
@@ -48,12 +46,12 @@ class HierarchicalHTMLSplitter:
         self.max_paragraphs_per_chunk = max_paragraphs_per_chunk
         self.overlap_paragraphs = overlap_paragraphs
 
-    def split_html_file(self, html_file_path: str) -> List[Document]:
+    def split_html_file(self, html_file_path: str) -> list[Document]:
         """Load and split an HTML file hierarchically: first by sections, then by paragraphs."""
         chunks = []
 
         # Read the HTML file
-        with open(html_file_path, "r", encoding="utf-8") as f:
+        with open(html_file_path, encoding="utf-8") as f:
             html_content = f.read()
 
         # Parse HTML with BeautifulSoup
@@ -213,7 +211,7 @@ class ProductionVectorDB:
 
         # Load metadata
         metadata_path = base_path / "metadata.json"
-        with open(metadata_path, "r") as f:
+        with open(metadata_path) as f:
             self.metadata = json.load(f)
 
         # Load documents
@@ -234,13 +232,13 @@ class ProductionVectorDB:
             if "content_hash" in metadata:
                 self.content_hashes[metadata["content_hash"]] = i
 
-        print(f"✅ Loaded existing database:")
+        print("✅ Loaded existing database:")
         print(f"   {len(self.documents)} documents")
         print(f"   {len(self.content_hashes)} unique content hashes")
         print(f"   {self.index.ntotal if self.index else 0} vectors in index")
         return True
 
-    def add_documents_incremental(self, docs_with_metadata) -> Tuple[int, int]:
+    def add_documents_incremental(self, docs_with_metadata) -> tuple[int, int]:
         """Add documents, skipping those that already exist."""
         new_docs = []
         new_metadata = []
@@ -326,7 +324,7 @@ class ProductionVectorDB:
         if self.embeddings is None or len(self.embeddings) == 0:
             raise ValueError("No embeddings to index")
 
-        print(f"🏗️ Building FAISS index...")
+        print("🏗️ Building FAISS index...")
 
         # Create new index
         dimension = self.embeddings.shape[1]
@@ -370,15 +368,13 @@ class ProductionVectorDB:
                     "total_documents": len(self.documents),
                     "total_chunks": len(self.metadata),
                     "embedding_dimension": self.embeddings.shape[1],
-                    "build_timestamp": str(pd.Timestamp.now())
-                    if "pd" in globals()
-                    else "unknown",
+                    "build_timestamp": datetime.now().isoformat(),
                 },
                 f,
                 indent=2,
             )
 
-        print(f"✅ Saved production database:")
+        print("✅ Saved production database:")
         print(f"   Index: {index_path} ({index_path.stat().st_size:,} bytes)")
         print(f"   Metadata: {metadata_path} ({metadata_path.stat().st_size:,} bytes)")
         print(f"   Documents: {docs_path} ({docs_path.stat().st_size:,} bytes)")
@@ -473,8 +469,8 @@ def build_production_database(
     # Save to disk
     vector_db.save_to_disk(output_dir)
 
-    print(f"\n✅ Production vector database built successfully!")
-    print(f"📊 Final stats:")
+    print("\n✅ Production vector database built successfully!")
+    print("📊 Final stats:")
     print(f"   Total documents: {len(vector_db.documents)}")
     print(f"   New embeddings: {new_embeddings}")
     print(f"   Skipped (unchanged): {skipped}")

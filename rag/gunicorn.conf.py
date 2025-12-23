@@ -5,8 +5,8 @@ Production-ready Gunicorn configuration for RAG server.
 Provides better process management, monitoring, and error recovery.
 """
 
-import os
 import multiprocessing
+import os
 
 # Server socket
 bind = f"0.0.0.0:{os.getenv('PORT', '8000')}"

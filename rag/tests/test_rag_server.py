@@ -7,12 +7,12 @@ Tests both semantic search and conversational RAG functionality.
 """
 
 import os
+import shutil
 import sys
 import tempfile
-import shutil
 from pathlib import Path
+
 import pytest
-import pytest_asyncio
 from fastapi.testclient import TestClient
 
 # Add the parent directory to the path so we can import the modules
@@ -20,7 +20,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from rag_server import app
 from vector_db_builder import ProductionVectorDB
-from citation_utils import extract_page_metadata, get_citation_url
 
 
 class TestRAGServer:

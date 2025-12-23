@@ -5,15 +5,13 @@ Perfect for quick validation with minimal API usage.
 """
 
 import os
-import json
 from pathlib import Path
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 from langchain_community.document_loaders import BSHTMLLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import AzureOpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from test_build_time_vector_db import BuildTimeVectorDB
-from citation_utils import enrich_chunk_metadata
 
 load_dotenv()
 
@@ -89,7 +87,7 @@ def test_minimal_pipeline():
         docs_with_meta.append((chunk, chunk.metadata))
 
     # Build vector database
-    print(f"\n3️⃣ Building vector database...")
+    print("\n3️⃣ Building vector database...")
     vector_db = BuildTimeVectorDB(embeddings)
     vector_db.add_documents(docs_with_meta)
 
@@ -98,7 +96,7 @@ def test_minimal_pipeline():
     vector_db.build_faiss_index()
 
     # Test search
-    print(f"\n4️⃣ Testing search...")
+    print("\n4️⃣ Testing search...")
     test_queries = ["teaching", "computer science", "learning"]
 
     for query in test_queries:
@@ -107,8 +105,8 @@ def test_minimal_pipeline():
             f"   Query '{query}': {len(results)} result(s), top score: {results[0]['score']:.3f}"
         )
 
-    print(f"\n✅ Minimal pipeline test completed successfully!")
-    print(f"📊 Summary:")
+    print("\n✅ Minimal pipeline test completed successfully!")
+    print("📊 Summary:")
     print(f"   File processed: {smallest_file.name}")
     print(f"   Chunks created: {len(chunks)}")
     print(f"   Embeddings generated: {len(chunks)}")

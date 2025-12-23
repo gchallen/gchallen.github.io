@@ -4,8 +4,8 @@ Test script to process HTML files for RAG.
 Tests document loading and splitting without computing embeddings.
 """
 
-import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 from langchain_community.document_loaders import BSHTMLLoader
 from langchain_text_splitters import (
@@ -106,7 +106,7 @@ def test_document_processing():
         # Analyze the chunks
         chunk_lengths = [len(chunk.page_content) for chunk in all_splits]
 
-        print(f"\n📊 Chunk Statistics:")
+        print("\n📊 Chunk Statistics:")
         print(f"   Total chunks: {len(all_splits)}")
         print(
             f"   Average chunk size: {sum(chunk_lengths) / len(chunk_lengths):.1f} characters"
@@ -116,7 +116,7 @@ def test_document_processing():
         print(f"   Total content: {sum(chunk_lengths):,} characters")
 
         # Show details of first few chunks
-        print(f"\n🔍 Sample chunks:")
+        print("\n🔍 Sample chunks:")
         for i, chunk in enumerate(all_splits[:3]):
             print(f"\n   Chunk {i + 1} ({len(chunk.page_content)} chars):")
             print(f"   Metadata: {chunk.metadata}")
@@ -140,7 +140,7 @@ def test_document_processing():
         print(f"❌ Failed to do recursive splitting: {e}")
         return
 
-    print(f"\n✅ Document processing test completed successfully!")
+    print("\n✅ Document processing test completed successfully!")
     print(f"🎯 Ready for embedding: {len(all_splits)} chunks from {html_file}")
 
 

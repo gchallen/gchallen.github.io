@@ -4,19 +4,19 @@ Test script for incremental embedding updates.
 Demonstrates: load existing -> hash content -> skip unchanged -> process only new/changed documents
 """
 
-import os
-import json
-import pickle
 import hashlib
+import json
+import os
+import pickle
 from pathlib import Path
-from typing import List, Dict, Any, Set, Tuple
-import numpy as np
-import faiss
-from dotenv import load_dotenv
 
+import faiss
+import numpy as np
+from dotenv import load_dotenv
 from langchain_community.document_loaders import BSHTMLLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import AzureOpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 from citation_utils import enrich_chunk_metadata
 
 load_dotenv()
@@ -58,7 +58,7 @@ class IncrementalVectorDB:
 
         # Load metadata
         metadata_path = base_path / "metadata.json"
-        with open(metadata_path, "r") as f:
+        with open(metadata_path) as f:
             self.metadata = json.load(f)
 
         # Load documents
@@ -80,13 +80,13 @@ class IncrementalVectorDB:
             if "content_hash" in metadata:
                 self.content_hashes[metadata["content_hash"]] = i
 
-        print(f"✅ Loaded existing database:")
+        print("✅ Loaded existing database:")
         print(f"   {len(self.documents)} documents")
         print(f"   {len(self.content_hashes)} unique content hashes")
         print(f"   {self.index.ntotal if self.index else 0} vectors in index")
         return True
 
-    def add_documents_incremental(self, docs_with_metadata) -> Tuple[int, int]:
+    def add_documents_incremental(self, docs_with_metadata) -> tuple[int, int]:
         """
         Add documents, skipping those that already exist.
         Returns (new_documents_added, existing_documents_skipped)
@@ -175,7 +175,7 @@ class IncrementalVectorDB:
         if self.embeddings is None or len(self.embeddings) == 0:
             raise ValueError("No embeddings to index")
 
-        print(f"🏗️ Rebuilding FAISS index...")
+        print("🏗️ Rebuilding FAISS index...")
 
         # Create new index
         dimension = self.embeddings.shape[1]
@@ -344,7 +344,7 @@ def test_incremental_embeddings():
     new_added2, skipped2 = vector_db2.add_documents_incremental(all_docs_with_meta2)
     print(f"📊 Added: {new_added2}, Skipped: {skipped2}")
 
-    print(f"✅ Verification:")
+    print("✅ Verification:")
     print(f"   Should skip documents from first build: {skipped2 > 0}")
     print(f"   Should add only new documents: {new_added2 > 0}")
 
@@ -368,18 +368,18 @@ def test_incremental_embeddings():
     new_embeddings3 = vector_db3.build_embeddings_incremental()
     print(f"🧮 Generated {new_embeddings3} new embeddings")
 
-    print(f"✅ Verification:")
+    print("✅ Verification:")
     print(f"   Should skip all documents: {skipped3 > 0 and new_added3 == 0}")
     print(f"   Should generate no new embeddings: {new_embeddings3 == 0}")
 
     # Test search still works
-    print(f"\n🔍 Testing search after incremental updates:")
+    print("\n🔍 Testing search after incremental updates:")
     results = vector_db3.search("teaching", k=3)
     for i, result in enumerate(results, 1):
         print(f"   Result {i} (score: {result['score']:.3f}): {result['citation']}")
 
     # Performance comparison
-    print(f"\n📊 Performance Summary:")
+    print("\n📊 Performance Summary:")
     print(
         f"   First build: {len(all_docs_with_meta)} chunks, {new_embeddings} embeddings"
     )
@@ -387,8 +387,8 @@ def test_incremental_embeddings():
     print(f"   Third build: {new_added3} new chunks, {new_embeddings3} new embeddings")
     print(f"   💰 Embedding API calls saved: {skipped2 + skipped3}")
 
-    print(f"\n✅ Incremental embedding test completed!")
-    print(f"🎯 Ready for production: Only changed content gets reprocessed!")
+    print("\n✅ Incremental embedding test completed!")
+    print("🎯 Ready for production: Only changed content gets reprocessed!")
 
 
 if __name__ == "__main__":

@@ -8,40 +8,37 @@ Provides two main endpoints:
 2. /chat - Conversational RAG with memory and context awareness
 """
 
-import os
+import asyncio
 import json
 import logging
-import time
+import os
 import threading
-import asyncio
-from pathlib import Path
-from typing import List, Dict, Any, Optional
+import time
 from datetime import datetime, timedelta
-from collections import defaultdict
+from pathlib import Path
+from typing import Any
 
+import uvicorn
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-import slowapi
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
-import uvicorn
-
-from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
-from langchain_core.messages import HumanMessage, AIMessage, trim_messages
+from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnablePassthrough
-from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
+from pydantic import BaseModel
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 
 from vector_db_loader import ProductionVectorLoader
 
 
-def load_topics() -> List[str]:
+def load_topics() -> list[str]:
     """Load aggregated topics from topics.json."""
     topics_path = Path(__file__).parent / "topics.json"
     if topics_path.exists():
-        with open(topics_path, "r") as f:
+        with open(topics_path) as f:
             topics_data = json.load(f)
             # Get top topics (count >= 2) for the prompt
             return [t["topic"] for t in topics_data if t.get("count", 0) >= 2]
@@ -49,17 +46,17 @@ def load_topics() -> List[str]:
 
 
 # Global topics list (loaded at startup)
-WEBSITE_TOPICS: List[str] = []
+WEBSITE_TOPICS: list[str] = []
 
 
 # Request/Response models
 class SearchRequest(BaseModel):
     query: str
-    k: Optional[int] = 5
+    k: int | None = 5
 
 
 class SearchResponse(BaseModel):
-    results: List[Dict[str, Any]]
+    results: list[dict[str, Any]]
     query: str
     timestamp: str
 
@@ -67,20 +64,20 @@ class SearchResponse(BaseModel):
 class ChatMessage(BaseModel):
     role: str  # "user" or "assistant"
     content: str
-    timestamp: Optional[str] = None
+    timestamp: str | None = None
 
 
 class ChatRequest(BaseModel):
     message: str
-    session_id: Optional[str] = "default"
-    history: Optional[List[ChatMessage]] = []
+    session_id: str | None = "default"
+    history: list[ChatMessage] | None = []
 
 
 class ChatResponse(BaseModel):
     response: str
     session_id: str
     timestamp: str
-    sources: List[Dict[str, Any]]
+    sources: list[dict[str, Any]]
 
 
 # Rate limiting setup
@@ -118,11 +115,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Global instances
-vector_loader: Optional[ProductionVectorLoader] = None
-chat_model: Optional[AzureChatOpenAI] = None
-embeddings: Optional[AzureOpenAIEmbeddings] = None
-conversation_histories: Dict[str, List[HumanMessage | AIMessage]] = {}
-session_timestamps: Dict[str, datetime] = {}  # Track when sessions were last accessed
+vector_loader: ProductionVectorLoader | None = None
+chat_model: AzureChatOpenAI | None = None
+embeddings: AzureOpenAIEmbeddings | None = None
+conversation_histories: dict[str, list[HumanMessage | AIMessage]] = {}
+session_timestamps: dict[str, datetime] = {}  # Track when sessions were last accessed
 cleanup_lock = threading.Lock()
 
 # Configuration
@@ -222,7 +219,7 @@ def cleanup_old_sessions():
             )
 
 
-def get_conversation_history(session_id: str) -> List[HumanMessage | AIMessage]:
+def get_conversation_history(session_id: str) -> list[HumanMessage | AIMessage]:
     """Get conversation history for a session."""
     # Update last access time
     session_timestamps[session_id] = datetime.now()
@@ -261,7 +258,7 @@ def add_to_conversation_history(session_id: str, message: HumanMessage | AIMessa
         ]
 
 
-def create_context_aware_query(message: str, history: List[ChatMessage]) -> str:
+def create_context_aware_query(message: str, history: list[ChatMessage]) -> str:
     """Create a context-aware search query from the current message and history."""
     if not history:
         return message
@@ -404,7 +401,7 @@ async def semantic_search(request: Request, search_request: SearchRequest):
             timestamp=datetime.now().isoformat(),
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}") from e
 
 
 @app.post("/chat", response_model=ChatResponse)
@@ -612,14 +609,14 @@ Context from your website:
             raise HTTPException(
                 status_code=429,
                 detail="Rate limit exceeded. Please try again in a moment.",
-            )
+            ) from e
         elif "timeout" in error_message.lower():
             logger.warning(f"Timeout detected: {error_message}")
             raise HTTPException(
                 status_code=504, detail="Request timed out. Please try again."
-            )
+            ) from e
         else:
-            raise HTTPException(status_code=500, detail=f"Chat failed: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Chat failed: {str(e)}") from e
 
 
 @app.get("/sessions/{session_id}/history")
@@ -656,10 +653,9 @@ if __name__ == "__main__":
     port = 8000
 
     # Parse command line arguments
-    if len(sys.argv) > 1:
-        if sys.argv[1] == "--production":
-            host = "0.0.0.0"
-            port = int(os.getenv("PORT", 8000))
+    if len(sys.argv) > 1 and sys.argv[1] == "--production":
+        host = "0.0.0.0"
+        port = int(os.getenv("PORT", 8000))
 
     print(f"Starting RAG server on {host}:{port}")
     uvicorn.run(app, host=host, port=port, reload=False, access_log=False)

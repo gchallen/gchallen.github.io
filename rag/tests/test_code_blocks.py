@@ -5,10 +5,10 @@ import sys
 
 sys.path.insert(0, ".")
 
-from vector_db_builder import HierarchicalHTMLSplitter
-from bs4 import BeautifulSoup
-import tempfile
 import os
+import tempfile
+
+from vector_db_builder import HierarchicalHTMLSplitter
 
 
 def test_code_block_splitting():

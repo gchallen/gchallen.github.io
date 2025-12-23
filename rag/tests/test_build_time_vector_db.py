@@ -4,18 +4,18 @@ Test script for build-time vector database approach.
 Demonstrates: build embeddings -> save to disk -> load from disk -> query
 """
 
-import os
 import json
+import os
 import pickle
 from pathlib import Path
-from typing import List, Dict, Any
-import numpy as np
-import faiss
-from dotenv import load_dotenv
 
+import faiss
+import numpy as np
+from dotenv import load_dotenv
 from langchain_community.document_loaders import BSHTMLLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import AzureOpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 from citation_utils import enrich_chunk_metadata
 
 load_dotenv()
@@ -77,7 +77,7 @@ class BuildTimeVectorDB:
         if self.embeddings is None or len(self.embeddings) == 0:
             raise ValueError("No embeddings to index")
 
-        print(f"🏗️ Building FAISS index...")
+        print("🏗️ Building FAISS index...")
 
         # Use a simple flat index for small datasets (exact search)
         dimension = self.embeddings.shape[1]
@@ -116,7 +116,7 @@ class BuildTimeVectorDB:
         with open(docs_path, "wb") as f:
             pickle.dump(self.documents, f)
 
-        print(f"✅ Saved:")
+        print("✅ Saved:")
         print(f"   Index: {index_path} ({index_path.stat().st_size:,} bytes)")
         print(f"   Metadata: {metadata_path} ({metadata_path.stat().st_size:,} bytes)")
         print(f"   Documents: {docs_path} ({docs_path.stat().st_size:,} bytes)")
@@ -137,7 +137,7 @@ class BuildTimeVectorDB:
 
         # Load metadata
         metadata_path = base_path / "metadata.json"
-        with open(metadata_path, "r") as f:
+        with open(metadata_path) as f:
             db.metadata = json.load(f)
 
         # Load documents
@@ -275,7 +275,7 @@ def test_build_time_approach():
         "student learning",
     ]
 
-    print(f"\n🔍 Testing similarity search:")
+    print("\n🔍 Testing similarity search:")
     for i, query in enumerate(test_queries, 1):
         print(f"\n   Query {i}: '{query}'")
         results = loaded_db.search(query, k=3)
@@ -286,7 +286,7 @@ def test_build_time_approach():
             print(f"         Content: {result['content'][:150]}...")
 
     # Performance test
-    print(f"\n📊 Performance test:")
+    print("\n📊 Performance test:")
     import time
 
     start_time = time.time()
@@ -297,9 +297,9 @@ def test_build_time_approach():
     print(f"   Average query time: {query_time * 1000:.1f}ms")
     print(f"   Queries per second: {1 / query_time:.0f}")
 
-    print(f"\n✅ Build-time vector database test completed successfully!")
+    print("\n✅ Build-time vector database test completed successfully!")
     print(
-        f"💡 Ready for production: build index during CI/CD, ship with container, load on startup"
+        "💡 Ready for production: build index during CI/CD, ship with container, load on startup"
     )
 
 

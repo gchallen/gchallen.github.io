@@ -5,10 +5,11 @@ Production server runner with enhanced monitoring and management.
 """
 
 import os
-import sys
-import subprocess
 import signal
+import subprocess
+import sys
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 
@@ -41,7 +42,7 @@ def check_production_requirements():
 
     # Check if gunicorn is installed
     try:
-        import gunicorn
+        import gunicorn  # noqa: F401
     except ImportError:
         print("❌ Gunicorn not installed!")
         print("Install requirements: pip install -r requirements.txt")
@@ -79,7 +80,7 @@ def main():
     workers = int(os.getenv("WORKERS", 4))
     log_level = os.getenv("LOG_LEVEL", "info")
 
-    print(f"📊 Configuration:")
+    print("📊 Configuration:")
     print(f"   - Port: {port}")
     print(f"   - Workers: {workers}")
     print(f"   - Log level: {log_level}")

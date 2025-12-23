@@ -4,15 +4,15 @@ Production vector database loader for RAG system.
 Loads pre-built vector database for fast runtime queries.
 """
 
-import os
 import json
+import os
 import pickle
 from pathlib import Path
-from typing import List, Dict, Any
-import numpy as np
-import faiss
-from dotenv import load_dotenv
+from typing import Any
 
+import faiss
+import numpy as np
+from dotenv import load_dotenv
 from langchain_openai import AzureOpenAIEmbeddings
 
 load_dotenv()
@@ -70,7 +70,7 @@ class ProductionVectorLoader:
 
         # Load metadata
         metadata_path = self.db_path / "metadata.json"
-        with open(metadata_path, "r") as f:
+        with open(metadata_path) as f:
             self.metadata = json.load(f)
 
         # Load documents
@@ -81,10 +81,10 @@ class ProductionVectorLoader:
         # Load build info if available
         info_path = self.db_path / "build_info.json"
         if info_path.exists():
-            with open(info_path, "r") as f:
+            with open(info_path) as f:
                 self.build_info = json.load(f)
 
-        print(f"✅ Loaded production vector database:")
+        print("✅ Loaded production vector database:")
         print(f"   Documents: {len(self.documents)}")
         print(f"   Index vectors: {self.index.ntotal}")
         print(f"   Embedding dimension: {self.index.d}")
@@ -95,7 +95,7 @@ class ProductionVectorLoader:
         k: int = 10,
         use_adaptive_threshold: bool = True,
         min_threshold: float = 0.3,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """
         Search for similar documents with adaptive filtering.
 
@@ -122,7 +122,7 @@ class ProductionVectorLoader:
 
         # Format all candidate results
         all_results = []
-        for score, idx in zip(scores[0], indices[0]):
+        for score, idx in zip(scores[0], indices[0], strict=True):
             if idx < len(self.documents) and idx >= 0:  # Valid index
                 # Apply minimum threshold to prevent very poor matches
                 if score < min_threshold:
@@ -183,7 +183,7 @@ class ProductionVectorLoader:
 
         return results
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         """Get database statistics."""
         return {
             "total_documents": len(self.documents),
@@ -207,7 +207,7 @@ def search_documents(
     db_path: str = "vector_db",
     k: int = 5,
     use_adaptive_threshold: bool = True,
-) -> List[Dict[str, Any]]:
+) -> list[dict[str, Any]]:
     """Quick search function with adaptive filtering."""
     loader = ProductionVectorLoader(db_path)
     return loader.search(query, k, use_adaptive_threshold)

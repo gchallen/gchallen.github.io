@@ -4,17 +4,17 @@ Utilities for extracting and managing citation information from HTML documents.
 """
 
 from pathlib import Path
+
 from bs4 import BeautifulSoup
-from typing import Dict, Optional
 
 
-def extract_page_metadata(html_file_path: str) -> Dict[str, str]:
+def extract_page_metadata(html_file_path: str) -> dict[str, str]:
     """
     Extract citation metadata from HTML file.
     Returns dict with url, title, description, published, etc.
     """
     try:
-        with open(html_file_path, "r", encoding="utf-8") as f:
+        with open(html_file_path, encoding="utf-8") as f:
             content = f.read()
 
         soup = BeautifulSoup(content, "lxml")
@@ -77,7 +77,7 @@ def get_citation_url(html_file_path: str) -> str:
     return url
 
 
-def format_citation(metadata: Dict[str, str]) -> str:
+def format_citation(metadata: dict[str, str]) -> str:
     """
     Format citation information for display.
     Returns a human-readable citation string.
@@ -101,13 +101,13 @@ def format_citation(metadata: Dict[str, str]) -> str:
                 metadata["published"].replace("Z", "+00:00")
             )
             parts.append(f"Published: {pub_date.strftime('%B %d, %Y')}")
-        except:
+        except Exception:
             pass
 
     return " - ".join(parts) if parts else "Unknown source"
 
 
-def enrich_chunk_metadata(chunk_metadata: Dict, html_file_path: str) -> Dict:
+def enrich_chunk_metadata(chunk_metadata: dict, html_file_path: str) -> dict:
     """
     Enrich chunk metadata with citation information.
     """

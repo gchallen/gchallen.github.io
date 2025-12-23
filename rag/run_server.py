@@ -6,6 +6,7 @@ Simple script to run the RAG server with proper environment setup.
 
 import os
 import sys
+
 from dotenv import load_dotenv
 
 

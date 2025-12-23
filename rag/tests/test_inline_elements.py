@@ -5,8 +5,9 @@ import sys
 
 sys.path.insert(0, ".")
 
-from vector_db_builder import HierarchicalHTMLSplitter
 from bs4 import BeautifulSoup
+
+from vector_db_builder import HierarchicalHTMLSplitter
 
 
 def test_inline_elements():

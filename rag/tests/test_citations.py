@@ -3,8 +3,7 @@
 Test script to verify citation functionality.
 """
 
-import json
-from citation_utils import extract_page_metadata, get_citation_url, format_citation
+from citation_utils import extract_page_metadata, format_citation, get_citation_url
 
 
 def test_citations():

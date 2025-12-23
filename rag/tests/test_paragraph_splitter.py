@@ -5,8 +5,8 @@ import sys
 
 sys.path.insert(0, ".")
 
+
 from vector_db_builder import HierarchicalHTMLSplitter
-from pathlib import Path
 
 
 def test_splitter():
@@ -25,10 +25,10 @@ def test_splitter():
 
     chunks = splitter.split_html_file(test_file)
 
-    print(f"\nSummary:")
+    print("\nSummary:")
     print(f"  Total chunks: {len(chunks)}")
 
-    print(f"\nFirst 3 chunks in detail:")
+    print("\nFirst 3 chunks in detail:")
     for i, chunk in enumerate(chunks[:3]):
         print(f"\n--- Chunk {i + 1} ---")
         print(f"Length: {len(chunk.page_content)} characters")
