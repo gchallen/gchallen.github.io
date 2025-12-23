@@ -84,6 +84,14 @@
     "count": 2
   },
   {
+    "topic": "programming assignments",
+    "count": 2
+  },
+  {
+    "topic": "course staff",
+    "count": 2
+  },
+  {
     "topic": "course design",
     "count": 2
   },
@@ -109,14 +117,6 @@
   },
   {
     "topic": "teaching methods",
-    "count": 2
-  },
-  {
-    "topic": "programming assignments",
-    "count": 2
-  },
-  {
-    "topic": "course staff",
     "count": 2
   },
   {
@@ -165,6 +165,10 @@
   },
   {
     "topic": "publications",
+    "count": 1
+  },
+  {
+    "topic": "student projects",
     "count": 1
   },
   {
@@ -260,10 +264,6 @@
     "count": 1
   },
   {
-    "topic": "student projects",
-    "count": 1
-  },
-  {
     "topic": "security sandbox",
     "count": 1
   },
@@ -272,23 +272,11 @@
     "count": 1
   },
   {
-    "topic": "microservices",
-    "count": 1
-  },
-  {
-    "topic": "debugging",
-    "count": 1
-  },
-  {
-    "topic": "programming languages",
-    "count": 1
-  },
-  {
-    "topic": "Android",
-    "count": 1
-  },
-  {
     "topic": "cloud computing",
+    "count": 1
+  },
+  {
+    "topic": "microservices",
     "count": 1
   },
   {
@@ -304,7 +292,15 @@
     "count": 1
   },
   {
-    "topic": "teaching assistants",
+    "topic": "debugging",
+    "count": 1
+  },
+  {
+    "topic": "programming languages",
+    "count": 1
+  },
+  {
+    "topic": "Android",
     "count": 1
   },
   {
@@ -317,6 +313,10 @@
   },
   {
     "topic": "course forums",
+    "count": 1
+  },
+  {
+    "topic": "teaching assistants",
     "count": 1
   },
   {
