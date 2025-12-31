@@ -227,8 +227,9 @@ async function aggregateTopics() {
   }
 
   // Sort topics by frequency (descending), then alphabetically for stability
+  // Use explicit locale and case-insensitive comparison for consistent ordering
   const sortedTopics = Object.entries(topicCounts)
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "en", { sensitivity: "base" }))
     .map(([topic, count]) => ({ topic, count }))
 
   await mkdirs("rag")
