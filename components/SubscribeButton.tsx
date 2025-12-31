@@ -34,35 +34,24 @@ const SubscribeButton: React.FC<PropsWithChildren & { center?: boolean; hideAfte
 }) => {
   const { executeRecaptcha } = useGoogleReCaptcha()
   const { data: session } = useSession()
-  const [email, setEmail] = useState<string>("")
-  const submitEmail = useRef<string>("")
-  const [enabled, setEnabled] = useState(false)
+  const sessionEmail = session?.user?.email || ""
+  const [manualEmail, setManualEmail] = useState<string>("")
+  const email = sessionEmail || manualEmail
+  const submitEmail = useRef<string>(email)
   const [showSuccess, setShowSuccess] = useState(false)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { show } = useSubscribeButtonContext()
   const [hide, setHide] = useState(false)
 
-  const updateEmail = useCallback((newEmail: string) => {
-    setEmail(newEmail)
-    setEnabled(validator.validate(newEmail))
-    submitEmail.current = newEmail
-  }, [])
+  const enabled = validator.validate(email)
 
   useEffect(() => {
-    if (session?.user?.email) {
-      updateEmail(session.user.email)
-    } else {
-      setShowSuccess(false)
-      updateEmail("")
-    }
-  }, [session, updateEmail])
+    submitEmail.current = email
+  }, [email])
 
-  const onChange = useCallback(
-    (event: any) => {
-      updateEmail(event.target.value)
-    },
-    [updateEmail],
-  )
+  const onChange = useCallback((event: any) => {
+    setManualEmail(event.target.value)
+  }, [])
 
   const onSubmit = useCallback(
     async (event: any) => {

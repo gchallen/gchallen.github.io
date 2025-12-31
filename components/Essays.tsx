@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { Essay } from "../lib/getEssays"
 import { useNewWindowLogin } from "./LoginButton"
 import SubscribeButton from "./SubscribeButton"
@@ -27,7 +27,7 @@ const Essays: React.FC<{
   random?: boolean
 }> = ({ published, drafts, h1 = false, showSubscribe = false, limit = false, random = false }) => {
   const { session } = useNewWindowLogin()
-  const [actualRandom, setActualRandom] = useState(false)
+  const [randomIndex] = useState(() => Math.floor(Math.random() * 1000))
 
   const latestEssays = useMemo(() => {
     return published.slice(0, limit ? 4 : Infinity)
@@ -35,12 +35,8 @@ const Essays: React.FC<{
 
   const randomEssay = useMemo(() => {
     const notLatest = published.filter((e) => !latestEssays.map((p) => p.url).includes(e.url))
-    return notLatest[actualRandom ? Math.floor(Math.random() * notLatest.length) : 0]
-  }, [published, latestEssays, actualRandom])
-
-  useEffect(() => {
-    setActualRandom(true)
-  }, [])
+    return notLatest[randomIndex % notLatest.length]
+  }, [published, latestEssays, randomIndex])
 
   return (
     <>
