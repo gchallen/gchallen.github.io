@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "geoffreychallen.com",
-  "version": "2025.12.2",
+  "version": "2025.12.3",
   "type": "module",
   "scripts": {
     "build:mdx": "tsx bin/build.ts mdx output --build --clean",
@@ -30,27 +30,29 @@
     "k8s:stopDev": "kubectl scale deployment dev-geoffreychallen-com-deployment --replicas=0 -n geoffreychallen",
     "lint": "next lint && eslint",
     "ncu": "ncu && bun rag:ncu",
+    "ncu:update": "ncu -u && bun rag:ncu:update",
     "prebuild": "bun build:mdx && tsx bin/rss.ts && tsx bin/pyodide.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
     "prettier": "prettier --cache -w --plugin=prettier-plugin-organize-imports . && prettier-package-json --write && cd rag && source venv/bin/activate && ruff format . && deactivate",
     "rag:build": "bun build:vector && cd rag && docker build -t geoffreychallen/rag-server:latest -t geoffreychallen/rag-server:$npm_package_version .",
     "rag:dev": "cd rag && docker compose --profile dev up rag-server-dev",
     "rag:lint": "cd rag && source venv/bin/activate && ruff check . && deactivate",
     "rag:ncu": "cd rag && source venv/bin/activate && pip-review --local && deactivate",
+    "rag:ncu:update": "cd rag && source venv/bin/activate && pip install --upgrade -r requirements.txt && deactivate",
     "rag:prod": "cd rag && python run_production.py",
     "rag:push": "bun build:vector && cd rag && docker buildx build . --platform=linux/amd64,linux/arm64/v8 --builder multiplatform --tag geoffreychallen/rag-server:latest --tag geoffreychallen/rag-server:$npm_package_version --push",
     "rag:run": "cd rag && docker compose up rag-server",
-    "start:rag": "bun rag:build && bun rag:dev",
     "rag:stop": "cd rag && docker compose down",
     "serve": "next start",
     "start": "run-p start-mdx start-next",
+    "start:rag": "bun rag:build && bun rag:dev",
     "start-mdx": "tsx bin/build.ts mdx output --clean",
     "start-next": "next dev --turbopack",
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@cs124/jeed-output": "2025.11.1",
-    "@cs124/jeed-react": "2025.11.1",
-    "@cs124/jeed-types": "2025.11.1",
+    "@cs124/jeed-output": "2025.12.4",
+    "@cs124/jeed-react": "2025.12.4",
+    "@cs124/jeed-types": "2025.12.4",
     "@cs124/playground-react": "2023.1.0",
     "@cs124/playground-types": "2023.1.0",
     "ace-builds": "1.43.5",
@@ -59,7 +61,7 @@
     "email-validator": "2.0.4",
     "glob": "13.0.0",
     "hamburger-react": "2.5.2",
-    "next": "15.5.7",
+    "next": "16.1.1",
     "next-auth": "4.24.13",
     "react": "19.2.3",
     "react-ace": "14.0.1",
@@ -76,7 +78,6 @@
     "styled-components": "6.1.19"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "3.3.3",
     "@eslint/js": "9.39.2",
     "@mdx-js/mdx": "3.1.1",
     "@types/argparse": "2.0.17",
@@ -97,7 +98,7 @@
     "chokidar": "5.0.0",
     "depcheck": "1.4.7",
     "eslint": "9.39.2",
-    "eslint-config-next": "15.5.4",
+    "eslint-config-next": "16.1.1",
     "feed": "5.1.0",
     "fs-extra": "11.3.3",
     "gray-matter": "yankeeinlondon/gray-matter",
@@ -124,6 +125,10 @@
     "tsx": "4.21.0",
     "typescript": "5.9.3",
     "unist-util-visit": "5.0.0"
+  },
+  "overrides": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3"
   },
   "prettier": {
     "semi": false,
