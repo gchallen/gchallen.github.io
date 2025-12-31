@@ -96,7 +96,8 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS middleware for web access - secured for production
 allowed_origins = os.getenv(
-    "ALLOWED_ORIGINS", "http://localhost:3000,https://geoffreychallen.com"
+    "ALLOWED_ORIGINS",
+    "http://localhost:3000,https://geoffreychallen.com,https://dev.geoffreychallen.com",
 ).split(",")
 app.add_middleware(
     CORSMiddleware,
