@@ -176,7 +176,7 @@ const Code: React.FC<{ codeId: string; originalCode: string; mode: string; meta:
         args.checkstyle = { failOnError: true }
       }
       if (tasks.includes("ktlint")) {
-        args.ktlint = { failOnError: true }
+        args.ktLint = { failOnError: true }
       }
       if (mode === "kotlin") {
         args.snippet!.fileType = "KOTLIN"
