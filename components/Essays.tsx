@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Essay } from "../lib/getEssays"
 import { useNewWindowLogin } from "./LoginButton"
 import SubscribeButton from "./SubscribeButton"
@@ -27,7 +27,14 @@ const Essays: React.FC<{
   random?: boolean
 }> = ({ published, drafts, h1 = false, showSubscribe = false, limit = false, random = false }) => {
   const { session } = useNewWindowLogin()
-  const [randomIndex] = useState(() => Math.floor(Math.random() * 1000))
+  const [randomIndex, setRandomIndex] = useState(0)
+
+  // Initialize random index on client only to avoid hydration mismatch
+  /* eslint-disable react-hooks/set-state-in-effect */
+  useEffect(() => {
+    setRandomIndex(Math.floor(Math.random() * 1000))
+  }, [])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const latestEssays = useMemo(() => {
     return published.slice(0, limit ? 4 : Infinity)
