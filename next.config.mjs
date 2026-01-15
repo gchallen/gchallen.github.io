@@ -39,6 +39,22 @@ const config = {
         destination: "/service",
         permanent: false,
       },
+      // Talk short links (date only → full URL)
+      {
+        source: "/talks/2025-12-07",
+        destination: "/talks/2025-12-07-cs-124-all-staff-meeting",
+        permanent: false,
+      },
+      {
+        source: "/talks/2025-12-11",
+        destination: "/talks/2025-12-11-cs-124-all-student-meeting",
+        permanent: false,
+      },
+      {
+        source: "/talks/2026-01-15",
+        destination: "/talks/2026-01-15-claude-code-howwhen-to-show-and-teach-assisted-coding",
+        permanent: false,
+      },
     ]
   },
 }

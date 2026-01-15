@@ -1,7 +1,7 @@
 [
   {
     "topic": "CS education",
-    "count": 29
+    "count": 30
   },
   {
     "topic": "CS1",
@@ -24,6 +24,10 @@
     "count": 4
   },
   {
+    "topic": "AI in education",
+    "count": 4
+  },
+  {
     "topic": "assessment",
     "count": 4
   },
@@ -42,10 +46,6 @@
   {
     "topic": "Jeed",
     "count": 4
-  },
-  {
-    "topic": "AI in education",
-    "count": 3
   },
   {
     "topic": "career advice",
@@ -73,6 +73,10 @@
   },
   {
     "topic": "active learning",
+    "count": 2
+  },
+  {
+    "topic": "Claude Code",
     "count": 2
   },
   {
@@ -152,15 +156,15 @@
     "count": 1
   },
   {
-    "topic": "Claude Code",
-    "count": 1
-  },
-  {
     "topic": "cloud computing",
     "count": 1
   },
   {
     "topic": "code quality",
+    "count": 1
+  },
+  {
+    "topic": "coding agents",
     "count": 1
   },
   {
@@ -301,6 +305,10 @@
   },
   {
     "topic": "service",
+    "count": 1
+  },
+  {
+    "topic": "software development",
     "count": 1
   },
   {
