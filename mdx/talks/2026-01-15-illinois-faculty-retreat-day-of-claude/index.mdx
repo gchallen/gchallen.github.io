@@ -1,0 +1,125 @@
+---
+title: Claude Code - How/When to Show and Teach Assisted Coding
+description: >
+  Faculty retreat presentation demonstrating AI-assisted software development
+  using real data from an intensive 17-hour Claude session, and discussing how
+  CS 124 is adapting to teach students to work with AI.
+published: 2026-01-15
+audience: Illinois CS Faculty
+topics:
+  - AI in education
+  - CS education
+  - software development
+  - coding agents
+  - Claude Code
+---
+
+## Summary
+
+A presentation for the Illinois Computer Science faculty retreat demonstrating Claude Code's capabilities using real data from January 14, 2026, and discussing how we're adapting CS 124 to respond to AI coding agents.
+
+## I Want These Tools to Work
+
+Let me start by saying there's a lot of concerns in this space, but I really want these tools to work. I'm very excited about them. I wasn't an early adopter, but I've been a very enthusiastic one.
+
+Part of that is selfish—I've always built software to make my courses better and more effective, and these tools are amazing at making that easier. AI is accelerating my ability to just make my courses better.
+
+But there's something bigger happening here. This is going to create an entire sea change in how we think about who's a software developer. There's always been all this training required. As a result, we've had a small group of people with the skills to build things who have been making design decisions on behalf of a much larger population. These tools are going to make so many more people able to build their own software, their own apps, their own tools—for themselves, but also to share with others.
+
+We are really going to collapse and destroy this idea of the software priesthood, and nothing could excite me more than that.
+
+## The Day of Claude
+
+To give you a sense of how I use these tools and what they can accomplish, I want to walk you through one day. This was yesterday—a very heavy day for me. I was home, not feeling all that well, but I had a whole day to sit down and focus intensely on course prep. I do all of this with Claude now. I try to think about how I can work Claude into everything I do with a computer.
+
+Yesterday I was working on two projects primarily—cs124.org and usingandunderstanding.ai. Over 17 hours, I sent about one prompt per minute to Claude. It added about 16,000 lines of code, removed a bunch of things, 63 commits across these two projects, incorporating a bunch of different features and new improvements.
+
+None of this was written by me. I wrote zero lines of code, and I should also point out that I read zero lines of code along the way. I read a few here and there as it was going, but in general my approach is very high level, and that's possible given how effective these tools are.
+
+I'm on the Claude Max plan, which is $200 a month. That's worth every penny to me. If you look at the API usage cost of all the tokens I used yesterday, it's about $1,000.
+
+## Working with Coding Agents
+
+If you haven't done a lot of work with coding agents, these are conversations. I typically work at a very high level, and the interactions don't necessarily involve writing or reading a lot of code. Like I said, I wrote and read essentially no code yesterday despite doing a ton of really useful software development and course management tasks.
+
+Claude has a plan mode where it iterates with you over what to do. It doesn't actually touch any code at that point—it presents you iteratively with a plan that you can approve. I tend to make my initial prompts in planning sessions very minimal because Claude will expand on those ideas, and then based on where it's going, I can steer it.
+
+These plans are very detailed—tied to the architecture of my site and how the different backend microservices work. Claude shows an overview, key decisions it's making, code snippets, types it's going to use, system prompts for agents to help them stay on task. It's really providing a high-level summary that's a nice mix of code snippets and conceptual bits for you to review.
+
+This is where I spend a lot of time now—at this design level. It presents a design, I make comments, it presents an updated design, I make more comments. When it's ready, it asks if it can go ahead. I say fine, and put it into "vibe coding mode" where it has a lot of access to my system. At that point it can update files, run tests, move things around, access databases, view logs, restart services. It's really almost like an entirely autonomous software developer with all this control over my project.
+
+I'm running everything in Git, so these are always done on branches—there's a degree to which it can't make too much of a mess. But I've developed a lot of trust in these systems, maybe too much. Check in six months and see if they've made some RM-RF mistake somewhere and destroyed my files.
+
+## The New Workflow
+
+This is my new workflow. Before, I would do a little bit of design thinking, then spend a lot of time implementing something. That has drawbacks—you get really connected to your implementations and it's hard to step back and say "this is wrong, I made bad design decisions, I need to back up."
+
+Now, because implementation is so easy for an agent to do, you can spend a lot more time planning. If a portion of the project starts to go sideways, you just say stop, delete the branch, and start over with a better plan. I spent no time writing code yesterday, but it was mentally taxing because you spend a ton of time thinking. How do I want this to work? How should this look? Is this okay? What's wrong with this? Debugging too—helping the agent when it gets stuck.
+
+I sometimes tell people the source code is the new assembly code. People say, "Aren't you worried that you won't be able to understand the code the agent writes?" I say, "I don't know—are you worried that you can't understand the compiler output?" Would you be able to work effectively by editing the assembly code generated by your compiler? I don't think so. We're getting to a new place where source code is really the new assembly code, and human language is how we communicate what we want from a software development project.
+
+## Deletions Tell the Story
+
+The deletions also tell part of this story. It's so easy now to move away from bad decisions. At some point yesterday I realized Claude had chosen an old but stable authentication library for my new project. It was something I was familiar with, but there's a better option. So I just told it to stop, tear that out, and replace it.
+
+We did something similar with RAG—we tried a couple different chunking approaches and ranking approaches based on my feedback that it couldn't answer certain questions I wanted it to answer. You spend so much more time thinking and designing because bad implementations are really cheap. And you didn't do them, so there's no sense that you're connected to it.
+
+## Agents Get Off Track
+
+Agents do get off track. There were times yesterday where I was yelling at Claude—"No, no, no!" It wanted to do something and I'm like, that's a terrible idea. There were probably a few times where it was actually right about what it needed to do and I was wrong.
+
+One thing I've noticed is that my expectations have been rising. We're humans and we do homeostasis. I'm so used to going much faster now and accomplishing so much more that when agents get stuck, it's kind of annoying. But overall, software development has become a much less frustrating experience working with agents. It's a lot more fun.
+
+## Testing as a Secret Weapon
+
+I don't really read what Claude does anymore. I just let it work and come up with ways to validate what it does. I do a lot of planning, and testing is one of the secret weapons for working with these tools.
+
+You can use them to write tests. A lot of times when I'm working on stuff, either before or after I've built something, I'll have it write tests to make sure it works, then iterate over those tests. If you give them a loop where they can check their own work, that's tremendously powerful. You can walk away for an hour—take the dog for a walk, read a book—and they'll continue working because they have a way to evaluate their own output.
+
+## Beyond Code: Course Management
+
+I want to point out that given the audience here, I know I do a lot of software development for my courses—that makes me pretty unusual. But there are tons of other things these tools are tremendously good at.
+
+They can integrate with all sorts of tools. I'm using them to send email for my courses, integrate with university systems like LDAP, manage my forum. If a staff member has an idea about something they want to improve on the course website, I can have the agent read that directly from the forum and start working on it. That's wild.
+
+They're great at reading PDFs. Yesterday I had a PDF with all the application information for students who applied to join my AI course, and we went through that together and reviewed each one and sent welcome messages.
+
+Using them at the command line isn't the only way. Claude has a ton of integrations—they just came out with something that lets you give them access to a folder from a UI where they can read and edit files. That brings my Claude Code workflows a lot closer to where normal people are.
+
+## CS 124: Responding to This Moment
+
+Software development has changed fundamentally. That's really past tense for me at this point—it's over. I've started using the term "classical programming" for writing code by hand. That's not something people are going to do for very much longer, and we need to adapt.
+
+I feel a moral obligation to teach students how to use these tools and that they exist and are really effective. If a student comes into my class and leaves thinking they need to write code by hand, I've failed.
+
+## The Traditional Assignment Problem
+
+Our old model had the instructor come up with a specification, give it to students, and students translate that specification into code. But now agents translate specifications into code—they're really good at that. If you give students a clear specification, which we try to do because we need to grade based on it, that just makes the agent's job even easier.
+
+We tried a middle-of-the-road approach last fall—blurring the specification while telling students to use Claude. The problem is Claude's too good. Even with a slightly blurred specification, even with incomplete tests, it still does the job. They're just too powerful now.
+
+## Spring 2026: My Project
+
+What are we going to do? Everyone will do their own project. The challenge now isn't turning specifications into code—AI is really good at that. The challenge is getting your idea out of your own brain and into a specification so the coding agent can do the rest.
+
+In a CS1 course, we're going to have students with eight or nine weeks of programming experience building their own Android applications from scratch. How cool is that? We are living in the future.
+
+I get it—there's fear and concern about what this means for society, what it means for us as human beings. But this is still awesome. It's so cool that students will be able to take their own ideas and make something that solves a problem for them. Not a problem I made up, not the same thing everyone else is doing, but something that lets them express their own individuality and understand they can solve their own problems using technology.
+
+## Classical Programming Remains
+
+We're still going to test students on their ability to perform basic programming tasks in the CBTF. That part of the course isn't going away—it might even increase to 80% of the grade. I'm going to keep calling this "classical programming." Learning how to write code to solve simple problems is a great way to learn how to think more clearly and express yourself more accurately. It's a great mental activity, like a crossword puzzle.
+
+## The Future of Computer Science
+
+Even if you're on the fence, I hate to break it to you—these tools work. Some people don't want them to work for various reasons, but they work. I'm using them to do all sorts of things, and so are many other people. This is the reality we live in.
+
+There's that famous quote: "The future is here—it's just not evenly distributed." I hope this talk helps distribute the future a little more evenly.
+
+They're not perfect, but they're getting better. And even if they stopped getting better right now, software development has changed forever. Even if Claude Code was only as good as it was yesterday, I'm never going back to writing code by hand, because I shouldn't—I can do more this way.
+
+We have to adapt. Education has to adapt. I don't think it's acceptable for us to hide this technology from students. We need to think across our entire program, not just one course, about how we incorporate this and respond to it.
+
+It's possible computer science is going to get very strange. One model I think about is math. Many students learn math at the university, but very few major in mathematics. There's a huge difference between what a math professor does and what we teach in calculus. That may be a future computer science is headed towards—where everybody at the university is taught programming, meaning prompting an agent to build cool things, but very few are actually CS majors, and what they're doing is really not recognizable to other people.
+
+As someone who teaches intro programming, I'm well aware that I may be teaching a dead skill. We're going to have to adapt, and we'll need to be talking about this and working together to face the future.
