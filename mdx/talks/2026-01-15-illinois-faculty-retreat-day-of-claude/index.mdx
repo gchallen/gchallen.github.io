@@ -34,9 +34,52 @@ To give you a sense of how I use these tools and what they can accomplish, I wan
 
 Yesterday I was working on two projects primarily—cs124.org and usingandunderstanding.ai. Over 17 hours, I sent about one prompt per minute to Claude. It added about 16,000 lines of code, removed a bunch of things, 63 commits across these two projects, incorporating a bunch of different features and new improvements.
 
+| Metric | Value |
+|--------|-------|
+| Prompts sent | **903** (~1/minute) |
+| Hours of work | **17** |
+| Commits shipped | **63** |
+| Lines added | **16,266** |
+| Lines deleted | **5,801** |
+| API cost | **~\$1,000** |
+| Lines written by hand | **0** |
+
+How do I know all this? I built a tool called Claude Recorder—with Claude's help, of course—that logs all my Claude Code sessions to a local SQLite database. It captures timestamps, tool usage, token counts, and conversation flow. This lets me analyze my usage patterns and generate stats like the ones above. It's been invaluable for understanding how I actually work with these tools.
+
+### What I Built: cs124.org (26 commits)
+
+| Time | Category | Description |
+|------|----------|-------------|
+| 7:15am | Testing | Student journey tests, reviews display fix |
+| 8:15am | Dependencies | Deps update, e2e fixes, version bump |
+| 9:42am | Hiring | k8s:restart, hiring improvements, UI fixes |
+| 11:42am | Test Infra | data-testid refactor, student journey tests |
+| 1:06pm | Discourse | Migration fixes, WWC group management |
+| 2:03pm | Appointments | Staff hiring automation tool (2+ hours) |
+| 5:21pm | Qdrant | Sync fixes, version bumps, lesson dates |
+| 6:25pm | K8s Logs | Log aggregation utility |
+| 7:54pm | Performance | planprogress CPU issue fix |
+| 11:43pm | AI Chat | RAG improvements |
+
+### What I Built: usingandunderstanding.ai (37 commits)
+
+| Time | Category | Description |
+|------|----------|-------------|
+| 8:15am | Integrations | LDAP, Microsoft Graph, roster generation |
+| 8:50am | Data Reorg | Semester format, course content migration |
+| 10:02am | Welcome Emails | Outlook MCP, email workflow → 24 sent |
+| 10:12am | Upgrades | Node.js 24, dependencies |
+| 11:22am | Framework | Next.js 16, Tailwind v4, dev server |
+| 12:20pm | Database | Docker PostgreSQL, NextAuth config |
+| 1:07pm | Redesign | Terminal aesthetic, typography |
+| 2:35pm | RAG Setup | Embedding tool, dev server |
+| 5:47pm | Agents | Markdown-based agent definitions |
+| 6:18pm | Auth Migration | NextAuth → Better Auth (2+ hours) |
+| 11:06pm | RAG v2 | Hierarchical chunking, hybrid search |
+
 None of this was written by me. I wrote zero lines of code, and I should also point out that I read zero lines of code along the way. I read a few here and there as it was going, but in general my approach is very high level, and that's possible given how effective these tools are.
 
-I'm on the Claude Max plan, which is $200 a month. That's worth every penny to me. If you look at the API usage cost of all the tokens I used yesterday, it's about $1,000.
+I'm on the Claude Max plan, which is \$200 a month. That's worth every penny to me. If you look at the API usage cost of all the tokens I used yesterday, it's about \$1,000.
 
 ## Working with Coding Agents
 
@@ -53,6 +96,11 @@ I'm running everything in Git, so these are always done on branches—there's a 
 ## The New Workflow
 
 This is my new workflow. Before, I would do a little bit of design thinking, then spend a lot of time implementing something. That has drawbacks—you get really connected to your implementations and it's hard to step back and say "this is wrong, I made bad design decisions, I need to back up."
+
+| Before | Now |
+|--------|-----|
+| Iterate over **implementations** | Iterate over **plans** |
+| write → test → fix → repeat | design → refine → approve → agent implements |
 
 Now, because implementation is so easy for an agent to do, you can spend a lot more time planning. If a portion of the project starts to go sideways, you just say stop, delete the branch, and start over with a better plan. I spent no time writing code yesterday, but it was mentally taxing because you spend a ton of time thinking. How do I want this to work? How should this look? Is this okay? What's wrong with this? Debugging too—helping the agent when it gets stuck.
 
@@ -98,6 +146,11 @@ I feel a moral obligation to teach students how to use these tools and that they
 
 Our old model had the instructor come up with a specification, give it to students, and students translate that specification into code. But now agents translate specifications into code—they're really good at that. If you give students a clear specification, which we try to do because we need to grade based on it, that just makes the agent's job even easier.
 
+| Model | Flow |
+|-------|------|
+| **Traditional** | Instructor idea → Spec → *Student writes code* |
+| **Spring 2026** | *Student idea → Student spec* → AI writes code |
+
 We tried a middle-of-the-road approach last fall—blurring the specification while telling students to use Claude. The problem is Claude's too good. Even with a slightly blurred specification, even with incomplete tests, it still does the job. They're just too powerful now.
 
 ## Spring 2026: My Project
@@ -125,3 +178,9 @@ We have to adapt. Education has to adapt. I don't think it's acceptable for us t
 It's possible computer science is going to get very strange. One model I think about is math. Many students learn math at the university, but very few major in mathematics. There's a huge difference between what a math professor does and what we teach in calculus. That may be a future computer science is headed towards—where everybody at the university is taught programming, meaning prompting an agent to build cool things, but very few are actually CS majors, and what they're doing is really not recognizable to other people.
 
 As someone who teaches intro programming, I'm well aware that I may be teaching a dead skill. We're going to have to adapt, and we'll need to be talking about this and working together to face the future.
+
+## About This Presentation
+
+In case you're wondering: yes, this presentation was also created with Claude. I used Claude Code to query my Claude Recorder database, extract the statistics and commit timelines, design the reveal.js slides with the interactive timeline visualization, transcribe my practice recordings using WhisperX, and write this conversational summary. The slides are a standalone HTML file with all CSS and JavaScript embedded—Claude handled that too.
+
+It's turtles all the way down.
