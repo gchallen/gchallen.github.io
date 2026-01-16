@@ -36,7 +36,7 @@
     "rag:build": "bun build:vector && cd rag && docker build -t geoffreychallen/rag-server:latest -t geoffreychallen/rag-server:$npm_package_version .",
     "rag:dev": "cd rag && docker compose --profile dev up rag-server-dev",
     "rag:lint": "cd rag && source venv/bin/activate && ruff check . && deactivate",
-    "rag:ncu": "cd rag && source venv/bin/activate && pip-review --local && deactivate",
+    "rag:ncu": "cd rag && source venv/bin/activate && uvx pip-review --local && deactivate",
     "rag:ncu:update": "cd rag && source venv/bin/activate && pip install --upgrade -r requirements.txt && deactivate",
     "rag:prod": "cd rag && python run_production.py",
     "rag:push": "bun build:vector && cd rag && docker buildx build . --platform=linux/amd64,linux/arm64/v8 --tag geoffreychallen/rag-server:latest --tag geoffreychallen/rag-server:$npm_package_version --push",

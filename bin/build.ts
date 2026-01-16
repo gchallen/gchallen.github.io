@@ -38,12 +38,12 @@ async function update(source: string) {
     data.isEssay = true
     const prefix = data.published ? `${moment(data.published).utc().format("YYYY-MM-DD")}-` : ""
     const postfix = data.draft ? "-draft" : ""
-    const name = `${prefix}${slugify(data.title, { lower: true })}${postfix}.jsx`
+    const name = `${prefix}${slugify(data.title, { lower: true, remove: /:/g })}${postfix}.jsx`
     pagePath = path.join("pages/essays", name)
   } else if (source.startsWith("mdx/talks/")) {
     data.isTalk = true
     const prefix = data.published ? `${moment(data.published).utc().format("YYYY-MM-DD")}-` : ""
-    const name = `${prefix}${slugify(data.title, { lower: true })}.jsx`
+    const name = `${prefix}${slugify(data.title, { lower: true, remove: /:/g })}.jsx`
     pagePath = path.join("pages/talks", name)
     // Derive slides URL from directory name by convention (talks use index.mdx in directories)
     const talkDir = source.endsWith("/index.mdx") ? path.basename(path.dirname(source)) : path.basename(source, ".mdx")
