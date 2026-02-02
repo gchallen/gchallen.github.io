@@ -48,6 +48,10 @@ async function update(source: string) {
     // Derive slides URL from directory name by convention (talks use index.mdx in directories)
     const talkDir = source.endsWith("/index.mdx") ? path.basename(path.dirname(source)) : path.basename(source, ".mdx")
     data.slidesUrl = `/talks/${talkDir}/slides.html`
+  } else if (source.startsWith("mdx/interviews/")) {
+    data.isInterview = true
+    const dirName = path.basename(path.dirname(source))
+    pagePath = path.join("pages/interviews", `${dirName}.jsx`)
   } else {
     pagePath = replaceExt(path.join("pages", path.relative(args.input, source)), ".jsx")
   }
@@ -58,7 +62,9 @@ async function update(source: string) {
     // For talks, copy to public/talks/{talkDir}/, otherwise public/mdx/{url}/
     const publicDir = data.isTalk
       ? path.join("public/talks", path.basename(path.dirname(source)))
-      : path.join("public/mdx", url)
+      : data.isInterview
+        ? path.join("public/interviews", path.basename(path.dirname(source)))
+        : path.join("public/mdx", url)
     await mkdirs(publicDir)
     for (const otherFile of otherFiles) {
       await copy(otherFile, path.join(publicDir, path.basename(otherFile)))
@@ -85,46 +91,47 @@ async function update(source: string) {
   const toc = (compiled.data as any)?.toc || []
   const contents = compiled.toString()
 
-  // Generate HTML for RAG
-  try {
-    // Simple fallback components for HTML generation
-    const htmlComponents = {
-      Image: ({ src, alt, width, height, children }: any) =>
-        createElement(
-          "figure",
-          null,
-          createElement("img", { src, alt, width, height, style: { height: "auto" } }),
-          children && createElement("figcaption", null, children),
-        ),
-      Code: ({ children }: any) => createElement("pre", null, createElement("code", null, children)),
-      YouTube: ({ id }: any) => createElement("div", { className: "youtube-placeholder" }, `[YouTube Video: ${id}]`),
-      Footnote: ({ counter, children }: any) =>
-        createElement("sup", { className: "footnote" }, `(${counter}: ${children})`),
-      ScreenOnly: ({ children }: any) => createElement("div", { className: "screenonly" }, children),
-      PrintOnly: ({ children }: any) => createElement("div", { className: "printonly" }, children),
-      Comment: () => null,
-      a: ({ href, children, ...props }: any) => {
-        if (href === "-") {
-          return createElement("span", null, children)
-        }
-        return createElement("a", { href, ...props }, children)
-      },
-    }
+  // Generate HTML for RAG (skip interviews to keep them private)
+  if (!data.isInterview) {
+    try {
+      // Simple fallback components for HTML generation
+      const htmlComponents = {
+        Image: ({ src, alt, width, height, children }: any) =>
+          createElement(
+            "figure",
+            null,
+            createElement("img", { src, alt, width, height, style: { height: "auto" } }),
+            children && createElement("figcaption", null, children),
+          ),
+        Code: ({ children }: any) => createElement("pre", null, createElement("code", null, children)),
+        YouTube: ({ id }: any) => createElement("div", { className: "youtube-placeholder" }, `[YouTube Video: ${id}]`),
+        Footnote: ({ counter, children }: any) =>
+          createElement("sup", { className: "footnote" }, `(${counter}: ${children})`),
+        ScreenOnly: ({ children }: any) => createElement("div", { className: "screenonly" }, children),
+        PrintOnly: ({ children }: any) => createElement("div", { className: "printonly" }, children),
+        Comment: () => null,
+        a: ({ href, children, ...props }: any) => {
+          if (href === "-") {
+            return createElement("span", null, children)
+          }
+          return createElement("a", { href, ...props }, children)
+        },
+      }
 
-    const mdxModule = evaluateSync(content, {
-      ...(runtime as any),
-      remarkPlugins: [remarkGfm, [footnotes as any, { inlineNotes: true }], remarkMath, smartypants],
-      rehypePlugins: [rehypeKate],
-    })
+      const mdxModule = evaluateSync(content, {
+        ...(runtime as any),
+        remarkPlugins: [remarkGfm, [footnotes as any, { inlineNotes: true }], remarkMath, smartypants],
+        rehypePlugins: [rehypeKate],
+      })
 
-    const htmlContent = renderToString(createElement(mdxModule.default as any, { components: htmlComponents }))
+      const htmlContent = renderToString(createElement(mdxModule.default as any, { components: htmlComponents }))
 
-    // Create HTML file path in rag/html directory
-    const htmlPath = replaceExt(path.resolve("rag/html", path.relative(args.input, source)), ".html")
-    await mkdirs(path.dirname(htmlPath))
+      // Create HTML file path in rag/html directory
+      const htmlPath = replaceExt(path.resolve("rag/html", path.relative(args.input, source)), ".html")
+      await mkdirs(path.dirname(htmlPath))
 
-    // Write HTML with metadata
-    const htmlWithMetadata = `<!DOCTYPE html>
+      // Write HTML with metadata
+      const htmlWithMetadata = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -140,9 +147,10 @@ async function update(source: string) {
 </body>
 </html>`
 
-    await writeFile(htmlPath, htmlWithMetadata)
-  } catch (error) {
-    console.error(`Failed to generate HTML for ${source}:`, error)
+      await writeFile(htmlPath, htmlWithMetadata)
+    } catch (error) {
+      console.error(`Failed to generate HTML for ${source}:`, error)
+    }
   }
 
   const contentPath = replaceExt(path.resolve(args.output, path.relative(args.input, source)), ".js")

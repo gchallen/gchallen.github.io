@@ -95,6 +95,7 @@ const Wrapper: React.FC<
       reading: { text: string }
       isEssay?: boolean
       isTalk?: boolean
+      isInterview?: boolean
       audience?: string
       slidesUrl?: string
       draft?: boolean
@@ -116,6 +117,7 @@ const Wrapper: React.FC<
     noTitle,
     isEssay,
     isTalk,
+    isInterview,
     audience,
     slidesUrl,
     draft,
@@ -134,6 +136,7 @@ const Wrapper: React.FC<
             <meta property="og:description" content={description.trim()} key="ogdesc" />
           </>
         )}
+        {isInterview && <meta name="robots" content="noindex, nofollow" />}
       </Head>
       <Header />
       <main className="responsive paddings">
@@ -147,7 +150,7 @@ const Wrapper: React.FC<
               <div id="publishedAt">
                 <strong>{!draft ? publishedAt : "Draft"}</strong>
                 <br />
-                <em>{isTalk && audience ? audience : reading.text}</em>
+                {!isInterview && <em>{isTalk && audience ? audience : reading.text}</em>}
                 {isTalk && slidesUrl && (
                   <>
                     <br />

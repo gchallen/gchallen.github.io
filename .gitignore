@@ -37,6 +37,7 @@ yarn-error.log*
 /output
 /public/mdx
 /public/talks
+/public/interviews
 /dist
 
 /public/atom.xml
