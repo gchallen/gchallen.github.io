@@ -383,10 +383,10 @@
       </text>
 
       <!-- Cliff illustrations -->
-      <image href="img/cliff-midterm.png" x="308" y="234" width="64" height="132" opacity="0" preserveAspectRatio="none" aria-label="Students scrambling up a cliff face at the midterm grade jump">
+      <image href="img/cliff-midterm.png" aria-label="Students scrambling up a cliff face at the midterm grade jump" x="308" y="234" width="64" height="132" opacity="0" preserveAspectRatio="none">
         <animate attributeName="opacity" from="0" to="1" dur="0.4s" fill="freeze" begin="indefinite" data-delay="1.2"/>
       </image>
-      <image href="img/cliff-final.png" x="581" y="98" width="78" height="136" opacity="0" preserveAspectRatio="none" aria-label="Students falling off a cliff face at the final exam grade jump">
+      <image href="img/cliff-final.png" aria-label="Students falling off a cliff face at the final exam grade jump" x="581" y="98" width="78" height="136" opacity="0" preserveAspectRatio="none">
         <animate attributeName="opacity" from="0" to="1" dur="0.4s" fill="freeze" begin="indefinite" data-delay="2.2"/>
       </image>
 
@@ -3887,5 +3887,13 @@ boolean isPositive(int argument) {
         }
       });
     </script>
-  </body>
+  
+<script>
+  // Flip PageUp/PageDown for presentation controller
+  Reveal.on('ready', () => {
+    Reveal.addKeyBinding(33, 'next');
+    Reveal.addKeyBinding(34, 'prev');
+  });
+</script>
+</body>
 </html>

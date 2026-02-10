@@ -99,10 +99,48 @@
   .timer-display.warning { color: #c8860a; }
   .timer-display.danger { color: #c9302c; }
 
-  .slide-info {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 2rem;
+  .timer-display.secondary {
+    font-size: 4rem;
+    color: #888;
+  }
+
+  .slide-title-block {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .slide-title-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .slide-notes {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .slide-notes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .slide-notes li {
+    font-size: 1.5rem;
+    color: #ccc;
+    padding: 0.3rem 0;
+    line-height: 1.4;
+  }
+
+  .slide-notes li::before {
+    content: "›";
+    color: #5BC4D4;
+    font-weight: 700;
+    margin-right: 0.6rem;
   }
 
   /* Practice controls */
@@ -269,9 +307,25 @@
         <div class="timer-display" id="clock"></div>
       </div>
     </div>
-    <div class="slide-info" id="slide-info"></div>
-    <div class="slide-info" id="fragments-info" style="color: #888;"></div>
-    <div class="slide-info" style="color: #555;">Arrow keys control slides</div>
+    <div class="timers" style="gap: 3rem;">
+      <div class="timer-block">
+        <div class="timer-label">Slide</div>
+        <div class="timer-display secondary" id="current-slide">-</div>
+      </div>
+      <div class="timer-block">
+        <div class="timer-label">Total Slides</div>
+        <div class="timer-display secondary" id="total-slides">-</div>
+      </div>
+      <div class="timer-block">
+        <div class="timer-label">Fragments Left</div>
+        <div class="timer-display secondary" id="fragments-left">-</div>
+      </div>
+      <div class="timer-block slide-title-block">
+        <div class="timer-label">Slide</div>
+        <div class="timer-display secondary slide-title-text" id="slide-title">-</div>
+      </div>
+    </div>
+    <div class="slide-notes" id="slide-notes"></div>
 
     <div id="presenter-start-controls" style="margin-top: 1rem;">
       <button class="btn" id="presenter-start-btn">Start Timer</button>
@@ -325,6 +379,7 @@
     { title: "AI v. the Assignment", targetSec: 300, startSlide: 7 },
     { title: "Your Ideas Talking", targetSec: 300, startSlide: 9 },
     { title: "Conversational Assessment", targetSec: 300, startSlide: 10 },
+    { title: "The Horizon", targetSec: 600, startSlide: 11 },
   ];
 
   // Precompute cumulative targets
@@ -351,15 +406,191 @@
   const sectionTimerEl = document.getElementById('section-timer');
   const totalTimerEl = document.getElementById('total-timer');
   const bufferTimerEl = document.getElementById('buffer-timer');
-  const slideInfoEl = document.getElementById('slide-info');
   const clockEl = document.getElementById('clock');
   const dotEl = document.getElementById('recording-dot');
   const labelEl = document.getElementById('recording-label');
   const summaryBody = document.getElementById('summary-body');
 
-  const fragmentsInfoEl = document.getElementById('fragments-info');
+  const currentSlideEl = document.getElementById('current-slide');
+  const totalSlidesEl = document.getElementById('total-slides');
+  const fragmentsLeftEl = document.getElementById('fragments-left');
+  const slideTitleEl = document.getElementById('slide-title');
   const presenterStartControls = document.getElementById('presenter-start-controls');
   const presenterStartBtn = document.getElementById('presenter-start-btn');
+  const slideNotesEl = document.getElementById('slide-notes');
+
+  // Speaker notes per slide (0-indexed)
+  const slideNotes = [
+    // 0: title
+    ["I'm an educational engineer — I build technology to help students learn",
+     "Sydney connection: Bilgola Beach, summer 2010, thanks to David Kinley",
+     "Harvard PhD → Buffalo (NSF CAREER, ~$3M funding) → Illinois teaching pivot 2017"],
+    // 1: follow-along
+    ["Share the slides link — audience can follow along on their devices"],
+    // 2: overview-grid
+    ["Nine sections: six past, three present, closing with the future",
+     "Past → Present → Future arc"],
+    // 3: section-frequent-assessment
+    [],
+    // 4: high-stakes-problem
+    ["Students cram, forget, fall behind — one bad day = catastrophic",
+     "Limited data about understanding — you find out too late",
+     "Infrequent assessment provides no structure"],
+    // 5: cramming-spikes
+    ["Cramming spikes before midterm and final",
+     "No incentive to keep up between exams"],
+    // 6: weekly-quizzes
+    ["No midterm, no final — weekly quizzes worth 2.5% each",
+     "Most significant untimed assessment is only 4%",
+     "Entirely eliminated high-stakes assessment"],
+    // 7: fsa-reasons
+    ["Students keep up — no incentive to procrastinate",
+     "Immediate feedback within a week, enables early intervention",
+     "Generous drops, retakes, catch-up grading — universal design",
+     "Reduces stress without formal accommodations"],
+    // 8: assessment-comparison
+    ["Fall 2017: code in proctored setting ONCE — on a paper exam",
+     "Fall 2024: weekly proctored computer quizzes",
+     "15 hours proctored vs 3–4 previously",
+     "Not grade inflation — better course design"],
+    // 9: cbtf
+    ["Computer-based testing facility — proctored, autograded, purpose-built",
+     "→ Frequent assessment creates demand for problems"],
+    // 10: section-questioner
+    [],
+    // 11: spec-vs-tests
+    ["Authoring bottleneck: test suites take hours to write",
+     "269-line spec → 645-line test suite",
+     "Need to cover corner cases, prevent memoization, handle multiple approaches"],
+    // 12: questioner-insight
+    ["Found myself writing mini-solutions inside test code",
+     "When autograding, the solution is known — fundamentally different from software testing",
+     "Why maintain three sources of truth when two should suffice?"],
+    // 13: mutation-example
+    ["Source code mutation: flip <, change + to -, etc.",
+     "Test each mutant to ensure generated tests catch the error",
+     "If a mutant slips through, strengthen tests and retry"],
+    // 14: questioner-scale
+    ["Old: hours per problem, unknown accuracy",
+     "New: several problems per hour, validated accuracy",
+     "700+ problems since Fall 2020 — published at SIGCSE 2025"],
+    // 15: programming-exercises
+    ["Code quality analysis: complexity, dead code, style, efficiency",
+     "Not just 'does it work?' but 'is it good?'",
+     "Instant feedback — addresses classic autograding criticism"],
+    // 16: debugging-exercises
+    ["Mutates real student code to create buggy versions",
+     "Students find and fix without rewriting — forces reading others' code",
+     "→ Had tools and assessment, but still doing lectures. Then a crisis."],
+    // 17: section-pandemic-pivot
+    [],
+    // 18: fall-2019
+    ["The before picture: 900 students, lectures 3x/week",
+     "No single pace works for a large diverse class",
+     "Watching someone code breeds overconfidence"],
+    // 19: spring-2020
+    ["Remote lecturing clearly even less effective",
+     "If rebuilding for remote, don't replicate what wasn't working"],
+    // 20: pandemic-daily-lessons
+    ["Replaced lectures with async daily lessons — 5 per week",
+     "Text + playgrounds + walkthroughs + practice problems",
+     "Self-paced: beginners take longer, experienced move fast"],
+    // 21: kept-it
+    ["Post-pandemic: did NOT go back to lectures",
+     "Enrollment 900 → 1,400 with strong outcomes",
+     "The pandemic was a crisis — I turned it into an opportunity"],
+    // 22: dawn-dusk-tutoring
+    ["Dawn-to-dusk online tutoring support",
+     "17,000 questions answered Fall 2022 — 14 per student",
+     "Far more interaction than any lecture could support",
+     "→ Needed to replace live coding — led to walkthroughs"],
+    // 23: section-walkthroughs
+    [],
+    // 24: walkthrough-origin
+    ["Clicked on video to edit code — video just paused",
+     "Video only delivers pixels, not code",
+     "I knew I could build something better"],
+    // 25: walkthrough-demo
+    ["Animated editor replay with audio narration",
+     "NOT a video — actual code in a real editor",
+     "Students can pause, edit, run, submit to autograder"],
+    // 26: walkthrough-recording
+    ["Recorded in browser, right on the lesson page",
+     "No external tools — instructor sees surrounding context",
+     "Low barrier: a few minutes to record, immediately available"],
+    // 27: decentering
+    ["~300 people have recorded walkthroughs since Fall 2020",
+     "2,540+ walkthroughs across the course",
+     "I fail to represent the diversity of this field — walkthroughs let me invite others in"],
+    // 28: student-preferences
+    ["Students develop real preferences — align with identity",
+     "Multiple voices change who feels welcome",
+     "Published: Zhou, Paquette & Challen, SIGCSE 2025"],
+    // 29: section-trajectory
+    [],
+    // 30: trajectory-results
+    ["700 → 1,200+ students, Java and Kotlin",
+     "50% → 80% A-range, 5% → 2.5% failure",
+     "15,000+ students taught, 2,200+ course staff",
+     "Performance gaps between genders and majors shrunk significantly"],
+    // 31: trajectory-dissemination
+    ["learncs.online — free, public, used worldwide",
+     "High school outreach, community college pilot",
+     "Every innovation connects — integrated system, not one-off tools",
+     "→ The pandemic was one crisis. Now the second."],
+    // 32: section-ai-broke
+    [],
+    // 33: ai-demo
+    ["Tested Claude on CS 124 Android project, Summer 2025",
+     "Gave only test suites — not even written instructions",
+     "Completed entire assignment with almost no human intervention"],
+    // 34: assignment-pipeline
+    ["Traditional: instructor idea → spec → student writes code → autograder",
+     "Spec is central — but makes agent's job trivially easy",
+     "Years making specs clearer inadvertently helped AI"],
+    // 35: blurred-spec
+    ["Fall 2025: tried blurring spec while telling students to use Claude",
+     "Staff tested: told Claude 'make the tests compile' — finished the project",
+     "This approach failed"],
+    // 36: student-quotes
+    ["Students: 'everyone is using AI', 'just asked Claude to do everything'",
+     "Had to do something different",
+     "→ So we flipped the model"],
+    // 37: section-two-lane
+    [],
+    // 38: idea-pipeline
+    ["Old: instructor idea → instructor spec → student writes code",
+     "New: student idea → student spec → AI writes code",
+     "Everyone builds their own Android app — My Project",
+     "Machine Problem → Machine Project → My Project"],
+    // 39: two-lanes
+    ["Lane 1: Classical programming — 70%, proctored, no AI",
+     "Lane 2: AI-collaborative — My Project with Claude Code",
+     "Writing code by hand = mental training like weightlifting",
+     "15 hours proctored — we know what students actually know"],
+    // 40: section-conversation
+    [],
+    // 41: autograde-everything
+    ["AI makes written assessment vulnerable",
+     "Oral exams don't scale with 1,200 students",
+     "Need assessment that scales and AI can't fake"],
+    // 42: conversation-demo
+    ["Oral-exam-style via chat with AI interviewer",
+     "Generation, not recognition — explain in your own words",
+     "Running at usingandunderstanding.ai"],
+    // 43: multi-agent-architecture
+    ["Interviewer: conducts conversation, doesn't see rubric or answers",
+     "Evaluator: analyses against rubrics, sends guidance",
+     "Adversarial testing with personas — validated robustness",
+     "→ That's where I am. Let me close with where this is headed."],
+    // 44: section-horizon
+    [],
+    // 45: horizon-thoughts
+    ["The future of CS education in an AI world",
+     "Big open questions about what comes next"],
+    // 46: lets-chat
+    ["Thank you! Let's chat."],
+  ];
 
   const startBtn = document.getElementById('start-btn');
   const downloadZipBtn = document.getElementById('download-zip-btn');
@@ -438,13 +669,20 @@
       : `Section ${currentSectionIndex + 1} of ${sections.length}`;
     sectionTitle.textContent = broadcastSectionName || broadcastTitle || sec.title;
 
-    const slidesRemaining = broadcastTotalSlides - broadcastCurrentSlide;
-    const fragmentsRemaining = broadcastFragmentStepsTotal - broadcastFragmentStepsVisible;
-    slideInfoEl.textContent = `Slide ${broadcastCurrentSlide} of ${broadcastTotalSlides} (${slidesRemaining} remaining)`;
-    if (broadcastFragmentStepsTotal > 0) {
-      fragmentsInfoEl.textContent = `${fragmentsRemaining} click${fragmentsRemaining !== 1 ? 's' : ''} remaining on this slide`;
+    currentSlideEl.textContent = broadcastCurrentSlide || '-';
+    totalSlidesEl.textContent = broadcastTotalSlides || '-';
+    fragmentsLeftEl.textContent = broadcastFragmentStepsTotal > 0
+      ? broadcastFragmentStepsTotal - broadcastFragmentStepsVisible
+      : '-';
+    slideTitleEl.textContent = broadcastTitle || '-';
+
+    // Show speaker notes for current slide (0-indexed)
+    const noteIndex = broadcastCurrentSlide ? broadcastCurrentSlide - 1 : -1;
+    const notes = (noteIndex >= 0 && noteIndex < slideNotes.length) ? slideNotes[noteIndex] : [];
+    if (notes.length > 0) {
+      slideNotesEl.innerHTML = '<ul>' + notes.map(n => `<li>${n}</li>`).join('') + '</ul>';
     } else {
-      fragmentsInfoEl.textContent = '';
+      slideNotesEl.innerHTML = '';
     }
 
     // Initialize timers before presenting starts
@@ -855,10 +1093,10 @@
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     if (state === 'DONE') return;
 
-    if (e.code === 'ArrowRight' || e.code === 'Space' || e.code === 'PageDown') {
+    if (e.code === 'ArrowRight' || e.code === 'Space' || e.code === 'PageUp') {
       e.preventDefault();
       syncChannel.postMessage({ type: 'navigate', direction: 'next' });
-    } else if (e.code === 'ArrowLeft' || e.code === 'PageUp') {
+    } else if (e.code === 'ArrowLeft' || e.code === 'PageDown') {
       e.preventDefault();
       syncChannel.postMessage({ type: 'navigate', direction: 'prev' });
     } else if (e.code === 'ArrowUp') {
