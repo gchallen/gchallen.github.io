@@ -1,12 +1,96 @@
 ---
 title: "The Educational Engineer"
 description: >
-  Presentation at the University of Sydney on building better CS education through
-  engineering, frequent assessment, interactive tools, and adapting to AI.
+  Building technology to improve student outcomes at scale: frequent assessment,
+  solution-driven autograding, interactive walkthroughs, and adapting to AI.
+  Presented at the University of Sydney School of Computing.
 published: 2026-02-11
-audience: University of Sydney
+audience: University of Sydney School of Computing
 topics:
   - AI in education
   - CS education
   - educational engineering
+  - assessment
+  - autograding
+  - interactive walkthroughs
 ---
+
+## Summary
+
+A seminar presenting eight years of building educational technology for introductory computer science at the University of Illinois. The talk covers the development of frequent small assessment, solution-driven autograding, interactive walkthroughs, and a tutorial-based course format—innovations that have improved student success rates from 50% to 80% A-range grades while serving over 15,000 students. It then addresses how AI coding agents have broken traditional programming assignments and what we're doing about it, including a new student-driven project model and AI-powered conversational assessment.
+
+## The Educational Engineer
+
+I'm an educational engineer: I build technology to help students learn. I've spent eight years teaching one of the world's largest introductory computer science courses at the University of Illinois, rebuilding it from the ground up—one tool, one system, one semester at a time.
+
+The before picture, Fall 2017: 700 students, Java only, lectures three times a week, a midterm and a paper final exam. Students wrote code in a proctored setting exactly once—on the paper final. 50% earned A-range grades, 5% failed. It was a functional course, but I thought we could do a lot better.
+
+The after picture, Fall 2024: 1,200+ students, Java and Kotlin, a tutorial format with daily lessons and continuous staff support, weekly quizzes in a computer-based testing facility, 15 hours of proctored assessment per semester. 80% earn A-range grades, 2.5% fail.
+
+## Frequent Small Assessment
+
+The first major change wasn't a tool—it was a philosophy. High-stakes exams encourage cramming, punish bad days, and give you limited data about student understanding. You find out too late that students are struggling.
+
+CS 124 has no midterm and no final. Instead, students take weekly computer-based quizzes, each worth only 2.5% of the grade, delivered in a dedicated computer-based testing facility. Daily homework problems provide continuous practice. The most significant untimed assessment—a project checkpoint—is worth just 4%. I have entirely eliminated high-stakes assessment.
+
+This enables flexible policies: generous drops on homework and quizzes, retake opportunities, catch-up grading where doing better on the next quiz raises earlier scores. These policies are possible because we assess frequently—lots of data points. Students keep up instead of cramming, and we get immediate feedback on what's not working.
+
+The rigor argument is important: in Fall 2017, students wrote code in a proctored setting once, on a paper exam. Now they complete multiple autograded programming challenges every week. That's 15 hours of proctored assessment per semester versus 3–4 previously. More rigorous assessment, despite better outcomes. This is not grade inflation—this is better course design.
+
+## Solve, Learn, Repeat
+
+Frequent assessment creates a demand for problems. I needed a way to author them fast.
+
+The insight behind our autograder, Questioner, is that when autograding, the solution is known. This is fundamentally different from software testing, where only the desired behaviour is known. So instead of maintaining three sources of truth—a description, a solution, and tests—the author provides just a description and a reference solution, and Questioner generates and validates the testing strategy automatically using source code mutation.
+
+The old process took hours per problem with unknown accuracy. The new process produces several problems per hour with validated accuracy. We've authored over 700 problems since Fall 2020. Questioner also evaluates code quality—not just "does it work?" but "is it good?"—giving students instant feedback on complexity, style, and efficiency.
+
+The same mutation engine powers debugging exercises. We mutate correct student submissions to create buggy versions, and students must find and fix the bug without rewriting. This forces them to read others' code and exposes them to different solution approaches.
+
+## Through the Pandemic
+
+The pandemic was a crisis I turned into an opportunity. Remote lecturing in Spring 2020 was clearly less effective than in-person lecturing—and in-person lecturing wasn't great either. No single pace works for a large, diverse class. Watching someone else code breeds overconfidence.
+
+In Fall 2020, I replaced lectures entirely with asynchronous daily lessons—five per week. Each lesson combines text explanations, runnable code playgrounds, interactive walkthroughs, practice problems, and debugging exercises. Students work at their own pace, supported by dawn-to-dusk online tutoring. In Fall 2022, staff answered 17,000 tutoring questions—14 per student on average. Far more interaction than any lecture could support.
+
+The key decision: post-pandemic, we did not go back to lectures. The asynchronous format proved so effective we made it permanent. Enrolment grew from 900 in Fall 2019 to 1,400 in Fall 2022 with strong outcomes.
+
+## Interactive Walkthroughs
+
+The most distinctive thing I've built. The origin story: I was watching a video of someone live coding, clicked on the screen to edit the code, and the video just paused—because video only delivers pixels, not code. I knew I could build something better.
+
+Interactive walkthroughs are animated editor replays with audio narration. They look like videos—press play, code starts changing, the instructor talks—but they are not videos. They're real code in a real editor. Students can pause, edit the code, run it, and submit it to the autograder. Every walkthrough is connected to a live backend.
+
+The low barrier to recording—done in the browser, right on the lesson page—enabled something unexpected. Nearly 300 people have recorded walkthroughs since Fall 2020, producing over 2,540 across the course. Most concepts have at least two explanations from different voices. Research with Luc Paquette shows that students develop real preferences, and those preferences align with aspects of identity. Multiple voices aren't just nice to have—they change who feels welcome.
+
+## The Trajectory
+
+What impact have these innovations had? From Fall 2017 to Fall 2024: 700 to 1,200+ students, 50% to 80% A-range grades, 5% to 2.5% failure rate. Over 15,000 students taught across 21 semesters, 2,200+ course staff recruited and managed. Performance gaps between genders, majors and non-majors, and experience levels have shrunk significantly. 80% of students are non-majors—they succeed at similar rates to majors despite different preparation.
+
+These tools are available beyond Illinois through [learncs.online](https://www.learncs.online), a free public resource. We've also partnered with the Discovery Partners Institute for high school outreach, piloted materials at Wilbur Wright Community College, and run the [Illinois Summer Teaching Workshop](https://teaching-workshop.cs.illinois.edu/) for five consecutive years.
+
+Every innovation connects to the others: playgrounds power walkthroughs, walkthroughs power lessons, Questioner powers homework and quizzes, mutation powers debugging exercises. This is an integrated system, not a collection of one-off tools.
+
+## AI v. the Assignment
+
+The pandemic was one crisis I turned into an opportunity. AI is the second. Traditional programming assignments follow a simple model: the instructor creates a specification, the student translates it into code. But AI coding agents are very good at translating specifications into code—and the clearer the specification, the easier the agent's job.
+
+In Summer 2025, I tested whether Claude could complete CS 124's Android project given only the test suites—not even the written instructions. It completed the entire assignment with almost no human intervention. In Fall 2025, we tried a compromise: blurring the specification while telling students to use Claude. Even with reduced test suites, agents completed assignments easily. This approach failed.
+
+## Your Ideas Talking
+
+So we flipped the model. The old flow: instructor idea, instructor spec, student writes code. The new flow: student idea, student spec, AI writes code. The interesting human contribution is getting the idea out of your head and into a specification for the coding agent to follow.
+
+In Spring 2026, every student builds their own Android app—not the same assignment, their own project. Students use Claude Code to realise their specification. We've gone from Machine Problem to Machine Project to My Project—retiring both original words while keeping the MP acronym.
+
+This coexists with rigorous assessment of fundamentals. The course runs two lanes: classical programming through weekly proctored quizzes worth 70% of the grade with no AI permitted, and AI-collaborative development through My Project. Learning to write code by hand is great mental training—like weightlifting. The weights don't go anywhere, but you get stronger.
+
+## Conversational Assessment
+
+AI makes traditional written assessment vulnerable, but oral exams don't scale—not with 1,200 students. I built conversational assessment: oral-exam-style evaluations conducted via chat with an AI interviewer. Students have a real-time conversation where the interviewer asks questions, follows up, and probes for understanding. Not recognition—generation.
+
+The system uses a two-agent architecture. An interviewer agent conducts natural conversation without seeing rubric details. A separate evaluator agent analyses responses against rubrics and sends guidance to the interviewer. The separation ensures the evaluator focuses on structured analysis while the interviewer stays conversational. The system is validated with adversarial persona-based testing—good students, weak students, answer extractors, and confident bluffers.
+
+## The Future of CS, Education
+
+The talk closes with thoughts on where CS education is headed: navigating the age of AI anxiety, training architects rather than coders, rethinking who we teach and how, and staying mission-driven through rapid change.
