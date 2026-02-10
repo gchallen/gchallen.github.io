@@ -5,3 +5,4 @@ output
 pages/**/*.jsx
 public/onload.js
 rag
+mdx/talks/2026-02-11-the-educational-engineer/

@@ -1,7 +1,7 @@
 [
   {
     "topic": "CS education",
-    "count": 30
+    "count": 31
   },
   {
     "topic": "CS1",
@@ -10,6 +10,10 @@
   {
     "topic": "University of Illinois",
     "count": 11
+  },
+  {
+    "topic": "AI in education",
+    "count": 5
   },
   {
     "topic": "personal",
@@ -21,10 +25,6 @@
   },
   {
     "topic": "academic jobs",
-    "count": 4
-  },
-  {
-    "topic": "AI in education",
     "count": 4
   },
   {
@@ -205,6 +205,10 @@
   },
   {
     "topic": "Discourse",
+    "count": 1
+  },
+  {
+    "topic": "educational engineering",
     "count": 1
   },
   {
