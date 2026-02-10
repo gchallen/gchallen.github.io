@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presenter View</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #1a1a1a;
+    color: #f5f5f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Waiting screen */
+  #waiting-screen {
+    text-align: center;
+  }
+
+  #waiting-screen h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  #waiting-screen .hint {
+    font-size: 1.2rem;
+    color: #888;
+  }
+
+  /* Presenter screen */
+  #presenter-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .section-label {
+    font-size: 1.4rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-size: 3rem;
+    font-weight: 300;
+    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+    color: #fff;
+  }
+
+  .timers {
+    display: flex;
+    gap: 4rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+
+  .timer-block {
+    text-align: center;
+  }
+
+  .timer-label {
+    font-size: 1.2rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .timer-display {
+    font-size: 6rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+
+  .timer-display.on-track { color: #28a745; }
+  .timer-display.warning { color: #c8860a; }
+  .timer-display.danger { color: #c9302c; }
+
+  .slide-info {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  /* Practice controls */
+  .practice-controls {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .practice-controls.visible {
+    display: flex;
+  }
+
+  .recording-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.2rem;
+    color: #c9302c;
+    height: 1.5rem;
+  }
+
+  .recording-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #d9534f;
+    display: none;
+  }
+
+  .recording-dot.active {
+    display: block;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .btn {
+    font-size: 1.4rem;
+    padding: 0.8rem 2.5rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    font-weight: 500;
+    background: #28a745;
+    color: white;
+  }
+
+  .btn:hover { transform: scale(1.05); }
+  .btn:active { transform: scale(0.98); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .btn.stop { background: #c9302c; }
+  .btn.download { background: #6c757d; }
+
+  .btn-row {
+    display: flex;
+    gap: 1rem;
+  }
+
+  /* Done screen */
+  #done-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  #done-screen h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .summary-table th,
+  .summary-table td {
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+
+  .summary-table th {
+    color: #888;
+    font-weight: 500;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .summary-table td { font-size: 1.1rem; }
+
+  .summary-table .num { text-align: center; color: #888; }
+  .summary-table .time { text-align: right; font-variant-numeric: tabular-nums; }
+  .summary-table .over { color: #c9302c; }
+  .summary-table .under { color: #28a745; }
+  .summary-table .on-time { color: #888; }
+
+  .summary-table tr.total-row td {
+    border-top: 2px solid #2a7ab5;
+    font-weight: 600;
+    padding-top: 0.75rem;
+  }
+
+  .done-actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .mode-indicator {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .mode-indicator.practice { color: #c9302c; }
+</style>
+</head>
+<body>
+
+<div class="mode-indicator" id="mode-indicator"></div>
+
+<div class="container">
+  <div id="waiting-screen">
+    <h1>Presenter View</h1>
+    <div class="hint">Waiting for slides to connect...</div>
+    <div class="hint" style="margin-top: 0.5rem;">Open the presenter slides at <a href="presenter.html" style="color: #2a7ab5;">presenter.html</a></div>
+  </div>
+
+  <div id="presenter-screen">
+    <div class="section-label" id="section-label"></div>
+    <div class="section-title" id="section-title"></div>
+    <div class="timers">
+      <div class="timer-block">
+        <div class="timer-label">Section</div>
+        <div class="timer-display" id="section-timer">0:00</div>
+      </div>
+      <div class="timer-block">
+        <div class="timer-label">Total</div>
+        <div class="timer-display" id="total-timer">0:00</div>
+      </div>
+      <div class="timer-block">
+        <div class="timer-label">Buffer</div>
+        <div class="timer-display" id="buffer-timer">+0:00</div>
+      </div>
+      <div class="timer-block">
+        <div class="timer-label">Clock</div>
+        <div class="timer-display" id="clock"></div>
+      </div>
+    </div>
+    <div class="slide-info" id="slide-info"></div>
+    <div class="slide-info" id="fragments-info" style="color: #888;"></div>
+    <div class="slide-info" style="color: #555;">Arrow keys control slides</div>
+
+    <div id="presenter-start-controls" style="margin-top: 1rem;">
+      <button class="btn" id="presenter-start-btn">Start Timer</button>
+    </div>
+
+    <div class="practice-controls" id="practice-controls">
+      <div class="recording-indicator">
+        <div class="recording-dot" id="recording-dot"></div>
+        <span id="recording-label"></span>
+      </div>
+      <div class="btn-row" id="practice-buttons">
+        <button class="btn" id="start-btn">Start Recording</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="done-screen">
+    <h2>Practice Complete</h2>
+    <table class="summary-table" id="summary-table">
+      <thead>
+        <tr>
+          <th class="num">#</th>
+          <th>Section</th>
+          <th class="time">Actual</th>
+          <th class="time">Target</th>
+          <th class="time">Diff</th>
+        </tr>
+      </thead>
+      <tbody id="summary-body"></tbody>
+    </table>
+    <div class="done-actions">
+      <button class="btn download" id="download-zip-btn">Download ZIP</button>
+      <button class="btn download" id="download-yaml-btn">Download YAML</button>
+      <button class="btn" id="restart-btn">Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Section definitions - maps to slides.yaml structure
+  // Each section starts at a section-slide and includes subsequent content slides
+  // Slide indices: 0=title, 1=section-frequent-assessment, 2=section-questioner, etc.
+  const sections = [
+    { title: "The Educational Engineer", targetSec: 120, startSlide: 0 },
+    { title: "Frequent Small Assessment", targetSec: 420, startSlide: 1 },
+    { title: "Solve, Learn, Repeat", targetSec: 300, startSlide: 2 },
+    { title: "Through the Pandemic", targetSec: 300, startSlide: 3 },
+    { title: "Interactive Walkthroughs", targetSec: 300, startSlide: 5 },
+    { title: "The Trajectory", targetSec: 180, startSlide: 6 },
+    { title: "AI v. the Assignment", targetSec: 300, startSlide: 7 },
+    { title: "Your Ideas Talking", targetSec: 300, startSlide: 9 },
+    { title: "Conversational Assessment", targetSec: 300, startSlide: 10 },
+  ];
+
+  // Precompute cumulative targets
+  let cumulative = 0;
+  for (const s of sections) {
+    cumulative += s.targetSec;
+    s.cumulativeTarget = cumulative;
+  }
+
+  // Check for practice mode
+  const urlParams = new URLSearchParams(window.location.search);
+  const isPracticeMode = urlParams.get('practice') === 'true';
+
+  // DOM refs
+  const modeIndicator = document.getElementById('mode-indicator');
+  const waitingScreen = document.getElementById('waiting-screen');
+  const presenterScreen = document.getElementById('presenter-screen');
+  const doneScreen = document.getElementById('done-screen');
+  const practiceControls = document.getElementById('practice-controls');
+  const practiceButtons = document.getElementById('practice-buttons');
+
+  const sectionLabel = document.getElementById('section-label');
+  const sectionTitle = document.getElementById('section-title');
+  const sectionTimerEl = document.getElementById('section-timer');
+  const totalTimerEl = document.getElementById('total-timer');
+  const bufferTimerEl = document.getElementById('buffer-timer');
+  const slideInfoEl = document.getElementById('slide-info');
+  const clockEl = document.getElementById('clock');
+  const dotEl = document.getElementById('recording-dot');
+  const labelEl = document.getElementById('recording-label');
+  const summaryBody = document.getElementById('summary-body');
+
+  const fragmentsInfoEl = document.getElementById('fragments-info');
+  const presenterStartControls = document.getElementById('presenter-start-controls');
+  const presenterStartBtn = document.getElementById('presenter-start-btn');
+
+  const startBtn = document.getElementById('start-btn');
+  const downloadZipBtn = document.getElementById('download-zip-btn');
+  const downloadYamlBtn = document.getElementById('download-yaml-btn');
+  const restartBtn = document.getElementById('restart-btn');
+
+  // State
+  let currentSlideH = 0;
+  let currentSlideV = 0;
+  let currentSectionIndex = 0;
+  let totalStartTime = 0;
+  let sectionStartTime = 0;
+  let timerInterval = null;
+  let mediaRecorder = null;
+  let audioChunks = [];
+  let sectionTimes = []; // actual seconds per section
+  let state = 'WAITING'; // WAITING | PRESENTING | RECORDING | DONE
+  let connected = false;
+
+  // Broadcast state
+  let broadcastTitle = '';
+  let broadcastTotalSlides = 0;
+  let broadcastCurrentSlide = 0;
+  let broadcastFragmentStepsTotal = 0;
+  let broadcastFragmentStepsVisible = 0;
+  let broadcastSectionIndex = 0;
+  let broadcastSectionName = '';
+  let broadcastSectionCount = 0;
+
+  // Set up mode indicator
+  if (isPracticeMode) {
+    modeIndicator.textContent = 'Practice Mode';
+    modeIndicator.classList.add('practice');
+    practiceControls.classList.add('visible');
+    presenterStartControls.style.display = 'none';
+  } else {
+    modeIndicator.textContent = 'Presenter Mode';
+  }
+
+  presenterStartBtn.addEventListener('click', () => {
+    startPresenting();
+    presenterStartControls.style.display = 'none';
+  });
+
+  function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+  function formatTimeWithSign(seconds, alwaysSign) {
+    const absSeconds = Math.abs(seconds);
+    const m = Math.floor(absSeconds / 60);
+    const s = Math.floor(absSeconds % 60);
+    const time = `${m}:${s.toString().padStart(2, '0')}`;
+
+    if (seconds < 0) return `-${time}`;
+    if (alwaysSign) return `+${time}`;
+    return time;
+  }
+
+  function getSectionForSlide(indexh) {
+    // Find which section this slide belongs to
+    for (let i = sections.length - 1; i >= 0; i--) {
+      if (indexh >= sections[i].startSlide) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
+  function updateDisplay() {
+    const sec = sections[currentSectionIndex];
+    sectionLabel.textContent = broadcastSectionCount > 0
+      ? `Section ${broadcastSectionIndex + 1} of ${broadcastSectionCount}`
+      : `Section ${currentSectionIndex + 1} of ${sections.length}`;
+    sectionTitle.textContent = broadcastSectionName || broadcastTitle || sec.title;
+
+    const slidesRemaining = broadcastTotalSlides - broadcastCurrentSlide;
+    const fragmentsRemaining = broadcastFragmentStepsTotal - broadcastFragmentStepsVisible;
+    slideInfoEl.textContent = `Slide ${broadcastCurrentSlide} of ${broadcastTotalSlides} (${slidesRemaining} remaining)`;
+    if (broadcastFragmentStepsTotal > 0) {
+      fragmentsInfoEl.textContent = `${fragmentsRemaining} click${fragmentsRemaining !== 1 ? 's' : ''} remaining on this slide`;
+    } else {
+      fragmentsInfoEl.textContent = '';
+    }
+
+    // Initialize timers before presenting starts
+    if (state !== 'PRESENTING' && state !== 'RECORDING') {
+      sectionTimerEl.textContent = sec ? formatTime(sec.targetSec) : '0:00';
+      sectionTimerEl.classList.remove('warning', 'danger');
+      sectionTimerEl.classList.add('on-track');
+      totalTimerEl.textContent = '0:00';
+      totalTimerEl.classList.remove('warning', 'danger');
+      totalTimerEl.classList.add('on-track');
+      bufferTimerEl.textContent = '+0:00';
+      bufferTimerEl.classList.remove('warning', 'danger');
+      bufferTimerEl.classList.add('on-track');
+    }
+  }
+
+  function updateClock() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    clockEl.textContent = `${hours}:${minutes}`;
+  }
+
+  function updateTimers() {
+    if (state !== 'PRESENTING' && state !== 'RECORDING') return;
+
+    const now = Date.now();
+    const currentSessionElapsed = (now - sectionStartTime) / 1000;
+    const sectionTotal = (sectionTimes[currentSectionIndex] || 0) + currentSessionElapsed;
+    const totalElapsed = (now - totalStartTime) / 1000;
+    const sec = sections[currentSectionIndex];
+
+    // Section timer: countdown from target (accumulated time across all visits)
+    const sectionRemaining = sec.targetSec - sectionTotal;
+    sectionTimerEl.textContent = formatTimeWithSign(sectionRemaining, false);
+
+    // Section coloring: green > 60s, yellow 0-60s, red < 0
+    sectionTimerEl.classList.remove('on-track', 'warning', 'danger');
+    if (sectionRemaining < 0) {
+      sectionTimerEl.classList.add('danger');
+    } else if (sectionRemaining < 60) {
+      sectionTimerEl.classList.add('warning');
+    } else {
+      sectionTimerEl.classList.add('on-track');
+    }
+
+    // Total timer: count up
+    totalTimerEl.textContent = formatTime(totalElapsed);
+
+    // Calculate buffer:
+    // - Completed sections: sum of (target - actual)
+    // - Current section: only negative contributes (when over time)
+    // - Future sections: assume on time (no contribution)
+    let buffer = 0;
+    for (let i = 0; i < currentSectionIndex; i++) {
+      buffer += sections[i].targetSec - (sectionTimes[i] || 0);
+    }
+    // Current section: only count overrun (negative remaining time)
+    const currentOverrun = Math.min(0, sectionRemaining);
+    buffer += currentOverrun;
+
+    // Total coloring: based on buffer
+    totalTimerEl.classList.remove('on-track', 'warning', 'danger');
+    if (buffer < -30) {
+      totalTimerEl.classList.add('danger');
+    } else if (buffer < 30) {
+      totalTimerEl.classList.add('warning');
+    } else {
+      totalTimerEl.classList.add('on-track');
+    }
+
+    // Buffer timer: +/- time ahead/behind
+    bufferTimerEl.textContent = formatTimeWithSign(buffer, true);
+    bufferTimerEl.classList.remove('on-track', 'warning', 'danger');
+    if (buffer < -30) {
+      bufferTimerEl.classList.add('danger');
+    } else if (Math.abs(buffer) < 30) {
+      bufferTimerEl.classList.add('warning');
+    } else {
+      bufferTimerEl.classList.add('on-track');
+    }
+  }
+
+  function handleSlideChange(indexh, indexv) {
+    currentSlideH = indexh;
+    currentSlideV = indexv;
+
+    const newSectionIndex = broadcastSectionIndex;
+
+    // If section changed and we're timing, accumulate the section time
+    if (newSectionIndex !== currentSectionIndex && (state === 'PRESENTING' || state === 'RECORDING')) {
+      const now = Date.now();
+      const sessionElapsed = (now - sectionStartTime) / 1000;
+      sectionTimes[currentSectionIndex] = (sectionTimes[currentSectionIndex] || 0) + sessionElapsed;
+      sectionStartTime = now;
+    }
+
+    currentSectionIndex = newSectionIndex;
+    updateDisplay();
+
+    // Check if we've finished (last slide)
+    // This would need knowledge of total slides - for now we rely on manual stop
+  }
+
+  function startPresenting() {
+    state = 'PRESENTING';
+    totalStartTime = Date.now();
+    sectionStartTime = Date.now();
+    sectionTimes = new Array(sections.length).fill(0);
+    timerInterval = setInterval(updateTimers, 100);
+    updateTimers();
+  }
+
+  async function startRecording() {
+    state = 'RECORDING';
+    totalStartTime = Date.now();
+    sectionStartTime = Date.now();
+    sectionTimes = new Array(sections.length).fill(0);
+    audioChunks = [];
+
+    // Start recording
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: false, noiseSuppression: true, autoGainControl: true }
+      });
+
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+        ? 'audio/webm;codecs=opus'
+        : 'audio/webm';
+
+      mediaRecorder = new MediaRecorder(stream, { mimeType });
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) audioChunks.push(e.data);
+      };
+      mediaRecorder.start(1000);
+
+      dotEl.classList.add('active');
+      labelEl.textContent = 'Recording';
+    } catch (e) {
+      dotEl.classList.remove('active');
+      labelEl.textContent = 'No mic access';
+    }
+
+    // Update button
+    practiceButtons.innerHTML = '<button class="btn stop" id="stop-btn">Stop Recording</button>';
+    document.getElementById('stop-btn').addEventListener('click', finishPractice);
+
+    timerInterval = setInterval(updateTimers, 100);
+    updateTimers();
+  }
+
+  function finishPractice() {
+    // Accumulate final section time
+    const now = Date.now();
+    const sessionElapsed = (now - sectionStartTime) / 1000;
+    sectionTimes[currentSectionIndex] = (sectionTimes[currentSectionIndex] || 0) + sessionElapsed;
+
+    state = 'DONE';
+    clearInterval(timerInterval);
+
+    // Stop recording
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.stop();
+      mediaRecorder.stream.getTracks().forEach(t => t.stop());
+    }
+    dotEl.classList.remove('active');
+    labelEl.textContent = '';
+
+    // Build summary
+    presenterScreen.style.display = 'none';
+    doneScreen.style.display = 'flex';
+
+    summaryBody.innerHTML = '';
+    let totalActual = 0;
+    let totalTarget = 0;
+
+    for (let i = 0; i < sections.length; i++) {
+      const sec = sections[i];
+      const actual = sectionTimes[i] || 0;
+      totalActual += actual;
+      totalTarget += sec.targetSec;
+
+      const diff = actual - sec.targetSec;
+      const diffAbs = Math.abs(diff);
+      let diffClass, diffText;
+      if (actual === 0) {
+        diffClass = 'on-time';
+        diffText = '—';
+      } else if (Math.abs(diff) < 5) {
+        diffClass = 'on-time';
+        diffText = '—';
+      } else if (diff > 0) {
+        diffClass = 'over';
+        diffText = `+${formatTime(diffAbs)}`;
+      } else {
+        diffClass = 'under';
+        diffText = `−${formatTime(diffAbs)}`;
+      }
+
+      const tr = document.createElement('tr');
+      tr.innerHTML =
+        `<td class="num">${i + 1}</td>` +
+        `<td>${sec.title}</td>` +
+        `<td class="time">${actual > 0 ? formatTime(actual) : '—'}</td>` +
+        `<td class="time">${formatTime(sec.targetSec)}</td>` +
+        `<td class="time ${diffClass}">${diffText}</td>`;
+      summaryBody.appendChild(tr);
+    }
+
+    // Total row
+    const totalDiff = totalActual - totalTarget;
+    const totalDiffAbs = Math.abs(totalDiff);
+    let totalDiffClass, totalDiffText;
+    if (Math.abs(totalDiff) < 5) {
+      totalDiffClass = 'on-time';
+      totalDiffText = '—';
+    } else if (totalDiff > 0) {
+      totalDiffClass = 'over';
+      totalDiffText = `+${formatTime(totalDiffAbs)}`;
+    } else {
+      totalDiffClass = 'under';
+      totalDiffText = `−${formatTime(totalDiffAbs)}`;
+    }
+
+    const totalRow = document.createElement('tr');
+    totalRow.className = 'total-row';
+    totalRow.innerHTML =
+      `<td class="num"></td>` +
+      `<td>Total</td>` +
+      `<td class="time">${formatTime(totalActual)}</td>` +
+      `<td class="time">${formatTime(totalTarget)}</td>` +
+      `<td class="time ${totalDiffClass}">${totalDiffText}</td>`;
+    summaryBody.appendChild(totalRow);
+
+    // Show/hide download buttons
+    downloadZipBtn.style.display = audioChunks.length > 0 ? 'inline-block' : 'none';
+  }
+
+  function reset() {
+    state = 'PRESENTING';
+    doneScreen.style.display = 'none';
+    presenterScreen.style.display = 'flex';
+
+    if (isPracticeMode) {
+      practiceButtons.innerHTML = '<button class="btn" id="start-btn">Start Recording</button>';
+      document.getElementById('start-btn').addEventListener('click', startRecording);
+    }
+
+    // Restart timing from current position
+    totalStartTime = Date.now();
+    sectionStartTime = Date.now();
+    sectionTimes = new Array(sections.length).fill(0);
+    timerInterval = setInterval(updateTimers, 100);
+    updateTimers();
+  }
+
+  // Event handlers
+  startBtn.addEventListener('click', startRecording);
+  restartBtn.addEventListener('click', reset);
+
+  function getStamp() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+  }
+
+  function buildYaml() {
+    const stamp = getStamp();
+    let totalActual = 0;
+    let totalTarget = 0;
+    let yamlSections = '';
+    for (let i = 0; i < sections.length; i++) {
+      const sec = sections[i];
+      const actual = Math.round(sectionTimes[i] || 0);
+      totalActual += actual;
+      totalTarget += sec.targetSec;
+      const diff = actual - sec.targetSec;
+      yamlSections +=
+        `  - num: ${i + 1}\n` +
+        `    title: "${sec.title}"\n` +
+        `    actual_sec: ${actual}\n` +
+        `    target_sec: ${sec.targetSec}\n` +
+        `    diff_sec: ${diff}\n`;
+    }
+    return (
+      `date: "${stamp.replace('_', 'T')}"\n` +
+      `total_actual_sec: ${totalActual}\n` +
+      `total_target_sec: ${totalTarget}\n` +
+      `sections:\n` +
+      yamlSections
+    );
+  }
+
+  function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // Minimal ZIP builder
+  function buildZip(files) {
+    const enc = new TextEncoder();
+    let offset = 0;
+    const centralDir = [];
+    const parts = [];
+
+    for (const { name, data } of files) {
+      const nameBytes = enc.encode(name);
+      const localHeader = new Uint8Array(30 + nameBytes.length);
+      const lv = new DataView(localHeader.buffer);
+      lv.setUint32(0, 0x04034b50, true);
+      lv.setUint16(4, 20, true);
+      lv.setUint16(8, 0, true);
+      lv.setUint32(18, data.byteLength, true);
+      lv.setUint32(22, data.byteLength, true);
+      lv.setUint16(26, nameBytes.length, true);
+      localHeader.set(nameBytes, 30);
+
+      const cdEntry = new Uint8Array(46 + nameBytes.length);
+      const cv = new DataView(cdEntry.buffer);
+      cv.setUint32(0, 0x02014b50, true);
+      cv.setUint16(4, 20, true);
+      cv.setUint16(6, 20, true);
+      cv.setUint16(10, 0, true);
+      cv.setUint32(20, data.byteLength, true);
+      cv.setUint32(24, data.byteLength, true);
+      cv.setUint16(28, nameBytes.length, true);
+      cv.setUint32(42, offset, true);
+      cdEntry.set(nameBytes, 46);
+
+      parts.push(localHeader, new Uint8Array(data));
+      centralDir.push(cdEntry);
+      offset += localHeader.byteLength + data.byteLength;
+    }
+
+    const cdOffset = offset;
+    let cdSize = 0;
+    for (const e of centralDir) { cdSize += e.byteLength; parts.push(e); }
+
+    const eocd = new Uint8Array(22);
+    const ev = new DataView(eocd.buffer);
+    ev.setUint32(0, 0x06054b50, true);
+    ev.setUint16(8, files.length, true);
+    ev.setUint16(10, files.length, true);
+    ev.setUint32(12, cdSize, true);
+    ev.setUint32(16, cdOffset, true);
+    parts.push(eocd);
+
+    return new Blob(parts, { type: 'application/zip' });
+  }
+
+  downloadYamlBtn.addEventListener('click', () => {
+    const yaml = buildYaml();
+    const blob = new Blob([yaml], { type: 'text/yaml' });
+    downloadBlob(blob, `talk-practice-${getStamp()}.yaml`);
+  });
+
+  downloadZipBtn.addEventListener('click', async () => {
+    const stamp = getStamp();
+    const yaml = buildYaml();
+    const yamlBytes = new TextEncoder().encode(yaml);
+
+    const mimeType = mediaRecorder ? mediaRecorder.mimeType : 'audio/webm';
+    const audioBlob = new Blob(audioChunks, { type: mimeType });
+    const audioBuffer = await audioBlob.arrayBuffer();
+
+    const zip = buildZip([
+      { name: `${stamp}.yaml`, data: yamlBytes.buffer },
+      { name: `${stamp}.webm`, data: audioBuffer }
+    ]);
+    downloadBlob(zip, `talk-practice-${stamp}.zip`);
+  });
+
+  // BroadcastChannel for sync with main slides
+  const syncChannel = new BroadcastChannel('reveal-sync');
+
+  syncChannel.onmessage = (event) => {
+    const data = event.data;
+
+    if (data.type === 'slidechanged') {
+      // Store broadcast data
+      if (data.title !== undefined) broadcastTitle = data.title;
+      if (data.totalSlides !== undefined) broadcastTotalSlides = data.totalSlides;
+      if (data.currentSlide !== undefined) broadcastCurrentSlide = data.currentSlide;
+      if (data.fragmentStepsTotal !== undefined) broadcastFragmentStepsTotal = data.fragmentStepsTotal;
+      if (data.fragmentStepsVisible !== undefined) broadcastFragmentStepsVisible = data.fragmentStepsVisible;
+      if (data.sectionIndex !== undefined) broadcastSectionIndex = data.sectionIndex;
+      if (data.sectionName !== undefined) broadcastSectionName = data.sectionName;
+      if (data.sectionCount !== undefined) broadcastSectionCount = data.sectionCount;
+
+      if (!connected) {
+        connected = true;
+        waitingScreen.style.display = 'none';
+        presenterScreen.style.display = 'flex';
+        updateDisplay();
+      }
+
+      handleSlideChange(data.indexh, data.indexv);
+    }
+  };
+
+  // Keyboard navigation - send commands to main slides
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (state === 'DONE') return;
+
+    if (e.code === 'ArrowRight' || e.code === 'Space' || e.code === 'PageDown') {
+      e.preventDefault();
+      syncChannel.postMessage({ type: 'navigate', direction: 'next' });
+    } else if (e.code === 'ArrowLeft' || e.code === 'PageUp') {
+      e.preventDefault();
+      syncChannel.postMessage({ type: 'navigate', direction: 'prev' });
+    } else if (e.code === 'ArrowUp') {
+      e.preventDefault();
+      syncChannel.postMessage({ type: 'navigate', direction: 'up' });
+    } else if (e.code === 'ArrowDown') {
+      e.preventDefault();
+      syncChannel.postMessage({ type: 'navigate', direction: 'down' });
+    }
+  });
+
+  // Start clock updates
+  updateClock();
+  setInterval(updateClock, 1000);
+
+})();
+</script>
+</body>
+</html>

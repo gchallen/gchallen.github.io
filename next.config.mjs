@@ -55,6 +55,11 @@ const config = {
         destination: "/talks/2026-01-15-a-day-with-claude-using-and-teaching-coding-agents",
         permanent: false,
       },
+      {
+        source: "/talks/2026-02-11",
+        destination: "/talks/2026-02-11-the-educational-engineer",
+        permanent: false,
+      },
       // Redirects from old title-based slugs
       {
         source: "/talks/2026-01-15-claude-code-howwhen-to-show-and-teach-assisted-coding",
