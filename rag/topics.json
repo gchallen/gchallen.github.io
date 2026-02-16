@@ -16,6 +16,14 @@
     "count": 5
   },
   {
+    "topic": "assessment",
+    "count": 5
+  },
+  {
+    "topic": "autograding",
+    "count": 5
+  },
+  {
     "topic": "personal",
     "count": 5
   },
@@ -25,14 +33,6 @@
   },
   {
     "topic": "academic jobs",
-    "count": 4
-  },
-  {
-    "topic": "assessment",
-    "count": 4
-  },
-  {
-    "topic": "autograding",
     "count": 4
   },
   {
@@ -53,6 +53,10 @@
   },
   {
     "topic": "course structure",
+    "count": 3
+  },
+  {
+    "topic": "interactive walkthroughs",
     "count": 3
   },
   {
@@ -97,10 +101,6 @@
   },
   {
     "topic": "hiring",
-    "count": 2
-  },
-  {
-    "topic": "interactive walkthroughs",
     "count": 2
   },
   {
