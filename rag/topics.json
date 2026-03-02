@@ -84,6 +84,10 @@
     "count": 2
   },
   {
+    "topic": "coding agents",
+    "count": 2
+  },
+  {
     "topic": "course community",
     "count": 2
   },
@@ -93,6 +97,10 @@
   },
   {
     "topic": "course staff",
+    "count": 2
+  },
+  {
+    "topic": "generative AI",
     "count": 2
   },
   {
@@ -125,6 +133,10 @@
   },
   {
     "topic": "Python",
+    "count": 2
+  },
+  {
+    "topic": "software development",
     "count": 2
   },
   {
@@ -161,10 +173,6 @@
   },
   {
     "topic": "code quality",
-    "count": 1
-  },
-  {
-    "topic": "coding agents",
     "count": 1
   },
   {
@@ -217,10 +225,6 @@
   },
   {
     "topic": "gender equity",
-    "count": 1
-  },
-  {
-    "topic": "generative AI",
     "count": 1
   },
   {
@@ -309,10 +313,6 @@
   },
   {
     "topic": "service",
-    "count": 1
-  },
-  {
-    "topic": "software development",
     "count": 1
   },
   {
