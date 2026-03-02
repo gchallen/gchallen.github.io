@@ -4,7 +4,7 @@
 FROM oven/bun:alpine AS bun_builder
 
 # Stage 2: Build your Node.js Alpine image and copy Bun
-FROM node:24.8.0-alpine AS base
+FROM node:24.14.0-alpine AS base
 RUN apk add --no-cache git
 
 # Copy the Bun executable from the bun_builder stage
