@@ -194,5 +194,17 @@ const Wrapper: React.FC<
     </>
   )
 }
-const components = { wrapper: Wrapper, a: A, Code, Footnote, Image, ScreenOnly, PrintOnly, Comment, YouTube, Quote, Attribution }
+const components = {
+  wrapper: Wrapper,
+  a: A,
+  Code,
+  Footnote,
+  Image,
+  ScreenOnly,
+  PrintOnly,
+  Comment,
+  YouTube,
+  Quote,
+  Attribution,
+}
 export default components

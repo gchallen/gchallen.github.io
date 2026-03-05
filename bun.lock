@@ -24,7 +24,7 @@
         "react-dom": "19.2.4",
         "react-google-recaptcha-v3": "1.11.0",
         "react-hook-inview": "4.5.1",
-        "react-icons": "5.5.0",
+        "react-icons": "5.6.0",
         "react-markdown": "^10.1.0",
         "react-popper-tooltip": "4.4.2",
         "react-sidebar": "https://github.com/gchallen/react-sidebar#9e2b65ba",
@@ -55,7 +55,7 @@
         "eslint": "9.39.2",
         "eslint-config-next": "16.1.6",
         "feed": "5.2.0",
-        "fs-extra": "11.3.3",
+        "fs-extra": "11.3.4",
         "gray-matter": "yankeeinlondon/gray-matter",
         "image-size": "1.1.1",
         "mdast-util-to-string": "4.0.0",
@@ -802,7 +802,7 @@
 
     "for-each": ["for-each@0.3.5", "", { "dependencies": { "is-callable": "^1.2.7" } }, "sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg=="],
 
-    "fs-extra": ["fs-extra@11.3.3", "", { "dependencies": { "graceful-fs": "^4.2.0", "jsonfile": "^6.0.1", "universalify": "^2.0.0" } }, "sha512-VWSRii4t0AFm6ixFFmLLx1t7wS1gh+ckoa84aOeapGum0h+EZd1EhEumSB+ZdDLnEPuucsVB9oB7cxJHap6Afg=="],
+    "fs-extra": ["fs-extra@11.3.4", "", { "dependencies": { "graceful-fs": "^4.2.0", "jsonfile": "^6.0.1", "universalify": "^2.0.0" } }, "sha512-CTXd6rk/M3/ULNQj8FBqBWHYBVYybQ3VPBw0xGKFe3tuH7ytT6ACnvzpIQ3UZtB8yvUKC2cXn1a+x+5EVQLovA=="],
 
     "fs.realpath": ["fs.realpath@1.0.0", "", {}, "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw=="],
 
@@ -1354,7 +1354,7 @@
 
     "react-hook-inview": ["react-hook-inview@4.5.1", "", { "peerDependencies": { "react": ">= 16.8.0", "react-dom": ">= 16.8.0" } }, "sha512-ceb2tjSNnBIQ19TphSlxrjy85dfWEoqCb1kTquOM0li+Myzn0cBDi6WzItFf9vyQbZAXJR7LaoESLBXvMu6clA=="],
 
-    "react-icons": ["react-icons@5.5.0", "", { "peerDependencies": { "react": "*" } }, "sha512-MEFcXdkP3dLo8uumGI5xN3lDFNsRtrjbOEKDLD7yv76v4wpnEq2Lt2qeHaQOr34I/wPN3s3+N08WkQ+CW37Xiw=="],
+    "react-icons": ["react-icons@5.6.0", "", { "peerDependencies": { "react": "*" } }, "sha512-RH93p5ki6LfOiIt0UtDyNg/cee+HLVR6cHHtW3wALfo+eOHTp8RnU2kRkI6E+H19zMIs03DyxUG/GfZMOGvmiA=="],
 
     "react-is": ["react-is@16.13.1", "", {}, "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="],
 
