@@ -7,7 +7,7 @@ python-dotenv>=1.2.2
 # LangChain and OpenAI
 langchain>=1.2.10
 langchain-openai>=1.1.10
-langchain-core>=1.2.16
+langchain-core>=1.2.17
 langchain-community>=0.4.1
 openai>=2.24.0
 tiktoken>=0.12.0
