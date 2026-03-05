@@ -1,7 +1,7 @@
 [
   {
     "topic": "CS education",
-    "count": 31
+    "count": 32
   },
   {
     "topic": "CS1",
@@ -10,6 +10,10 @@
   {
     "topic": "University of Illinois",
     "count": 11
+  },
+  {
+    "topic": "personal",
+    "count": 6
   },
   {
     "topic": "AI in education",
@@ -24,7 +28,7 @@
     "count": 5
   },
   {
-    "topic": "personal",
+    "topic": "educational technology",
     "count": 5
   },
   {
@@ -36,10 +40,6 @@
     "count": 4
   },
   {
-    "topic": "educational technology",
-    "count": 4
-  },
-  {
     "topic": "infrastructure",
     "count": 4
   },
@@ -48,11 +48,19 @@
     "count": 4
   },
   {
+    "topic": "teaching",
+    "count": 4
+  },
+  {
     "topic": "career advice",
     "count": 3
   },
   {
     "topic": "course structure",
+    "count": 3
+  },
+  {
+    "topic": "generative AI",
     "count": 3
   },
   {
@@ -68,7 +76,7 @@
     "count": 3
   },
   {
-    "topic": "teaching",
+    "topic": "software development",
     "count": 3
   },
   {
@@ -97,10 +105,6 @@
   },
   {
     "topic": "course staff",
-    "count": 2
-  },
-  {
-    "topic": "generative AI",
     "count": 2
   },
   {
@@ -136,15 +140,15 @@
     "count": 2
   },
   {
-    "topic": "software development",
-    "count": 2
-  },
-  {
     "topic": "student learning",
     "count": 2
   },
   {
     "topic": "teaching methods",
+    "count": 2
+  },
+  {
+    "topic": "teaching philosophy",
     "count": 2
   },
   {
@@ -325,10 +329,6 @@
   },
   {
     "topic": "teaching assistants",
-    "count": 1
-  },
-  {
-    "topic": "teaching philosophy",
     "count": 1
   },
   {
