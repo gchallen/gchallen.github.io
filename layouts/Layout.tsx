@@ -8,6 +8,7 @@ import "react-popper-tooltip/dist/styles.css"
 import Code from "../components/Code"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
+import Quote, { Attribution } from "../components/Quote"
 import SubscribeButton from "../components/SubscribeButton"
 import TableOfContents, { TocHeading } from "../components/TableOfContents"
 import YouTube from "../components/YouTube"
@@ -193,5 +194,5 @@ const Wrapper: React.FC<
     </>
   )
 }
-const components = { wrapper: Wrapper, a: A, Code, Footnote, Image, ScreenOnly, PrintOnly, Comment, YouTube }
+const components = { wrapper: Wrapper, a: A, Code, Footnote, Image, ScreenOnly, PrintOnly, Comment, YouTube, Quote, Attribution }
 export default components

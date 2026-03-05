@@ -110,6 +110,8 @@ async function update(source: string) {
         ScreenOnly: ({ children }: any) => createElement("div", { className: "screenonly" }, children),
         PrintOnly: ({ children }: any) => createElement("div", { className: "printonly" }, children),
         Comment: () => null,
+        Quote: ({ children }: any) => createElement("blockquote", null, children),
+        Attribution: ({ children }: any) => createElement("cite", null, children),
         a: ({ href, children, ...props }: any) => {
           if (href === "-") {
             return createElement("span", null, children)
