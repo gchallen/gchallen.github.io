@@ -47,6 +47,9 @@ vector_db_test/
 # Generated HTML files (from MDX build process)
 html/
 
+# Essay similarity embeddings cache
+essay_embeddings_cache.json
+
 # Logs
 *.log
 logs/

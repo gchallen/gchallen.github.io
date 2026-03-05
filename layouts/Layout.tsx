@@ -6,6 +6,7 @@ import { onlyText } from "react-children-utilities"
 import { usePopperTooltip } from "react-popper-tooltip"
 import "react-popper-tooltip/dist/styles.css"
 import Code from "../components/Code"
+import EssayNavigation from "../components/EssayNavigation"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import Quote, { Attribution } from "../components/Quote"
@@ -105,6 +106,7 @@ const Wrapper: React.FC<
       technical?: boolean
       showTOC?: boolean
       toc?: TocHeading[]
+      navigation?: any
     }
   }
 > = ({ frontmatter, children }) => {
@@ -124,6 +126,7 @@ const Wrapper: React.FC<
     draft,
     showTOC,
     toc,
+    navigation,
   } = frontmatter
   const actualTitle = `Geoffrey Challen : ${title}`
   return (
@@ -179,14 +182,23 @@ const Wrapper: React.FC<
           <TableOfContents headings={toc} />
         </aside>
       )}
+      {isEssay && navigation && (
+        <aside className="essayNavSidebar">
+          <EssayNavigation navigation={navigation} />
+        </aside>
+      )}
+      {isEssay && navigation && (
+        <div className="essayNavFooter">
+          <EssayNavigation navigation={navigation} />
+        </div>
+      )}
       {isEssay && (
         <div id="thanks">
-          <p className="thanks">
-            Thanks for reading! I&apos;d love to hear your take. Feel free to{" "}
-            <a href="mailto:geoffrey.challen@gmail.com">get in touch.</a>
-          </p>
           <SubscribeButton hideAfterSubscribe>
-            <span>Subscribe to be notified when I post new essays:</span>
+            <p className="thanks">
+              <a href="mailto:geoffrey.challen@gmail.com">Email me</a>, or subscribe to be notified when I post new
+              essays:
+            </p>
           </SubscribeButton>
         </div>
       )}

@@ -2,7 +2,7 @@ import { compile, evaluateSync } from "@mdx-js/mdx"
 import { ArgumentParser } from "argparse"
 import { exec } from "child-process-promise"
 import chokidar from "chokidar"
-import { copy, emptyDir, mkdirs, remove } from "fs-extra"
+import { copy, emptyDir, mkdirs, pathExists, remove } from "fs-extra"
 import { readFile, writeFile } from "fs/promises"
 import { glob } from "glob"
 import matter from "gray-matter"
@@ -31,6 +31,21 @@ const args = parser.parse_args()
 
 async function update(source: string) {
   const { content, data, isEmpty } = matter(await readFile(source))
+
+  // Check for unescaped dollar signs (likely currency that should be \$)
+  // Skip content inside code blocks (``` ... ```) and inline code (` ... `)
+  const contentWithoutCode = content.replace(/```[\s\S]*?```/g, "").replace(/`[^`]*`/g, "")
+  const dollarMatches = [...contentWithoutCode.matchAll(/(?<!\\)\$\d/g)]
+  if (dollarMatches.length > 0) {
+    const lines = contentWithoutCode.split("\n")
+    for (const match of dollarMatches) {
+      const lineNum = contentWithoutCode.substring(0, match.index).split("\n").length
+      console.error(
+        `ERROR: Unescaped $ in ${source} (line ~${lineNum}): "${lines[lineNum - 1].trim().substring(0, 80)}"`,
+      )
+    }
+    throw new Error(`Unescaped dollar sign(s) in ${source}. Use \\$ for currency.`)
+  }
 
   let pagePath
 
@@ -187,7 +202,19 @@ ${lines.slice(splitPoint + 1).join("\n")}`.trim()
     path.join("layouts", data.layout ?? args.defaultLayout),
   )
   const frontmatterImportPath = path.relative(path.dirname(pagePath), dataPath)
-  const pageContent = `
+  const navigationImportPath = path.relative(path.dirname(pagePath), "output/essay-navigation.json")
+  const pageContent = data.isEssay
+    ? `
+import Content from "${contentImportPath}"
+import components from "${layoutImportPath}"
+import frontmatter from "${frontmatterImportPath}"
+import navigation from "${navigationImportPath}"
+
+export default function Page() {
+  return <Content components={components} frontmatter={{...frontmatter, navigation: navigation[frontmatter.url] ?? null}} />
+}
+`.trimStart()
+    : `
 import Content from "${contentImportPath}"
 import components from "${layoutImportPath}"
 import frontmatter from "${frontmatterImportPath}"
@@ -211,9 +238,18 @@ async function rm(source: string) {
   await remove(htmlPath)
 }
 
+const NAVIGATION_FILE = "output/essay-navigation.json"
+
 async function clean() {
+  // Preserve essay-navigation.json across clean since it's built separately
+  const navPath = NAVIGATION_FILE
+  let navContent: string | undefined
+  if (await pathExists(navPath)) {
+    navContent = (await readFile(navPath)).toString()
+  }
   await emptyDir(args.output)
   await emptyDir("rag/html")
+  await writeFile(navPath, navContent ?? "{}")
   try {
     await exec("git clean pages -fX")
   } catch (err) {}

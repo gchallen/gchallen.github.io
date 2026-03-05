@@ -6,6 +6,7 @@
   "scripts": {
     "build:mdx": "tsx bin/build.ts mdx output --build --clean",
     "build:next": "next build",
+    "build:similarity": "cd rag && uv run python essay_similarity.py",
     "build:vector": "bun build:mdx && cd rag && uv run python vector_db_builder.py --html-dir html --output-dir vector_db",
     "build:vector:clean": "bun build:mdx && cd rag && uv run python vector_db_builder.py --clean --html-dir html --output-dir vector_db",
     "buildAndPush": "bun build:vector && bun build:next && bun docker:push && bun rag:push",
@@ -31,7 +32,7 @@
     "lint": "next lint && eslint",
     "ncu": "ncu && bun rag:ncu",
     "ncu:update": "ncu -u && bun rag:ncu:update",
-    "prebuild": "bun build:mdx && tsx bin/rss.ts && tsx bin/pyodide.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
+    "prebuild": "bun build:mdx && bun build:similarity && tsx bin/rss.ts && tsx bin/pyodide.ts && esbuild --bundle onload.ts --outfile=public/onload.js",
     "prettier": "prettier --cache -w --plugin=prettier-plugin-organize-imports . && prettier-package-json --write && cd rag && uvx ruff format .",
     "rag:build": "bun build:vector && cd rag && docker build -t geoffreychallen/rag-server:latest -t geoffreychallen/rag-server:$npm_package_version .",
     "rag:dev": "cd rag && docker compose --profile dev up rag-server-dev",

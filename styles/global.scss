@@ -565,6 +565,101 @@ div.loginButton {
     cursor: pointer;
   }
 }
+$essayNavBreakpoint: calc(#{$maxTextWidth}px + 240px + 240px + 6rem);
+
+.essayNavSidebar {
+  position: fixed;
+  top: calc(68px + 1.5rem);
+  right: max(1rem, calc((100vw - #{$maxTextWidth}px) / 2 - 240px - 2rem));
+  width: 240px;
+  max-height: calc(100vh - 68px - 3rem);
+  overflow-y: auto;
+  padding-top: 1.5rem;
+
+  @media screen and (max-width: $essayNavBreakpoint) {
+    display: none;
+  }
+
+  @media print {
+    display: none;
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: #cccccc #fdfdfd;
+  .dark-mode & {
+    scrollbar-color: #555555 #333333;
+  }
+}
+.essayNavFooter {
+  display: none;
+  padding: 1rem 2rem;
+  border-top: 4px solid #eeeeee;
+  margin-top: 2rem;
+  .dark-mode & {
+    border-top: 4px solid #888888;
+  }
+
+  @media screen and (max-width: $essayNavBreakpoint) {
+    display: block;
+  }
+
+  @media print {
+    display: none;
+  }
+
+  .essayNavigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 2rem;
+  }
+  .essayNavSection {
+    flex: 1;
+    min-width: 140px;
+  }
+}
+.essayNavigation {
+  font-size: 0.95em;
+  line-height: 1.3;
+
+  a {
+    text-decoration: none;
+    color: #666666;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    .dark-mode & {
+      color: #aaaaaa;
+    }
+    &:hover {
+      color: #444444;
+      text-decoration: underline;
+      .dark-mode & {
+        color: #dddddd;
+      }
+    }
+  }
+  h4 {
+    font-size: 0.85em;
+    margin: 0 0 0.2rem 0;
+    color: #888888;
+    font-weight: 600;
+    .dark-mode & {
+      color: #999999;
+    }
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin-bottom: 0.2rem;
+    }
+  }
+}
+.essayNavSection {
+  margin-bottom: 0.8rem;
+}
 #thanks {
   font-size: calc(0.8 * $base);
   border-top: 4px solid #eeeeee;
