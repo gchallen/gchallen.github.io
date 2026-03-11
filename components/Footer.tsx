@@ -1,5 +1,4 @@
 import Link from "next/link"
-import LoginButton from "./LoginButton"
 
 const Footer: React.FC = () => {
   return (
@@ -8,7 +7,6 @@ const Footer: React.FC = () => {
         <Link href="/">Home</Link>
         <Link href="/statements">Statements</Link>
         <Link href="mailto:geoffrey.challen@gmail.com">Contact</Link>
-        <LoginButton text />
         {process.env.NEXT_PUBLIC_SHOW_OPENING && <Link href="/opening">Recruiting</Link>}
         <Link href="https://learncs.online" target="_blank">
           <kbd>learncs.online</kbd>

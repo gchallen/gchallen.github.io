@@ -7,6 +7,7 @@ export interface Essay {
   published: string
   publishedAt: string
   url: string
+  notified?: boolean
 }
 export async function getEssays(): Promise<{ published: Essay[]; drafts: Essay[] }> {
   const essays = await Promise.all(

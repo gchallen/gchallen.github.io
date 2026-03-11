@@ -5,7 +5,6 @@ import { useRouter } from "next/router"
 import React, { Dispatch, PropsWithChildren, SetStateAction, createContext, useContext, useState } from "react"
 import Sidebar from "react-sidebar"
 import ChooseDarkMode from "../components/ChooseDarkMode"
-import LoginButton from "./LoginButton"
 
 const SidebarLink: React.FC<PropsWithChildren & { href: string; setOpen: (open: boolean) => void }> = ({
   href,
@@ -71,9 +70,6 @@ const SidebarContent: React.FC<{ setOpen: (open: boolean) => void }> = ({ setOpe
         </h2>
       </div>
       <div>
-        <h2>
-          <LoginButton text />
-        </h2>
         <h2>
           <ChooseDarkMode text />
         </h2>

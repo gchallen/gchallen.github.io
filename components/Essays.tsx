@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
 import { Essay } from "../lib/getEssays"
-import { useNewWindowLogin } from "./LoginButton"
 import SubscribeButton from "./SubscribeButton"
 
 const Summary: React.FC<{ essay: Essay }> = ({ essay }) => {
@@ -26,7 +25,6 @@ const Essays: React.FC<{
   limit?: boolean
   random?: boolean
 }> = ({ published, drafts, h1 = false, showSubscribe = false, limit = false, random = false }) => {
-  const { session } = useNewWindowLogin()
   const [randomIndex, setRandomIndex] = useState(0)
 
   // Initialize random index on client only to avoid hydration mismatch
@@ -87,7 +85,7 @@ const Essays: React.FC<{
           {latestEssays.map((essay, i) => (
             <Summary key={i} essay={essay} />
           ))}
-          {drafts && drafts.length > 0 && session?.user?.email === "geoffrey.challen@gmail.com" && (
+          {drafts && drafts.length > 0 && (
             <>
               {h1 ? <h2>Drafts</h2> : <h3>Drafts</h3>}
               {drafts.map((essay, i) => (
