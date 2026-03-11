@@ -11,6 +11,7 @@ const SubscribeButton: React.FC<PropsWithChildren & { center?: boolean; hideAfte
   const submitEmail = useRef(email)
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle")
   const [message, setMessage] = useState("")
+  const [confirmUrl, setConfirmUrl] = useState<string | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [hide, setHide] = useState(false)
 
@@ -34,6 +35,9 @@ const SubscribeButton: React.FC<PropsWithChildren & { center?: boolean; hideAfte
         if (res.ok) {
           setStatus("success")
           setMessage(data.message || "Check your email for a confirmation link")
+          if (data.confirmUrl) {
+            setConfirmUrl(data.confirmUrl)
+          }
           if (hideAfterSubscribe) {
             timer.current = setTimeout(() => setHide(true), 4000)
           }
@@ -62,7 +66,12 @@ const SubscribeButton: React.FC<PropsWithChildren & { center?: boolean; hideAfte
         {children}
         {status === "success" ? (
           <p style={{ display: "flex", alignItems: "center", gap: "0.4em" }}>
-            <FaCheckCircle size={"1.2em"} /> {message}
+            <FaCheckCircle size={"1.2em"} />{" "}
+            {confirmUrl ? (
+              <a href={confirmUrl}>Click here to confirm (dev mode)</a>
+            ) : (
+              message
+            )}
           </p>
         ) : (
           <form className={`subscribe${center ? " center" : ""}`} onSubmit={onSubmit}>

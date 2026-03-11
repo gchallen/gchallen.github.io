@@ -73,15 +73,13 @@ export async function sendConfirmationEmail(email: string, token: string): Promi
   })
 }
 
-export async function sendNotificationEmail(
-  email: string,
+export function buildNotificationEmail(
   essay: { title: string; description: string; url: string },
   unsubscribeToken: string,
-): Promise<void> {
+): { subject: string; html: string; text: string } {
   const essayUrl = `${SITE_URL}/${essay.url}`
   const unsubscribeUrl = `${SITE_URL}/api/subscribe/unsubscribe?token=${unsubscribeToken}`
-  await sendEmail({
-    to: email,
+  return {
     subject: `New essay: ${essay.title}`,
     html: `<p>I just published a new essay: <a href="${essayUrl}">${essay.title}</a></p>
 <p>${essay.description}</p>
@@ -89,6 +87,20 @@ export async function sendNotificationEmail(
 <hr>
 <p style="font-size: 0.85em; color: #666;"><a href="${unsubscribeUrl}">Unsubscribe</a></p>`,
     text: `I just published a new essay: ${essay.title}\n\n${essay.description}\n\nRead it here: ${essayUrl}\n\n---\nUnsubscribe: ${unsubscribeUrl}`,
+  }
+}
+
+export async function sendNotificationEmail(
+  email: string,
+  essay: { title: string; description: string; url: string },
+  unsubscribeToken: string,
+): Promise<void> {
+  const { subject, html, text } = buildNotificationEmail(essay, unsubscribeToken)
+  await sendEmail({
+    to: email,
+    subject,
+    html,
+    text,
     type: "notification",
   })
 }

@@ -11,6 +11,7 @@ declare global {
       SMTP_PORT?: string
       FROM_EMAIL?: string
       SITE_URL?: string
+      NOTIFY_SECRET?: string
     }
   }
 }
