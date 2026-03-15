@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "geoffreychallen.com",
-  "version": "2026.3.0",
+  "version": "2026.3.1",
   "type": "module",
   "scripts": {
     "build:mdx": "tsx bin/build.ts mdx output --build --clean",
@@ -84,7 +84,7 @@
     "@types/color": "4.2.0",
     "@types/fs-extra": "11.0.4",
     "@types/gtag.js": "0.0.20",
-    "@types/node": "25.4.0",
+    "@types/node": "25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@types/replace-ext": "2.0.2",
@@ -118,7 +118,7 @@
     "remark-smartypants": "3.0.2",
     "replace-ext": "2.0.0",
     "sass": "1.98.0",
-    "slugify": "1.6.6",
+    "slugify": "1.6.8",
     "string-hash": "1.1.3",
     "tsx": "4.21.0",
     "typescript": "5.9.3",
