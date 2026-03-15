@@ -366,75 +366,6 @@ header {
   font-size: 0.8em;
   color: #888888;
 }
-.grecaptcha-badge {
-  visibility: hidden;
-}
-form.subscribe {
-  display: flex;
-  width: 100%;
-  &.center {
-    justify-content: center;
-  }
-  .email {
-    flex: 1;
-    font-family: "Monaco", monospace;
-    font-size: 0.8em;
-    .center & {
-      max-width: 40em;
-    }
-  }
-  .submit {
-    display: block;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-    font-size: 0.9em;
-    line-height: 1.4em;
-    color: #555555;
-    background-color: #fdfdfd;
-    border: 1px solid #555555;
-    cursor: pointer;
-    &:disabled {
-      color: #aaaaaa;
-      border: 1px solid #aaaaaa;
-    }
-    .dark-mode & {
-      color: #cccccc;
-      background-color: #333333;
-      border: 1px solid #cccccc;
-      &:disabled {
-        color: #555555;
-        border: 1px solid #555555;
-      }
-    }
-    @media print {
-      color: #555555 !important;
-      background-color: #fdfdfd !important;
-      border: 1px solid #555555 !important;
-      &:disabled {
-        border: 1px solid #aaaaaa !important;
-      }
-    }
-  }
-  svg.success {
-    color: green;
-    transition: opacity 0.5s;
-  }
-}
-div.subscribe {
-  justify-content: center;
-  align-items: center;
-  transition:
-    max-height 0.5s,
-    opacity 0.5s;
-  overflow: hidden;
-  &.center {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .subscribed & {
-    display: none;
-  }
-}
 a.anchorTarget {
   display: block;
   visibility: hidden;
@@ -459,10 +390,6 @@ blockquote {
   @media print {
     border-left: 1px solid #555555 !important;
   }
-}
-div.thanks {
-  font-size: 0.9em;
-  text-align: right;
 }
 div.opening {
   margin-top: -8px;
@@ -660,16 +587,6 @@ $essayNavBreakpoint: calc(#{$maxTextWidth}px + 240px + 240px + 6rem);
 .essayNavSection {
   margin-bottom: 0.8rem;
 }
-#thanks {
-  font-size: calc(0.8 * $base);
-  border-top: 4px solid #eeeeee;
-  .dark-mode & {
-    border-top: 4px solid #888888;
-  }
-  margin-top: 2rem;
-  padding: 1rem 2rem;
-}
-
 /* Chat component styles */
 .chatContainer {
   display: flex;

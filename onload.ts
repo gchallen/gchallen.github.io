@@ -20,7 +20,3 @@ if (localStorageTheme) {
 } else {
   localStorage.setItem(storageKey, JSON.stringify(document.body.classList.contains(classNameDark)))
 }
-
-if (localStorage.getItem("subscribed")) {
-  document.body.classList.add("subscribed")
-}

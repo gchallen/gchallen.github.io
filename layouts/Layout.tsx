@@ -10,7 +10,6 @@ import EssayNavigation from "../components/EssayNavigation"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import Quote, { Attribution } from "../components/Quote"
-import SubscribeButton from "../components/SubscribeButton"
 import TableOfContents, { TocHeading } from "../components/TableOfContents"
 import YouTube from "../components/YouTube"
 
@@ -190,16 +189,6 @@ const Wrapper: React.FC<
       {isEssay && navigation && (
         <div className="essayNavFooter">
           <EssayNavigation navigation={navigation} />
-        </div>
-      )}
-      {isEssay && (
-        <div id="thanks">
-          <SubscribeButton hideAfterSubscribe>
-            <p className="thanks">
-              <a href="mailto:geoffrey.challen@gmail.com">Email me</a>, or subscribe to be notified when I post new
-              essays:
-            </p>
-          </SubscribeButton>
         </div>
       )}
       <Footer />

@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
 import { Essay } from "../lib/getEssays"
-import SubscribeButton from "./SubscribeButton"
 
 const Summary: React.FC<{ essay: Essay }> = ({ essay }) => {
   const { title, description, publishedAt, url } = essay
@@ -21,10 +20,9 @@ const Essays: React.FC<{
   published: Essay[]
   drafts?: Essay[]
   h1?: boolean
-  showSubscribe?: boolean
   limit?: boolean
   random?: boolean
-}> = ({ published, drafts, h1 = false, showSubscribe = false, limit = false, random = false }) => {
+}> = ({ published, drafts, h1 = false, limit = false, random = false }) => {
   const [randomIndex, setRandomIndex] = useState(0)
 
   // Initialize random index on client only to avoid hydration mismatch
@@ -104,9 +102,6 @@ const Essays: React.FC<{
             <p>
               For more essays, click <Link href="/essays/">here</Link>.
             </p>
-          )}
-          {showSubscribe && (
-            <SubscribeButton hideAfterSubscribe>Want to know when I post new essays? Subscribe here:</SubscribeButton>
           )}
         </>
       )}

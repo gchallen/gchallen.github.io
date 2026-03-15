@@ -77,7 +77,7 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           <Link href="/bio">shorter</Link>? Or you could <Link href="/chat">chat</Link> with my AI assistant?
         </p>
         <hr style={{ marginTop: 0 }} />
-        <Essays published={published} limit random showSubscribe />
+        <Essays published={published} limit random />
       </div>
       <Footer />
     </div>
