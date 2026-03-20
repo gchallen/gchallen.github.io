@@ -82,7 +82,6 @@ Key environment variables for local development:
 - `JEED_SERVER`: Java code execution endpoint
 - `PLAYGROUND_SERVER`: Additional code playground features
 - `GOOGLE_ANALYTICS_ID`: Analytics tracking
-- `RECAPTCHA_KEY`: Form protection
 
 ## Deployment Notes
 

@@ -48,7 +48,6 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 JEED_SERVER=your_jeed_server_url
 PLAYGROUND_SERVER=your_playground_server_url
 GOOGLE_ANALYTICS_ID=your_ga_id
-RECAPTCHA_KEY=your_recaptcha_key
 ```
 
 ## Development
