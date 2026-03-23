@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "geoffreychallen.com",
-  "version": "2026.3.1",
+  "version": "2026.3.2",
   "type": "module",
   "scripts": {
     "build:mdx": "tsx bin/build.ts mdx output --build --clean",
@@ -12,7 +12,8 @@
     "buildAndPush": "bun build:vector && bun build:next && bun docker:push && bun rag:push",
     "chat": "tsx bin/chat.ts",
     "check": "bun depcheck && bun prettier && bun eslint && bun tsc && bun rag:lint",
-    "depcheck": "depcheck --ignores=node-fetch,@types/*,prettier-plugin-*,pyodide,unist,mdast,@eslint/js,eslint-config-next",
+    "depcheck": "depcheck --ignores=bun,node-fetch,@types/*,prettier-plugin-*,pyodide,unist,mdast,@eslint/js,eslint-config-next",
+    "deploy": "tsx scripts/deploy.ts",
     "docker:build": "docker build --build-arg VERSION=$npm_package_version --build-arg GIT_COMMIT=$(git show --no-patch --format=%h) --build-arg BUILD_DATE=`date -u +\"%Y-%m-%dT%H:%M:%SZ\"` . -t geoffreychallen/www:latest && bun docker:tag",
     "docker:push": "docker buildx build . --platform=linux/amd64,linux/arm64/v8 --tag geoffreychallen/www:latest --tag geoffreychallen/www:$npm_package_version --push",
     "docker:tag": "docker tag geoffreychallen/www:latest geoffreychallen/www:$npm_package_version",
