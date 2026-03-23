@@ -10,8 +10,8 @@ import styles from "../styles/index.module.scss"
 
 const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, published }) => {
   const description =
-    "Hi, I'm Geoff Challen. I love to teach, and I love to code. I teach students to code. " +
-    "And I write code that helps them learn."
+    "Hi, I'm Geoff Challen. I love to teach, and I love to build. I teach students to build—with code and AI. " +
+    "And I build things that help them learn."
   return (
     <div className={styles.index}>
       <Head>
@@ -61,14 +61,22 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
       <div className="responsive" style={{ marginTop: -64 }}>
         <h1>Hi, I&apos;m Geoff</h1>
         <p className={styles.h2}>
-          I love to teach, and I love to code. <br />I teach students to code. <br />
-          And I write code that helps them learn.
+          I love to teach, and I love to build. <br />I teach students to build&mdash;with code and AI. <br />
+          And I build things that help them learn.
         </p>
         <p>
           My goal is to teach computer science to as many people as possible. I do this by creating interactive learning
           environments that scale. You can explore an example of my materials at{" "}
           <Link href="https://learncs.online" target="_blank">
             learncs.online
+          </Link>
+          . I&apos;m also building a new course on{" "}
+          <Link href="https://www.usingandunderstanding.ai/" target="_blank">
+            using and understanding AI
+          </Link>{" "}
+          for non-technical students, and rethinking how we{" "}
+          <Link href="https://www.cs124.org/ai" target="_blank">
+            teach programming in the age of AI
           </Link>
           .
         </p>

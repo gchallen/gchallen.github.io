@@ -83,6 +83,10 @@ Key environment variables for local development:
 - `PLAYGROUND_SERVER`: Additional code playground features
 - `GOOGLE_ANALYTICS_ID`: Analytics tracking
 
+## Writing Style
+
+- Em dashes have no spaces: `word—word`, not `word — word` or `word -- word`
+
 ## Deployment Notes
 
 - Docker image builds for AMD64 and ARM64
