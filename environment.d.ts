@@ -1,4 +1,7 @@
 declare global {
+  interface Window {
+    gtag: (...args: unknown[]) => void
+  }
   namespace NodeJS {
     interface ProcessEnv {
       NEXT_PUBLIC_JEED_SERVER: string
