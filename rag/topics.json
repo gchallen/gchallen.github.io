@@ -1,11 +1,11 @@
 [
   {
     "topic": "CS education",
-    "count": 32
+    "count": 31
   },
   {
     "topic": "CS1",
-    "count": 15
+    "count": 14
   },
   {
     "topic": "University of Illinois",
@@ -13,11 +13,7 @@
   },
   {
     "topic": "personal",
-    "count": 6
-  },
-  {
-    "topic": "AI in education",
-    "count": 5
+    "count": 7
   },
   {
     "topic": "assessment",
@@ -32,6 +28,10 @@
     "count": 5
   },
   {
+    "topic": "teaching",
+    "count": 5
+  },
+  {
     "topic": "teaching faculty",
     "count": 5
   },
@@ -40,7 +40,7 @@
     "count": 4
   },
   {
-    "topic": "infrastructure",
+    "topic": "AI in education",
     "count": 4
   },
   {
@@ -48,7 +48,7 @@
     "count": 4
   },
   {
-    "topic": "teaching",
+    "topic": "software development",
     "count": 4
   },
   {
@@ -64,6 +64,10 @@
     "count": 3
   },
   {
+    "topic": "infrastructure",
+    "count": 3
+  },
+  {
     "topic": "interactive walkthroughs",
     "count": 3
   },
@@ -76,19 +80,15 @@
     "count": 3
   },
   {
-    "topic": "software development",
-    "count": 3
-  },
-  {
     "topic": "teaching at scale",
     "count": 3
   },
   {
-    "topic": "active learning",
-    "count": 2
+    "topic": "teaching philosophy",
+    "count": 3
   },
   {
-    "topic": "Claude Code",
+    "topic": "active learning",
     "count": 2
   },
   {
@@ -120,10 +120,6 @@
     "count": 2
   },
   {
-    "topic": "Kubernetes",
-    "count": 2
-  },
-  {
     "topic": "learncs.online",
     "count": 2
   },
@@ -148,10 +144,6 @@
     "count": 2
   },
   {
-    "topic": "teaching philosophy",
-    "count": 2
-  },
-  {
     "topic": "Android",
     "count": 1
   },
@@ -172,7 +164,7 @@
     "count": 1
   },
   {
-    "topic": "cloud computing",
+    "topic": "Claude Code",
     "count": 1
   },
   {
@@ -248,6 +240,10 @@
     "count": 1
   },
   {
+    "topic": "Kubernetes",
+    "count": 1
+  },
+  {
     "topic": "lecturing",
     "count": 1
   },
@@ -260,15 +256,7 @@
     "count": 1
   },
   {
-    "topic": "NextJS",
-    "count": 1
-  },
-  {
     "topic": "online courses",
-    "count": 1
-  },
-  {
-    "topic": "personal website",
     "count": 1
   },
   {
@@ -281,10 +269,6 @@
   },
   {
     "topic": "proctored exams",
-    "count": 1
-  },
-  {
-    "topic": "programming",
     "count": 1
   },
   {
@@ -332,15 +316,7 @@
     "count": 1
   },
   {
-    "topic": "technical",
-    "count": 1
-  },
-  {
     "topic": "tutoring",
-    "count": 1
-  },
-  {
-    "topic": "web development",
     "count": 1
   }
 ]
