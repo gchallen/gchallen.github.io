@@ -51,6 +51,10 @@ async function update(source: string) {
 
   if (source.startsWith("mdx/essays/")) {
     data.isEssay = true
+    // Skip draft essays during production build
+    if (args.build && (!data.published || data.draft)) {
+      return
+    }
     const prefix = data.published ? `${moment(data.published).utc().format("YYYY-MM-DD")}-` : ""
     const postfix = data.draft ? "-draft" : ""
     const name = `${prefix}${slugify(data.title, { lower: true, remove: /:/g })}${postfix}.jsx`
