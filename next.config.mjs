@@ -2,6 +2,7 @@
 
 const config = {
   output: "standalone",
+  allowedDevOrigins: ["www.geoffreychallen.local"],
   sassOptions: {
     silenceDeprecations: ["legacy-js-api"],
   },
