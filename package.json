@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "geoffreychallen.com",
-  "version": "2026.4.2",
+  "version": "2026.4.3",
   "type": "module",
   "scripts": {
     "build:mdx": "tsx bin/build.ts mdx output --build --clean",
