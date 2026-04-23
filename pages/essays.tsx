@@ -8,8 +8,8 @@ import { Essay, getEssays } from "../lib/getEssays"
 const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, published }) => {
   const description =
     "I post essays here on teaching, technology, and the overlap between the two. " +
-    "I try to keep my essays on teaching accessible to teachers who don't program, " +
-    "and my essays on technology interesting to programmers who don't teach."
+    "I try to keep my essays on teaching accessible to teachers who don't build, " +
+    "and my essays on technology interesting to builders who don't teach."
   return (
     <>
       <Head>

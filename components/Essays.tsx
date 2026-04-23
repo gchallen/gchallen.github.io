@@ -54,23 +54,11 @@ const Essays: React.FC<{
               <h2>Essays</h2>
             </Link>
           )}
-          {h1 ? (
-            <>
-              <div className="lead">
-                <p>I post essays here on teaching, technology, and the overlap between the two.</p>
-              </div>
-              <p>
-                I try to keep my essays on teaching accessible to teachers who don&apos;t program, and my essays on
-                technology interesting to programmers who don&apos;t teach.{" "}
-              </p>
-            </>
-          ) : (
-            <p>
-              I post essays here on teaching, technology, and the overlap between the two. I try to keep my essays on
-              teaching accessible to teachers who don&apos;t program, and my essays on technology interesting to
-              programmers who don&apos;t teach.{" "}
-            </p>
-          )}
+          <p>
+            I post essays here on teaching, technology, and the overlap between the two. I try to keep my essays on
+            teaching accessible to teachers who don&apos;t build, and my essays on technology interesting to builders
+            who don&apos;t teach.{" "}
+          </p>
           {limit && (
             <>
               {h1 ? <h2>Latest</h2> : <h3>Latest</h3>}
