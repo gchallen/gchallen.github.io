@@ -74,11 +74,19 @@ const Page: React.FC<{ drafts: Essay[]; published: Essay[] }> = ({ drafts, publi
           <Link href="https://www.usingandunderstanding.ai/" target="_blank">
             using and understanding AI
           </Link>{" "}
-          for non-technical students, and rethinking how we{" "}
+          for non-technical students, rethinking how we{" "}
           <Link href="https://www.cs124.org/ai" target="_blank">
             teach programming in the age of AI
           </Link>
-          .
+          , and leading the design of{" "}
+          <Link
+            href="https://docs.google.com/document/d/1Wq5d7x-l3yV0BzkqQRMiUNElfCr5k8OySGLJ01A5hAU/edit?tab=t.0#heading=h.az9mk8qiyib"
+            target="_blank"
+          >
+            Applied Computing
+          </Link>
+          , a proposed new undergraduate degree at Illinois organized around studio-based design, domain integration,
+          and AI-assisted building.
         </p>
         <p>
           Here&apos;s a <Link href="/about">long bio</Link>. Perhaps you&apos;d prefer something{" "}

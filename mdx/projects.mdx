@@ -12,14 +12,65 @@ topics:
 
 <div className="lead">
 
-**I write code that helps students learn.**
+**I build technology that helps students learn.**
 
 </div>
 
-I create and maintain a variety of software tools to support my courses.
+I create and maintain a variety of technology to support my courses.
 Most of my projects are published on GitHub, and many are publicly deployed and freely available for educators and students to use and extend.
 If you'd like to use something for your own courses and need help, please get in touch!
 I'm happy to help and, to some degree, what I've made publicly available is largely a result of what people have wanted to use.
+
+## Conversational Programming ((ask))
+
+Launching in Fall 2026, Conversational Programming is a new course for anyone who wants to build things.
+No prerequisites. No prior experience. No code.
+
+Students learn to work like architects.
+Architects don't lay bricks—they understand the people who will use a space, sketch ideas, explore alternatives, and then work with builders to bring them to life.
+That's what students do in this course: explore problems deeply, design solutions, prototype with AI, critique what emerges, iterate through conversation, and validate with real users.
+Prototypes that once took weeks now take minutes.
+
+With AI handling the syntax, the ability to create is available to everyone—not just those willing to learn to think like a machine.
+What happens when _everyone_ can build?
+That's what we're going to find out.
+
+## Applied Computing ((appliedcomputing))
+
+[Applied Computing](https://docs.google.com/document/d/1Wq5d7x-l3yV0BzkqQRMiUNElfCr5k8OySGLJ01A5hAU/edit?tab=t.0#heading=h.az9mk8qiyib) is a proposed new undergraduate degree at Illinois that prepares students to use AI to build technology that serves the people and communities they work with.
+The closest analogy is architecture: like architects, its graduates learn to create things that exist in social contexts, shape human behavior, and carry consequences for the people who interact with them.
+
+The degree is organized around studio-based design, a required domain concentration, breadth in studio art, moral reasoning, literature, and advanced writing, and a capstone thesis with public defense.
+It is proposed as a school-level collaboration spanning the Siebel School, the School of Art and Design, Gies, and the iSchool.
+
+We get to decide what computing education looks like now that everyone can build.
+Applied Computing is one answer.
+
+## Exploring Generative AI ((uai))
+
+[Exploring Generative AI](https://www.usingandunderstanding.ai/) is a new course I created for non-technical students at Illinois.
+Students use AI to create websites, music, data analyses, and more—while exploring how AI works and what it means for society.
+
+The course features several novel technical components:
+
+* [**Conversational assessments**](https://www.usingandunderstanding.ai/educators#conversational-assessment): AI-conducted dialogues that replace traditional exams, using a two-agent architecture that separates the interviewer from a hidden evaluator tracking understanding against rubrics
+* [**Interactive AI demos**](https://www.usingandunderstanding.ai/resources): A Digit Recognition Network where students train a neural network from scratch, a Neuron Explorer for adjusting weights and activation functions, and a Markov Babbler for understanding statistical text generation
+* **AI-facilitated group discussions**: Structured in-class activities with real-time partner matching, role assignment, and progressive stages
+
+The entire course platform was [built through conversational programming](https://www.usingandunderstanding.ai/create) with [Claude Code](https://claude.ai/code)—167 sessions, 3,049 conversational turns, and 22,689 tool calls over 47 days—and educators interested in adopting or adapting these components can find more detail on the [educators page](https://www.usingandunderstanding.ai/educators).
+
+## Integrating AI Into CS1 ((cs124ai))
+
+Specification-based assignments have become a poor fit for this moment.
+Traditional CS assignments follow a familiar pattern: the instructor writes a specification, the student translates it into code, and the code is graded against the specification.
+But AI agents are now too good at that translation step—when I tested Claude on the previous spring's CS 124 project, it finished the entire thing from the test suites alone, without even reading the written instructions.
+If students can hand a specification to an AI and get a working solution, the assignment has lost most of its educational value.
+And assignments that weren't designed for AI are also a poor way to learn how to collaborate with AI effectively: when the official task is "write the code yourself," AI use becomes something to hide rather than a craft to develop.
+I [explained the reasoning to students](/talks/2025-12-11-cs-124-all-student-meeting) at the end of Fall 2025.
+
+In Spring 2026, CS 124 replaced the traditional shared project with [an independent project](https://www.cs124.org/ai) where each student designs and builds their own unique Android application using AI coding agents.
+This teaches the skills that matter in an era of AI-assisted development: writing effective prompts, validating AI-generated code through automated testing, and recognizing when an AI is off track.
+Classical programming continues through weekly proctored quizzes completed without AI assistance, which account for 70% of the course grade.
 
 ## `learncs.online`: Learn to Program Online ((learncsonline))
 
@@ -37,32 +88,6 @@ Many of the components supporting [`learncs.online`](https://learncs.online/) em
 
 **Demo**: https://learncs.online/  
 **Credits**: Hundreds of course staff have contributed content to `learncs.online`, creating the first crowdsourced CS1 course. Find the [full list of contributors here](https://www.learncs.online/people).
-
-## CS 199 UAI: Using and Understanding AI ((uai))
-
-[CS 199 UAI](https://www.usingandunderstanding.ai/) is a new course I created for non-technical students at Illinois.
-Students use AI to create websites, music, data analyses, and more—while exploring how AI works and what it means for society.
-
-The course features several novel technical components:
-
-* [**Conversational assessments**](https://www.usingandunderstanding.ai/educators): AI-conducted dialogues that replace traditional exams, using a two-agent architecture that separates the interviewer from a hidden evaluator tracking understanding against rubrics
-* **Interactive AI demos**: A Digit Recognition Network where students train a neural network from scratch, a Neuron Explorer for adjusting weights and activation functions, and a Markov Babbler for understanding statistical text generation
-* **AI-facilitated group discussions**: Structured in-class activities with real-time partner matching, role assignment, and progressive stages
-
-The entire course platform was built through conversational programming with [Claude Code](https://claude.ai/code)—167 sessions, 3,049 conversational turns, and 22,689 tool calls over 47 days. The [full development history](https://www.usingandunderstanding.ai/create) is published transparently.
-
-**Demo**: https://www.usingandunderstanding.ai/
-**For Educators**: https://www.usingandunderstanding.ai/educators
-
-## CS 124: AI Integration ((cs124ai))
-
-In Spring 2026, I [rethought CS 124's programming assignments for the AI era](https://www.cs124.org/ai).
-Traditional shared assignments—where every student implements the same specification—have been replaced by "My Project," where each student designs and builds their own unique Android application using AI coding agents.
-
-This teaches the skills that matter in an era of AI-assisted development: writing effective prompts, validating AI-generated code through automated testing, and recognizing when an AI is off track.
-Classical programming continues through weekly proctored quizzes completed without AI assistance, which account for 70% of the course grade.
-
-**Demo**: https://www.cs124.org/ai
 
 ## Interactive Code Walkthroughs ((walkthroughs))
 
