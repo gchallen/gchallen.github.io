@@ -72,6 +72,13 @@ function runChecks(): void {
   exec("bun check")
 }
 
+function buildSite(): void {
+  exec("bun build:mdx")
+  exec("tsx bin/rss.ts")
+  exec("tsx bin/pyodide.ts")
+  exec("esbuild --bundle onload.ts --outfile=public/onload.js")
+}
+
 function buildAndPushWww(): void {
   exec(
     `docker buildx build . --platform=linux/amd64,linux/arm64/v8 --tag geoffreychallen/www:latest --tag geoffreychallen/www:${version} --push`,
@@ -113,6 +120,7 @@ if (await ask(`Bump version ${version} → ${nextVersion}? [y/N] `)) {
 console.log(`\nDeploying v${version}\n`)
 
 await step("Running checks", runChecks)
+await step("Building site", buildSite)
 await step("Building and pushing www", buildAndPushWww)
 await step("Building and pushing rag-server", buildAndPushRag)
 await step("Updating and waiting for deployments", updateDeployments)
