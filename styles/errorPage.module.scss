@@ -1,0 +1,59 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.digits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.digit {
+  font-size: clamp(8rem, 20vw, 22rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  user-select: none;
+  color: #555555;
+  opacity: 0.15;
+
+  :global(body.dark-mode) & {
+    color: #cccccc;
+    opacity: 0.22;
+  }
+}
+
+.imageWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -52%);
+  height: 85%;
+  width: auto;
+}
+
+.message {
+  margin-top: 1.5rem;
+
+  h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    max-width: 28rem;
+  }
+}
