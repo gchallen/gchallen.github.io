@@ -4,5 +4,6 @@ dist
 output
 pages/**/*.jsx
 public/onload.js
+public/pyodide-lock.json
 rag
 mdx/talks/2026-02-11-the-educational-engineer/
