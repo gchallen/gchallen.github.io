@@ -18,7 +18,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ code, title, heading, children })
   return (
     <>
       <Head>
-        <title>{title} : Geoffrey Challen</title>
+        <title>{`${title} : Geoffrey Challen`}</title>
         <meta name="description" content={title} />
       </Head>
       <div className={`${styles.container} responsive`}>
